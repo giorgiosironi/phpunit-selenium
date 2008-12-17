@@ -102,7 +102,7 @@ abstract class PHPUnit_Extensions_PerformanceTestCase extends PHPUnit_Framework_
             $maxRunningTime >= 0) {
             $this->maxRunningTime = $maxRunningTime;
         } else {
-            throw new InvalidArgumentException;
+            throw PHPUnit_Util_InvalidArgumentHelper::factory(1, 'positive integer');
         }
     }
 
