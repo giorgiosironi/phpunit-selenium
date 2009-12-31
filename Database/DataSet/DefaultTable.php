@@ -2,7 +2,7 @@
 /**
  * PHPUnit
  *
- * Copyright (c) 2002-2009, Sebastian Bergmann <sb@sebastian-bergmann.de>.
+ * Copyright (c) 2002-2010, Sebastian Bergmann <sb@sebastian-bergmann.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -37,7 +37,7 @@
  * @category   Testing
  * @package    PHPUnit
  * @author     Mike Lively <m@digitalsandwich.com>
- * @copyright  2002-2009 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright  2002-2010 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link       http://www.phpunit.de/
  * @since      File available since Release 3.2.0
@@ -55,7 +55,7 @@ PHP_CodeCoverage_Filter::getInstance()->addFileToBlacklist(__FILE__, 'PHPUNIT');
  * @category   Testing
  * @package    PHPUnit
  * @author     Mike Lively <m@digitalsandwich.com>
- * @copyright  2009 Mike Lively <m@digitalsandwich.com>
+ * @copyright  2010 Mike Lively <m@digitalsandwich.com>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
@@ -83,21 +83,7 @@ class PHPUnit_Extensions_Database_DataSet_DefaultTable extends PHPUnit_Extension
     public function addRow($values = array())
     {
         $columnNames = $this->getTableMetaData()->getColumns();
-
-         if (function_exists('array_fill_keys')) {	
-             $this->data[] = array_merge(
-               array_fill_keys($columnNames, NULL),
-               $values
-             );
-         } else {
-             $this->data[] = array_merge(
-               array_combine(
-                 $columnNames,
-                 array_fill(0, count($columnNames), NULL)
-               ),
-               $values
-             );
-         }
+        $this->data[] = array_merge(array_fill_keys($columnNames, NULL), $values);
     }
 
     /**
