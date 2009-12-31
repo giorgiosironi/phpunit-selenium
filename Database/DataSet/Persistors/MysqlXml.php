@@ -2,7 +2,7 @@
 /**
  * PHPUnit
  *
- * Copyright (c) 2002-2010, Sebastian Bergmann <sb@sebastian-bergmann.de>.
+ * Copyright (c) 2002-2009, Sebastian Bergmann <sb@sebastian-bergmann.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,37 +36,43 @@
  *
  * @category   Testing
  * @package    PHPUnit
- * @author     Mike Lively <m@digitalsandwich.com>
- * @copyright  2002-2010 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @author     Matthew Turland <tobias382@gmail.com>
+ * @copyright  2002-2009 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link       http://www.phpunit.de/
- * @since      File available since Release 3.2.0
+ * @since      File available since Release 3.4.6
  */
 
 require_once 'PHPUnit/Framework.php';
+require_once 'PHPUnit/Util/Filter.php';
 
 require_once 'PHPUnit/Extensions/Database/DataSet/Persistors/Abstract.php';
 
-PHP_CodeCoverage_Filter::getInstance()->addFileToBlacklist(__FILE__, 'PHPUNIT');
+PHPUnit_Util_Filter::addFileToFilter(__FILE__, 'PHPUNIT');
 
 /**
- * A XML dataset persistor.
+ * A MySQL XML dataset persistor.
  *
  * @category   Testing
  * @package    PHPUnit
- * @author     Mike Lively <m@digitalsandwich.com>
- * @copyright  2010 Mike Lively <m@digitalsandwich.com>
+ * @author     Matthew Turland <tobias382@gmail.com> 
+ * @copyright  2009 Matthew Turland <tobias382@gmail.com>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
- * @since      Class available since Release 3.2.0
+ * @since      Class available since Release 3.4.6
  */
-class PHPUnit_Extensions_Database_DataSet_Persistors_Xml extends PHPUnit_Extensions_Database_DataSet_Persistors_Abstract
+class PHPUnit_Extensions_Database_DataSet_Persistors_MysqlXml extends PHPUnit_Extensions_Database_DataSet_Persistors_Abstract
 {
     /**
      * @var string
      */
     protected $filename;
+
+    /**
+     * @var string
+     */
+    protected $database;
 
     /**
      * @var resource
@@ -84,6 +90,16 @@ class PHPUnit_Extensions_Database_DataSet_Persistors_Xml extends PHPUnit_Extensi
     }
 
     /**
+     * Sets the name of the database.
+     *
+     * @param string $database
+     */
+    public function setDatabase($database)
+    {
+        $this->database = $database;
+    }
+
+    /**
      * Override to save the start of a dataset.
      *
      * @param PHPUnit_Extensions_Database_DataSet_IDataSet $dataset
@@ -96,8 +112,9 @@ class PHPUnit_Extensions_Database_DataSet_Persistors_Xml extends PHPUnit_Extensi
            throw new PHPUnit_Framework_Exception("Could not open {$this->filename} for writing see " . __CLASS__ . "::setFileName()");
         }
 
-        fwrite($this->fh, "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n");
-        fwrite($this->fh, "<dataset>\n");
+        fwrite($this->fh, '<?xml version="1.0" encoding="UTF-8"?>' . "\n");
+        fwrite($this->fh, '<mysqldump xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' . "\n");
+        fwrite($this->fh, '<database name="' . $this->database . '">' . "\n"); 
     }
 
     /**
@@ -107,7 +124,8 @@ class PHPUnit_Extensions_Database_DataSet_Persistors_Xml extends PHPUnit_Extensi
      */
     protected function endDataSet(PHPUnit_Extensions_Database_DataSet_IDataSet $dataset)
     {
-        fwrite($this->fh, "</dataset>\n");
+        fwrite($this->fh, '</database>' . "\n");
+        fwrite($this->fh, '</mysqldump>' . "\n");
     }
 
     /**
@@ -117,11 +135,7 @@ class PHPUnit_Extensions_Database_DataSet_Persistors_Xml extends PHPUnit_Extensi
      */
     protected function startTable(PHPUnit_Extensions_Database_DataSet_ITable $table)
     {
-        fwrite($this->fh, "\t<table name=\"{$table->getTableMetaData()->getTableName()}\">\n");
-
-        foreach ($table->getTableMetaData()->getColumns() as $columnName) {
-            fwrite($this->fh, "\t\t<column>{$columnName}</column>\n");
-        }
+        fwrite($this->fh, "\t" . '<table_data name="' . $table->getTableMetaData()->getTableName() . '">' . "\n");
     }
 
     /**
@@ -131,7 +145,7 @@ class PHPUnit_Extensions_Database_DataSet_Persistors_Xml extends PHPUnit_Extensi
      */
     protected function endTable(PHPUnit_Extensions_Database_DataSet_ITable $table)
     {
-        fwrite($this->fh, "\t</table>\n");
+        fwrite($this->fh, "\t" . '</table_data>' . "\n");
     }
 
     /**
@@ -142,18 +156,18 @@ class PHPUnit_Extensions_Database_DataSet_Persistors_Xml extends PHPUnit_Extensi
      */
     protected function row(Array $row, PHPUnit_Extensions_Database_DataSet_ITable $table)
     {
-        fwrite($this->fh, "\t\t<row>\n");
+        fwrite($this->fh, "\t" . '<row>' . "\n");
 
         foreach ($table->getTableMetaData()->getColumns() as $columnName) {
+            fwrite($this->fh, "\t\t" . '<field name="' . $columnName . '"');
             if (isset($row[$columnName])) {
-                fwrite($this->fh, "\t\t\t<value>" . htmlspecialchars($row[$columnName]) . "</value>\n");
+                fwrite($this->fh, '>' . htmlspecialchars($row[$columnName]) . '</field>' . "\n");
             } else {
-                fwrite($this->fh, "\t\t\t<null />\n");
+                fwrite($this->fh, ' xsi:nil="true" />' . "\n"); 
             }
         }
 
-        fwrite($this->fh, "\t\t</row>\n");
+        fwrite($this->fh, "\t" . '</row>' . "\n");
     }
 }
-
 ?>

@@ -2,7 +2,7 @@
 /**
  * PHPUnit
  *
- * Copyright (c) 2002-2010, Sebastian Bergmann <sb@sebastian-bergmann.de>.
+ * Copyright (c) 2002-2009, Sebastian Bergmann <sb@sebastian-bergmann.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,67 +36,85 @@
  *
  * @category   Testing
  * @package    PHPUnit
- * @author     Mike Lively <m@digitalsandwich.com>
- * @copyright  2002-2010 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @author     Matthew Turland <tobias382@gmail.com> 
+ * @copyright  2002-2009 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link       http://www.phpunit.de/
- * @since      File available since Release 3.2.0
+ * @since      File available since Release 3.4.6
  */
 
 require_once 'PHPUnit/Framework.php';
+require_once 'PHPUnit/Util/Filter.php';
 
 require_once 'PHPUnit/Extensions/Database/DataSet/AbstractXmlDataSet.php';
-require_once 'PHPUnit/Extensions/Database/DataSet/Persistors/FlatXml.php';
+require_once 'PHPUnit/Extensions/Database/DataSet/Persistors/MysqlXml.php';
 
-PHP_CodeCoverage_Filter::getInstance()->addFileToBlacklist(__FILE__, 'PHPUNIT');
+PHPUnit_Util_Filter::addFileToFilter(__FILE__, 'PHPUNIT');
 
 /**
- * The default implementation of a data set.
+ * Data set implementation for the output of mysqldump --xml -t. 
  *
  * @category   Testing
  * @package    PHPUnit
- * @author     Mike Lively <m@digitalsandwich.com>
- * @copyright  2010 Mike Lively <m@digitalsandwich.com>
+ * @author     Matthew Turland <tobias382@gmail.com> 
+ * @copyright  2009 Matthew Turland <tobias382@gmail.com> 
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
- * @since      Class available since Release 3.2.0
+ * @since      Class available since Release 3.4.6
  */
-class PHPUnit_Extensions_Database_DataSet_FlatXmlDataSet extends PHPUnit_Extensions_Database_DataSet_AbstractXmlDataSet
+class PHPUnit_Extensions_Database_DataSet_MysqlXmlDataSet extends PHPUnit_Extensions_Database_DataSet_AbstractXmlDataSet
 {
 
     protected function getTableInfo(Array &$tableColumns, Array &$tableValues)
     {
-        if ($this->xmlFileContents->getName() != 'dataset') {
-            throw new Exception("The root element of a flat xml data set file must be called <dataset>");
+        if ($this->xmlFileContents->getName() != 'mysqldump') {
+            throw new Exception('The root element of a MySQL XML data set file must be called <mysqldump>');
         }
 
-        foreach ($this->xmlFileContents->children() as $row) {
-            $tableName = $row->getName();
+        foreach ($this->xmlFileContents->xpath('./database/table_data') as $tableElement) {
+            if (empty($tableElement['name'])) {
+                throw new Exception('<table_data> elements must include a name attribute');
+            }
+
+            $tableName = (string)$tableElement['name'];
 
             if (!isset($tableColumns[$tableName])) {
                 $tableColumns[$tableName] = array();
+            }
+
+            if (!isset($tableValues[$tableName])) {
                 $tableValues[$tableName] = array();
             }
 
-            $values = array();
-            foreach ($row->attributes() as $name => $value) {
-                if (!in_array($name, $tableColumns[$tableName])) {
-                    $tableColumns[$tableName][] = $name;
+            foreach ($tableElement->xpath('./row/field') as $columnElement) {
+                $columnName = (string)$columnElement['name']; 
+                if (empty($columnName)) {
+                    throw new Exception('<field> element name attributes cannot be empty');
                 }
 
-                $values[$name] = $value;
+                if (!in_array($columnName, $tableColumns[$tableName])) {
+                    $tableColumns[$tableName][] = $columnName;
+                }
             }
 
-            if (count($values)) {
-                $tableValues[$tableName][] = $values;
+            foreach ($this->xmlFileContents->xpath('./database/table_data[@name="' . $tableName . '"]/row') as $rowElement) {
+                $rowValues = array();
+                foreach ($tableColumns[$tableName] as $columnName) {
+                    $fields = $rowElement->xpath('./field[@name="' . $columnName . '"]');
+                    $column = array_shift($fields);
+                    $null = isset($column['nil']);
+                    $columnValue = $null ? NULL : (string)$column;
+                    $rowValues[$columnName] = $columnValue;
+                }
+                $tableValues[$tableName][] = $rowValues;
             }
         }
     }
 
     public static function write(PHPUnit_Extensions_Database_DataSet_IDataSet $dataset, $filename)
     {
-        $pers = new PHPUnit_Extensions_Database_DataSet_Persistors_FlatXml();
+        $pers = new PHPUnit_Extensions_Database_DataSet_Persistors_MysqlXml();
         $pers->setFileName($filename);
 
         try {
