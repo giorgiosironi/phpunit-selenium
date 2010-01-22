@@ -43,12 +43,14 @@
  * @since      File available since Release 3.2.0
  */
 
+require_once 'PHPUnit/Util/Filter.php';
+
 require_once 'PHPUnit/Extensions/Database/DataSet/AbstractDataSet.php';
 require_once 'PHPUnit/Extensions/Database/DataSet/DefaultTableIterator.php';
 require_once 'PHPUnit/Extensions/Database/DataSet/DefaultTable.php';
 require_once 'PHPUnit/Extensions/Database/DataSet/DefaultTableMetaData.php';
 
-PHP_CodeCoverage_Filter::getInstance()->addFileToBlacklist(__FILE__, 'PHPUNIT');
+PHPUnit_Util_Filter::addFileToFilter(__FILE__, 'PHPUNIT');
 
 /**
  * Creates CsvDataSets.
@@ -145,7 +147,11 @@ class PHPUnit_Extensions_Database_DataSet_CsvDataSet extends PHPUnit_Extensions_
      */
     protected function getCsvRow($fh)
     {
-        return fgetcsv($fh, NULL, $this->delimiter, $this->enclosure, $this->escape);
+        if (version_compare(PHP_VERSION, '5.3.0', '>')) {
+            return fgetcsv($fh, NULL, $this->delimiter, $this->enclosure, $this->escape);
+        } else {
+            return fgetcsv($fh, NULL, $this->delimiter, $this->enclosure);
+        }
     }
 }
 ?>

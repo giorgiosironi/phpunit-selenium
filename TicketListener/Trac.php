@@ -46,7 +46,7 @@
 
 require_once 'PHPUnit/Extensions/TicketListener.php';
 
-PHP_CodeCoverage_Filter::getInstance()->addFileToBlacklist(__FILE__, 'PHPUNIT');
+PHPUnit_Util_Filter::addFileToFilter(__FILE__, 'PHPUNIT');
 
 /**
  * A test listener that interact with Trac.

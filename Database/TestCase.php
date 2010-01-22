@@ -44,6 +44,7 @@
  */
 
 require_once 'PHPUnit/Framework.php';
+require_once 'PHPUnit/Util/Filter.php';
 
 require_once 'PHPUnit/Extensions/Database/DefaultTester.php';
 require_once 'PHPUnit/Extensions/Database/DB/DefaultDatabaseConnection.php';
@@ -51,7 +52,7 @@ require_once 'PHPUnit/Extensions/Database/Operation/Factory.php';
 require_once 'PHPUnit/Extensions/Database/Constraint/TableIsEqual.php';
 require_once 'PHPUnit/Extensions/Database/Constraint/DataSetIsEqual.php';
 
-PHP_CodeCoverage_Filter::getInstance()->addFileToBlacklist(__FILE__, 'PHPUNIT');
+PHPUnit_Util_Filter::addFileToFilter(__FILE__, 'PHPUNIT');
 
 /**
  * A TestCase extension that provides functionality for testing and asserting
@@ -179,19 +180,6 @@ abstract class PHPUnit_Extensions_Database_TestCase extends PHPUnit_Framework_Te
     {
         require_once 'PHPUnit/Extensions/Database/DataSet/XmlDataSet.php';
         return new PHPUnit_Extensions_Database_DataSet_XmlDataSet($xmlFile);
-    }
-
-    /**
-     * Create a a new MysqlXmlDataSet with the given $xmlFile. (absolute path.)
-     *
-     * @param string $xmlFile
-     * @return PHPUnit_Extensions_Database_DataSet_MysqlXmlDataSet
-     * @since  Method available since Release 3.5.0
-     */
-    protected function createMySQLXMLDataSet($xmlFile)
-    {
-        require_once 'PHPUnit/Extensions/Database/DataSet/MysqlXmlDataSet.php';
-        return new PHPUnit_Extensions_Database_DataSet_MysqlXmlDataSet($xmlFile);
     }
 
     /**

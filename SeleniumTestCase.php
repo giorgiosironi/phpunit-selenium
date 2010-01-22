@@ -43,13 +43,14 @@
  * @since      File available since Release 3.0.0
  */
 
-require_once 'File/Iterator/Factory.php';
 require_once 'PHPUnit/Framework.php';
+require_once 'PHPUnit/Util/Log/Database.php';
+require_once 'PHPUnit/Util/Filter.php';
 require_once 'PHPUnit/Util/Test.php';
 require_once 'PHPUnit/Util/XML.php';
 require_once 'PHPUnit/Extensions/SeleniumTestCase/Driver.php';
 
-PHP_CodeCoverage_Filter::getInstance()->addFileToBlacklist(__FILE__, 'PHPUNIT');
+PHPUnit_Util_Filter::addFileToFilter(__FILE__, 'PHPUNIT');
 
 /**
  * TestCase class that uses Selenium to provide
@@ -290,8 +291,8 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
         $result->run($this);
 
         if ($this->collectCodeCoverageInformation) {
-            $this->codeCoverage->getCodeCoverage()->append(
-              $this->getCodeCoverage(), $this
+            $result->appendCodeCoverageInformation(
+              $this, $this->getCodeCoverage()
             );
         }
 
@@ -993,8 +994,14 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
      */
     protected static function getSeleneseFiles($directory, $suffix)
     {
-        $files    = array();
-        $iterator = File_Iterator_Factory::getFileIterator($directory, $suffix);
+        $files = array();
+
+        $iterator = new PHPUnit_Util_FilterIterator(
+          new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($directory)
+          ),
+          $suffix
+        );
 
         foreach ($iterator as $file) {
             $files[] = (string)$file;

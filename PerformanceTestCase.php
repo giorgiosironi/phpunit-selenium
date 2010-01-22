@@ -36,56 +36,86 @@
  *
  * @category   Testing
  * @package    PHPUnit
- * @author     Mike Lively <m@digitalsandwich.com>
+ * @author     Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @copyright  2002-2010 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link       http://www.phpunit.de/
- * @since      File available since Release 3.2.0
+ * @since      File available since Release 2.1.0
  */
 
 require_once 'PHPUnit/Framework.php';
 require_once 'PHPUnit/Util/Filter.php';
+require_once 'PHPUnit/Util/Timer.php';
 
 PHPUnit_Util_Filter::addFileToFilter(__FILE__, 'PHPUNIT');
 
-require_once 'PHPUnit/Extensions/Database/DataSet/AbstractTable.php';
-
 /**
- * Provides the functionality to represent a database result set as a DBUnit
- * table.
+ * A TestCase that expects a TestCase to be executed
+ * meeting a given time limit.
  *
  * @category   Testing
  * @package    PHPUnit
- * @author     Mike Lively <m@digitalsandwich.com>
- * @copyright  2010 Mike Lively <m@digitalsandwich.com>
+ * @author     Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright  2002-2010 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
- * @deprecated The PHPUnit_Extension_Database_DataSet_QueryTable should be used instead
- * @see        PHPUnit_Extension_Database_DataSet_QueryTable
- * @see        PHPUnit_Extension_Database_DataSet_QueryDataSet
- * @since      Class available since Release 3.2.0
+ * @since      Class available since Release 2.1.0
  */
-class PHPUnit_Extensions_Database_DB_ResultSetTable extends PHPUnit_Extensions_Database_DataSet_AbstractTable
+abstract class PHPUnit_Extensions_PerformanceTestCase extends PHPUnit_Framework_TestCase
 {
+    /**
+     * @var    integer
+     */
+    protected $maxRunningTime = 0;
 
     /**
-     * Creates a new result set table.
-     *
-     * @param string $tableName
-     * @param PDOStatement $pdoStatement
+     * @return mixed
+     * @throws RuntimeException
      */
-    public function __construct($tableName, PDOStatement $pdoStatement)
+    protected function runTest()
     {
-        $this->data = $pdoStatement->fetchAll(PDO::FETCH_ASSOC);
+        PHPUnit_Util_Timer::start();
+        $testResult = parent::runTest();
+        $time = PHPUnit_Util_Timer::stop();
 
-        if (count($this->data)) {
-            $columns = array_keys($this->data[0]);
-        } else {
-            $columns = array();
+        if ($this->maxRunningTime != 0 &&
+            $time > $this->maxRunningTime) {
+            $this->fail(
+              sprintf(
+                'expected running time: <= %s but was: %s',
+
+                $this->maxRunningTime,
+                $time
+              )
+            );
         }
 
-        $this->setTableMetaData(new PHPUnit_Extensions_Database_DataSet_DefaultTableMetaData($tableName, $columns));
+        return $testResult;
+    }
+
+    /**
+     * @param  integer $maxRunningTime
+     * @throws InvalidArgumentException
+     * @since  Method available since Release 2.3.0
+     */
+    public function setMaxRunningTime($maxRunningTime)
+    {
+        if (is_integer($maxRunningTime) &&
+            $maxRunningTime >= 0) {
+            $this->maxRunningTime = $maxRunningTime;
+        } else {
+            throw PHPUnit_Util_InvalidArgumentHelper::factory(1, 'positive integer');
+        }
+    }
+
+    /**
+     * @return integer
+     * @since  Method available since Release 2.3.0
+     */
+    public function getMaxRunningTime()
+    {
+        return $this->maxRunningTime;
     }
 }
 ?>

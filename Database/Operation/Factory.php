@@ -44,10 +44,11 @@
  */
 
 require_once 'PHPUnit/Framework.php';
+require_once 'PHPUnit/Util/Filter.php';
 
 require_once 'PHPUnit/Extensions/Database/Operation/IDatabaseOperation.php';
 
-PHP_CodeCoverage_Filter::getInstance()->addFileToBlacklist(__FILE__, 'PHPUNIT');
+PHPUnit_Util_Filter::addFileToFilter(__FILE__, 'PHPUNIT');
 
 require_once 'PHPUnit/Extensions/Database/Operation/Composite.php';
 require_once 'PHPUnit/Extensions/Database/Operation/DeleteAll.php';
