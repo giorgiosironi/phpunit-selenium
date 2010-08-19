@@ -34,8 +34,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @package    PHPUnit
- * @subpackage Extensions_Story
+ * @package    PHPUnit_Selenium
  * @author     Mattis Stordalen Flister <mattis@xait.no>
  * @author     Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @copyright  2002-2010 Sebastian Bergmann <sb@sebastian-bergmann.de>
@@ -47,8 +46,7 @@
 /**
  *
  *
- * @package    PHPUnit
- * @subpackage Extensions_Story
+ * @package    PHPUnit_Selenium
  * @author     Mattis Stordalen Flister <mattis@xait.no>
  * @author     Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @copyright  2002-2010 Sebastian Bergmann <sb@sebastian-bergmann.de>

@@ -34,8 +34,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @category   Testing
- * @package    PHPUnit
+ * @package    PHPUnit_Selenium
  * @author     Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @author     Shin Ohno <ganchiku@gmail.com>
  * @copyright  2002-2010 Sebastian Bergmann <sb@sebastian-bergmann.de>
@@ -49,8 +48,7 @@ require_once 'PHPUnit/Extensions/SeleniumTestCase.php';
 /**
  * Tests for PHPUnit_Extensions_SeleniumTestCase.
  *
- * @category   Testing
- * @package    PHPUnit
+ * @package    PHPUnit_Selenium
  * @author     Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @author     Shin Ohno <ganchiku@gmail.com>
  * @copyright  2002-2010 Sebastian Bergmann <sb@sebastian-bergmann.de>
