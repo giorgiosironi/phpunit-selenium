@@ -106,7 +106,7 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
     protected $seleniumTimeout = 30;
 
     /**
-     * @var    array
+     * @var    string
      */
     protected $sessionId;
 
