@@ -46,11 +46,6 @@
        <tasks:replace from="@package_version@" to="version" type="package-info" />
       </file>
      </dir>
-     <dir name="Story">
-      <file baseinstalldir="/" name="SeleniumTestCase.php" role="php">
-       <tasks:replace from="@package_version@" to="version" type="package-info" />
-      </file>
-     </dir>
      <file baseinstalldir="/" name="SeleniumTestCase.php" role="php">
       <tasks:replace from="@package_version@" to="version" type="package-info" />
      </file>
