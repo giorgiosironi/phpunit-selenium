@@ -292,12 +292,18 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
             $result = $this->createResult();
         }
 
+        $this->result = $result;
+
         $this->collectCodeCoverageInformation = $result->getCollectCodeCoverageInformation();
 
         foreach ($this->drivers as $driver) {
             $driver->setCollectCodeCoverageInformation(
               $this->collectCodeCoverageInformation
             );
+        }
+
+        if (!$this->handleDependencies()) {
+            return;
         }
 
         $result->run($this);
