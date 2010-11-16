@@ -781,6 +781,18 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
     }
 
     /**
+     * Asserts that an element's text equals to given string.
+     *
+     * @param  string $locator
+     * @param  string $text
+     * @param  string $message
+     */
+    public function assertElementTextEquals($locator, $text, $message = '')
+    {
+        $this->assertEquals($text, $this->getText($locator), $message);
+    }
+
+    /**
      * Asserts that a select element has a specific option.
      *
      * @param  string $selectLocator
