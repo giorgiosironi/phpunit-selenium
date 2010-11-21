@@ -899,15 +899,13 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
         }
 
         stream_set_blocking($handle, 1);
-        stream_set_timeout($handle, 0, $this->httpTimeout * 1000);
+        stream_set_timeout($handle, $this->httpTimeout);
 
-        $info     = stream_get_meta_data($handle);
-        $response = '';
+        /* Tell the web server that we will not be sending more data
+        so that it can start processing our request */
+        stream_socket_shutdown($handle, STREAM_SHUT_WR);
 
-        while (!$info['eof'] && !$info['timed_out']) {
-            $response .= fgets($handle, 4096);
-            $info = stream_get_meta_data($handle);
-        }
+        $response = stream_get_contents($handle);
 
         fclose($handle);
 
