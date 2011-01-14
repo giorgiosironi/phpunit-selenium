@@ -1,19 +1,9 @@
-PHPUnit_Selenium 1.0
+PHPUnit_Selenium 1.1
 ====================
 
-This is the list of changes for the PHPUnit_Selenium 1.0 release series.
+This is the list of changes for the PHPUnit_Selenium 1.1 release series.
 
-PHPUnit_Selenium 1.0.2
+PHPUnit_Selenium 1.1.0
 ----------------------
 
-* Updated for PHPUnit 3.5.8.
-
-PHPUnit_Selenium 1.0.1
-----------------------
-
-* Handle test dependencies correctly.
-
-PHPUnit_Selenium 1.0.0
-----------------------
-
-* Initial release as separate component.
+* Fixed HTTP deadlock with Selenium RC server.
