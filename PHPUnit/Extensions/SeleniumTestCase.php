@@ -406,10 +406,10 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
     {
         $this->start();
 
-        if (!is_file($this->name)) {
+        if (!is_file($this->getName(FALSE))) {
             parent::runTest();
         } else {
-            $this->runSelenese($this->name);
+            $this->runSelenese($this->getName(FALSE));
         }
 
         if (!empty($this->verificationErrors)) {
