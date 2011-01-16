@@ -63,16 +63,6 @@ class Extensions_SeleniumTestCaseTest extends PHPUnit_Extensions_SeleniumTestCas
 
     public function setUp()
     {
-        if (!@fsockopen(PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_HOST, PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_PORT, $errno, $errstr)) {
-            $this->markTestSkipped(
-              sprintf(
-                'Selenium RC not running on %s:%d.',
-                PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_HOST,
-                PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_PORT
-              )
-            );
-        }
-
         $this->url = sprintf(
           'http://%s:%d/selenium-server/tests/',
           PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_HOST,

@@ -115,6 +115,11 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
     protected $screenshotUrl = '';
 
     /**
+     * @var boolean
+     */
+    private $serverRunning;
+
+    /**
      * @param  string $name
      * @param  array  $data
      * @param  string $dataName
@@ -384,6 +389,12 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
             $browser['httpTimeout'] = 45;
         }
 
+        if (@fsockopen($browser['host'], $browser['port'], $errno, $errstr)) {
+            $this->serverRunning = TRUE;
+        } else {
+            $this->serverRunning = FALSE;
+        }
+
         $driver = new PHPUnit_Extensions_SeleniumTestCase_Driver;
         $driver->setName($browser['name']);
         $driver->setBrowser($browser['browser']);
@@ -404,6 +415,16 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
      */
     protected function runTest()
     {
+        if (!$this->serverRunning) {
+            $this->markTestSkipped(
+              sprintf(
+                'Could not connect to Selenium RC on %s:%d.',
+                PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_HOST,
+                PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_PORT
+              )
+            );
+        }
+
         $this->start();
 
         if (!is_file($this->getName(FALSE))) {
