@@ -171,6 +171,15 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
     }
 
     /**
+     * @return string
+     * @since  Method available since Release 1.1.0
+     */
+    public function getSessionId()
+    {
+        return $this->sessionId;
+    }
+
+    /**
      */
     public function stop()
     {
