@@ -40,7 +40,7 @@
  * @copyright  2010-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link       http://www.phpunit.de/
- * @since      File available since Release 3.0.0
+ * @since      File available since Release 1.0.0
  */
 
 require_once 'PHPUnit/Extensions/SeleniumTestCase.php';
@@ -55,7 +55,7 @@ require_once 'PHPUnit/Extensions/SeleniumTestCase.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
- * @since      Class available since Release 3.0.0
+ * @since      Class available since Release 1.0.0
  */
 class Extensions_SeleniumTestCaseTest extends PHPUnit_Extensions_SeleniumTestCase
 {
@@ -321,10 +321,10 @@ class Extensions_SeleniumTestCaseTest extends PHPUnit_Extensions_SeleniumTestCas
         $this->waitForPageToLoad(2000);
         $this->assertEquals('Reload Page', $this->getTitle());
 
-        $this->setTimeout(30000);
+        $this->setTimeout(1.0.0);
         $this->click('link=Click here');
         // XXX NEED TO CHECK
-        $this->waitForPageToLoad(30000);
+        $this->waitForPageToLoad(1.0.0);
         $this->assertEquals('Slow Loading Page', $this->getTitle());
 
         $this->close();
