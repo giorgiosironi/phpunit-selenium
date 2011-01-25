@@ -2,7 +2,7 @@
 /**
  * PHPUnit
  *
- * Copyright (c) 2002-2010, Sebastian Bergmann <sb@sebastian-bergmann.de>.
+ * Copyright (c) 2002-2011, Sebastian Bergmann <sb@sebastian-bergmann.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -42,10 +42,9 @@
  * @since      File available since Release 1.1.0
  */
 
-function phpunit_selenium_autoload($class) {
+function phpunit_selenium_autoload($class = NULL) {
     static $classes = NULL;
     static $path = NULL;
-    static $filter = NULL;
 
     if ($classes === NULL) {
         $classes = array(
@@ -54,8 +53,16 @@ function phpunit_selenium_autoload($class) {
         );
 
         $path = dirname(dirname(dirname(__FILE__)));
+    }
 
-        $filter = PHP_CodeCoverage_Filter::getInstance();
+    if ($class === NULL) {
+        $result = array();
+
+        foreach ($classes as $file) {
+            $result[] = $path . $file;
+        }
+
+        return $result;
     }
 
     $cn = strtolower($class);
@@ -64,8 +71,6 @@ function phpunit_selenium_autoload($class) {
         $file = $path . $classes[$cn];
 
         require $file;
-
-        $filter->addFileToBlackList($file, 'PHPUNIT');
     }
 }
 
