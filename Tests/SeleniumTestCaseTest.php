@@ -650,4 +650,19 @@ class Extensions_SeleniumTestCaseTest extends PHPUnit_Extensions_SeleniumTestCas
         $this->assertFalse($this->isEditable('disabled_text'));
         $this->assertFalse($this->isEditable('disabled_select'));
     }
+    
+    public function testCapture() {
+    	$this->setCaptureScreenshotOnFailure(true);
+    	$this->setScreenshotPath(PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_PATH);
+    	$this->setScreenshotUrl('http://localhost');
+    	
+    	$expectationException = new PHPUnit_Framework_ExpectationFailedException('testCapture');
+    	try {
+    		$this->onNotSuccessfulTest($expectationException);
+    	} catch (PHPUnit_Framework_ExpectationFailedException $e) {
+    		$this->assertFileExists(PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_PATH. DIRECTORY_SEPARATOR . $this->testId .'.png');
+    		return;
+    	}
+    	$this->fail();
+    }
 }

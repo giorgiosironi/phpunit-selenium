@@ -100,21 +100,6 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
     protected $verificationErrors = array();
 
     /**
-     * @var    boolean
-     */
-    protected $captureScreenshotOnFailure = FALSE;
-
-    /**
-     * @var    string
-     */
-    protected $screenshotPath = '';
-
-    /**
-     * @var    string
-     */
-    protected $screenshotUrl = '';
-
-    /**
      * @param  string $name
      * @param  array  $data
      * @param  string $dataName
@@ -320,6 +305,7 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
     /**
      * @param  array $browser
      * @return PHPUnit_Extensions_SeleniumTestCase_Driver
+     * @author Nicolas Fabre <nicolas.fabre@gmail.com>
      * @since  Method available since Release 3.3.0
      */
     protected function getDriver(array $browser)
@@ -383,6 +369,36 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
         } else {
             $browser['httpTimeout'] = 45;
         }
+        
+    	if (isset($browser['captureScreenshotOnFailure'])) {
+            if (!is_bool($browser['captureScreenshotOnFailure'])) {
+                throw new InvalidArgumentException(
+                  'Array element "captureScreenshotOnFailure" is no boolean.'
+                );
+            }
+        } else {
+            $browser['captureScreenshotOnFailure'] = false;
+        }
+        
+        if (isset($browser['screenshotPath'])) {
+            if (!is_string($browser['screenshotPath'])) {
+                throw new InvalidArgumentException(
+                  'Array element "screenshotPath" is no string.'
+                );
+            }
+        } else {
+            $browser['screenshotPath'] = '';
+        }
+        
+    	if (isset($browser['screenshotUrl'])) {
+            if (!is_string($browser['screenshotUrl'])) {
+                throw new InvalidArgumentException(
+                  'Array element "screenshotUrl" is no string.'
+                );
+            }
+        } else {
+            $browser['screenshotUrl'] = '';
+        }
 
         $driver = new PHPUnit_Extensions_SeleniumTestCase_Driver;
         $driver->setName($browser['name']);
@@ -391,6 +407,9 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
         $driver->setPort($browser['port']);
         $driver->setTimeout($browser['timeout']);
         $driver->setHttpTimeout($browser['httpTimeout']);
+        $driver->setCaptureScreenshotOnFailure($browser['captureScreenshotOnFailure']);
+        $driver->setScreenshotPath($browser['screenshotPath']);
+        $driver->setScreenshotUrl($browser['screenshotUrl']);
         $driver->setTestCase($this);
         $driver->setTestId($this->testId);
 
@@ -1024,6 +1043,7 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
      * This method is called when a test method did not execute successfully.
      *
      * @param Exception $e
+     * @author Nicolas Fabre <nicolas.fabre@gmail.com>
      * @since Method available since Release 3.4.0
      */
     protected function onNotSuccessfulTest(Exception $e)
@@ -1033,15 +1053,15 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
                        "\n";
             $message = $e->getCustomMessage();
 
-            if ($this->captureScreenshotOnFailure &&
-                !empty($this->screenshotPath) &&
-                !empty($this->screenshotUrl)) {
+            if ($this->drivers[0]->getCaptureScreenshotOnFailure() &&
+                $this->drivers[0]->hasScreenshotPath() &&
+                $this->drivers[0]->hasScreenshotUrl()) {
                 $this->drivers[0]->captureEntirePageScreenshot(
-                  $this->screenshotPath . DIRECTORY_SEPARATOR . $this->testId .
-                  '.png'
+                  $this->drivers[0]->getScreenshotPath() . 
+                  DIRECTORY_SEPARATOR. $this->testId .'.png'
                 );
 
-                $buffer .= 'Screenshot: ' . $this->screenshotUrl . '/' .
+                $buffer .= 'Screenshot: ' . $this->drivers[0]->getScreenshotUrl() . '/' .
                            $this->testId . ".png\n";
             }
         }
