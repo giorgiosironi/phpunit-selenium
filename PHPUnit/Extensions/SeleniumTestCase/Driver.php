@@ -856,7 +856,6 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
 
     /**
      * Send a command to the Selenium RC server.
-     * Uses the cURL library to fetch the URL under test.
      * 
      * @param  string $command
      * @param  array  $arguments
@@ -871,31 +870,46 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
           $this->port,
           urlencode($command)
         );
+
         $numArguments = count($arguments);
+
         for ($i = 0; $i < $numArguments; $i++) {
             $argNum = strval($i + 1);
-            $url .= sprintf('&%s=%s', $argNum, urlencode(trim ($arguments[$i])));
+            $url   .= sprintf(
+                        '&%s=%s',
+                        $argNum,
+                        urlencode(trim($arguments[$i]))
+                      );
         }
+
         if (isset($this->sessionId)) {
             $url .= sprintf('&%s=%s', 'sessionId', $this->sessionId);
         }
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_HEADER, 0);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 60);
-        $response = curl_exec($ch);
-        $info = curl_getinfo($ch);
-        curl_close($ch);
-        if($response !== false) {
-            if($info['http_code'] != 200) {
-                $this->stop();
-                throw new RuntimeException('The response from the Selenium RC server is invalid: ' . $response);
-            }
-        } else {
-            throw new RuntimeException('Could not connect to the Selenium RC server.');
-            $response = '';
+
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_HEADER, 0);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 60);
+
+        $response = curl_exec($curl);
+        $info     = curl_getinfo($curl);
+
+        if (!$response) {
+            throw new RuntimeException(curl_error($curl));
         }
+
+        curl_close($curl);
+
+        if ($info['http_code'] != 200) {
+            $this->stop();
+
+            throw new RuntimeException(
+              'The response from the Selenium RC server is invalid: ' .
+              $response
+            );
+        }
+
         return $response;
     }
 
