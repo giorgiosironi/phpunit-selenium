@@ -39,7 +39,7 @@
  * @copyright  2010-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link       http://www.phpunit.de/
- * @since      File available since Release 3.3.0
+ * @since      File available since Release 1.0.0
  */
 
 /**
@@ -51,7 +51,7 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
- * @since      Class available since Release 3.3.0
+ * @since      Class available since Release 1.0.0
  */
 class PHPUnit_Extensions_SeleniumTestCase_Driver
 {
@@ -182,6 +182,15 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
             $this->doCommand('setTimeout', array($this->seleniumTimeout * 1000));
         }
 
+        return $this->sessionId;
+    }
+
+    /**
+     * @return string
+     * @since  Method available since Release 1.1.0
+     */
+    public function getSessionId()
+    {
         return $this->sessionId;
     }
 

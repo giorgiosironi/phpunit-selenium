@@ -17,14 +17,14 @@
   <email>sb@sebastian-bergmann.de</email>
   <active>yes</active>
  </lead>
- <date>2011-01-14</date>
+ <date>2010-MM-DD</date>
  <version>
-  <release>1.0.2</release>
-  <api>1.0.0</api>
+  <release>1.1.0</release>
+  <api>1.1.0</api>
  </version>
  <stability>
-  <release>stable</release>
-  <api>stable</api>
+  <release>devel</release>
+  <api>devel</api>
  </stability>
  <license>BSD License</license>
  <notes>http://github.com/sebastianbergmann/phpunit-selenium/blob/master/README.markdown</notes>
@@ -33,6 +33,9 @@
    <dir name="PHPUnit">
     <dir name="Extensions">
      <dir name="SeleniumTestCase">
+      <file baseinstalldir="/" name="Autoload.php" role="php">
+       <tasks:replace from="@package_version@" to="version" type="package-info" />
+      </file>
       <file baseinstalldir="/" name="Driver.php" role="php">
        <tasks:replace from="@package_version@" to="version" type="package-info" />
       </file>
@@ -43,11 +46,6 @@
        <tasks:replace from="@package_version@" to="version" type="package-info" />
       </file>
       <file baseinstalldir="/" name="prepend.php" role="php">
-       <tasks:replace from="@package_version@" to="version" type="package-info" />
-      </file>
-     </dir>
-     <dir name="Story">
-      <file baseinstalldir="/" name="SeleniumTestCase.php" role="php">
        <tasks:replace from="@package_version@" to="version" type="package-info" />
       </file>
      </dir>

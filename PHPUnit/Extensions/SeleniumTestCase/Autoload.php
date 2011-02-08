@@ -2,7 +2,7 @@
 /**
  * PHPUnit
  *
- * Copyright (c) 2010-2011, Sebastian Bergmann <sb@sebastian-bergmann.de>.
+ * Copyright (c) 2002-2011, Sebastian Bergmann <sb@sebastian-bergmann.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,24 +36,42 @@
  *
  * @package    PHPUnit_Selenium
  * @author     Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @copyright  2010-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright  2002-2010 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link       http://www.phpunit.de/
- * @since      File available since Release 1.0.0
+ * @since      File available since Release 1.1.0
  */
 
-// By default the code coverage files are written to the same directory
-// that contains the covered sourcecode files. Use this setting to change
-// the default behaviour and set a specific directory to write the files to.
-// If you change the default setting, please make sure to also configure
-// the same directory in phpunit_coverage.php. Also note that the webserver
-// needs write access to the directory.
-$GLOBALS['PHPUNIT_COVERAGE_DATA_DIRECTORY'] = FALSE;
+function phpunit_selenium_autoload($class = NULL) {
+    static $classes = NULL;
+    static $path = NULL;
 
-if ( isset($_COOKIE['PHPUNIT_SELENIUM_TEST_ID']) &&
-    !isset($_GET['PHPUNIT_SELENIUM_TEST_ID']) &&
-    extension_loaded('xdebug')) {
-    $GLOBALS['PHPUNIT_FILTERED_FILES'] = array(__FILE__);
+    if ($classes === NULL) {
+        $classes = array(
+          'phpunit_extensions_seleniumtestcase' => '/Extensions/SeleniumTestCase.php',
+          'phpunit_extensions_seleniumtestcase_driver' => '/Extensions/SeleniumTestCase/Driver.php'
+        );
 
-    xdebug_start_code_coverage(XDEBUG_CC_UNUSED | XDEBUG_CC_DEAD_CODE);
+        $path = dirname(dirname(dirname(__FILE__)));
+    }
+
+    if ($class === NULL) {
+        $result = array();
+
+        foreach ($classes as $file) {
+            $result[] = $path . $file;
+        }
+
+        return $result;
+    }
+
+    $cn = strtolower($class);
+
+    if (isset($classes[$cn])) {
+        $file = $path . $classes[$cn];
+
+        require $file;
+    }
 }
+
+spl_autoload_register('phpunit_selenium_autoload');
