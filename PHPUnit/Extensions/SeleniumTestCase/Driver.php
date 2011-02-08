@@ -263,6 +263,13 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
     }
     
     /**
+     * @return string
+     */
+    public function getBrowser() {
+    	return $this->browser;
+    }
+    
+    /**
      * @param  string $browserUrl
      * @throws InvalidArgumentException
      */
@@ -287,7 +294,14 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
 
         $this->host = $host;
     }
-
+    
+    /**
+     * @return string.
+     */
+    public function getHost() {
+    	return $this->host;
+    }
+    
     /**
      * @param  integer $port
      * @throws InvalidArgumentException
@@ -299,6 +313,13 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
         }
 
         $this->port = $port;
+    }
+    
+	/**
+     * @return string.
+     */
+    public function getPort() {
+    	return $this->port;
     }
 
     /**

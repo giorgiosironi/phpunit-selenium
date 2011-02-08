@@ -1056,7 +1056,7 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
      */
     protected function onNotSuccessfulTest(Exception $e)
     {
-        if ($e instanceof PHPUnit_Framework_ExpectationFailedException) {
+    	if ($e instanceof PHPUnit_Framework_ExpectationFailedException) {
             $buffer  = 'Current URL: ' . $this->drivers[0]->getLocation() .
                        "\n";
             $message = $e->getCustomMessage();
@@ -1064,13 +1064,17 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
             if ($this->drivers[0]->getCaptureScreenshotOnFailure() &&
                 $this->drivers[0]->hasScreenshotPath() &&
                 $this->drivers[0]->hasScreenshotUrl()) {
-                $this->drivers[0]->captureEntirePageScreenshot(
+                if(strpos($this->drivers[0]->getBrowser(), 'firefox') !== false) {
+                	$captureMethod = 'captureEntirePageScreenshot';
+                }else $captureMethod = 'captureScreenshot';
+               	$browserType = str_replace('*', '', $this->drivers[0]->getBrowser());
+                $this->drivers[0]->$captureMethod(
                   $this->drivers[0]->getScreenshotPath() . 
-                  DIRECTORY_SEPARATOR. $this->testId .'.png'
+                  DIRECTORY_SEPARATOR. $browserType. '-' . $this->testId .'.png'
                 );
 
                 $buffer .= 'Screenshot: ' . $this->drivers[0]->getScreenshotUrl() . '/' .
-                           $this->testId . ".png\n";
+                           $browserType. '-' .$this->testId . ".png\n";
             }
         }
 
