@@ -874,7 +874,7 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
 
     /**
      * Send a command to the Selenium RC server.
-     * 
+     *
      * @param  string $command
      * @param  array  $arguments
      * @return string
