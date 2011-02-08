@@ -274,6 +274,15 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
     }
 
     /**
+     * @return string
+     * @since  Method available since Release 1.1.0
+     */
+    public function getHost()
+    {
+        return $this->host;
+    }
+
+    /**
      * @param  integer $port
      * @throws InvalidArgumentException
      */
@@ -284,6 +293,15 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
         }
 
         $this->port = $port;
+    }
+
+    /**
+     * @return integer
+     * @since  Method available since Release 1.1.0
+     */
+    public function getPort()
+    {
+        return $this->port;
     }
 
     /**

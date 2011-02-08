@@ -418,8 +418,8 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
             $this->markTestSkipped(
               sprintf(
                 'Could not connect to Selenium RC on %s:%d.',
-                PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_HOST,
-                PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_PORT
+                $this->drivers[0]->getHost(),
+                $this->drivers[0]->getPort()
               )
             );
         }
