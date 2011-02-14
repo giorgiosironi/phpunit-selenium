@@ -311,6 +311,27 @@ class Extensions_SeleniumTestCase_DriverTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals(false, $this->driver->hasScreenshotUrl());	
 	}
 	
+	public function testSetCaptureMethod() {
+		$this->driver->setCaptureMethod('captureScreenshot');
+		$this->assertAttributeEquals('captureScreenshot', 'captureMethod', $this->driver);	
+		$this->assertAttributeType('string', 'captureMethod', $this->driver);
+	}	
+	
+	public function testSetCaptureMethodButInvalidArgumentException() {
+		try {
+			$this->driver->setCaptureMethod(true);
+		} catch (InvalidArgumentException $e) {
+			$this->assertStringEndsWith(' must be a string', $e->getMessage());
+			return ;	
+		}
+		$this->fail();
+	}
+
+	public function testGetCaptureMethod() {
+		$this->driver->setCaptureMethod('captureScreenshot');
+		$this->assertEquals('captureScreenshot', $this->driver->getCaptureMethod());		
+	}
+	
 	public function testSetSleep() {
 		$this->driver->setSleep(300);
 		$this->assertAttributeEquals(300, 'sleep', $this->driver);	
@@ -358,6 +379,8 @@ class Extensions_SeleniumTestCase_DriverTest extends PHPUnit_Framework_TestCase
 		}
 		$this->fail();
 	}
+	
+	
 	
 	protected function checkSelenium() {
 	 if (!@fsockopen(PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_HOST, PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_PORT, $errno, $errstr)) {

@@ -403,6 +403,16 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
         } else {
             $browser['screenshotUrl'] = '';
         }
+        
+    	if (isset($browser['captureMethod'])) {
+            if (!is_string($browser['captureMethod'])) {
+                throw new InvalidArgumentException(
+                  'Array element "captureMethod" is no string.'
+                );
+            }
+        } else {
+            $browser['captureMethod'] = 'captureScreenshot';
+        }
 
         if (@fsockopen($browser['host'], $browser['port'], $errno, $errstr)) {
             $this->serverRunning = TRUE;
@@ -420,6 +430,7 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
         $driver->setCaptureScreenshotOnFailure($browser['captureScreenshotOnFailure']);
         $driver->setScreenshotPath($browser['screenshotPath']);
         $driver->setScreenshotUrl($browser['screenshotUrl']);
+        $driver->setCaptureMethod($browser['captureMethod']);
         $driver->setTestCase($this);
         $driver->setTestId($this->testId);
 
@@ -1064,11 +1075,11 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
             if ($this->drivers[0]->getCaptureScreenshotOnFailure() &&
                 $this->drivers[0]->hasScreenshotPath() &&
                 $this->drivers[0]->hasScreenshotUrl()) {
-                if(strpos($this->drivers[0]->getBrowser(), 'firefox') !== false) {
-                	$captureMethod = 'captureEntirePageScreenshot';
-                }else $captureMethod = 'captureScreenshot';
-               	$browserType = str_replace('*', '', $this->drivers[0]->getBrowser());
-                $this->drivers[0]->$captureMethod(
+               	$browserType = str_replace(
+                	array('*', ' '), array('', '-'), $this->drivers[0]->getBrowser()
+                );
+               	
+                $this->drivers[0]->{$this->drivers[0]->getCaptureMethod()}(
                   $this->drivers[0]->getScreenshotPath() . 
                   DIRECTORY_SEPARATOR. $browserType. '-' . $this->testId .'.png'
                 );
