@@ -310,7 +310,6 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
     /**
      * @param  array $browser
      * @return PHPUnit_Extensions_SeleniumTestCase_Driver
-     * @author Nicolas Fabre <nicolas.fabre@gmail.com>
      */
     protected function getDriver(array $browser)
     {
@@ -1063,7 +1062,6 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
      * This method is called when a test method did not execute successfully.
      *
      * @param Exception $e
-     * @author Nicolas Fabre <nicolas.fabre@gmail.com>
      */
     protected function onNotSuccessfulTest(Exception $e)
     {
@@ -1075,17 +1073,14 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
             if ($this->drivers[0]->getCaptureScreenshotOnFailure() &&
                 $this->drivers[0]->hasScreenshotPath() &&
                 $this->drivers[0]->hasScreenshotUrl()) {
-               	$browserType = str_replace(
-                	array('*', ' '), array('', '-'), $this->drivers[0]->getBrowser()
-                );
                	
                 $this->drivers[0]->{$this->drivers[0]->getCaptureMethod()}(
                   $this->drivers[0]->getScreenshotPath() . 
-                  DIRECTORY_SEPARATOR. $browserType. '-' . $this->testId .'.png'
+                  DIRECTORY_SEPARATOR. $this->testId .'.png'
                 );
 
                 $buffer .= 'Screenshot: ' . $this->drivers[0]->getScreenshotUrl() . '/' .
-                           $browserType. '-' .$this->testId . ".png\n";
+                           $this->testId . ".png\n";
             }
         }
 

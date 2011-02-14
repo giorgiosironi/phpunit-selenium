@@ -253,6 +253,13 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
 
         $this->name = $name;
     }
+    
+    /**
+     * @return string
+     */
+    public function getName() {
+    	return $this->name;
+    }
 
     /**
      * @param  string $browser

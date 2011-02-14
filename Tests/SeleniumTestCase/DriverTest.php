@@ -138,6 +138,11 @@ class Extensions_SeleniumTestCase_DriverTest extends PHPUnit_Framework_TestCase
 		$this->fail();
 	}
 	
+	public function testGetName() {
+		$this->driver->setName('Firefox On Windows');
+		$this->assertEquals('Firefox On Windows', $this->driver->getName());		
+	}
+	
 	public function testSetBrowser() {
 		$this->driver->setBrowser('*firefox');
 		$this->assertAttributeEquals('*firefox', 'browser', $this->driver);	

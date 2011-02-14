@@ -651,12 +651,8 @@ class Extensions_SeleniumTestCaseTest extends PHPUnit_Extensions_SeleniumTestCas
     	try {
     		$this->onNotSuccessfulTest($expectationException);
     	} catch (PHPUnit_Framework_ExpectationFailedException $e) {
-    		$browserType = str_replace(
-            	array('*', ' '), array('', '-'), $this->drivers[0]->getBrowser()
-            );
     		$this->assertFileExists(
-    			PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_PATH. DIRECTORY_SEPARATOR .
-    			$browserType . '-' . $this->testId .'.png');
+    			PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_PATH. DIRECTORY_SEPARATOR . $this->testId .'.png');
     		return;
     	}
     	$this->fail();
