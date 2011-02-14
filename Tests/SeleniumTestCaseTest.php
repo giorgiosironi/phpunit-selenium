@@ -321,10 +321,11 @@ class Extensions_SeleniumTestCaseTest extends PHPUnit_Extensions_SeleniumTestCas
         $this->waitForPageToLoad(2000);
         $this->assertEquals('Reload Page', $this->getTitle());
 
-        $this->setTimeout(100);
+        $this->setTimeout(30000);
         $this->click('link=Click here');
         // XXX NEED TO CHECK
-        $this->waitForPageToLoad(100);
+        $this->waitForPageToLoad(30000);
+
         $this->assertEquals('Slow Loading Page', $this->getTitle());
 
         $this->close();

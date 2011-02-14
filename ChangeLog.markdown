@@ -7,4 +7,5 @@ PHPUnit_Selenium 1.1.0
 ----------------------
 
 * Implemented GH-31: Skip tests when connection to Selenium RC server is not possible.
+* Implemented GH-37: Replace usage of `fopen()` with cuRL in `doCommand()`.
 * Fixed HTTP deadlock with Selenium RC server.
