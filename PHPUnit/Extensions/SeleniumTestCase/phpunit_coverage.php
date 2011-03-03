@@ -42,8 +42,8 @@
  * @since      File available since Release 1.0.0
  */
 
-require_once 'File/Iterator/Factory.php';
-require_once 'PHP/CodeCoverage/Filter.php';
+require_once 'File/Iterator/Autoload.php';
+require_once 'PHP/CodeCoverage/Autoload.php';
 
 // Set this to the directory that contains the code coverage files.
 // It defaults to getcwd(). If you have configured a different directory

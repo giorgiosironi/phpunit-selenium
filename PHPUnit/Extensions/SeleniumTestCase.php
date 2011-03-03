@@ -42,8 +42,6 @@
  * @since      File available since Release 1.0.0
  */
 
-require_once 'File/Iterator/Factory.php';
-
 /**
  * TestCase class that uses Selenium to provide
  * the functionality required for web testing.
