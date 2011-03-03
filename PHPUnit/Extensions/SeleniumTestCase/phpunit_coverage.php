@@ -51,7 +51,8 @@ require_once 'PHP/CodeCoverage/Autoload.php';
 $GLOBALS['PHPUNIT_COVERAGE_DATA_DIRECTORY'] = getcwd();
 
 if (isset($_GET['PHPUNIT_SELENIUM_TEST_ID'])) {
-    $files = File_Iterator_Factory::getFileIterator(
+    $facade = new File_Iterator_Facade;
+    $files  = $facade->getFilesAsArray(
       $GLOBALS['PHPUNIT_COVERAGE_DATA_DIRECTORY'],
       $_GET['PHPUNIT_SELENIUM_TEST_ID']
     );
@@ -59,22 +60,21 @@ if (isset($_GET['PHPUNIT_SELENIUM_TEST_ID'])) {
     $coverage = array();
 
     foreach ($files as $file) {
-        $filename = $file->getPathName();
-        $data     = unserialize(file_get_contents($filename));
-        @unlink($filename);
-        unset($filename);
+        $data = unserialize(file_get_contents($file));
+        @unlink($file);
+        unset($file);
 
-        foreach ($data as $filename => $lines) {
-            if (PHP_CodeCoverage_Filter::isFile($filename)) {
-                if (!isset($coverage[$filename])) {
-                    $coverage[$filename] = array(
-                      'md5' => md5_file($filename), 'coverage' => $lines
+        foreach ($data as $file => $lines) {
+            if (PHP_CodeCoverage_Filter::isFile($file)) {
+                if (!isset($coverage[$file])) {
+                    $coverage[$file] = array(
+                      'md5' => md5_file($file), 'coverage' => $lines
                     );
                 } else {
                     foreach ($lines as $line => $flag) {
-                        if (!isset($coverage[$filename]['coverage'][$line]) ||
-                            $flag > $coverage[$filename]['coverage'][$line]) {
-                            $coverage[$filename]['coverage'][$line] = $flag;
+                        if (!isset($coverage[$file]['coverage'][$line]) ||
+                            $flag > $coverage[$file]['coverage'][$line]) {
+                            $coverage[$file]['coverage'][$line] = $flag;
                         }
                     }
                 }

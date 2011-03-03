@@ -1005,14 +1005,9 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
      */
     protected static function getSeleneseFiles($directory, $suffix)
     {
-        $files    = array();
-        $iterator = File_Iterator_Factory::getFileIterator($directory, $suffix);
+        $facade = new File_Iterator_Facade;
 
-        foreach ($iterator as $file) {
-            $files[] = (string)$file;
-        }
-
-        return $files;
+        return $facade->getFilesAsArray($directory, $suffix);
     }
 
     /**
