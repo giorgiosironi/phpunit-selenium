@@ -1065,9 +1065,9 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
 
         if ($info['isBoolean']) {
             if (!isset($info['negative']) || !$info['negative']) {
-                PHPUnit_Framework_Assert::assertTrue($result);
+	      PHPUnit_Framework_Assert::assertTrue($result, $arguments[ count($arguments) - 1 ]);
             } else {
-                PHPUnit_Framework_Assert::assertFalse($result);
+	      PHPUnit_Framework_Assert::assertFalse($result, $arguments[ count($arguments) - 1 ]);
             }
         } else {
             $expected = array_pop($arguments);
