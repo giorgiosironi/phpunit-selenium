@@ -709,6 +709,28 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
     }
 
     /**
+     * Asserts that an element is present.
+     *
+     * @param string $locator
+     * @param string $message
+     */
+    public function assertElementPresent($locator, $message = '')
+    {
+        $this->assertTrue($this->isElementPresent($locator), $message);
+    }
+
+    /**
+     * Asserts that an element is not present.
+     *
+     * @param string $locator
+     * @param string $message
+     */
+    public function assertElementNotPresent($locator, $message = '')
+    {
+        $this->assertFalse($this->isElementPresent($locator), $message);
+    }
+
+    /**
      * Asserts that an element's value is equal to a given string.
      *
      * @param  string $locator
