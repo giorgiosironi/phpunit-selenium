@@ -941,7 +941,12 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
             $buffer = @file_get_contents($url);
 
             if ($buffer !== FALSE) {
-                return $this->matchLocalAndRemotePaths(unserialize($buffer));
+                $coverageData = unserialize($buffer);
+                if (is_array($coverageData)) {
+                    return $this->matchLocalAndRemotePaths($coverageData);
+                } else {
+                    throw new Exception('Empty or invalid code coverage data received from url "' . $url . '"');
+                }
             }
         }
 
