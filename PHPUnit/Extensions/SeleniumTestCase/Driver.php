@@ -885,7 +885,8 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
         $context = stream_context_create(
           array(
             'http' => array(
-              'timeout' => $this->httpTimeout
+              'timeout' => $this->httpTimeout,
+              'ignore_errors' => true
             )
           )
         );
