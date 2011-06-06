@@ -3,6 +3,12 @@ PHPUnit_Selenium 1.0
 
 This is the list of changes for the PHPUnit_Selenium 1.0 release series.
 
+PHPUnit_Selenium 1.0.3
+----------------------
+
+* Added support for a `$message` parameter on `assertTrue()` and `assertFalse()` on `SeleniumTestCase`.
+* Moved `@method` declaration from method comment into class comment to enable code completion in IDE.
+
 PHPUnit_Selenium 1.0.2
 ----------------------
 
