@@ -136,6 +136,11 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
     protected $commands = array();
 
     /**
+     * @var array $userCommands A numerical array which holds custom user commands.
+     */
+    protected $userCommands = array();
+
+    /**
      * @var array
      */
     protected $verificationErrors = array();
@@ -836,11 +841,14 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
             break;
 
             default: {
-                $this->stop();
+                if (!in_array($command, $this->userCommands)) {
+                    $this->stop();
 
-                throw new BadMethodCallException(
-                  "Method $command not defined."
-                );
+                    throw new BadMethodCallException(
+                      "Method $command not defined."
+                    );
+                }
+                $this->doCommand($command, $arguments);
             }
         }
     }
