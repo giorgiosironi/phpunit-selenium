@@ -354,6 +354,24 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
     }
 
     /**
+     * Adds allowed user commands into {@link self::$userCommands}. See
+     * {@link self::__call()} (switch/case -> default) for usage.
+     *
+     * @param string $command A command.
+     *
+     * @return $this
+     * @see    self::__call()
+     */
+    public function addUserCommand($command)
+    {
+        if (!is_string($command)) {
+            throw PHPUnit_Util_InvalidArgumentHelper::factory(1, 'string');
+        }
+        $this->userCommands[] = $string;
+        return $this;
+    }
+
+    /**
      * This method implements the Selenium RC protocol.
      *
      * @param  string $command
