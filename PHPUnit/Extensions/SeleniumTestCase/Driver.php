@@ -367,7 +367,7 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
         if (!is_string($command)) {
             throw PHPUnit_Util_InvalidArgumentHelper::factory(1, 'string');
         }
-        $this->userCommands[] = $string;
+        $this->userCommands[] = $command;
         return $this;
     }
 
