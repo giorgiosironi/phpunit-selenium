@@ -136,6 +136,11 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
     protected $commands = array();
 
     /**
+     * @var array $userCommands A numerical array which holds custom user commands.
+     */
+    protected $userCommands = array();
+
+    /**
      * @var array
      */
     protected $verificationErrors = array();
@@ -346,6 +351,24 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
         }
 
         $this->useWaitForPageToLoad = $flag;
+    }
+
+    /**
+     * Adds allowed user commands into {@link self::$userCommands}. See
+     * {@link self::__call()} (switch/case -> default) for usage.
+     *
+     * @param string $command A command.
+     *
+     * @return $this
+     * @see    self::__call()
+     */
+    public function addUserCommand($command)
+    {
+        if (!is_string($command)) {
+            throw PHPUnit_Util_InvalidArgumentHelper::factory(1, 'string');
+        }
+        $this->userCommands[] = $command;
+        return $this;
     }
 
     /**
@@ -836,11 +859,14 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
             break;
 
             default: {
-                $this->stop();
+                if (!in_array($command, $this->userCommands)) {
+                    $this->stop();
 
-                throw new BadMethodCallException(
-                  "Method $command not defined."
-                );
+                    throw new BadMethodCallException(
+                      "Method $command not defined."
+                    );
+                }
+                $this->doCommand($command, $arguments);
             }
         }
     }
