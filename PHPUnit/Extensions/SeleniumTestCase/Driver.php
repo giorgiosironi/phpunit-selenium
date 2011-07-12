@@ -953,6 +953,12 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
               $response
             );
         }
+        if (!preg_match('/^OK/', $response)) {
+            throw new RuntimeException(
+              'The response from the Selenium RC server is invalid: ' .
+              $response
+            );
+        }
 
         return $response;
     }
@@ -1023,16 +1029,7 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
      */
     protected function getString($command, array $arguments)
     {
-        try {
-            $result = $this->doCommand($command, $arguments);
-        }
-
-        catch (RuntimeException $e) {
-            $this->stop();
-
-            throw $e;
-        }
-
+        $result = $this->doCommand($command, $arguments);
         return (strlen($result) > 3) ? substr($result, 3) : '';
     }
 
@@ -1249,3 +1246,4 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
         }
     }
 }
+
