@@ -704,4 +704,15 @@ class Extensions_SeleniumTestCaseTest extends PHPUnit_Extensions_SeleniumTestCas
 
         $this->fail('Test should throw exception! Titles are not equals.');
     }
+
+    /**
+     * Issue #54
+     */
+    public function testWaitForVisible()
+    {
+        $this->open($this->url . 'html/test_wait.html');
+        $this->waitForVisible('testBox');
+        $this->assertTrue($this->isVisible('testBox'));
+    }
 }
+
