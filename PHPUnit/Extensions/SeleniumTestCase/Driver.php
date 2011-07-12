@@ -910,8 +910,6 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
         fclose($handle);
 
         if (!preg_match('/^OK/', $response)) {
-            $this->stop();
-
             throw new PHPUnit_Framework_Exception(
               sprintf(
                 "Response from Selenium RC server for %s.\n%s.\n",
@@ -990,16 +988,7 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
      */
     protected function getString($command, array $arguments)
     {
-        try {
-            $result = $this->doCommand($command, $arguments);
-        }
-
-        catch (RuntimeException $e) {
-            $this->stop();
-
-            throw $e;
-        }
-
+        $result = $this->doCommand($command, $arguments);
         return (strlen($result) > 3) ? substr($result, 3) : '';
     }
 
@@ -1216,3 +1205,4 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
         }
     }
 }
+
