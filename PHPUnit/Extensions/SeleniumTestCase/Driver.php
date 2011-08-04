@@ -717,7 +717,9 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
                             sleep($this->sleep);
                         }
 
-                        $this->testCase->runDefaultAssertions($command);
+                        if ($this->testCase) {
+                          $this->testCase->runDefaultAssertions($command);
+                        }
                     }
                 }
             }
@@ -821,7 +823,9 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
                 }
 
                 $this->doCommand($command, $arguments);
-                $this->testCase->runDefaultAssertions($command);
+                if ($this->testCase) {
+                  $this->testCase->runDefaultAssertions($command);
+                }
             }
             break;
 
@@ -831,7 +835,9 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
                 }
 
                 $this->doCommand($command, $arguments);
-                $this->testCase->runDefaultAssertions($command);
+                if ($this->testCase) {
+                  $this->testCase->runDefaultAssertions($command);
+                }
             }
             break;
 
