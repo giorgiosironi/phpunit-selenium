@@ -159,9 +159,17 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
         }
 
         if (!isset($this->sessionId)) {
+            $session_params = array($this->browser, $this->browserUrl);
+
+            // Hack around google chrome security
+            if ($this->browser == '*googlechrome') {
+                $session_params[] = '';
+                $session_params[] = 'commandLineFlags=--disable-web-security';
+            }
+
             $this->sessionId = $this->getString(
               'getNewBrowserSession',
-              array($this->browser, $this->browserUrl)
+              $session_params
             );
 
             $this->doCommand('setTimeout', array($this->seleniumTimeout * 1000));
