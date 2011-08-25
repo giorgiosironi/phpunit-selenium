@@ -475,60 +475,60 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
      * @method array    getAllWindowIds()
      * @method array    getAllWindowNames()
      * @method array    getAllWindowTitles()
-     * @method string   getAttribute()
-     * @method array    getAttributeFromAllWindows()
+     * @method string   getAttribute(string $attributeLocator)
+     * @method array    getAttributeFromAllWindows(string $attributeName)
      * @method string   getBodyText()
      * @method string   getConfirmation()
      * @method string   getCookie()
-     * @method string   getCookieByName()
-     * @method integer  getCursorPosition()
-     * @method integer  getElementHeight()
-     * @method integer  getElementIndex()
-     * @method integer  getElementPositionLeft()
-     * @method integer  getElementPositionTop()
-     * @method integer  getElementWidth()
-     * @method string   getEval()
-     * @method string   getExpression()
+     * @method string   getCookieByName(string $name)
+     * @method integer  getCursorPosition(string $locator)
+     * @method integer  getElementHeight(string $locator)
+     * @method integer  getElementIndex(string $locator)
+     * @method integer  getElementPositionLeft(string $locator)
+     * @method integer  getElementPositionTop(string $locator)
+     * @method integer  getElementWidth(string $locator)
+     * @method string   getEval(string $script)
+     * @method string   getExpression(string $expression)
      * @method string   getHtmlSource()
      * @method string   getLocation()
      * @method string   getLogMessages()
      * @method integer  getMouseSpeed()
      * @method string   getPrompt()
-     * @method array    getSelectOptions()
-     * @method string   getSelectedId()
-     * @method array    getSelectedIds()
-     * @method string   getSelectedIndex()
-     * @method array    getSelectedIndexes()
-     * @method string   getSelectedLabel()
-     * @method array    getSelectedLabels()
-     * @method string   getSelectedValue()
-     * @method array    getSelectedValues()
+     * @method array    getSelectOptions(string $selectLocator)
+     * @method string   getSelectedId(string $selectLocator)
+     * @method array    getSelectedIds(string $selectLocator)
+     * @method string   getSelectedIndex(string $selectLocator)
+     * @method array    getSelectedIndexes(string $selectLocator)
+     * @method string   getSelectedLabel(string $selectLocator)
+     * @method array    getSelectedLabels(string $selectLocator)
+     * @method string   getSelectedValue(string $selectLocator)
+     * @method array    getSelectedValues(string $selectLocator)
      * @method unknown  getSpeed()
      * @method unknown  getSpeedAndWait()
-     * @method string   getTable()
-     * @method string   getText()
+     * @method string   getTable(string $tableCellAddress)
+     * @method string   getText(string $locator)
      * @method string   getTitle()
-     * @method string   getValue()
-     * @method boolean  getWhetherThisFrameMatchFrameExpression()
-     * @method boolean  getWhetherThisWindowMatchWindowExpression()
-     * @method integer  getXpathCount()
+     * @method string   getValue(string $locator)
+     * @method boolean  getWhetherThisFrameMatchFrameExpression(string $currentFrameString, string $target)
+     * @method boolean  getWhetherThisWindowMatchWindowExpression(string $currentWindowString, string $target)
+     * @method integer  getXpathCount(string $xpath)
      * @method unknown  goBack()
      * @method unknown  goBackAndWait()
-     * @method unknown  highlight()
-     * @method unknown  highlightAndWait()
-     * @method unknown  ignoreAttributesWithoutValue()
-     * @method unknown  ignoreAttributesWithoutValueAndWait()
+     * @method unknown  highlight(string $locator)
+     * @method unknown  highlightAndWait(string $locator)
+     * @method unknown  ignoreAttributesWithoutValue(string $ignore)
+     * @method unknown  ignoreAttributesWithoutValueAndWait(string $ignore)
      * @method boolean  isAlertPresent()
-     * @method boolean  isChecked()
+     * @method boolean  isChecked(locator)
      * @method boolean  isConfirmationPresent()
-     * @method boolean  isCookiePresent()
-     * @method boolean  isEditable()
-     * @method boolean  isElementPresent()
-     * @method boolean  isOrdered()
+     * @method boolean  isCookiePresent(string $name)
+     * @method boolean  isEditable(string $locator)
+     * @method boolean  isElementPresent(string $locator)
+     * @method boolean  isOrdered(string $locator1, string $locator2)
      * @method boolean  isPromptPresent()
-     * @method boolean  isSomethingSelected()
-     * @method boolean  isTextPresent()
-     * @method boolean  isVisible()
+     * @method boolean  isSomethingSelected(string $selectLocator)
+     * @method boolean  isTextPresent(pattern)
+     * @method boolean  isVisible(locator)
      * @method unknown  keyDown()
      * @method unknown  keyDownAndWait()
      * @method unknown  keyDownNative()
@@ -1095,6 +1095,7 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
     protected function assertCommand($command, $arguments, $info)
     {
         $method = $info['originalMethod'];
+        $requiresTarget = $info['requiresTarget'];
         $result = $this->__call($method, $arguments);
 
         if ($info['isBoolean']) {
@@ -1104,7 +1105,11 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
 	      PHPUnit_Framework_Assert::assertFalse($result, $arguments[ count($arguments) - 1 ]);
             }
         } else {
-            $expected = array_pop($arguments);
+            if ($requiresTarget === true) {
+                $expected = $arguments[1];
+            } else {
+                $expected = $arguments[0];
+            }
 
             if (strpos($expected, 'exact:') === 0) {
                 $expected = substr($expected, strlen('exact:'));
@@ -1191,14 +1196,15 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
         $method     = new ReflectionMethod(__CLASS__, '__call');
         $docComment = $method->getDocComment();
 
-        if (preg_match_all('(@method\s+(\w+)\s+([\w]+)\(\))', $docComment, $matches)) {
-            foreach ($matches[2] as $method) {
-                if (preg_match('/^(get|is)([A-Z].+)$/', $method, $matches)) {
-                    $baseName  = $matches[2];
-                    $isBoolean = $matches[1] == 'is';
+        if (preg_match_all('(@method\s+(\w+)\s+([\w]+)\((.*)\))', $docComment, $matches)) {
+            foreach ($matches[2] as $methodKey => $method) {
+                if (preg_match('/^(get|is)([A-Z].+)$/', $method, $methodMatches)) {
+                    $baseName  = $methodMatches[2];
+                    $isBoolean = $methodMatches[1] == 'is';
+                    $requiresTarget = (strlen($matches[3][$methodKey]) > 0);
 
-                    if (preg_match('/^(.*)Present$/', $baseName, $matches)) {
-                        $notBaseName = $matches[1].'NotPresent';
+                    if (preg_match('/^(.*)Present$/', $baseName, $methodMatches)) {
+                        $notBaseName = $methodMatches[1].'NotPresent';
                     } else {
                         $notBaseName = 'Not'.$baseName;
                     }
@@ -1210,40 +1216,46 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
                     self::$autoGeneratedCommands['assert' . $baseName] = array(
                       'originalMethod' => $method,
                       'isBoolean'      => $isBoolean,
-                      'functionHelper' => 'assertCommand'
+                      'functionHelper' => 'assertCommand',
+                      'requiresTarget' => $requiresTarget
                     );
 
                     self::$autoGeneratedCommands['assert' . $notBaseName] = array(
                       'originalMethod' => $method,
                       'isBoolean'      => $isBoolean,
                       'negative'       => TRUE,
-                      'functionHelper' => 'assertCommand'
+                      'functionHelper' => 'assertCommand',
+                      'requiresTarget' => $requiresTarget
                     );
 
                     self::$autoGeneratedCommands['verify' . $baseName] = array(
                       'originalMethod' => $method,
                       'isBoolean'      => $isBoolean,
-                      'functionHelper' => 'verifyCommand'
+                      'functionHelper' => 'verifyCommand',
+                      'requiresTarget' => $requiresTarget
                     );
 
                     self::$autoGeneratedCommands['verify' . $notBaseName] = array(
                       'originalMethod' => $method,
                       'isBoolean'      => $isBoolean,
                       'negative'       => TRUE,
-                      'functionHelper' => 'verifyCommand'
+                      'functionHelper' => 'verifyCommand',
+                      'requiresTarget' => $requiresTarget
                     );
 
                     self::$autoGeneratedCommands['waitFor' . $baseName] = array(
                       'originalMethod' => $method,
                       'isBoolean'      => $isBoolean,
-                      'functionHelper' => 'waitForCommand'
+                      'functionHelper' => 'waitForCommand',
+                      'requiresTarget' => $requiresTarget
                     );
 
                     self::$autoGeneratedCommands['waitFor' . $notBaseName] = array(
                       'originalMethod' => $method,
                       'isBoolean'      => $isBoolean,
                       'negative'       => TRUE,
-                      'functionHelper' => 'waitForCommand'
+                      'functionHelper' => 'waitForCommand',
+                      'requiresTarget' => $requiresTarget
                     );
                 }
             }
