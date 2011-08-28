@@ -1170,7 +1170,7 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
                     $requiresTarget = (strlen($matches[3][$methodKey]) > 0);
 
                     if (preg_match('/^(.*)Present$/', $baseName, $methodMatches)) {
-                        $notBaseName = $matches[1].'NotPresent';
+                        $notBaseName = $methodMatches[1].'NotPresent';
                     } else {
                         $notBaseName = 'Not'.$baseName;
                     }
