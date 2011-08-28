@@ -42,6 +42,8 @@
  * @since      File available since Release 1.1.0
  */
 
+require_once 'File/Iterator/Autoload.php';
+
 function phpunit_selenium_autoload($class = NULL) {
     static $classes = NULL;
     static $path = NULL;
@@ -56,7 +58,7 @@ function phpunit_selenium_autoload($class = NULL) {
     }
 
     if ($class === NULL) {
-        $result = array();
+        $result = array(__FILE__);
 
         foreach ($classes as $file) {
             $result[] = $path . $file;
