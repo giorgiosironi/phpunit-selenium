@@ -1161,16 +1161,16 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
         $method = $info['originalMethod'];
         $requiresTarget = $info['requiresTarget'];
         $result = $this->__call($method, $arguments);
+        $message = "Failed command: " . $command . "('"
+            . (array_key_exists(0, $arguments) ? $arguments[0] . "'" : '')
+            . (array_key_exists(1, $arguments) ? ", '" . $arguments[1] . "'" : '')
+            . ")";
 
         if ($info['isBoolean']) {
             if (!isset($info['negative']) || !$info['negative']) {
-                PHPUnit_Framework_Assert::assertTrue(
-                  $result, $arguments[count($arguments) - 1]
-                );
+                PHPUnit_Framework_Assert::assertTrue($result, $message);
             } else {
-                PHPUnit_Framework_Assert::assertFalse(
-                  $result, $arguments[count($arguments) - 1]
-                );
+                PHPUnit_Framework_Assert::assertFalse($result, $message);
             }
         } else {
             if ($requiresTarget === TRUE) {
@@ -1183,9 +1183,9 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
                 $expected = substr($expected, strlen('exact:'));
 
                 if (!isset($info['negative']) || !$info['negative']) {
-                    PHPUnit_Framework_Assert::assertEquals($expected, $result);
+                    PHPUnit_Framework_Assert::assertEquals($expected, $result, $message);
                 } else {
-                    PHPUnit_Framework_Assert::assertNotEquals($expected, $result);
+                    PHPUnit_Framework_Assert::assertNotEquals($expected, $result, $message);
                 }
             } else {
                 $caseInsensitive = FALSE;
@@ -1217,11 +1217,11 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
 
                 if (!isset($info['negative']) || !$info['negative']) {
                     PHPUnit_Framework_Assert::assertRegExp(
-                      $expected, $result
+                      $expected, $result, $message
                     );
                 } else {
                     PHPUnit_Framework_Assert::assertNotRegExp(
-                      $expected, $result
+                      $expected, $result, $message
                     );
                 }
             }
@@ -1241,9 +1241,13 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
 
     protected function waitForCommand($command, $arguments, $info)
     {
+        $lastExceptionMessage = '';
         for ($second = 0; ; $second++) {
             if ($second > $this->httpTimeout) {
-                PHPUnit_Framework_Assert::fail('timeout');
+                PHPUnit_Framework_Assert::fail(
+                    "WaitFor timeout. \n"
+                    . "Last exception message: \n" . $lastExceptionMessage
+                );
             }
 
             try {
@@ -1252,6 +1256,7 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
             }
 
             catch (Exception $e) {
+                $lastExceptionMessage = $e->getMessage();
             }
 
             sleep(1);
