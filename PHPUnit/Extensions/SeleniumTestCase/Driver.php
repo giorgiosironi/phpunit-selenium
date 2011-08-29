@@ -621,6 +621,8 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
      */
     public function __call($command, $arguments)
     {
+        $arguments = $this->preprocessParameters($arguments);
+
         $wait = FALSE;
 
         if (substr($command, -7, 7) == 'AndWait') {
@@ -956,6 +958,15 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
         }
 
         return $response;
+    }
+
+    protected function preprocessParameters($params) {
+        foreach ($params as $key => $param ) {
+            if (is_string($param) && (strlen($param) > 0)) {
+                $params[$key] = $this->getString('getExpression', array($param));
+            }
+        }
+        return $params;
     }
 
     /**
