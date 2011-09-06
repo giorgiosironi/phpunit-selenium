@@ -66,6 +66,11 @@
    <pearinstaller>
     <min>1.9.4</min>
    </pearinstaller>
+   <package>
+    <name>PHPUnit</name>
+    <channel>pear.phpunit.de</channel>
+    <min>3.6.0RC1</min>
+   </package>
    <extension>
     <name>curl</name>
    </extension>
