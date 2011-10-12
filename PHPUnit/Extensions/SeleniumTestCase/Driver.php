@@ -919,11 +919,12 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
 
         for ($i = 0; $i < $numArguments; $i++) {
             $argNum = strval($i + 1);
-            $url   .= sprintf(
-                        '&%s=%s',
-                        $argNum,
-                        urlencode(trim($arguments[$i]))
-                      );
+            
+            if($arguments[$i] == ' ') {
+              $url .= sprintf('&%s=%s', $argNum, urlencode($arguments[$i]));
+            } else {
+              $url .= sprintf('&%s=%s', $argNum, urlencode(trim($arguments[$i])));
+            }            
         }
 
         if (isset($this->sessionId)) {
