@@ -341,7 +341,7 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
      */
     public function __construct($name = NULL, array $data = array(), $dataName = '', array $browser = array())
     {
-        parent::__construct($name, $data, $dataName);
+        parent::__construct($name, $data, $dataName, $browser);
         $this->testId = md5(uniqid(rand(), TRUE));
         $this->getDriver($browser);
     }
