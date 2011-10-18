@@ -981,7 +981,7 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
                 $this->stop();
 
                 throw new PHPUnit_Framework_Exception(
-                  'Result is neither "true" nor "false": ' . PHPUnit_Util_Type::toString($result, TRUE)
+                  'Result is neither "true" nor "false": ' . PHPUnit_Util_Type::export($result)
                 );
             }
         }
@@ -1005,7 +1005,7 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
             $this->stop();
 
             throw new PHPUnit_Framework_Exception(
-              'Result is not numeric: ' . PHPUnit_Util_Type::toString($result, TRUE)
+              'Result is not numeric: ' . PHPUnit_Util_Type::export($result)
             );
         }
 
