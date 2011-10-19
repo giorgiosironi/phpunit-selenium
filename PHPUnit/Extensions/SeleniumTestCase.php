@@ -352,7 +352,9 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
      */
     public static function suite($className)
     {
+        $parallelism = PHPUnit_Util_Test::getParallelismSettings($className);
         $suite = new PHPUnit_Framework_TestSuite;
+        $suite->setParallelism($parallelism);
         $suite->setName($className);
 
         $class            = new ReflectionClass($className);
@@ -371,6 +373,7 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
             if (!empty($staticProperties['browsers'])) {
                 foreach ($staticProperties['browsers'] as $browser) {
                     $browserSuite = new PHPUnit_Framework_TestSuite;
+                    $browserSuite->setParallelism($parallelism);
                     $browserSuite->setName($className . ': ' . $browser['name']);
 
                     foreach ($files as $file) {
@@ -396,6 +399,7 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
         if (!empty($staticProperties['browsers'])) {
             foreach ($staticProperties['browsers'] as $browser) {
                 $browserSuite = new PHPUnit_Framework_TestSuite;
+                $browserSuite->setParallelism($parallelism);
                 $browserSuite->setName($className . ': ' . $browser['name']);
 
                 foreach ($class->getMethods() as $method) {
