@@ -1038,7 +1038,16 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
         if ($e instanceof PHPUnit_Framework_ExpectationFailedException) {
             $buffer  = 'Current URL: ' . $this->drivers[0]->getLocation() .
                        "\n";
-            $message = $e->getComparisonFailure()->toString();
+            
+            // ?: Is "comparison failure" set and therefore an object? (fixes issue #66)
+            if(is_object($e->getComparisonFailure())) {
+                // -> Comparison failure is and object and should therefore have the toString method
+	        $message = $e->getComparisonFailure()->toString();
+            }
+            else {
+                // -> Comparison failure is not an object. Lets use exception message instead
+            	$message = $e->getMessage();
+            }
 
             if ($this->captureScreenshotOnFailure &&
                 !empty($this->screenshotPath) &&
@@ -1065,7 +1074,17 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
                 $buffer .= "\n" . $message;
             }
 
-            $e->setCustomMessage($buffer);
+            // ?: Does the setCustomMessage method exist on the exception object? (fixes issue #67)
+            if(method_exists($e, 'setCustomMessage')) {
+                // -> Method setCustomMessage does exist on the object, this means we are using PHPUnit 
+                //    between 3.4 and 3.6
+                $e->setCustomMessage($buffer);
+            }
+            else {
+                // -> Method setCustomerMessages does not exist on the object, must make a new exception to 
+                //    add the new message (inc. current URL, screenshot path, etc)
+            	$e = new PHPUnit_Framework_ExpectationFailedException($buffer, $e->getComparisonFailure());
+            }
         }
 
         throw $e;
