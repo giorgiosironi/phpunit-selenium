@@ -37,6 +37,7 @@
  * @package    PHPUnit_Selenium
  * @author     Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @author     Shin Ohno <ganchiku@gmail.com>
+ * @author     Giorgio Sironi <giorgio.sironi@asp-poli.it>
  * @copyright  2010-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link       http://www.phpunit.de/
@@ -63,12 +64,13 @@ class Extensions_SeleniumTestCaseTest extends PHPUnit_Extensions_SeleniumTestCas
 
     public function setUp()
     {
-        $this->url = 'http://sironi.altervista.org/tests/';
-
         $this->setHost(PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_HOST);
         $this->setPort((int)PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_PORT);
         $this->setBrowser(PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_BROWSER);
-        $this->setBrowserUrl($this->url);
+        if (!defined('PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL')) {
+            $this->markTestSkipped("You must serve the selenium-1-tests folder from an HTTP server and configure the PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL constant accordingly.");
+        }
+        $this->setBrowserUrl(PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL);
     }
 
     public function testOpen()
