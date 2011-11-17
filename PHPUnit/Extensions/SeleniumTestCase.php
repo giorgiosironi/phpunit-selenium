@@ -1065,8 +1065,6 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
             if (!empty($message)) {
                 $buffer .= "\n" . $message;
             }
-
-//            $e->setCustomMessage($buffer);
         }
 
         throw $e;
