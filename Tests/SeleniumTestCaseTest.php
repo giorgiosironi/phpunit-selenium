@@ -651,4 +651,15 @@ class Extensions_SeleniumTestCaseTest extends PHPUnit_Extensions_SeleniumTestCas
         $this->assertFalse($this->isEditable('disabled_text'));
         $this->assertFalse($this->isEditable('disabled_select'));
     }
+
+    /**
+     * @expectedException PHPUnit_Framework_ExpectationFailedException
+     */
+    public function testAssertGetCommand()
+    {
+        $this->open($this->url . 'html/test_dummy_page.html');
+        $this->assertTitle('This is not Dummy Page', ''); //should throw exception
+
+        $this->fail('Test should throw exception! Titles are not equals.');
+    }
 }
