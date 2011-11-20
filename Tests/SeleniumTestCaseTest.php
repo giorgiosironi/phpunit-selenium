@@ -330,6 +330,19 @@ class Extensions_SeleniumTestCaseTest extends PHPUnit_Extensions_SeleniumTestCas
         $this->selectWindow('null');
     }
 
+    public function testWaitFor()
+    {
+        //is* wait for
+        $this->open($this->url . 'html/test_delayed_element.html');
+        $this->click('createElementButton');
+        $this->waitForVisible("//div[@id='delayedDiv']");
+
+        //get* wait for
+        $this->open($this->url . 'html/test_delayed_element.html');
+        $this->click('createElementButton');
+        $this->waitForXpathCount("//div[@id='delayedDiv']", 1);
+    }
+
     public function testLocators()
     {
         $this->open($this->url . 'html/test_locators.html');
