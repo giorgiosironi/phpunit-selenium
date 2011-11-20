@@ -651,4 +651,11 @@ class Extensions_SeleniumTestCaseTest extends PHPUnit_Extensions_SeleniumTestCas
         $this->assertFalse($this->isEditable('disabled_text'));
         $this->assertFalse($this->isEditable('disabled_select'));
     }
+
+    public function testPreprocessParameters()
+    {
+        $this->open($this->url . 'html/test_dummy_page.html');
+        $this->store('Dummy Page', 'titleText');
+        $this->assertTitle('${titleText}');
+    }
 }
