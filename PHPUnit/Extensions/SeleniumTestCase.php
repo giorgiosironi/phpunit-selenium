@@ -1064,6 +1064,8 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
             if (!empty($message)) {
                 $buffer .= "\n" . $message;
             }
+
+            throw new PHPUnit_Framework_ExpectationFailedException($buffer, $e->getComparisonFailure());
         }
 
         throw $e;
