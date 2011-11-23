@@ -185,6 +185,15 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
     }
 
     /**
+     * @param string
+     * @since  Method available since Release 1.2.0
+     */
+    public function setSessionId($sessionId)
+    {
+        $this->sessionId = $sessionId;
+    }
+
+    /**
      */
     public function stop()
     {
