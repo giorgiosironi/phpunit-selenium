@@ -658,4 +658,27 @@ class Extensions_SeleniumTestCaseTest extends PHPUnit_Extensions_SeleniumTestCas
         $this->store('Dummy Page', 'titleText');
         $this->assertTitle('${titleText}');
     }
+
+    /**
+     * @dataProvider providedScreenshotPaths
+     *
+     * @param string $path
+     * @param string $expected
+     *
+     * @return void
+     */
+    public function testGetScreenshotPath($path, $expected)
+    {
+        $this->screenshotPath = $path;
+        $this->assertEquals($expected, $this->getScreenshotPath());
+    }
+
+    public function providedScreenshotPaths()
+    {
+        return array(
+            'C:\screenshots\\' => array('C:\screenshots\\', 'C:\screenshots\\'),
+            '/var/screenshots/' => array('/var/screenshots/', '/var/screenshots/'),
+            '/var/screenshots' => array('/var/screenshots', '/var/screenshots/'),
+        );
+    }
 }
