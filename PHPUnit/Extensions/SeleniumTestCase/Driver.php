@@ -930,12 +930,12 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
 
         for ($i = 0; $i < $numArguments; $i++) {
             $argNum = strval($i + 1);
-            
+
             if($arguments[$i] == ' ') {
               $url .= sprintf('&%s=%s', $argNum, urlencode($arguments[$i]));
             } else {
               $url .= sprintf('&%s=%s', $argNum, urlencode(trim($arguments[$i])));
-            }            
+            }
         }
 
         if (isset($this->sessionId)) {
@@ -998,8 +998,6 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
             case 'false': return FALSE;
 
             default: {
-                $this->stop();
-
                 throw new PHPUnit_Framework_Exception(
                   'Result is neither "true" nor "false": ' . PHPUnit_Util_Type::export($result)
                 );
@@ -1022,8 +1020,6 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
         $result = $this->getString($command, $arguments);
 
         if (!is_numeric($result)) {
-            $this->stop();
-
             throw new PHPUnit_Framework_Exception(
               'Result is not numeric: ' . PHPUnit_Util_Type::export($result)
             );
@@ -1049,8 +1045,6 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
         }
 
         catch (RuntimeException $e) {
-            $this->stop();
-
             throw $e;
         }
 
