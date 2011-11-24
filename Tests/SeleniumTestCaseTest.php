@@ -312,6 +312,7 @@ class Extensions_SeleniumTestCaseTest extends PHPUnit_Extensions_SeleniumTestCas
         $this->waitForPopUp('myPopupWindow', 500);
         $this->selectWindow('myPopupWindow');
         $this->assertEquals('Select Window Popup', $this->getTitle());
+        $this->close();
 
         $this->markTestIncomplete('There are no links to click on in our version of this page.');
         $this->setTimeout(2000);

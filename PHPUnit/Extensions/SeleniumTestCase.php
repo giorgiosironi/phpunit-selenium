@@ -333,6 +333,25 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
     private $serverRunning;
 
     /**
+     * @var boolean
+     */
+    private static $shareSession;
+
+    /**
+     * The last sessionId used for running a test.
+     * @var string
+     */
+    private static $sessionId = null;
+
+    /**
+     * @param boolean
+     */
+    public static function shareSession($shareSession)
+    {
+        self::$shareSession = $shareSession;
+    }
+
+    /**
      * @param  string $name
      * @param  array  $data
      * @param  string $dataName
@@ -637,7 +656,12 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
             );
         }
 
-        $this->start();
+        if (self::$shareSession and self::$sessionId !== null) {
+            $this->setSessionId(self::$sessionId);
+            $this->selectWindow('null');
+        } else {
+            self::$sessionId = $this->start();
+        }
 
         if (!is_file($this->getName(FALSE))) {
             parent::runTest();
@@ -649,12 +673,16 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
             $this->fail(implode("\n", $this->verificationErrors));
         }
 
+        if (!self::$shareSession) {
+            $this->stopSession();
+        }
+    }
+
+    private function stopSession()
+    {
         try {
             $this->stop();
-        }
-
-        catch (RuntimeException $e) {
-        }
+        } catch (RuntimeException $e) { }
     }
 
     /**
@@ -1053,12 +1081,8 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
             }
         }
 
-        try {
-            $this->stop();
-        }
-
-        catch (RuntimeException $e) {
-        }
+        $this->stopSession();
+        self::$sessionId = null;
 
         if ($e instanceof PHPUnit_Framework_ExpectationFailedException) {
             if (!empty($message)) {
