@@ -1072,7 +1072,7 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
                 !empty($this->screenshotPath) &&
                 !empty($this->screenshotUrl)) {
                 $this->drivers[0]->captureEntirePageScreenshot(
-                  $this->screenshotPath . DIRECTORY_SEPARATOR . $this->testId .
+                  $this->getScreenshotPath() . $this->testId .
                   '.png'
                 );
 
@@ -1088,8 +1088,26 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
             if (!empty($message)) {
                 $buffer .= "\n" . $message;
             }
+
+            throw new PHPUnit_Framework_ExpectationFailedException($buffer, $e->getComparisonFailure());
         }
 
         throw $e;
+    }
+
+    /**
+     * Returns correct path to screenshot save path.
+     *
+     * @return string
+     */
+    protected function getScreenshotPath()
+    {
+        $path = $this->screenshotPath;
+
+        if(!in_array(substr($path, strlen($path) -1, 1), array("/","\\"))) {
+            $path .= DIRECTORY_SEPARATOR;
+        }
+
+        return $path;
     }
 }
