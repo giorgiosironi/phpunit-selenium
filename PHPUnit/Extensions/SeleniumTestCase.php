@@ -1066,7 +1066,6 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
         if ($e instanceof PHPUnit_Framework_ExpectationFailedException) {
             $buffer  = 'Current URL: ' . $this->drivers[0]->getLocation() .
                        "\n";
-            $message = $e->toString();
 
             if ($this->captureScreenshotOnFailure &&
                 !empty($this->screenshotPath) &&
@@ -1085,11 +1084,15 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
         self::$sessionId = null;
 
         if ($e instanceof PHPUnit_Framework_ExpectationFailedException) {
-            if (!empty($message)) {
-                $buffer .= "\n" . $message;
+            if(is_object($e->getComparisonFailure())) {
+                $message = $e->getComparisonFailure()->toString();
+            } else {
+            	$message = $e->getMessage();
             }
 
-            throw new PHPUnit_Framework_ExpectationFailedException($buffer, $e->getComparisonFailure());
+            $buffer .= "\n" . $message;
+
+            throw new PHPUnit_Framework_ExpectationFailedException($buffer, $message);
         }
 
         throw $e;
