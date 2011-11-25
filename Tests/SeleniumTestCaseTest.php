@@ -695,4 +695,16 @@ class Extensions_SeleniumTestCaseTest extends PHPUnit_Extensions_SeleniumTestCas
             '/var/screenshots' => array('/var/screenshots', '/var/screenshots/'),
         );
     }
+
+    /**
+     * Issue #13
+     * @expectedException PHPUnit_Framework_ExpectationFailedException
+     */
+    public function testAssertGetCommand()
+    {
+        $this->open($this->url . 'html/test_dummy_page.html');
+        $this->assertTitle('This is not Dummy Page', ''); //should throw exception
+
+        $this->fail('Test should throw exception! Titles are not equals.');
+    }
 }
