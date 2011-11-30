@@ -931,10 +931,10 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
         for ($i = 0; $i < $numArguments; $i++) {
             $argNum = strval($i + 1);
 
-            if($arguments[$i] == ' ') {
-              $url .= sprintf('&%s=%s', $argNum, urlencode($arguments[$i]));
+            if ($arguments[$i] == ' ') {
+                $url .= sprintf('&%s=%s', $argNum, urlencode($arguments[$i]));
             } else {
-              $url .= sprintf('&%s=%s', $argNum, urlencode(trim($arguments[$i])));
+                $url .= sprintf('&%s=%s', $argNum, urlencode(trim($arguments[$i])));
             }
         }
 
@@ -969,7 +969,8 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
         return $response;
     }
 
-    protected function preprocessParameters($params) {
+    protected function preprocessParameters($params)
+    {
         foreach ($params as $key => $param ) {
             if (is_string($param) && (strlen($param) > 0)) {
                 $params[$key] = $this->getString('getExpression', array($param));
@@ -1114,12 +1115,16 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
 
         if ($info['isBoolean']) {
             if (!isset($info['negative']) || !$info['negative']) {
-	      PHPUnit_Framework_Assert::assertTrue($result, $arguments[ count($arguments) - 1 ]);
+                PHPUnit_Framework_Assert::assertTrue(
+                  $result, $arguments[count($arguments) - 1]
+                );
             } else {
-	      PHPUnit_Framework_Assert::assertFalse($result, $arguments[ count($arguments) - 1 ]);
+                PHPUnit_Framework_Assert::assertFalse(
+                  $result, $arguments[count($arguments) - 1]
+                );
             }
         } else {
-            if ($requiresTarget === true) {
+            if ($requiresTarget === TRUE) {
                 $expected = $arguments[1];
             } else {
                 $expected = $arguments[0];
@@ -1138,10 +1143,14 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
 
                 if (strpos($expected, 'regexp:') === 0) {
                     $expected = substr($expected, strlen('regexp:'));
-                } else if (strpos($expected, 'regexpi:') === 0) {
+                }
+
+                else if (strpos($expected, 'regexpi:') === 0) {
                     $expected        = substr($expected, strlen('regexpi:'));
                     $caseInsensitive = TRUE;
-                } else  {
+                }
+
+                else {
                     if (strpos($expected, 'glob:') === 0) {
                         $expected = substr($expected, strlen('glob:'));
                     }

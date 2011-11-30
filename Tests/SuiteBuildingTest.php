@@ -53,7 +53,7 @@ require_once 'PHPUnit/Extensions/SeleniumTestCase.php';
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
- * @since      Class available since Release ?.?.? 
+ * @since      Class available since Release ?.?.?
  */
 class Extensions_SeleniumSuiteBuildingTest extends PHPUnit_Framework_TestCase
 {
@@ -94,7 +94,7 @@ class Extensions_SeleniumMultipleBrowsersTestCaseSample extends PHPUnit_Extensio
             'host'    => 'localhost',
             'port'    => 4444,
             'timeout' => 30000,
-        ), 
+        ),
     );
 
     public function testSingle() {}

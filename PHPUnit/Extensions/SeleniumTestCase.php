@@ -341,7 +341,7 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
      * The last sessionId used for running a test.
      * @var string
      */
-    private static $sessionId = null;
+    private static $sessionId;
 
     /**
      * @param boolean
@@ -656,7 +656,7 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
             );
         }
 
-        if (self::$shareSession and self::$sessionId !== null) {
+        if (self::$shareSession && self::$sessionId !== NULL) {
             $this->setSessionId(self::$sessionId);
             $this->selectWindow('null');
         } else {
@@ -1081,13 +1081,13 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
         }
 
         $this->stopSession();
-        self::$sessionId = null;
+        self::$sessionId = NULL;
 
         if ($e instanceof PHPUnit_Framework_ExpectationFailedException) {
-            if(is_object($e->getComparisonFailure())) {
+            if (is_object($e->getComparisonFailure())) {
                 $message = $e->getComparisonFailure()->toString();
             } else {
-            	$message = $e->getMessage();
+                $message = $e->getMessage();
             }
 
             $buffer .= "\n" . $message;
@@ -1107,7 +1107,7 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
     {
         $path = $this->screenshotPath;
 
-        if(!in_array(substr($path, strlen($path) -1, 1), array("/","\\"))) {
+        if (!in_array(substr($path, strlen($path) -1, 1), array("/","\\"))) {
             $path .= DIRECTORY_SEPARATOR;
         }
 
