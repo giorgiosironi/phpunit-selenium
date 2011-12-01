@@ -549,7 +549,7 @@ class Extensions_SeleniumTestCaseTest extends PHPUnit_Extensions_SeleniumTestCas
 
     public function testFireEvents()
     {
-        $this->open($this->url .'html/test_form_events.html');
+        $this->open('html/test_form_events.html');
         $this->assertEquals('', $this->getValue('eventlog'));
         $this->fireEvent('theTextbox', 'focus');
         $this->assertEquals('{focus(theTextbox)}', $this->getValue('eventlog'));
