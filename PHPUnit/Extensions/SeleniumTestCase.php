@@ -1070,10 +1070,9 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
             if ($this->captureScreenshotOnFailure &&
                 !empty($this->screenshotPath) &&
                 !empty($this->screenshotUrl)) {
-                $this->drivers[0]->captureEntirePageScreenshot(
-                  $this->getScreenshotPath() . $this->testId .
-                  '.png'
-                );
+                $filename = $this->getScreenshotPath() . $this->testId . '.png';
+
+                $this->drivers[0]->captureEntirePageScreenshot($filename);
 
                 $buffer .= 'Screenshot: ' . $this->screenshotUrl . '/' .
                            $this->testId . ".png\n";

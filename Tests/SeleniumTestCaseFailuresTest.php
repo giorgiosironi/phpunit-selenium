@@ -86,4 +86,21 @@ class Extensions_SeleniumTestCaseFailuresTest extends PHPUnit_Extensions_Seleniu
         $exception = new PHPUnit_Framework_ExpectationFailedException("Some error.");
         $this->onNotSuccessfulTest($exception);
     }
+
+    public function testScreenshotsAreCapturedOnFailuresWhenRequired()
+    {
+        $this->captureScreenshotOnFailure = true;
+        $this->screenshotPath = sys_get_temp_dir();
+        $this->screenshotUrl = 'http://...';
+
+        try {
+            $exception = new PHPUnit_Framework_ExpectationFailedException("Some error.");
+            $this->onNotSuccessfulTest($exception);
+        } catch (PHPUnit_Framework_ExpectationFailedException $e) {
+            $this->assertTrue(file_exists($this->screenshotPath));
+            $this->assertTrue((bool) strstr($e->getMessage(), 'Screenshot: http://.../'));
+            return;
+        }
+        $this->fail('An exception should have been raised by now.');
+    }
 }
