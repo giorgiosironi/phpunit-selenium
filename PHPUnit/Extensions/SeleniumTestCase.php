@@ -620,12 +620,6 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
             $browser['httpTimeout'] = 45;
         }
 
-        if (@fsockopen($browser['host'], $browser['port'], $errno, $errstr)) {
-            $this->serverRunning = TRUE;
-        } else {
-            $this->serverRunning = FALSE;
-        }
-
         $driver = new PHPUnit_Extensions_SeleniumTestCase_Driver;
         $driver->setName($browser['name']);
         $driver->setBrowser($browser['browser']);
@@ -641,20 +635,27 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
         return $driver;
     }
 
-    /**
-     * @throws RuntimeException
-     */
-    protected function runTest()
+    public function skipWithNoServerRunning()
     {
-        if (!$this->serverRunning) {
+        // TODO: make the 10 timeout a parameter
+        $serverRunning = @fsockopen($this->drivers[0]->getHost(), $this->drivers[0]->getPort(), $errno, $errstr, 10);
+        if (!$serverRunning) {
             $this->markTestSkipped(
               sprintf(
-                'Could not connect to Selenium RC on %s:%d.',
+                'Could not connect to the Selenium Server on %s:%d.',
                 $this->drivers[0]->getHost(),
                 $this->drivers[0]->getPort()
               )
             );
         }
+    }
+
+    /**
+     * @throws RuntimeException
+     */
+    protected function runTest()
+    {
+        $this->skipWithNoServerRunning();
 
         if (self::$shareSession && self::$sessionId !== NULL) {
             $this->setSessionId(self::$sessionId);
