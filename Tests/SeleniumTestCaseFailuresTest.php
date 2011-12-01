@@ -87,6 +87,17 @@ class Extensions_SeleniumTestCaseFailuresTest extends PHPUnit_Extensions_Seleniu
         $this->onNotSuccessfulTest($exception);
     }
 
+    public function testWhenAComparisonFailureIsPresentItIsIncludedInTheMessage()
+    {
+        $failure = new PHPUnit_Framework_ComparisonFailure(1, 2, '1', '2'); 
+        $exception = new PHPUnit_Framework_ExpectationFailedException('1 is not 2', $failure);
+        try {
+            $this->onNotSuccessfulTest($exception);
+        } catch (PHPUnit_Framework_ExpectationFailedException $e) {
+            $this->assertTrue((bool) strstr($e->getMessage(), '--- Expected'));
+        }
+    }
+
     public function testScreenshotsAreCapturedOnFailuresWhenRequired()
     {
         $this->captureScreenshotOnFailure = true;
