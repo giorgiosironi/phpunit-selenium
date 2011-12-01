@@ -60,8 +60,6 @@ require_once 'PHPUnit/Extensions/SeleniumTestCase.php';
  */
 class Extensions_SeleniumTestCaseTest extends PHPUnit_Extensions_SeleniumTestCase
 {
-    protected $url;
-
     public function setUp()
     {
         $this->setHost(PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_HOST);
@@ -75,18 +73,18 @@ class Extensions_SeleniumTestCaseTest extends PHPUnit_Extensions_SeleniumTestCas
 
     public function testOpen()
     {
-        $this->open($this->url . 'html/test_open.html');
+        $this->open('html/test_open.html');
         $this->assertStringEndsWith('html/test_open.html', $this->getLocation());
         $this->assertEquals('This is a test of the open command.', $this->getBodyText());
 
-        $this->open($this->url . 'html/test_page.slow.html');
+        $this->open('html/test_page.slow.html');
         $this->assertStringEndsWith('html/test_page.slow.html', $this->getLocation());
         $this->assertEquals('Slow Loading Page', $this->getTitle());
     }
 
     public function testClick()
     {
-        $this->open($this->url . 'html/test_click_page1.html');
+        $this->open('html/test_click_page1.html');
         $this->assertEquals('Click here for next page', $this->getText('link'));
         $this->click('link');
         $this->waitForPageToLoad(500);
@@ -116,7 +114,7 @@ class Extensions_SeleniumTestCaseTest extends PHPUnit_Extensions_SeleniumTestCas
 
     public function testClickJavaScriptHref()
     {
-        $this->open($this->url . 'html/test_click_javascript_page.html');
+        $this->open('html/test_click_javascript_page.html');
         $this->click('link');
         $this->assertTrue($this->isAlertPresent());
         $this->assertEquals('link clicked', $this->getAlert());
@@ -139,7 +137,7 @@ class Extensions_SeleniumTestCaseTest extends PHPUnit_Extensions_SeleniumTestCas
 
     public function testType()
     {
-        $this->open($this->url . 'html/test_type_page1.html');
+        $this->open('html/test_type_page1.html');
         $this->type('username', 'TestUser');
         $this->assertEquals('TestUser', $this->getValue('username'));
         $this->type('password', 'testUserPassword');
@@ -152,7 +150,7 @@ class Extensions_SeleniumTestCaseTest extends PHPUnit_Extensions_SeleniumTestCas
 
     public function testSelect()
     {
-        $this->open($this->url . 'html/test_select.html');
+        $this->open('html/test_select.html');
         $this->assertEquals('Second Option', $this->getSelectedLabel('theSelect'));
         $this->assertEquals('option2', $this->getSelectedValue('theSelect'));
 
@@ -182,7 +180,7 @@ class Extensions_SeleniumTestCaseTest extends PHPUnit_Extensions_SeleniumTestCas
 
     public function testMultiSelect()
     {
-        $this->open($this->url . 'html/test_multiselect.html');
+        $this->open('html/test_multiselect.html');
         $this->assertEquals('Second Option', $this->getSelectedLabel('theSelect'));
 
         $this->select('theSelect', 'index=4');
@@ -209,7 +207,7 @@ class Extensions_SeleniumTestCaseTest extends PHPUnit_Extensions_SeleniumTestCas
 
     public function testSubmit()
     {
-        $this->open($this->url . 'html/test_submit.html');
+        $this->open('html/test_submit.html');
         $this->submit('searchForm');
         $this->assertTrue($this->isAlertPresent());
         $this->assertEquals('onsubmit called', $this->getAlert());
@@ -222,7 +220,7 @@ class Extensions_SeleniumTestCaseTest extends PHPUnit_Extensions_SeleniumTestCas
 
     public function testCheckUncheck()
     {
-        $this->open($this->url . 'html/test_check_uncheck.html');
+        $this->open('html/test_check_uncheck.html');
         $this->assertEquals('on', $this->getValue('base-spud'));
         $this->assertNotEquals('on', $this->getValue('base-rice'));
         $this->assertEquals('on', $this->getValue('option-cheese'));
@@ -245,7 +243,7 @@ class Extensions_SeleniumTestCaseTest extends PHPUnit_Extensions_SeleniumTestCas
 
     public function testSelectWindow()
     {
-        $this->open($this->url . 'html/test_select_window.html');
+        $this->open('html/test_select_window.html');
         $this->click('popupPage');
         $this->waitForPopUp('myPopupWindow', 1000);
         $this->selectWindow('myPopupWindow');
@@ -271,7 +269,7 @@ class Extensions_SeleniumTestCaseTest extends PHPUnit_Extensions_SeleniumTestCas
 
     public function testJavaScriptParameters()
     {
-        $this->open($this->url . 'html/test_store_value.html');
+        $this->open('html/test_store_value.html');
         $this->type('theText', "javascript{[1,2,3,4,5].join(':')}");
         $this->assertEquals('1:2:3:4:5', $this->getValue('theText'));
 
@@ -281,7 +279,7 @@ class Extensions_SeleniumTestCaseTest extends PHPUnit_Extensions_SeleniumTestCas
 
     public function testWait()
     {
-        $this->open($this->url . 'html/test_reload_onchange_page.html');
+        $this->open('html/test_reload_onchange_page.html');
         $this->select('theSelect', 'Second Option');
         $this->waitForPageToLoad(5000);
         $this->assertEquals('Slow Loading Page', $this->getTitle());
@@ -307,7 +305,7 @@ class Extensions_SeleniumTestCaseTest extends PHPUnit_Extensions_SeleniumTestCas
 
     public function testWaitInPopupWindow()
     {
-        $this->open($this->url . 'html/test_select_window.html');
+        $this->open('html/test_select_window.html');
         $this->click('popupPage');
         $this->waitForPopUp('myPopupWindow', 500);
         $this->selectWindow('myPopupWindow');
@@ -334,19 +332,19 @@ class Extensions_SeleniumTestCaseTest extends PHPUnit_Extensions_SeleniumTestCas
     public function testWaitFor()
     {
         //is* wait for
-        $this->open($this->url . 'html/test_delayed_element.html');
+        $this->open('html/test_delayed_element.html');
         $this->click('createElementButton');
         $this->waitForVisible("//div[@id='delayedDiv']");
 
         //get* wait for
-        $this->open($this->url . 'html/test_delayed_element.html');
+        $this->open('html/test_delayed_element.html');
         $this->click('createElementButton');
         $this->waitForXpathCount("//div[@id='delayedDiv']", 1);
     }
 
     public function testLocators()
     {
-        $this->open($this->url . 'html/test_locators.html');
+        $this->open('html/test_locators.html');
         $this->assertEquals('this is the first element', $this->getText('id=id1'));
         $this->assertFalse($this->isElementPresent('id=name1'));
         $this->assertFalse($this->isElementPresent('id=id4'));
@@ -371,7 +369,7 @@ class Extensions_SeleniumTestCaseTest extends PHPUnit_Extensions_SeleniumTestCas
 
     public function testImplicitLocators()
     {
-        $this->open($this->url . 'html/test_locators.html');
+        $this->open('html/test_locators.html');
         $this->assertEquals('this is the first element', $this->getText('id1'));
         $this->assertEquals('a1', $this->getAttribute('id1@class'));
 
@@ -386,7 +384,7 @@ class Extensions_SeleniumTestCaseTest extends PHPUnit_Extensions_SeleniumTestCas
 
     public function testXPathLocators()
     {
-        $this->open($this->url . 'html/test_locators.html');
+        $this->open('html/test_locators.html');
         $this->assertEquals('this is the first element', $this->getText('xpath=//a'));
         $this->assertEquals('this is the second element', $this->getText("xpath=//a[@class='a2']"));
         $this->assertEquals('this is the second element', $this->getText("xpath=//*[@class='a2']"));
@@ -406,7 +404,7 @@ class Extensions_SeleniumTestCaseTest extends PHPUnit_Extensions_SeleniumTestCas
 
     public function testGoBack()
     {
-        $this->open($this->url . 'html/test_click_page1.html');
+        $this->open('html/test_click_page1.html');
         $this->assertEquals('Click Page 1', $this->getTitle());
 
         $this->click('link');
@@ -420,7 +418,7 @@ class Extensions_SeleniumTestCaseTest extends PHPUnit_Extensions_SeleniumTestCas
 
     public function testRefresh()
     {
-        $this->open($this->url . 'html/test_page.slow.html');
+        $this->open('html/test_page.slow.html');
         $this->assertStringEndsWith('html/test_page.slow.html', $this->getLocation());
         $this->assertEquals('Slow Loading Page', $this->getTitle());
 
@@ -437,7 +435,7 @@ class Extensions_SeleniumTestCaseTest extends PHPUnit_Extensions_SeleniumTestCas
 
     public function testLinkEvents()
     {
-        $this->open($this->url . 'html/test_form_events.html');
+        $this->open('html/test_form_events.html');
         $this->assertEquals('', $this->getValue('eventlog'));
         $this->click('theLink');
         $this->assertEquals('{focus(theLink)} {click(theLink)}', $this->getValue('eventlog'));
@@ -447,7 +445,7 @@ class Extensions_SeleniumTestCaseTest extends PHPUnit_Extensions_SeleniumTestCas
 
     public function testButtonEvents()
     {
-        $this->open($this->url . 'html/test_form_events.html');
+        $this->open('html/test_form_events.html');
         $this->assertEquals('', $this->getValue('eventlog'));
         $this->click('theButton');
         $this->assertEquals('{focus(theButton)} {click(theButton)}', $this->getValue('eventlog'));
@@ -460,7 +458,7 @@ class Extensions_SeleniumTestCaseTest extends PHPUnit_Extensions_SeleniumTestCas
 
     public function testSelectEvents()
     {
-        $this->open($this->url . 'html/test_form_events.html');
+        $this->open('html/test_form_events.html');
         $this->assertEquals('', $this->getValue('theSelect'));
         $this->assertEquals('', $this->getValue('eventlog'));
 
@@ -482,7 +480,7 @@ class Extensions_SeleniumTestCaseTest extends PHPUnit_Extensions_SeleniumTestCas
 
     public function testRadioEvents()
     {
-        $this->open($this->url . 'html/test_form_events.html');
+        $this->open('html/test_form_events.html');
         $this->assertEquals('off', $this->getValue('theRadio1'));
         $this->assertEquals('off', $this->getValue('theRadio2'));
         $this->assertEquals('', $this->getValue('eventlog'));
@@ -513,7 +511,7 @@ class Extensions_SeleniumTestCaseTest extends PHPUnit_Extensions_SeleniumTestCas
 
     public function testCheckboxEvents()
     {
-        $this->open($this->url . 'html/test_form_events.html');
+        $this->open('html/test_form_events.html');
         $this->assertEquals('off', $this->getValue('theCheckbox'));
         $this->assertEquals('', $this->getValue('eventlog'));
 
@@ -535,7 +533,7 @@ class Extensions_SeleniumTestCaseTest extends PHPUnit_Extensions_SeleniumTestCas
 
     public function testTextEvents()
     {
-        $this->open($this->url . 'html/test_form_events.html');
+        $this->open('html/test_form_events.html');
         $this->assertEquals('', $this->getValue('theTextbox'));
         $this->assertEquals('', $this->getValue('eventlog'));
 
@@ -566,7 +564,7 @@ class Extensions_SeleniumTestCaseTest extends PHPUnit_Extensions_SeleniumTestCas
 
     public function testMouseEvents()
     {
-        $this->open($this->url . 'html/test_form_events.html');
+        $this->open('html/test_form_events.html');
         $this->mouseOver('theTextbox');
         $this->mouseOver('theButton');
         $this->mouseDown('theTextbox');
@@ -576,7 +574,7 @@ class Extensions_SeleniumTestCaseTest extends PHPUnit_Extensions_SeleniumTestCas
 
     public function testKeyEvents()
     {
-        $this->open($this->url . 'html/test_form_events.html');
+        $this->open('html/test_form_events.html');
         $this->markTestIncomplete('The page should also record the keys pressed.');
         $this->keyPress('theTextbox', '119');
         $this->keyPress('theTextbox', '115');
@@ -587,7 +585,7 @@ class Extensions_SeleniumTestCaseTest extends PHPUnit_Extensions_SeleniumTestCas
 
     public function testFocusOnBlur()
     {
-        $this->open($this->url . 'html/test_focus_on_blur.html');
+        $this->open('html/test_focus_on_blur.html');
         $this->type('testInput', 'test');
         $this->fireEvent('testInput', 'blur');
         $this->assertEquals('Bad value', $this->getAlert());
@@ -596,7 +594,7 @@ class Extensions_SeleniumTestCaseTest extends PHPUnit_Extensions_SeleniumTestCas
 
     public function testAlerts()
     {
-        $this->open($this->url . 'html/test_verify_alert.html');
+        $this->open('html/test_verify_alert.html');
         $this->assertFalse($this->isAlertPresent());
 
         $this->click('oneAlert');
@@ -613,7 +611,7 @@ class Extensions_SeleniumTestCaseTest extends PHPUnit_Extensions_SeleniumTestCas
 
     public function testConfirmations()
     {
-        $this->open($this->url . 'html/test_confirm.html');
+        $this->open('html/test_confirm.html');
         $this->chooseCancelOnNextConfirmation();
         $this->click('confirmAndLeave');
         $this->assertTrue($this->isConfirmationPresent());
@@ -628,7 +626,7 @@ class Extensions_SeleniumTestCaseTest extends PHPUnit_Extensions_SeleniumTestCas
 
     public function testPrompt()
     {
-        $this->open($this->url . 'html/test_prompt.html');
+        $this->open('html/test_prompt.html');
         $this->assertFalse($this->isPromptPresent());
 
         $this->click('promptAndLeave');
@@ -645,7 +643,7 @@ class Extensions_SeleniumTestCaseTest extends PHPUnit_Extensions_SeleniumTestCas
 
     public function testVisibility()
     {
-        $this->open($this->url . 'html/test_visibility.html');
+        $this->open('html/test_visibility.html');
         $this->assertTrue($this->isVisible('visibleParagraph'));
         $this->assertFalse($this->isVisible('hiddenParagraph'));
         $this->assertFalse($this->isVisible('suppressedParagraph'));
@@ -659,7 +657,7 @@ class Extensions_SeleniumTestCaseTest extends PHPUnit_Extensions_SeleniumTestCas
 
     public function testEditable()
     {
-        $this->open($this->url . 'html/test_editable.html');
+        $this->open('html/test_editable.html');
         $this->assertTrue($this->isEditable('normal_text'));
         $this->assertTrue($this->isEditable('normal_select'));
         $this->assertFalse($this->isEditable('disabled_text'));
@@ -668,7 +666,7 @@ class Extensions_SeleniumTestCaseTest extends PHPUnit_Extensions_SeleniumTestCas
 
     public function testPreprocessParameters()
     {
-        $this->open($this->url . 'html/test_dummy_page.html');
+        $this->open('html/test_dummy_page.html');
         $this->store('Dummy Page', 'titleText');
         $this->assertTitle('${titleText}');
     }
@@ -702,7 +700,7 @@ class Extensions_SeleniumTestCaseTest extends PHPUnit_Extensions_SeleniumTestCas
      */
     public function testAssertGetCommand()
     {
-        $this->open($this->url . 'html/test_dummy_page.html');
+        $this->open('html/test_dummy_page.html');
         $this->assertTitle('This is not Dummy Page', ''); //should throw exception
 
         $this->fail('Test should throw exception! Titles are not equals.');
