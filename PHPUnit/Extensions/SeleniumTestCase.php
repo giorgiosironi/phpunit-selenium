@@ -328,6 +328,12 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
     protected $screenshotUrl = '';
 
     /**
+     * @var    integer  the number of seconds to wait before declaring
+     *                  the Selenium server not reachable
+     */
+    protected $serverConnectionTimeOut = 10;
+
+    /**
      * @var boolean
      */
     private $serverRunning;
@@ -637,8 +643,7 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
 
     public function skipWithNoServerRunning()
     {
-        // TODO: make the 10 timeout a parameter
-        $serverRunning = @fsockopen($this->drivers[0]->getHost(), $this->drivers[0]->getPort(), $errno, $errstr, 10);
+        $serverRunning = @fsockopen($this->drivers[0]->getHost(), $this->drivers[0]->getPort(), $errno, $errstr, $this->serverConnectionTimeOut);
         if (!$serverRunning) {
             $this->markTestSkipped(
               sprintf(
