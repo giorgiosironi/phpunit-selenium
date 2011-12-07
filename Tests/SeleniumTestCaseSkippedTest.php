@@ -64,7 +64,7 @@ class Extensions_SeleniumTestCaseSkippedTest extends PHPUnit_Framework_TestCase
     {
         $testCase = new Extensions_SeleniumTestCase_SkippedExample();
         $testCase->setUp();
-            
+
         try {
             $testCase->skipWithNoServerRunning();
         } catch (PHPUnit_Framework_SkippedTestError $e) {

@@ -89,7 +89,7 @@ class Extensions_SeleniumTestCaseFailuresTest extends PHPUnit_Extensions_Seleniu
 
     public function testWhenAComparisonFailureIsPresentItIsIncludedInTheMessage()
     {
-        $failure = new PHPUnit_Framework_ComparisonFailure(1, 2, '1', '2'); 
+        $failure = new PHPUnit_Framework_ComparisonFailure(1, 2, '1', '2');
         $exception = new PHPUnit_Framework_ExpectationFailedException('1 is not 2', $failure);
         try {
             $this->onNotSuccessfulTest($exception);
