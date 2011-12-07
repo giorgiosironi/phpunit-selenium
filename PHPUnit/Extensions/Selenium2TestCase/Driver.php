@@ -64,7 +64,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Driver
 
     public function startSession($browserUrl)
     {
-        $this->url = 'http://localhost:4444/wd/hub';
+        $this->url = "http://{$this->host}:{$this->port}/wd/hub";
         $response = $this->curl('POST', $this->url . '/session', array(
             'desiredCapabilities' => array(
                 'browserName' => $this->browser
