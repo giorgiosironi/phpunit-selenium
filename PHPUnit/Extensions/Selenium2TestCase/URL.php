@@ -43,7 +43,7 @@
  */
 
 /**
- * Implementation of the Selenium RC client/server protocol.
+ * Object representing an URL and allowing easy concatenation.
  *
  * @package    PHPUnit_Selenium
  * @author     Giorgio Sironi <giorgio.sironi@asp-poli.it>
@@ -53,56 +53,31 @@
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.0
  */
-class PHPUnit_Extensions_Selenium2TestCase_Driver
+final class PHPUnit_Extensions_Selenium2TestCase_URL
 {
-    public function __construct(PHPUnit_Extensions_Selenium2TestCase_URL $seleniumServerUrl, $browser)
-    {
-        $this->seleniumServerUrl = $seleniumServerUrl;
-        $this->browser = $browser;
-    }
+    /**
+     * @var string
+     */
+    private $value;
 
-    public function startSession($browserUrl)
+    public function __construct($value)
     {
-        $url = $this->seleniumServerUrl->descend("/wd/hub/session");
-        $response = $this->curl('POST', $url, array(
-            'desiredCapabilities' => array(
-                'browserName' => $this->browser
-            )
-        ));
-        $sessionPrefix = new PHPUnit_Extensions_Selenium2TestCase_URL($response->getUrl());
-        return new PHPUnit_Extensions_Selenium2TestCase_Session($this, $sessionPrefix, $browserUrl);
+        $this->value = $value;
     }
 
     /**
-     * Performs an HTTP request to the Selenium 2 server.
-     *
-     * @param string $method      'GET'|'POST'|'DELETE'|...
-     * @param string $url
-     * @param array $params       JSON parameters for POST requests
+     * @return string
      */
-    public function curl($http_method,
-                         PHPUnit_Extensions_Selenium2TestCase_URL $url,
-                         $params = null) {
-        $curl = curl_init($url->getValue());
-        curl_setopt($curl, CURLOPT_TIMEOUT, 60);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_HTTPHEADER,
-                    array('application/json;charset=UTF-8'));
+    public function getValue()
+    {
+        return $this->value;
+    }
 
-        if ($http_method === 'POST') {
-            curl_setopt($curl, CURLOPT_POST, true);
-            if ($params && is_array($params)) {
-               curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($params));
-            }
-            curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
-        } else if ($http_method == 'DELETE') {
-            curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'DELETE');
-        }
-
-        $rawResponse = trim(curl_exec($curl));
-        $info = curl_getinfo($curl);
-        curl_close($curl);
-        $content = json_decode($rawResponse, true);
-        return new PHPUnit_Extensions_Selenium2TestCase_Response($content, $info);
+    public function descend($addition)
+    {
+        $newValue = rtrim($this->value, '/')
+                  . '/'
+                  . ltrim($addition, '/');
+        return new self($newValue);
     }
 }

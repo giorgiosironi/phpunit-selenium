@@ -98,7 +98,8 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
 
     private function getDriver()
     {
-        return new PHPUnit_Extensions_Selenium2TestCase_Driver($this->host, $this->port, $this->browser);
+        $seleniumServerUrl = new PHPUnit_Extensions_Selenium2TestCase_URL("http://{$this->host}:{$this->port}");
+        return new PHPUnit_Extensions_Selenium2TestCase_Driver($seleniumServerUrl, $this->browser);
     }
 
     /**

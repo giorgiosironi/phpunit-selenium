@@ -65,7 +65,8 @@ class PHPUnit_Extensions_Selenium2TestCase_Element
      */
     private $url;
 
-    public function __construct($driver, $url)
+    public function __construct($driver,
+                                PHPUnit_Extensions_Selenium2TestCase_URL $url)
     {
         $this->driver = $driver;
         $this->url = $url;
@@ -76,7 +77,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Element
         if (count($arguments) > 0) {
             throw new Exception("There shouldn't be arguments.");
         }
-        $response = $this->curl('GET', $this->url . $command); 
+        $response = $this->curl('GET', $this->url->descend($command)); 
         return $response->getValue();
     }
 

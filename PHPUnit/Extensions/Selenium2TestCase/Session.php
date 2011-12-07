@@ -72,11 +72,13 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
      */
     private $baseUrl;
 
-    public function __construct($driver, $sessionUrl, $baseUrl)
+    public function __construct($driver,
+                                PHPUnit_Extensions_Selenium2TestCase_URL $sessionUrl,
+                                $baseUrl)
     {
         $this->driver = $driver;
         $this->sessionUrl = $sessionUrl;
-        $this->baseUrl = $baseUrl;
+        $this->baseUrl = new PHPUnit_Extensions_Selenium2TestCase_URL($baseUrl);
     }
 
     public function stop()
@@ -88,15 +90,15 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
     {
         if (count($arguments) == 1) {
             if (is_string($arguments[0])) {
-                $jsonParameters = array('url' => $this->baseUrl . $arguments[0]); 
+                $jsonParameters = array('url' => $this->baseUrl->descend($arguments[0])->getValue()); 
             } else if (is_array($arguments[0])) {
                 $jsonParameters = $arguments[0];
             } else {
                 throw new Exception("The argument should be an associative array or a single string.");
             }
-            $response = $this->curl('POST', $this->sessionUrl . $command, $jsonParameters);
+            $response = $this->curl('POST', $this->sessionUrl->descend($command), $jsonParameters);
         } else if (count($arguments) == 0) {
-            $response = $this->curl('GET', $this->sessionUrl . $command); 
+            $response = $this->curl('GET', $this->sessionUrl->descend($command)); 
         } else {
             throw new Exception('You cannot call a command with multiple method arguments.');
         }
@@ -105,9 +107,9 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
 
     public function element($jsonParameters)
     {
-        $response = $this->curl('POST', $this->sessionUrl . 'element', $jsonParameters);
+        $response = $this->curl('POST', $this->sessionUrl->descend('element'), $jsonParameters);
         $value = $response->getValue();
-        $url = $this->sessionUrl . 'element/' . $value['ELEMENT'] . '/';
+        $url = $this->sessionUrl->descend('element')->descend($value['ELEMENT']);
         return new PHPUnit_Extensions_Selenium2TestCase_Element($this->driver, $url);
     }
 
