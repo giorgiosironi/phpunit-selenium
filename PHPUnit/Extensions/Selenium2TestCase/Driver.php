@@ -67,7 +67,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Driver
         $this->url = 'http://localhost:4444/wd/hub';
         $response = $this->curl('POST', $this->url . '/session', array(
             'desiredCapabilities' => array(
-                'browserName' => 'firefox'
+                'browserName' => $this->browser
             )
         ));
         $sessionPrefix = $response->getUrl() . '/';
