@@ -63,13 +63,33 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
     private $session;
 
     /**
+     * @var string
+     */
+    private $host;
+
+    /**
+     * @var int
+     */
+    private $port;
+
+    /**
+     * @var string
+     */
+    private $browser;
+
+    /**
+     * @var PHPUnit_Extensions_Selenium2TestCase_URL
+     */
+    private $browserUrl;
+
+    /**
      * @throws RuntimeException
      */
     protected function runTest()
     {
         $driver = $this->getDriver();
 
-        $this->session = $driver->startSession($this->browserUrl);
+        $this->session = $driver->startSession($this->browser, $this->browserUrl);
 
         parent::runTest();
 
@@ -98,8 +118,8 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
 
     private function getDriver()
     {
-        $seleniumServerUrl = new PHPUnit_Extensions_Selenium2TestCase_URL("http://{$this->host}:{$this->port}");
-        return new PHPUnit_Extensions_Selenium2TestCase_Driver($seleniumServerUrl, $this->browser);
+        $seleniumServerUrl = PHPUnit_Extensions_Selenium2TestCase_URL::fromHostAndPort($this->host, $this->port);
+        return new PHPUnit_Extensions_Selenium2TestCase_Driver($seleniumServerUrl);
     }
 
     /**
@@ -151,6 +171,6 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
             throw PHPUnit_Util_InvalidArgumentHelper::factory(1, 'string');
         }
 
-        $this->browserUrl = $browserUrl;
+        $this->browserUrl = new PHPUnit_Extensions_Selenium2TestCase_URL($browserUrl);
     }
 }

@@ -55,21 +55,20 @@
  */
 class PHPUnit_Extensions_Selenium2TestCase_Driver
 {
-    public function __construct(PHPUnit_Extensions_Selenium2TestCase_URL $seleniumServerUrl, $browser)
+    public function __construct(PHPUnit_Extensions_Selenium2TestCase_URL $seleniumServerUrl)
     {
         $this->seleniumServerUrl = $seleniumServerUrl;
-        $this->browser = $browser;
     }
 
-    public function startSession($browserUrl)
+    public function startSession($browser, PHPUnit_Extensions_Selenium2TestCase_URL $browserUrl)
     {
-        $url = $this->seleniumServerUrl->descend("/wd/hub/session");
-        $response = $this->curl('POST', $url, array(
+        $sessionCreation = $this->seleniumServerUrl->descend("/wd/hub/session");
+        $response = $this->curl('POST', $sessionCreation, array(
             'desiredCapabilities' => array(
-                'browserName' => $this->browser
+                'browserName' => $browser
             )
         ));
-        $sessionPrefix = new PHPUnit_Extensions_Selenium2TestCase_URL($response->getUrl());
+        $sessionPrefix = $response->getURL();
         return new PHPUnit_Extensions_Selenium2TestCase_Session($this, $sessionPrefix, $browserUrl);
     }
 

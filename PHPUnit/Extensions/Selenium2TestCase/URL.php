@@ -80,4 +80,9 @@ final class PHPUnit_Extensions_Selenium2TestCase_URL
                   . ltrim($addition, '/');
         return new self($newValue);
     }
+
+    public static function fromHostAndPort($host, $port)
+    {
+        return new self("http://{$host}:{$port}");
+    }
 }

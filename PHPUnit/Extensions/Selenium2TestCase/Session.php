@@ -74,11 +74,11 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
 
     public function __construct($driver,
                                 PHPUnit_Extensions_Selenium2TestCase_URL $sessionUrl,
-                                $baseUrl)
+                                PHPUnit_Extensions_Selenium2TestCase_URL $baseUrl)
     {
         $this->driver = $driver;
         $this->sessionUrl = $sessionUrl;
-        $this->baseUrl = new PHPUnit_Extensions_Selenium2TestCase_URL($baseUrl);
+        $this->baseUrl = $baseUrl;
     }
 
     public function stop()

@@ -78,8 +78,11 @@ class PHPUnit_Extensions_Selenium2TestCase_Response
         }
     }
 
-    public function getUrl()
+    /**
+     * @return PHPUnit_Extensions_Selenium2TestCase_URL
+     */
+    public function getURL()
     {
-        return $this->info['url'];
+        return new PHPUnit_Extensions_Selenium2TestCase_URL($this->info['url']);
     }
 }
