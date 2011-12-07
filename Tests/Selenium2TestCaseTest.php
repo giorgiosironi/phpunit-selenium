@@ -2,7 +2,7 @@
 /**
  * PHPUnit
  *
- * Copyright (c) 2002-2011, Sebastian Bergmann <sb@sebastian-bergmann.de>.
+ * Copyright (c) 2010-2011, Sebastian Bergmann <sb@sebastian-bergmann.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -35,50 +35,44 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @package    PHPUnit_Selenium
- * @author     Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @copyright  2002-2010 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @author     Giorgio Sironi <giorgio.sironi@asp-poli.it>
+ * @copyright  2010-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link       http://www.phpunit.de/
- * @since      File available since Release 1.1.0
+ * @since      File available since Release 1.0.0
  */
 
-require_once 'File/Iterator/Autoload.php';
+require_once 'PHPUnit/Extensions/SeleniumTestCase.php';
 
-function phpunit_selenium_autoload($class = NULL) {
-    static $classes = NULL;
-    static $path = NULL;
-
-    if ($classes === NULL) {
-        $classes = array(
-          'phpunit_extensions_seleniumtestcase' => '/Extensions/SeleniumTestCase.php',
-          'phpunit_extensions_selenium2testcase' => '/Extensions/Selenium2TestCase.php',
-          'phpunit_extensions_seleniumtestcase_driver' => '/Extensions/SeleniumTestCase/Driver.php',
-          'phpunit_extensions_selenium2testcase_driver' => '/Extensions/Selenium2TestCase/Driver.php',
-          'phpunit_extensions_selenium2testcase_session' => '/Extensions/Selenium2TestCase/Session.php',
-          'phpunit_extensions_selenium2testcase_element' => '/Extensions/Selenium2TestCase/Element.php',
-          'phpunit_extensions_selenium2testcase_response' => '/Extensions/Selenium2TestCase/Response.php'
-        );
-
-        $path = dirname(dirname(dirname(__FILE__)));
-    }
-
-    if ($class === NULL) {
-        $result = array(__FILE__);
-
-        foreach ($classes as $file) {
-            $result[] = $path . $file;
+/**
+ * Tests for PHPUnit_Extensions_SeleniumTestCase.
+ *
+ * @package    PHPUnit_Selenium
+ * @author     Giorgio Sironi <giorgio.sironi@asp-poli.it>
+ * @copyright  2010-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version    Release: @package_version@
+ * @link       http://www.phpunit.de/
+ * @since      Class available since Release 1.0.0
+ */
+class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestCase
+{
+    public function setUp()
+    {
+        $this->setHost(PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_HOST);
+        $this->setPort((int)PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_PORT);
+        $this->setBrowser(PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_BROWSER);
+        if (!defined('PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL')) {
+            $this->markTestSkipped("You must serve the selenium-1-tests folder from an HTTP server and configure the PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL constant accordingly.");
         }
-
-        return $result;
+        $this->setBrowserUrl(PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL);
     }
 
-    $cn = strtolower($class);
-
-    if (isset($classes[$cn])) {
-        $file = $path . $classes[$cn];
-
-        require $file;
+    public function testOpen()
+    {
+        $this->url('html/test_open.html');
+        $this->assertStringEndsWith('html/test_open.html', $this->url());
+        $element = $this->element(array('using' => 'css selector', 'value' => 'body'));
+        $this->assertEquals('This is a test of the open command.', $element->text());
     }
 }
-
-spl_autoload_register('phpunit_selenium_autoload');

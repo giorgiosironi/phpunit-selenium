@@ -2,7 +2,7 @@
 /**
  * PHPUnit
  *
- * Copyright (c) 2002-2011, Sebastian Bergmann <sb@sebastian-bergmann.de>.
+ * Copyright (c) 2010-2011, Sebastian Bergmann <sb@sebastian-bergmann.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -35,50 +35,51 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @package    PHPUnit_Selenium
- * @author     Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @copyright  2002-2010 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @author     Giorgio Sironi <giorgio.sironi@asp-poli.it>
+ * @copyright  2010-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link       http://www.phpunit.de/
- * @since      File available since Release 1.1.0
+ * @since      File available since Release 1.2.0
  */
 
-require_once 'File/Iterator/Autoload.php';
+/**
+ * Object representing an HTTP response from the Selenium Server.
+ *
+ * @package    PHPUnit_Selenium
+ * @author     Giorgio Sironi <giorgio.sironi@asp-poli.it>
+ * @copyright  2010-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version    Release: @package_version@
+ * @link       http://www.phpunit.de/
+ * @since      Class available since Release 1.2.0
+ */
+class PHPUnit_Extensions_Selenium2TestCase_Response
+{
+    /**
+     * @var array   decoded response
+     */
+    private $jsonResponse;
 
-function phpunit_selenium_autoload($class = NULL) {
-    static $classes = NULL;
-    static $path = NULL;
+    /**
+     * @var array   CURL info for the response.
+     */
+    private $info;
 
-    if ($classes === NULL) {
-        $classes = array(
-          'phpunit_extensions_seleniumtestcase' => '/Extensions/SeleniumTestCase.php',
-          'phpunit_extensions_selenium2testcase' => '/Extensions/Selenium2TestCase.php',
-          'phpunit_extensions_seleniumtestcase_driver' => '/Extensions/SeleniumTestCase/Driver.php',
-          'phpunit_extensions_selenium2testcase_driver' => '/Extensions/Selenium2TestCase/Driver.php',
-          'phpunit_extensions_selenium2testcase_session' => '/Extensions/Selenium2TestCase/Session.php',
-          'phpunit_extensions_selenium2testcase_element' => '/Extensions/Selenium2TestCase/Element.php',
-          'phpunit_extensions_selenium2testcase_response' => '/Extensions/Selenium2TestCase/Response.php'
-        );
-
-        $path = dirname(dirname(dirname(__FILE__)));
+    public function __construct($jsonResponse, $info)
+    {
+        $this->jsonResponse = $jsonResponse;
+        $this->info = $info;
     }
 
-    if ($class === NULL) {
-        $result = array(__FILE__);
-
-        foreach ($classes as $file) {
-            $result[] = $path . $file;
+    public function getValue()
+    {
+        if (isset($this->jsonResponse['value'])) {
+            return $this->jsonResponse['value'];
         }
-
-        return $result;
     }
 
-    $cn = strtolower($class);
-
-    if (isset($classes[$cn])) {
-        $file = $path . $classes[$cn];
-
-        require $file;
+    public function getUrl()
+    {
+        return $this->info['url'];
     }
 }
-
-spl_autoload_register('phpunit_selenium_autoload');
