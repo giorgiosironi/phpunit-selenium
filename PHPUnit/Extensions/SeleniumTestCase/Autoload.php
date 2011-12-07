@@ -50,13 +50,13 @@ function phpunit_selenium_autoload($class = NULL) {
 
     if ($classes === NULL) {
         $classes = array(
-          'phpunit_extensions_seleniumtestcase' => '/Extensions/SeleniumTestCase.php',
           'phpunit_extensions_selenium2testcase' => '/Extensions/Selenium2TestCase.php',
-          'phpunit_extensions_seleniumtestcase_driver' => '/Extensions/SeleniumTestCase/Driver.php',
           'phpunit_extensions_selenium2testcase_driver' => '/Extensions/Selenium2TestCase/Driver.php',
-          'phpunit_extensions_selenium2testcase_session' => '/Extensions/Selenium2TestCase/Session.php',
           'phpunit_extensions_selenium2testcase_element' => '/Extensions/Selenium2TestCase/Element.php',
-          'phpunit_extensions_selenium2testcase_response' => '/Extensions/Selenium2TestCase/Response.php'
+          'phpunit_extensions_selenium2testcase_response' => '/Extensions/Selenium2TestCase/Response.php',
+          'phpunit_extensions_selenium2testcase_session' => '/Extensions/Selenium2TestCase/Session.php',
+          'phpunit_extensions_seleniumtestcase' => '/Extensions/SeleniumTestCase.php',
+          'phpunit_extensions_seleniumtestcase_driver' => '/Extensions/SeleniumTestCase/Driver.php'
         );
 
         $path = dirname(dirname(dirname(__FILE__)));
