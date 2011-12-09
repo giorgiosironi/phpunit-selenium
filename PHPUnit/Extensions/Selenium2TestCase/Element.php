@@ -77,8 +77,17 @@ class PHPUnit_Extensions_Selenium2TestCase_Element
         if (count($arguments) > 0) {
             throw new Exception("There shouldn't be arguments.");
         }
-        $response = $this->curl('GET', $this->url->descend($command)); 
+        $response = $this->curl($this->preferredHttpMethod($command), $this->url->descend($command)); 
         return $response->getValue();
+    }
+
+    private function preferredHttpMethod($command)
+    {
+        if ($command == 'click') {
+            return 'POST';
+        } else {
+            return 'GET';
+        }
     }
 
     private function curl($method, $path, $arguments = null)
