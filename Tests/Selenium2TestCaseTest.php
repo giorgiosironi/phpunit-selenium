@@ -77,11 +77,11 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
     public function testElementSelection()
     {
         $this->url('html/test_open.html');
-        $element = $this->element(array('using' => 'css selector', 'value' => 'body'));
+        $element = $this->element($this->using('css selector')->value('body'));
         $this->assertEquals('This is a test of the open command.', $element->text());
 
         $this->url('html/test_click_page1.html');
-        $link = $this->element(array('using' => 'id', 'value' => 'link'));
+        $link = $this->element($this->using('id')->value('link'));
         $this->assertEquals('Click here for next page', $link->text());
     }
 

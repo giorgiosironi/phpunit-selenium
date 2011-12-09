@@ -105,8 +105,19 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
         return $response->getValue();
     }
 
+    /**
+     * @param string $strategy
+     */
+    public function using($strategy)
+    {
+        return new PHPUnit_Extensions_Selenium2TestCase_ElementCriteria($strategy);
+    }
+
     public function element($jsonParameters)
     {
+        if (is_object($jsonParameters)) {
+            $jsonParameters = $jsonParameters->getArrayCopy();
+        }
         $response = $this->curl('POST', $this->sessionUrl->descend('element'), $jsonParameters);
         $value = $response->getValue();
         $url = $this->sessionUrl->descend('element')->descend($value['ELEMENT']);
