@@ -72,38 +72,46 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
     {
         $this->url('html/test_open.html');
         $this->assertStringEndsWith('html/test_open.html', $this->url());
+    }
+
+    public function testElementSelection()
+    {
+        $this->url('html/test_open.html');
         $element = $this->element(array('using' => 'css selector', 'value' => 'body'));
         $this->assertEquals('This is a test of the open command.', $element->text());
+
+        $this->url('html/test_click_page1.html');
+        $link = $this->element(array('using' => 'id', 'value' => 'link'));
+        $this->assertEquals('Click here for next page', $link->text());
     }
 
     public function testClick()
     {
         $this->url('html/test_click_page1.html');
-        $link = $this->element(array('using' => 'css selector', 'value' => '#link'));
-        $this->assertEquals('Click here for next page', $link->text());
+        $link = $this->element(array('using' => 'id', 'value' => 'link'));
         $link->click();
         $this->assertEquals('Click Page Target', $this->title());
-        $back = $this->element(array('using' => 'css selector', 'value' => '#previousPage'));
+        $back = $this->element(array('using' => 'id', 'value' => 'previousPage'));
         $back->click();
         $this->assertEquals('Click Page 1', $this->title());
 
-        $withImage = $this->element(array('using' => 'css selector', 'value' => '#linkWithEnclosedImage'));
+        $withImage = $this->element(array('using' => 'id', 'value' => 'linkWithEnclosedImage'));
         $withImage->click();
         $this->assertEquals('Click Page Target', $this->title());
-        $back = $this->element(array('using' => 'css selector', 'value' => '#previousPage'));
+        $back = $this->element(array('using' => 'id', 'value' => 'previousPage'));
         $back->click();
 
-        $enclosedImage = $this->element(array('using' => 'css selector', 'value' => '#enclosedImage'));
+        $enclosedImage = $this->element(array('using' => 'id', 'value' => 'enclosedImage'));
         $enclosedImage->click();
         $this->assertEquals('Click Page Target', $this->title());
-        $back = $this->element(array('using' => 'css selector', 'value' => '#previousPage'));
+        $back = $this->element(array('using' => 'id', 'value' => 'previousPage'));
         $back->click();
 
-        $toAnchor = $this->element(array('using' => 'css selector', 'value' => '#linkToAnchorOnThisPage'));
+        $toAnchor = $this->element(array('using' => 'id', 'value' => 'linkToAnchorOnThisPage'));
         $toAnchor->click();
         $this->assertEquals('Click Page 1', $this->title());
 
-        $withOnClick = $this->element(array('using' => 'css selector', 'value' => '#linkWithOnclickReturnsFalse'));
+        $withOnClick = $this->element(array('using' => 'id', 'value' => 'linkWithOnclickReturnsFalse'));
         $withOnClick->click();
         $this->assertEquals('Click Page 1', $this->title());
 
