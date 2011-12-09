@@ -113,12 +113,11 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
         return new PHPUnit_Extensions_Selenium2TestCase_ElementCriteria($strategy);
     }
 
-    public function element($jsonParameters)
+    public function element(PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $jsonParameters)
     {
-        if (is_object($jsonParameters)) {
-            $jsonParameters = $jsonParameters->getArrayCopy();
-        }
-        $response = $this->curl('POST', $this->sessionUrl->descend('element'), $jsonParameters);
+        $response = $this->curl('POST',
+                                $this->sessionUrl->descend('element'),
+                                $jsonParameters->getArrayCopy());
         $value = $response->getValue();
         $url = $this->sessionUrl->descend('element')->descend($value['ELEMENT']);
         return new PHPUnit_Extensions_Selenium2TestCase_Element($this->driver, $url);

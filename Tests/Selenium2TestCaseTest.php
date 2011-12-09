@@ -88,30 +88,30 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
     public function testClick()
     {
         $this->url('html/test_click_page1.html');
-        $link = $this->element(array('using' => 'id', 'value' => 'link'));
+        $link = $this->element($this->using('id')->value('link'));
         $link->click();
         $this->assertEquals('Click Page Target', $this->title());
-        $back = $this->element(array('using' => 'id', 'value' => 'previousPage'));
+        $back = $this->element($this->using('id')->value('previousPage'));
         $back->click();
         $this->assertEquals('Click Page 1', $this->title());
 
-        $withImage = $this->element(array('using' => 'id', 'value' => 'linkWithEnclosedImage'));
+        $withImage = $this->element($this->using('id')->value('linkWithEnclosedImage'));
         $withImage->click();
         $this->assertEquals('Click Page Target', $this->title());
-        $back = $this->element(array('using' => 'id', 'value' => 'previousPage'));
+        $back = $this->element($this->using('id')->value('previousPage'));
         $back->click();
 
-        $enclosedImage = $this->element(array('using' => 'id', 'value' => 'enclosedImage'));
+        $enclosedImage = $this->element($this->using('id')->value('enclosedImage'));
         $enclosedImage->click();
         $this->assertEquals('Click Page Target', $this->title());
-        $back = $this->element(array('using' => 'id', 'value' => 'previousPage'));
+        $back = $this->element($this->using('id')->value('previousPage'));
         $back->click();
 
-        $toAnchor = $this->element(array('using' => 'id', 'value' => 'linkToAnchorOnThisPage'));
+        $toAnchor = $this->element($this->using('id')->value('linkToAnchorOnThisPage'));
         $toAnchor->click();
         $this->assertEquals('Click Page 1', $this->title());
 
-        $withOnClick = $this->element(array('using' => 'id', 'value' => 'linkWithOnclickReturnsFalse'));
+        $withOnClick = $this->element($this->using('id')->value('linkWithOnclickReturnsFalse'));
         $withOnClick->click();
         $this->assertEquals('Click Page 1', $this->title());
 
