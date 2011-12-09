@@ -83,13 +83,36 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
     private $browserUrl;
 
     /**
+     * @var boolean
+     */
+    private static $shareSession;
+
+    /**
+     * @var PHPUnit_Extensions_Selenium2TestCase_URL
+     */
+    private static $sharedSessionUrl;
+
+    /**
+     * @param boolean
+     */
+    public static function shareSession($shareSession)
+    {
+        self::$shareSession = $shareSession;
+    }
+
+    /**
      * @throws RuntimeException
      */
     protected function runTest()
     {
         $driver = $this->getDriver();
 
-        $this->session = $driver->startSession($this->browser, $this->browserUrl);
+        if (self::$shareSession and self::$sharedSessionUrl !== null) {
+            $this->session = new PHPUnit_Extensions_Selenium2TestCase_Session($driver, self::$sharedSessionUrl, $this->browserUrl);
+        } else {
+            $this->session = $driver->startSession($this->browser, $this->browserUrl);
+            self::$sharedSessionUrl = $this->session->getSessionUrl();
+        }
 
         parent::runTest();
 
@@ -97,7 +120,14 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
             $this->fail(implode("\n", $this->verificationErrors));
         }
 
-        $this->session->stop();
+        if (!self::$shareSession) {
+            $this->session->stop();
+        }
+    }
+
+    public function onNotSuccessfulTest(Exception $e)
+    {
+        self::$sharedSessionUrl = null;
     }
     
     /**

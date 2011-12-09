@@ -81,6 +81,14 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
         $this->baseUrl = $baseUrl;
     }
 
+    /**
+     * @return PHPUnit_Extensions_Selenium2TestCase_URL
+     */
+    public function getSessionUrl()
+    {
+        return $this->sessionUrl;
+    }
+
     public function stop()
     {
         $this->curl('DELETE', $this->sessionUrl);
