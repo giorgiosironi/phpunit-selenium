@@ -43,8 +43,6 @@
  */
 
 /**
- * Object representing a DOM element.
- *
  * @package    PHPUnit_Selenium
  * @author     Giorgio Sironi <giorgio.sironi@asp-poli.it>
  * @copyright  2010-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
@@ -53,45 +51,22 @@
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.0
  */
-class PHPUnit_Extensions_Selenium2TestCase_Element
+class Extensions_Selenium2TestCase_URLTest extends PHPUnit_Framework_TestCase
 {
-    /**
-     * @var PHPUnit_Extensions_Selenium2TestCase_Driver
-     */
-    private $driver;
-
-    /**
-     * @var string  the API URL for this element,
-     */
-    private $url;
-
-    public function __construct($driver,
-                                PHPUnit_Extensions_Selenium2TestCase_URL $url)
+    public function testDescendsAnURLWithAnAdditionalFolder()
     {
-        $this->driver = $driver;
-        $this->url = $url;
+        $this->assertEquals($this->url('/posts/1'),
+                            $this->url('/posts')->descend('1'));
     }
 
-    public function __call($command, $arguments)
+    public function testTransformsCamelCaseIntoWhileAddingACommandToAnURL()
     {
-        if (count($arguments) > 0) {
-            throw new Exception("There shouldn't be arguments.");
-        }
-        $response = $this->curl($this->preferredHttpMethod($command), $this->url->addCommand($command)); 
-        return $response->getValue();
+        $this->assertEquals($this->url('/posts/alert_text'),
+                            $this->url('/posts')->addCommand('alertText'));
     }
 
-    private function preferredHttpMethod($command)
+    private function url($value)
     {
-        if ($command == 'click') {
-            return 'POST';
-        } else {
-            return 'GET';
-        }
-    }
-
-    private function curl($method, $path, $arguments = null)
-    {
-        return $this->driver->curl($method, $path, $arguments);
+        return new PHPUnit_Extensions_Selenium2TestCase_URL($value);
     }
 }

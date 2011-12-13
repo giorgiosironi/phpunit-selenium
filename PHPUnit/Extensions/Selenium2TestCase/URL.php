@@ -86,6 +86,18 @@ final class PHPUnit_Extensions_Selenium2TestCase_URL
         return new self($newValue);
     }
 
+    public function addCommand($command)
+    {
+        return $this->descend($this->camelCaseToUnderScores($command));
+    }
+
+    private function camelCaseToUnderScores($string)
+    {
+        $string = preg_replace('/([A-Z]{1,1})/', ' \1', $string);
+        $string = strtolower($string);
+        return str_replace(' ', '_', $string);
+    }
+
     public static function fromHostAndPort($host, $port)
     {
         return new self("http://{$host}:{$port}");

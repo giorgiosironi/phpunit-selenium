@@ -42,8 +42,6 @@
  * @since      File available since Release 1.0.0
  */
 
-require_once 'PHPUnit/Extensions/SeleniumTestCase.php';
-
 /**
  * Tests for PHPUnit_Extensions_SeleniumTestCase.
  *
@@ -116,4 +114,29 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $this->assertEquals('Click Page 1', $this->title());
 
     }
+
+    public function testClicksOnJavaScriptHref()
+    {
+        $this->url('html/test_click_javascript_page.html');
+        $this->clickOnElement('link');
+        $this->assertEquals('link clicked', $this->alertText());
+
+        /*
+        $this->click('linkWithMultipleJavascriptStatements');
+        $this->assertEquals('alert1', $this->getAlert());
+        $this->assertEquals('alert2', $this->getAlert());
+        $this->assertEquals('alert3', $this->getAlert());
+
+        $this->click('linkWithJavascriptVoidHref');
+        $this->assertEquals('onclick', $this->getAlert());
+        $this->assertEquals('Click Page 1', $this->getTitle());
+
+        $this->click('linkWithOnclickReturnsFalse');
+        $this->assertEquals('Click Page 1', $this->getTitle());
+
+        $this->click('enclosedImage');
+        $this->assertEquals('enclosedImage clicked', $this->getAlert());
+        */
+    }
+
 }

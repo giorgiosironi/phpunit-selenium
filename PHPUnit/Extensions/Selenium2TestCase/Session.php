@@ -98,15 +98,15 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
     {
         if (count($arguments) == 1) {
             if (is_string($arguments[0])) {
-                $jsonParameters = array('url' => $this->baseUrl->descend($arguments[0])->getValue()); 
+                $jsonParameters = array('url' => $this->baseUrl->addCommand($arguments[0])->getValue()); 
             } else if (is_array($arguments[0])) {
                 $jsonParameters = $arguments[0];
             } else {
                 throw new Exception("The argument should be an associative array or a single string.");
             }
-            $response = $this->curl('POST', $this->sessionUrl->descend($command), $jsonParameters);
+            $response = $this->curl('POST', $this->sessionUrl->addCommand($command), $jsonParameters);
         } else if (count($arguments) == 0) {
-            $response = $this->curl('GET', $this->sessionUrl->descend($command)); 
+            $response = $this->curl('GET', $this->sessionUrl->addCommand($command)); 
         } else {
             throw new Exception('You cannot call a command with multiple method arguments.');
         }
@@ -129,6 +129,11 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
         $value = $response->getValue();
         $url = $this->sessionUrl->descend('element')->descend($value['ELEMENT']);
         return new PHPUnit_Extensions_Selenium2TestCase_Element($this->driver, $url);
+    }
+
+    public function clickOnElement($id)
+    {
+        return $this->element($this->using('id')->value($id))->click();
     }
 
     private function curl($method, $path, $arguments = null)
