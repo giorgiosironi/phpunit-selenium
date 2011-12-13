@@ -106,11 +106,24 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
             }
             $response = $this->curl('POST', $this->sessionUrl->addCommand($command), $jsonParameters);
         } else if (count($arguments) == 0) {
-            $response = $this->curl('GET', $this->sessionUrl->addCommand($command)); 
+            $response = $this->curl($this->preferredHttpMethod($command),
+                                    $this->sessionUrl->addCommand($command)); 
         } else {
             throw new Exception('You cannot call a command with multiple method arguments.');
         }
         return $response->getValue();
+    }
+
+    /**
+     * @return string
+     */
+    private function preferredHttpMethod($command)
+    {
+        if ($command == 'acceptAlert' || $command == 'dismissAlert') {
+            return 'POST';
+        } else {
+            return 'GET';
+        }
     }
 
     /**

@@ -121,11 +121,14 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $this->clickOnElement('link');
         $this->assertEquals('link clicked', $this->alertText());
 
-        /*
-        $this->click('linkWithMultipleJavascriptStatements');
-        $this->assertEquals('alert1', $this->getAlert());
-        $this->assertEquals('alert2', $this->getAlert());
-        $this->assertEquals('alert3', $this->getAlert());
+        $this->markTestIncomplete('Non deterministic.');
+        $this->clickOnElement('linkWithMultipleJavascriptStatements');
+        $this->assertEquals('alert1', $this->alertText());
+        $this->acceptAlert();
+        $this->assertEquals('alert2', $this->alertText());
+        $this->dismissAlert();
+        $this->assertEquals('alert3', $this->alertText());
+        return;
 
         $this->click('linkWithJavascriptVoidHref');
         $this->assertEquals('onclick', $this->getAlert());
@@ -136,7 +139,6 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
 
         $this->click('enclosedImage');
         $this->assertEquals('enclosedImage clicked', $this->getAlert());
-        */
     }
 
 }
