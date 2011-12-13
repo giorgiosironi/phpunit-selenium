@@ -74,4 +74,11 @@ class Extensions_Selenium2TestCaseFailuresTest extends PHPUnit_Extensions_Seleni
         $this->inexistentSessionCommand();
     }
 
+    /**
+     * @expectedException DomainException
+     */
+    public function testExceptionsAreReThrownOnNotSuccessfulTests()
+    {
+        $this->onNotSuccessfulTest(new DomainException);
+    }
 }

@@ -128,6 +128,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
     public function onNotSuccessfulTest(Exception $e)
     {
         self::$sharedSessionUrl = null;
+        parent::onNotSuccessfulTest($e);
     }
     
     /**

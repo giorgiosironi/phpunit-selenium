@@ -73,6 +73,11 @@ final class PHPUnit_Extensions_Selenium2TestCase_URL
         return $this->value;
     }
 
+    public function __toString()
+    {
+        return $this->getValue();
+    }
+
     public function descend($addition)
     {
         $newValue = rtrim($this->value, '/')
