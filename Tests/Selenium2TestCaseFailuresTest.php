@@ -39,11 +39,11 @@
  * @copyright  2010-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link       http://www.phpunit.de/
- * @since      File available since Release 1.2.0
+ * @since      File available since Release 1.1.2
  */
 
 /**
- * Implementation of the Selenium RC client/server protocol.
+ * Tests for PHPUnit_Extensions_SeleniumTestCase.
  *
  * @package    PHPUnit_Selenium
  * @author     Giorgio Sironi <giorgio.sironi@asp-poli.it>
@@ -53,58 +53,25 @@
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.0
  */
-class PHPUnit_Extensions_Selenium2TestCase_Driver
+class Extensions_Selenium2TestCaseFailuresTest extends PHPUnit_Extensions_Selenium2TestCase
 {
-    public function __construct(PHPUnit_Extensions_Selenium2TestCase_URL $seleniumServerUrl)
+    public function setUp()
     {
-        $this->seleniumServerUrl = $seleniumServerUrl;
-    }
-
-    public function startSession($browser, PHPUnit_Extensions_Selenium2TestCase_URL $browserUrl)
-    {
-        $sessionCreation = $this->seleniumServerUrl->descend("/wd/hub/session");
-        $response = $this->curl('POST', $sessionCreation, array(
-            'desiredCapabilities' => array(
-                'browserName' => $browser
-            )
-        ));
-        $sessionPrefix = $response->getURL();
-        return new PHPUnit_Extensions_Selenium2TestCase_Session($this, $sessionPrefix, $browserUrl);
+        $this->setHost(PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_HOST);
+        $this->setPort((int)PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_PORT);
+        $this->setBrowser(PHPUNIT_TESTSUITE_EXTENSION_SELENIUM2_BROWSER);
+        if (!defined('PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL')) {
+            $this->markTestSkipped("You must serve the selenium-1-tests folder from an HTTP server and configure the PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL constant accordingly.");
+        }
+        $this->setBrowserUrl(PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL);
     }
 
     /**
-     * Performs an HTTP request to the Selenium 2 server.
-     *
-     * @param string $method      'GET'|'POST'|'DELETE'|...
-     * @param string $url
-     * @param array $params       JSON parameters for POST requests
+     * @expectedException BadMethodCallException
      */
-    public function curl($http_method,
-                         PHPUnit_Extensions_Selenium2TestCase_URL $url,
-                         $params = null) {
-        $curl = curl_init($url->getValue());
-        curl_setopt($curl, CURLOPT_TIMEOUT, 60);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_HTTPHEADER,
-                    array('application/json;charset=UTF-8'));
-
-        if ($http_method === 'POST') {
-            curl_setopt($curl, CURLOPT_POST, true);
-            if ($params && is_array($params)) {
-               curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($params));
-            }
-            curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
-        } else if ($http_method == 'DELETE') {
-            curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'DELETE');
-        }
-
-        $rawResponse = trim(curl_exec($curl));
-        $info = curl_getinfo($curl);
-        if ($info['http_code'] == 404) {
-            throw new BadMethodCallException("The command $url is not recognized by the server.");
-        }
-        curl_close($curl);
-        $content = json_decode($rawResponse, true);
-        return new PHPUnit_Extensions_Selenium2TestCase_Response($content, $info);
+    public function testInexistentCommandCauseTheTestToFail()
+    {
+        $this->inexistentSessionCommand();
     }
+
 }
