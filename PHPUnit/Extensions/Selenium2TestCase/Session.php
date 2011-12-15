@@ -139,6 +139,21 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
         return new PHPUnit_Extensions_Selenium2TestCase_ElementCriteria($strategy);
     }
 
+    /**
+     * @param string $string
+     */
+    public function textValue($string)
+    {
+        
+        $characters = array();
+        for ($i = 0; $i < strlen($string); $i++) {
+            $characters[] = $string{$i};
+        }
+        return array(
+            'value' => $characters
+        );
+    }
+
     public function element(PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $jsonParameters)
     {
         $response = $this->curl('POST',
