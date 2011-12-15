@@ -55,6 +55,7 @@ function phpunit_selenium_autoload($class = NULL) {
           'phpunit_extensions_selenium2testcase_element' => '/Extensions/Selenium2TestCase/Element.php',
           'phpunit_extensions_selenium2testcase_elementcommand' => '/Extensions/Selenium2TestCase/ElementCommand.php',
           'phpunit_extensions_selenium2testcase_elementcommand_click' => '/Extensions/Selenium2TestCase/ElementCommand/Click.php',
+          'phpunit_extensions_selenium2testcase_elementcommand_genericaccessor' => '/Extensions/Selenium2TestCase/ElementCommand/GenericAccessor.php',
           'phpunit_extensions_selenium2testcase_elementcommand_value' => '/Extensions/Selenium2TestCase/ElementCommand/Value.php',
           'phpunit_extensions_selenium2testcase_elementcriteria' => '/Extensions/Selenium2TestCase/ElementCriteria.php',
           'phpunit_extensions_selenium2testcase_response' => '/Extensions/Selenium2TestCase/Response.php',
