@@ -65,12 +65,18 @@ class PHPUnit_Extensions_Selenium2TestCase_Element
      */
     private $url;
 
+    /**
+     * @var array   instances of 
+     *              PHPUnit_Extensions_Selenium2TestCase_ElementCommand
+     */
+    private $commands;
+
     public function __construct($driver,
                                 PHPUnit_Extensions_Selenium2TestCase_URL $url)
     {
         $this->driver = $driver;
         $this->url = $url;
-        $this->specialCommands = array(
+        $this->commands = array(
             'click' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Click',
             'value' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Value',
             'text' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor'
@@ -93,13 +99,12 @@ class PHPUnit_Extensions_Selenium2TestCase_Element
 
     private function preferredHttpMethod($command, $jsonParameters)
     {
-        if (isset($this->specialCommands[$command])) {
-            $className = $this->specialCommands[$command];
+        if (isset($this->commands[$command])) {
+            $className = $this->commands[$command];
             $click = new $className($jsonParameters);
             return $click->httpMethod();
         }
         throw new Exception('Not supported yet.');
-        return 'GET';
     }
 
     private function curl($method, $path, $arguments = null)
