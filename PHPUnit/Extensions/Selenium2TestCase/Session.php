@@ -133,6 +133,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
 
     /**
      * @param string $strategy
+     * @return PHPUnit_Extensions_Selenium2TestCase_ElementCriteria
      */
     public function using($strategy)
     {
@@ -141,6 +142,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
 
     /**
      * @param string $string
+     * @return array    to pass to an element's value() method
      */
     public function textValue($string)
     {
@@ -154,6 +156,9 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
         );
     }
 
+    /**
+     * @return PHPUnit_Extensions_Selenium2TestCase_ElementCriteria
+     */
     public function element(PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $jsonParameters)
     {
         $response = $this->curl('POST',
@@ -164,6 +169,9 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
         return new PHPUnit_Extensions_Selenium2TestCase_Element($this->driver, $url);
     }
 
+    /**
+     * @param string $id    id attribute
+     */
     public function clickOnElement($id)
     {
         return $this->element($this->using('id')->value($id))->click();
