@@ -74,24 +74,58 @@ class PHPUnit_Extensions_Selenium2TestCase_Element
 
     public function __call($command, $arguments)
     {
-        if (count($arguments) > 0) {
-            throw new Exception("There shouldn't be arguments.");
+        if (count($arguments) > 1) {
+            throw new InvalidArgumentException("At most 1 argument can be passed.");
         }
-        $response = $this->curl($this->preferredHttpMethod($command), $this->url->addCommand($command)); 
+        if ($arguments === array()) {
+            $jsonParameters = null;
+        } else {
+            $jsonParameters = $arguments[0];
+        }
+        $response = $this->curl($this->preferredHttpMethod($command, $jsonParameters), $this->url->addCommand($command), $jsonParameters); 
         return $response->getValue();
     }
 
-    private function preferredHttpMethod($command)
+    private function preferredHttpMethod($command, $jsonParameters)
     {
         if ($command == 'click') {
-            return 'POST';
-        } else {
-            return 'GET';
+            $click = new ClickCommand();
+            return $click->httpMethod();
         }
+        if ($command == 'value') {
+            $value = new ValueCommand($jsonParameters);
+            return $value->httpMethod();
+        } 
+        return 'GET';
     }
 
     private function curl($method, $path, $arguments = null)
     {
         return $this->driver->curl($method, $path, $arguments);
+    }
+}
+
+class ClickCommand
+{
+    public function httpMethod()
+    {
+        return 'POST';
+    }
+}
+
+class ValueCommand
+{
+    public function __construct($jsonParameters)
+    {
+        $this->jsonParameters = $jsonParameters;
+    }
+
+    public function httpMethod()
+    {
+        if ($this->jsonParameters) {
+            return 'POST';
+        } else {
+            return 'GET';
+        }
     }
 }
