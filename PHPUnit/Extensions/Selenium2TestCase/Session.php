@@ -81,6 +81,11 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
         $this->baseUrl = $baseUrl;
     }
 
+    public function __destruct()
+    {
+        $this->stop();
+    }
+
     /**
      * @return PHPUnit_Extensions_Selenium2TestCase_URL
      */
