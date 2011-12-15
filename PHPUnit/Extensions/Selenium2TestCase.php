@@ -107,7 +107,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
     {
         $driver = $this->getDriver();
 
-        if (self::$shareSession and self::$sharedSessionUrl !== null) {
+        if (self::$shareSession and self::$sharedSessionUrl !== NULL) {
             $this->session = new PHPUnit_Extensions_Selenium2TestCase_Session($driver, self::$sharedSessionUrl, $this->browserUrl);
         } else {
             $this->session = $driver->startSession($this->browser, $this->browserUrl);
@@ -127,10 +127,10 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
 
     public function onNotSuccessfulTest(Exception $e)
     {
-        self::$sharedSessionUrl = null;
+        self::$sharedSessionUrl = NULL;
         parent::onNotSuccessfulTest($e);
     }
-    
+
     /**
      * Delegate method calls to the driver.
      *

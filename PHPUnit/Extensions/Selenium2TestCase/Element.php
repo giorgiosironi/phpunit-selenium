@@ -89,11 +89,11 @@ class PHPUnit_Extensions_Selenium2TestCase_Element
             throw new InvalidArgumentException("At most 1 argument can be passed.");
         }
         if ($arguments === array()) {
-            $jsonParameters = null;
+            $jsonParameters = NULL;
         } else {
             $jsonParameters = $arguments[0];
         }
-        $response = $this->curl($this->preferredHttpMethod($command, $jsonParameters), $this->url->addCommand($command), $jsonParameters); 
+        $response = $this->curl($this->preferredHttpMethod($command, $jsonParameters), $this->url->addCommand($command), $jsonParameters);
         return $response->getValue();
     }
 
@@ -107,7 +107,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Element
         throw new Exception('Not supported yet.');
     }
 
-    private function curl($method, $path, $arguments = null)
+    private function curl($method, $path, $arguments = NULL)
     {
         return $this->driver->curl($method, $path, $arguments);
     }

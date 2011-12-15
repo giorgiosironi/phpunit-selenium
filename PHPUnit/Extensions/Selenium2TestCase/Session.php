@@ -103,7 +103,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
     {
         if (count($arguments) == 1) {
             if (is_string($arguments[0])) {
-                $jsonParameters = array('url' => $this->baseUrl->addCommand($arguments[0])->getValue()); 
+                $jsonParameters = array('url' => $this->baseUrl->addCommand($arguments[0])->getValue());
             } else if (is_array($arguments[0])) {
                 $jsonParameters = $arguments[0];
             } else {
@@ -112,7 +112,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
             $response = $this->curl('POST', $this->sessionUrl->addCommand($command), $jsonParameters);
         } else if (count($arguments) == 0) {
             $response = $this->curl($this->preferredHttpMethod($command),
-                                    $this->sessionUrl->addCommand($command)); 
+                                    $this->sessionUrl->addCommand($command));
         } else {
             throw new Exception('You cannot call a command with multiple method arguments.');
         }
@@ -146,9 +146,8 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
      */
     public function textValue($string)
     {
-        
         $characters = array();
-        for ($i = 0; $i < strlen($string); $i++) {
+        for ($i = 0, $length = strlen($string); $i < $length; $i++) {
             $characters[] = $string{$i};
         }
         return array(
@@ -177,7 +176,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
         return $this->element($this->using('id')->value($id))->click();
     }
 
-    private function curl($method, $path, $arguments = null)
+    private function curl($method, $path, $arguments = NULL)
     {
         return $this->driver->curl($method, $path, $arguments);
     }

@@ -81,19 +81,20 @@ class PHPUnit_Extensions_Selenium2TestCase_Driver
      */
     public function curl($http_method,
                          PHPUnit_Extensions_Selenium2TestCase_URL $url,
-                         $params = null) {
+                         $params = NULL)
+    {
         $curl = curl_init($url->getValue());
         curl_setopt($curl, CURLOPT_TIMEOUT, 60);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($curl, CURLOPT_HTTPHEADER,
                     array('application/json;charset=UTF-8'));
 
         if ($http_method === 'POST') {
-            curl_setopt($curl, CURLOPT_POST, true);
+            curl_setopt($curl, CURLOPT_POST, TRUE);
             if ($params && is_array($params)) {
-               curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($params));
+                curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($params));
             }
-            curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+            curl_setopt($curl, CURLOPT_FOLLOWLOCATION, TRUE);
         } else if ($http_method == 'DELETE') {
             curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'DELETE');
         }
@@ -104,7 +105,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Driver
             throw new BadMethodCallException("The command $url is not recognized by the server.");
         }
         curl_close($curl);
-        $content = json_decode($rawResponse, true);
+        $content = json_decode($rawResponse, TRUE);
         return new PHPUnit_Extensions_Selenium2TestCase_Response($content, $info);
     }
 }
