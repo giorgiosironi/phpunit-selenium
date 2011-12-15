@@ -120,25 +120,24 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $this->url('html/test_click_javascript_page.html');
         $this->clickOnElement('link');
         $this->assertEquals('link clicked', $this->alertText());
+        $this->markTestIncomplete("Should guarantee alerts to be checked in the right order and be dismissed; should reset the session in case alerts are still displayed as they would block the next test.");
 
-        $this->markTestIncomplete('Non deterministic.');
         $this->clickOnElement('linkWithMultipleJavascriptStatements');
         $this->assertEquals('alert1', $this->alertText());
         $this->acceptAlert();
         $this->assertEquals('alert2', $this->alertText());
         $this->dismissAlert();
         $this->assertEquals('alert3', $this->alertText());
-        return;
 
-        $this->click('linkWithJavascriptVoidHref');
-        $this->assertEquals('onclick', $this->getAlert());
-        $this->assertEquals('Click Page 1', $this->getTitle());
+        $this->clickOnElement('linkWithJavascriptVoidHref');
+        $this->assertEquals('onclick', $this->alertText());
+        $this->assertEquals('Click Page 1', $this->title());
 
-        $this->click('linkWithOnclickReturnsFalse');
-        $this->assertEquals('Click Page 1', $this->getTitle());
+        $this->clickOnElement('linkWithOnclickReturnsFalse');
+        $this->assertEquals('Click Page 1', $this->title());
 
-        $this->click('enclosedImage');
-        $this->assertEquals('enclosedImage clicked', $this->getAlert());
+        $this->clickOnElement('enclosedImage');
+        $this->assertEquals('enclosedImage clicked', $this->alertText());
     }
 
 }
