@@ -144,7 +144,6 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
     {
         $this->url('html/test_type_page1.html');
         $usernameInput = $this->element($this->using('name')->value('username'));
-        //$usernameInput->value(array('value' => array('u', 's')));
         $usernameInput->value($this->textValue('us'));
         $this->assertEquals('us', $usernameInput->value());
         return;
