@@ -43,7 +43,7 @@
  */
 
 /**
- * Object representing a DOM element.
+ * Base class for implementing commands with special semantics.
  *
  * @package    PHPUnit_Selenium
  * @author     Giorgio Sironi <giorgio.sironi@asp-poli.it>
@@ -53,55 +53,11 @@
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.0
  */
-class PHPUnit_Extensions_Selenium2TestCase_Element
+class PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Click
+    extends PHPUnit_Extensions_Selenium2TestCase_ElementCommand
 {
-    /**
-     * @var PHPUnit_Extensions_Selenium2TestCase_Driver
-     */
-    private $driver;
-
-    /**
-     * @var string  the API URL for this element,
-     */
-    private $url;
-
-    public function __construct($driver,
-                                PHPUnit_Extensions_Selenium2TestCase_URL $url)
+    public function httpMethod()
     {
-        $this->driver = $driver;
-        $this->url = $url;
-        $this->specialCommands = array(
-            'click' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Click',
-            'value' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Value'
-        );
-    }
-
-    public function __call($command, $arguments)
-    {
-        if (count($arguments) > 1) {
-            throw new InvalidArgumentException("At most 1 argument can be passed.");
-        }
-        if ($arguments === array()) {
-            $jsonParameters = null;
-        } else {
-            $jsonParameters = $arguments[0];
-        }
-        $response = $this->curl($this->preferredHttpMethod($command, $jsonParameters), $this->url->addCommand($command), $jsonParameters); 
-        return $response->getValue();
-    }
-
-    private function preferredHttpMethod($command, $jsonParameters)
-    {
-        if (isset($this->specialCommands[$command])) {
-            $className = $this->specialCommands[$command];
-            $click = new $className($jsonParameters);
-            return $click->httpMethod();
-        }
-        return 'GET';
-    }
-
-    private function curl($method, $path, $arguments = null)
-    {
-        return $this->driver->curl($method, $path, $arguments);
+        return 'POST';
     }
 }
