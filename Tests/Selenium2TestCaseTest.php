@@ -140,4 +140,18 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $this->assertEquals('enclosedImage clicked', $this->alertText());
     }
 
+    public function testTypingViaTheKeyboard()
+    {
+        $this->url('html/test_type_page1.html');
+        $usernameInput = $this->element($this->using('name')->value('username'));
+        $usernameInput->value(array('value' => array('u', 's')));
+        $this->assertEquals('us', $usernameInput->value());
+        return;
+        $this->type('password', 'testUserPassword');
+        $this->assertEquals('testUserPassword', $this->getValue('password'));
+
+        $this->click('submitButton');
+        $this->waitForPageToLoad(500);
+        $this->assertRegExp('/Welcome, TestUser!/', $this->getText('//h2'));
+    }
 }
