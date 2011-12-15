@@ -43,7 +43,7 @@
  */
 
 /**
- * Object representing an URL and allowing easy concatenation.
+ * URL Value Object allowing easy concatenation.
  *
  * @package    PHPUnit_Selenium
  * @author     Giorgio Sironi <giorgio.sironi@asp-poli.it>

@@ -43,7 +43,7 @@
  */
 
 /**
- * Implementation of the Selenium RC client/server protocol.
+ * Browser session for Selenium 2: main point of entry for functionality.
  *
  * @package    PHPUnit_Selenium
  * @author     Giorgio Sironi <giorgio.sironi@asp-poli.it>

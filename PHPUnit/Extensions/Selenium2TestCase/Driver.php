@@ -43,7 +43,7 @@
  */
 
 /**
- * Implementation of the Selenium RC client/server protocol.
+ * Driver for creating browser session with Selenium 2 (WebDriver API).
  *
  * @package    PHPUnit_Selenium
  * @author     Giorgio Sironi <giorgio.sironi@asp-poli.it>

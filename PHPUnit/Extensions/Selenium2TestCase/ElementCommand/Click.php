@@ -43,7 +43,7 @@
  */
 
 /**
- * Base class for implementing commands with special semantics.
+ * Click on a DOM element.
  *
  * @package    PHPUnit_Selenium
  * @author     Giorgio Sironi <giorgio.sironi@asp-poli.it>

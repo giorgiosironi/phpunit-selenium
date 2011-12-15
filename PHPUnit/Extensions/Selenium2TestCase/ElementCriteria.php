@@ -43,7 +43,7 @@
  */
 
 /**
- * Object representing a DOM element.
+ * Conditions for selecting a DOM element.
  *
  * @package    PHPUnit_Selenium
  * @author     Giorgio Sironi <giorgio.sironi@asp-poli.it>
@@ -52,6 +52,7 @@
  * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.0
+ * @see        http://code.google.com/p/selenium/wiki/JsonWireProtocol#/session/:sessionId/element
  */
 class PHPUnit_Extensions_Selenium2TestCase_ElementCriteria extends ArrayObject
 {

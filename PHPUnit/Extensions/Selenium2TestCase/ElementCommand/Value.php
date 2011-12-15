@@ -43,7 +43,7 @@
  */
 
 /**
- * Base class for implementing commands with special semantics.
+ * Get and set the element's value attribute.
  *
  * @package    PHPUnit_Selenium
  * @author     Giorgio Sironi <giorgio.sironi@asp-poli.it>
