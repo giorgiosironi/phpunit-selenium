@@ -898,8 +898,6 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
 
             default: {
                 if (!in_array($command, $this->userCommands)) {
-                    $this->stop();
-
                     throw new BadMethodCallException(
                       "Method $command not defined."
                     );
@@ -958,8 +956,6 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
         curl_close($curl);
 
         if ($info['http_code'] != 200) {
-            $this->stop();
-
             throw new RuntimeException(
               'The response from the Selenium RC server is invalid: ' .
               $response
