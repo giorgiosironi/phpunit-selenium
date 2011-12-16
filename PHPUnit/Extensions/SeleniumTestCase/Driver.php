@@ -1045,6 +1045,10 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
             throw $e;
         }
 
+        if (strstr($result, 'ERROR: ') == $result) {
+            throw new RuntimeException($result);
+        }
+
         return (strlen($result) > 3) ? substr($result, 3) : '';
     }
 

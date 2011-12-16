@@ -114,4 +114,17 @@ class Extensions_SeleniumTestCaseFailuresTest extends PHPUnit_Extensions_Seleniu
         }
         $this->fail('An exception should have been raised by now.');
     }
+
+    /**
+     * Issue #71.
+     */
+    public function testErrorMessagesFromTheDriverAreNotCutted()
+    {
+        try {
+            $result = $this->getValue('inexistentSelector');
+            $this->fail('Should have raised an exception.');
+        } catch (RuntimeException $e) {
+            $this->assertEquals('ERROR: Element inexistentSelector not found', $e->getMessage());
+        }
+    }
 }
