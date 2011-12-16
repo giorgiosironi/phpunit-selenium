@@ -3,6 +3,14 @@ PHPUnit_Selenium 1.1
 
 This is the list of changes for the PHPUnit_Selenium 1.1 release series.
 
+PHPUnit_Selenium 1.1.3
+----------------------
+
+* Fixed #71: errors in the result string are detected and raised as exceptions
+* Completed #30: shared session is terminated at the end of the PHPUnit proces
+* Fixed #65: when required, a screenshot is captured in the case of any except
+* Fixed #80. Removed capability of automated stopping from the Driver: it is a
+
 PHPUnit_Selenium 1.1.2
 ----------------------
 
