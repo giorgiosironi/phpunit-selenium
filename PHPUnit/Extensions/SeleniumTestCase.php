@@ -1069,38 +1069,34 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
      */
     protected function onNotSuccessfulTest(Exception $e)
     {
-        if ($e instanceof PHPUnit_Framework_ExpectationFailedException) {
-            $buffer  = 'Current URL: ' . $this->drivers[0]->getLocation() .
-                       "\n";
+        $buffer  = 'Current URL: ' . $this->drivers[0]->getLocation() .
+                   "\n";
 
-            if ($this->captureScreenshotOnFailure &&
-                !empty($this->screenshotPath) &&
-                !empty($this->screenshotUrl)) {
-                $filename = $this->getScreenshotPath() . $this->testId . '.png';
+        if ($this->captureScreenshotOnFailure &&
+            !empty($this->screenshotPath) &&
+            !empty($this->screenshotUrl)) {
+            $filename = $this->getScreenshotPath() . $this->testId . '.png';
 
-                $this->drivers[0]->captureEntirePageScreenshot($filename);
+            $this->drivers[0]->captureEntirePageScreenshot($filename);
 
-                $buffer .= 'Screenshot: ' . $this->screenshotUrl . '/' .
-                           $this->testId . ".png\n";
-            }
+            $buffer .= 'Screenshot: ' . $this->screenshotUrl . '/' .
+                       $this->testId . ".png\n";
         }
 
         $this->stopSession();
         self::$sessionId = NULL;
 
-        if ($e instanceof PHPUnit_Framework_ExpectationFailedException) {
-            if (is_object($e->getComparisonFailure())) {
-                $message = $e->getComparisonFailure()->toString();
-            } else {
-                $message = $e->getMessage();
-            }
-
-            $buffer .= "\n" . $message;
-
-            throw new PHPUnit_Framework_ExpectationFailedException($buffer);
+        if ($e instanceof PHPUnit_Framework_ExpectationFailedException
+         && is_object($e->getComparisonFailure())) {
+            $message = $e->getComparisonFailure()->toString();
+        } else {
+            $message = $e->getMessage();
         }
 
-        throw $e;
+        $buffer .= "\n" . $message;
+
+        $exceptionClass = get_class($e);
+        throw new $exceptionClass($buffer);
     }
 
     /**

@@ -105,9 +105,9 @@ class Extensions_SeleniumTestCaseFailuresTest extends PHPUnit_Extensions_Seleniu
         $this->screenshotUrl = 'http://...';
 
         try {
-            $exception = new PHPUnit_Framework_ExpectationFailedException("Some error.");
+            $exception = new BadMethodCallException();
             $this->onNotSuccessfulTest($exception);
-        } catch (PHPUnit_Framework_ExpectationFailedException $e) {
+        } catch (BadMethodCallException $e) {
             $this->assertTrue(file_exists($this->screenshotPath));
             $this->assertTrue((bool) strstr($e->getMessage(), 'Screenshot: http://.../'));
             return;
