@@ -372,6 +372,15 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
     }
 
     /**
+     * Stops any shared session still open at the end of the current
+     * PHPUnit process.
+     */
+    public function __destruct()
+    {
+        $this->stopSession();
+    }
+
+    /**
      * @param  string $className
      * @return PHPUnit_Framework_TestSuite
      */
