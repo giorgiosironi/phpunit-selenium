@@ -1,4 +1,5 @@
 language: php
 php:
   - 5.3
-script: "phpunit Tests/SuiteBuildingTest.php"
+before_script: before_script.sh
+script: "php run-phpunit.php"
