@@ -1,3 +1,5 @@
+git submodule init
+git submodule update
 cd selenium-1-tests
 python -m SimpleHTTPServer 8080 &
 cd ..
