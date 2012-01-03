@@ -1,0 +1,30 @@
+[submodule "vendor/phpunit"]
+	path = vendor/phpunit
+	url = https://github.com/sebastianbergmann/phpunit
+[submodule "vendor/php-code-coverage"]
+	path = vendor/php-code-coverage
+	url = https://github.com/sebastianbergmann/php-code-coverage
+[submodule "vendor/php-file-iterator"]
+	path = vendor/php-file-iterator
+	url = https://github.com/sebastianbergmann/php-file-iterator
+[submodule "vendor/php-text-template"]
+	path = vendor/php-text-template
+	url = https://github.com/sebastianbergmann/php-text-template
+[submodule "vendor/php-token-stream"]
+	path = vendor/php-token-stream
+	url = https://github.com/sebastianbergmann/php-token-stream
+[submodule "vendor/dbunit"]
+	path = vendor/dbunit
+	url = https://github.com/sebastianbergmann/dbunit
+[submodule "vendor/phpunit-mock-objects"]
+	path = vendor/phpunit-mock-objects
+	url = https://github.com/sebastianbergmann/phpunit-mock-objects
+[submodule "vendor/php-invoker"]
+	path = vendor/php-invoker
+	url = https://github.com/sebastianbergmann/php-invoker
+[submodule "vendor/php-timer"]
+	path = vendor/php-timer
+	url = https://github.com/sebastianbergmann/php-timer
+[submodule "vendor/phpunit-story"]
+	path = vendor/phpunit-story
+	url = https://github.com/sebastianbergmann/phpunit-story
