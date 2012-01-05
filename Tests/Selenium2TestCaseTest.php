@@ -144,16 +144,15 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
     {
         $this->url('html/test_type_page1.html');
         $usernameInput = $this->element($this->using('name')->value('username'));
-        $usernameInput->value($this->textValue('us'));
-        $this->assertEquals('us', $usernameInput->value());
+        $usernameInput->value($this->textValue('TestUser'));
+        $this->assertEquals('TestUser', $usernameInput->value());
 
         $passwordInput = $this->element($this->using('name')->value('password'));
         $passwordInput->value($this->textValue('testUserPassword'));
         $this->assertEquals('testUserPassword', $passwordInput->value());
-        return;
 
-        $this->click('submitButton');
-        $this->waitForPageToLoad(500);
-        $this->assertRegExp('/Welcome, TestUser!/', $this->getText('//h2'));
+        $this->clickOnElement('submitButton');
+        $h2 = $this->element($this->using('css selector')->value('h2'));
+        $this->assertRegExp('/Welcome, TestUser!/', $h2->text());
     }
 }
