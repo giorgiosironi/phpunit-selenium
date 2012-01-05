@@ -544,7 +544,7 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
             $result = $this->createResult();
         }
 
-        $this->setTestResultObject($result);
+        $this->setTustResultObject($result);
 
         $this->collectCodeCoverageInformation = $result->getCollectCodeCoverageInformation();
 
@@ -672,6 +672,7 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
         $this->skipWithNoServerRunning();
 
         if (self::$shareSession && self::$sessionId !== NULL) {
+            $this->selectWindow('null');
             $this->setSessionId(self::$sessionId);
         } else {
             self::$sessionId = $this->start();
@@ -1077,7 +1078,7 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
      */
     protected function onNotSuccessfulTest(Exception $e)
     {
-        $this->restoreSessionState();
+        $this->restoreSessionStateAfterFailedTest();
 
         $buffer  = 'Current URL: ' . $this->drivers[0]->getLocation() .
                    "\n";
@@ -1108,7 +1109,7 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
         throw new $exceptionClass($buffer);
     }
 
-    private function restoreSessionState()
+    private function restoreSessionStateAfterFailedTest()
     {
         $this->selectWindow('null');
         self::$sessionId = NULL;
