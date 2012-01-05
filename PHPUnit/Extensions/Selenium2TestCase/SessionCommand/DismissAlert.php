@@ -53,7 +53,7 @@
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.0
  */
-class PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Click
+class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_DismissAlert
     extends PHPUnit_Extensions_Selenium2TestCase_ElementCommand
 {
     public function httpMethod()

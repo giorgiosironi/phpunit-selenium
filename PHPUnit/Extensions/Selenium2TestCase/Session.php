@@ -79,6 +79,10 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
         $this->driver = $driver;
         $this->sessionUrl = $sessionUrl;
         $this->baseUrl = $baseUrl;
+        $this->commands = array(
+            'acceptAlert' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_AcceptAlert',
+            'dismissAlert' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_DismissAlert',
+        );
     }
 
     public function __destruct()
@@ -139,11 +143,12 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
         if (count($arguments) != 0) {
             return 'POST';
         }
-        if ($command == 'acceptAlert' || $command == 'dismissAlert') {
-            return 'POST';
-        } else {
-            return 'GET';
+        if (isset($this->commands[$command])) {
+            $class = $this->commands[$command];
+            $commandObject = new $class($arguments);
+            return $commandObject->httpMethod();
         }
+        return 'GET';
     }
 
     /**
