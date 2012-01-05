@@ -101,29 +101,44 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
 
     public function __call($command, $arguments)
     {
-        if (count($arguments) == 1) {
-            if (is_string($arguments[0])) {
-                $jsonParameters = array('url' => $this->baseUrl->addCommand($arguments[0])->getValue());
-            } else if (is_array($arguments[0])) {
-                $jsonParameters = $arguments[0];
-            } else {
-                throw new Exception("The argument should be an associative array or a single string.");
-            }
-            $response = $this->curl('POST', $this->sessionUrl->addCommand($command), $jsonParameters);
-        } else if (count($arguments) == 0) {
-            $response = $this->curl($this->preferredHttpMethod($command),
-                                    $this->sessionUrl->addCommand($command));
-        } else {
+        $jsonParameters = $this->extractJsonParameters($arguments);
+        $response = $this->curl($this->preferredHttpMethod($command, $arguments)'POST',
+                                $this->sessionUrl->addCommand($command),
+                                $jsonParameters);
+        return $response->getValue();
+    }
+
+    private function extractJsonParameters($arguments)
+    {
+        $this->checkArguments($arguments);
+
+        if (count($arguments) == 0) {
+            return null;
+        }
+        if (is_string($arguments[0])) {
+            return array('url' => $this->baseUrl->addCommand($arguments[0])->getValue());
+        }
+        if (is_array($arguments[0])) {
+            return $arguments[0];
+        }
+        throw new Exception("The argument should be an associative array or a single string.");
+    }
+
+    private function checkArguments($arguments)
+    {
+        if (count($arguments) > 1) {
             throw new Exception('You cannot call a command with multiple method arguments.');
         }
-        return $response->getValue();
     }
 
     /**
      * @return string
      */
-    private function preferredHttpMethod($command)
+    private function preferredHttpMethod($command, $arguments)
     {
+        if (count($arguments) != 0) {
+            return 'POST';
+        }
         if ($command == 'acceptAlert' || $command == 'dismissAlert') {
             return 'POST';
         } else {
