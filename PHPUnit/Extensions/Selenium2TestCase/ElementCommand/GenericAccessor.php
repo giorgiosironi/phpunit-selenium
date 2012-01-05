@@ -55,7 +55,7 @@
  * @since      Class available since Release 1.2.0
  */
 class PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor
-    extends PHPUnit_Extensions_Selenium2TestCase_ElementCommand
+    extends PHPUnit_Extensions_Selenium2TestCase_Command
 {
     public function httpMethod()
     {

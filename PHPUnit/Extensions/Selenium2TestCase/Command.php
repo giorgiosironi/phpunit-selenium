@@ -53,7 +53,7 @@
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.0
  */
-abstract class PHPUnit_Extensions_Selenium2TestCase_ElementCommand
+abstract class PHPUnit_Extensions_Selenium2TestCase_Command
 {
     protected $jsonParameters;
 
