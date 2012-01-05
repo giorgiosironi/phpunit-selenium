@@ -56,17 +56,33 @@
 abstract class PHPUnit_Extensions_Selenium2TestCase_Command
 {
     protected $jsonParameters;
+    private $commandName;
 
     /**
      * @param array $jsonParameters     null in case of no parameters
      */
-    public function __construct($jsonParameters = NULL)
+    public function __construct($jsonParameters = NULL,
+                                PHPUnit_Extensions_Selenium2TestCase_URL $url)
     {
         $this->jsonParameters = $jsonParameters;
+        $this->url = $url;
+    }
+
+    public function url()
+    {
+        return $this->url;
     }
 
     /**
      * @return string
      */
     abstract public function httpMethod();
+
+    /**
+     * @param array $jsonParameters     null in case of no parameters
+     */
+    public function jsonParameters()
+    {
+        return $this->jsonParameters;
+    }
 }

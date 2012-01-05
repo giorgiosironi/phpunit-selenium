@@ -108,4 +108,11 @@ class PHPUnit_Extensions_Selenium2TestCase_Driver
         $content = json_decode($rawResponse, TRUE);
         return new PHPUnit_Extensions_Selenium2TestCase_Response($content, $info);
     }
+
+    public function execute(PHPUnit_Extensions_Selenium2TestCase_Command $command)
+    {
+        return $this->curl($command->httpMethod(),
+                           $command->url(),
+                           $command->jsonParameters());
+    }
 }

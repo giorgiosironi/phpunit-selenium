@@ -43,7 +43,7 @@
  */
 
 /**
- * Clicks ok on an alert popup.
+ * Clicks Ok on an alert popup.
  *
  * @package    PHPUnit_Selenium
  * @author     Giorgio Sironi <giorgio.sironi@asp-poli.it>

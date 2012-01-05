@@ -83,7 +83,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Element
         );
     }
 
-    public function __call($command, $arguments)
+    public function __call($commandName, $arguments)
     {
         if (count($arguments) > 1) {
             throw new InvalidArgumentException("At most 1 argument can be passed.");
@@ -93,18 +93,19 @@ class PHPUnit_Extensions_Selenium2TestCase_Element
         } else {
             $jsonParameters = $arguments[0];
         }
-        $response = $this->curl($this->preferredHttpMethod($command, $jsonParameters), $this->url->addCommand($command), $jsonParameters);
+        $response = $this->driver->execute($this->newCommand($commandName, $jsonParameters));
         return $response->getValue();
     }
 
-    private function preferredHttpMethod($command, $jsonParameters)
+    private function newCommand($commandName, $jsonParameters)
     {
-        if (isset($this->commands[$command])) {
-            $className = $this->commands[$command];
-            $click = new $className($jsonParameters);
-            return $click->httpMethod();
+        if (isset($this->commands[$commandName])) {
+            $className = $this->commands[$commandName];
+            $url = $this->url->addCommand($commandName);
+            $command = new $className($jsonParameters, $url);
+            return $command;
         }
-        throw new Exception('Not supported yet.');
+        throw new RuntimeException("The command '$commandName' is not supported yet.");
     }
 
     private function curl($method, $path, $arguments = NULL)
