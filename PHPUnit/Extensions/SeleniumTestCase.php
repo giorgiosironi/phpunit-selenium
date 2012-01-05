@@ -544,7 +544,7 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
             $result = $this->createResult();
         }
 
-        $this->setTustResultObject($result);
+        $this->setTestResultObject($result);
 
         $this->collectCodeCoverageInformation = $result->getCollectCodeCoverageInformation();
 
