@@ -44,8 +44,6 @@
  * @since      File available since Release 1.0.0
  */
 
-require_once 'PHPUnit/Extensions/SeleniumTestCase.php';
-
 /**
  * Tests for PHPUnit_Extensions_SeleniumTestCase.
  *

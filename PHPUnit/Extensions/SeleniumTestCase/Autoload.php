@@ -50,6 +50,17 @@ function phpunit_selenium_autoload($class = NULL) {
 
     if ($classes === NULL) {
         $classes = array(
+          'phpunit_extensions_selenium2testcase' => '/Extensions/Selenium2TestCase.php',
+          'phpunit_extensions_selenium2testcase_driver' => '/Extensions/Selenium2TestCase/Driver.php',
+          'phpunit_extensions_selenium2testcase_element' => '/Extensions/Selenium2TestCase/Element.php',
+          'phpunit_extensions_selenium2testcase_elementcommand' => '/Extensions/Selenium2TestCase/ElementCommand.php',
+          'phpunit_extensions_selenium2testcase_elementcommand_click' => '/Extensions/Selenium2TestCase/ElementCommand/Click.php',
+          'phpunit_extensions_selenium2testcase_elementcommand_genericaccessor' => '/Extensions/Selenium2TestCase/ElementCommand/GenericAccessor.php',
+          'phpunit_extensions_selenium2testcase_elementcommand_value' => '/Extensions/Selenium2TestCase/ElementCommand/Value.php',
+          'phpunit_extensions_selenium2testcase_elementcriteria' => '/Extensions/Selenium2TestCase/ElementCriteria.php',
+          'phpunit_extensions_selenium2testcase_response' => '/Extensions/Selenium2TestCase/Response.php',
+          'phpunit_extensions_selenium2testcase_session' => '/Extensions/Selenium2TestCase/Session.php',
+          'phpunit_extensions_selenium2testcase_url' => '/Extensions/Selenium2TestCase/URL.php',
           'phpunit_extensions_seleniumtestcase' => '/Extensions/SeleniumTestCase.php',
           'phpunit_extensions_seleniumtestcase_driver' => '/Extensions/SeleniumTestCase/Driver.php'
         );
