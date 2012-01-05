@@ -673,7 +673,6 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
 
         if (self::$shareSession && self::$sessionId !== NULL) {
             $this->setSessionId(self::$sessionId);
-            $this->selectWindow('null');
         } else {
             self::$sessionId = $this->start();
         }
@@ -1078,6 +1077,8 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
      */
     protected function onNotSuccessfulTest(Exception $e)
     {
+        $this->restoreSessionState();
+
         $buffer  = 'Current URL: ' . $this->drivers[0]->getLocation() .
                    "\n";
 
@@ -1093,7 +1094,6 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
         }
 
         $this->stopSession();
-        self::$sessionId = NULL;
 
         if ($e instanceof PHPUnit_Framework_ExpectationFailedException
          && is_object($e->getComparisonFailure())) {
@@ -1106,6 +1106,12 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
 
         $exceptionClass = get_class($e);
         throw new $exceptionClass($buffer);
+    }
+
+    private function restoreSessionState()
+    {
+        $this->selectWindow('null');
+        self::$sessionId = NULL;
     }
 
     /**
