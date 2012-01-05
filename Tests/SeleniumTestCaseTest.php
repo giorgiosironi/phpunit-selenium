@@ -267,6 +267,7 @@ class Extensions_SeleniumTestCaseTest extends PHPUnit_Extensions_SeleniumTestCas
 
     public function testJavaScriptParameters()
     {
+        $this->selectWindow('null');
         $this->open('html/test_store_value.html');
         $this->type('theText', "javascript{[1,2,3,4,5].join(':')}");
         $this->assertEquals('1:2:3:4:5', $this->getValue('theText'));
