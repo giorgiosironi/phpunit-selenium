@@ -82,6 +82,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
         $this->commands = array(
             'acceptAlert' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_AcceptAlert',
             'dismissAlert' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_DismissAlert',
+            'url' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Url',
         );
     }
 
@@ -103,12 +104,10 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
         $this->curl('DELETE', $this->sessionUrl);
     }
 
-    public function __call($command, $arguments)
+    public function __call($commandName, $arguments)
     {
         $jsonParameters = $this->extractJsonParameters($arguments);
-        $response = $this->curl($this->preferredHttpMethod($command, $arguments),
-                                $this->sessionUrl->addCommand($command),
-                                $jsonParameters);
+        $response = $this->driver->execute($this->newCommand($commandName, $jsonParameters));
         return $response->getValue();
     }
 
@@ -138,17 +137,14 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
     /**
      * @return string
      */
-    private function preferredHttpMethod($command, $arguments)
+    private function newCommand($commandName, $arguments)
     {
-        if (count($arguments) != 0) {
-            return 'POST';
+        if (isset($this->commands[$commandName])) {
+            $class = $this->commands[$commandName];
+            $url = $this->sessionUrl->addCommand($commandName);
+            $commandObject = new $class($arguments, $url);
+            return $commandObject;
         }
-        if (isset($this->commands[$command])) {
-            $class = $this->commands[$command];
-            $commandObject = new $class($arguments);
-            return $commandObject->httpMethod();
-        }
-        return 'GET';
     }
 
     /**
