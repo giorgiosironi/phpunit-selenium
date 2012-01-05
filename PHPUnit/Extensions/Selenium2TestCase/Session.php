@@ -145,6 +145,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
             $commandObject = new $class($arguments, $url);
             return $commandObject;
         }
+        throw new BadMethodCallException("The command '$commandName' is not existent or not supported.");
     }
 
     /**
