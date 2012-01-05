@@ -102,7 +102,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
     public function __call($command, $arguments)
     {
         $jsonParameters = $this->extractJsonParameters($arguments);
-        $response = $this->curl($this->preferredHttpMethod($command, $arguments)'POST',
+        $response = $this->curl($this->preferredHttpMethod($command, $arguments),
                                 $this->sessionUrl->addCommand($command),
                                 $jsonParameters);
         return $response->getValue();
