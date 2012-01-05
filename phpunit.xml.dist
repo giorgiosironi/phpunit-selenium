@@ -3,7 +3,8 @@
 
 <phpunit bootstrap="phpunit-selenium-bootstrap.php"
          backupGlobals="false"
-         verbose="true">
+         verbose="true"
+         colors="true">
 
   <php>
     <const name="PHPUNIT_TESTSUITE" value="true"/>
