@@ -81,7 +81,9 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
         $this->baseUrl = $baseUrl;
         $this->commands = array(
             'acceptAlert' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_AcceptAlert',
+            'alertText' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_GenericAccessor',
             'dismissAlert' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_DismissAlert',
+            'title' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_GenericAccessor',
             'url' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Url',
         );
     }
