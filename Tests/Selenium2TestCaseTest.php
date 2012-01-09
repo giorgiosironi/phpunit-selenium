@@ -75,11 +75,11 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
     public function testElementSelection()
     {
         $this->url('html/test_open.html');
-        $element = $this->element($this->using('css selector')->value('body'));
+        $element = $this->byCssSelector('body');
         $this->assertEquals('This is a test of the open command.', $element->text());
 
         $this->url('html/test_click_page1.html');
-        $link = $this->element($this->using('id')->value('link'));
+        $link = $this->byId('link');
         $this->assertEquals('Click here for next page', $link->text());
     }
 
@@ -106,30 +106,30 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
     public function testClick()
     {
         $this->url('html/test_click_page1.html');
-        $link = $this->element($this->using('id')->value('link'));
+        $link = $this->byId('link');
         $link->click();
         $this->assertEquals('Click Page Target', $this->title());
-        $back = $this->element($this->using('id')->value('previousPage'));
+        $back = $this->byId('previousPage');
         $back->click();
         $this->assertEquals('Click Page 1', $this->title());
 
-        $withImage = $this->element($this->using('id')->value('linkWithEnclosedImage'));
+        $withImage = $this->byId('linkWithEnclosedImage');
         $withImage->click();
         $this->assertEquals('Click Page Target', $this->title());
-        $back = $this->element($this->using('id')->value('previousPage'));
+        $back = $this->byId('previousPage');
         $back->click();
 
-        $enclosedImage = $this->element($this->using('id')->value('enclosedImage'));
+        $enclosedImage = $this->byId('enclosedImage');
         $enclosedImage->click();
         $this->assertEquals('Click Page Target', $this->title());
-        $back = $this->element($this->using('id')->value('previousPage'));
+        $back = $this->byId('previousPage');
         $back->click();
 
-        $toAnchor = $this->element($this->using('id')->value('linkToAnchorOnThisPage'));
+        $toAnchor = $this->byId('linkToAnchorOnThisPage');
         $toAnchor->click();
         $this->assertEquals('Click Page 1', $this->title());
 
-        $withOnClick = $this->element($this->using('id')->value('linkWithOnclickReturnsFalse'));
+        $withOnClick = $this->byId('linkWithOnclickReturnsFalse');
         $withOnClick->click();
         $this->assertEquals('Click Page 1', $this->title());
 
@@ -163,16 +163,16 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
     public function testTypingViaTheKeyboard()
     {
         $this->url('html/test_type_page1.html');
-        $usernameInput = $this->element($this->using('name')->value('username'));
+        $usernameInput = $this->byName('username');
         $usernameInput->value('TestUser');
         $this->assertEquals('TestUser', $usernameInput->value());
 
-        $passwordInput = $this->element($this->using('name')->value('password'));
+        $passwordInput = $this->byName('password');
         $passwordInput->value('testUserPassword');
         $this->assertEquals('testUserPassword', $passwordInput->value());
 
         $this->clickOnElement('submitButton');
-        $h2 = $this->element($this->using('css selector')->value('h2'));
+        $h2 = $this->byCssSelector('h2');
         $this->assertRegExp('/Welcome, TestUser!/', $h2->text());
     }
 }
