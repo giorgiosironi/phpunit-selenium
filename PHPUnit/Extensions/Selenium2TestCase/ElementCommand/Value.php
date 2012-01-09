@@ -56,6 +56,16 @@
 class PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Value
     extends PHPUnit_Extensions_Selenium2TestCase_Command
 {
+
+    public function __construct($jsonParameters = NULL,
+                                PHPUnit_Extensions_Selenium2TestCase_URL $url)
+    {
+        if (is_string($jsonParameters)) {
+            $jsonParameters = $this->charactersToType($jsonParameters);
+        }
+        parent::__construct($jsonParameters, $url);
+    }
+
     public function httpMethod()
     {
         if ($this->jsonParameters) {
@@ -64,4 +74,20 @@ class PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Value
             return 'GET';
         }
     }
+
+    /**
+     * @param string $string
+     * @return array    array of characters to type
+     */
+    private function charactersToType($string)
+    {
+        $characters = array();
+        for ($i = 0, $length = strlen($string); $i < $length; $i++) {
+            $characters[] = $string{$i};
+        }
+        return array(
+            'value' => $characters
+        );
+    }
+
 }

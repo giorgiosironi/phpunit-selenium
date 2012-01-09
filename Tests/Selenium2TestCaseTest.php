@@ -164,11 +164,11 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
     {
         $this->url('html/test_type_page1.html');
         $usernameInput = $this->element($this->using('name')->value('username'));
-        $usernameInput->value($this->textValue('TestUser'));
+        $usernameInput->value('TestUser');
         $this->assertEquals('TestUser', $usernameInput->value());
 
         $passwordInput = $this->element($this->using('name')->value('password'));
-        $passwordInput->value($this->textValue('testUserPassword'));
+        $passwordInput->value('testUserPassword');
         $this->assertEquals('testUserPassword', $passwordInput->value());
 
         $this->clickOnElement('submitButton');

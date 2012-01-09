@@ -175,7 +175,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
         return $this->by('xpath', $value);
     }
 
-    private function by($strategy, $value) {
+    protected function by($strategy, $value) {
         return $this->element($this->using($strategy)->value($value));
     }
 
@@ -186,21 +186,6 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
     public function using($strategy)
     {
         return new PHPUnit_Extensions_Selenium2TestCase_ElementCriteria($strategy);
-    }
-
-    /**
-     * @param string $string
-     * @return array    to pass to an element's value() method
-     */
-    public function textValue($string)
-    {
-        $characters = array();
-        for ($i = 0, $length = strlen($string); $i < $length; $i++) {
-            $characters[] = $string{$i};
-        }
-        return array(
-            'value' => $characters
-        );
     }
 
     /**
