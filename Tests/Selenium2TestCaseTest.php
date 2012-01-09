@@ -83,6 +83,26 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $this->assertEquals('Click here for next page', $link->text());
     }
 
+    public function testShortenedApiForSelectionOfElement()
+    {
+        $this->url('html/test_element_selection.html');
+
+        $element = $this->byClassName('theDivClass');
+        $this->assertEquals('The right div', $element->text());
+
+        $element = $this->byCssSelector('div.theDivClass');
+        $this->assertEquals('The right div', $element->text());
+
+        $element = $this->byId('theDivId');
+        $this->assertEquals('The right div', $element->text());
+
+        $element = $this->byName('theDivName');
+        $this->assertEquals('The right div', $element->text());
+
+        $element = $this->byXPath('//div[@id]');
+        $this->assertEquals('The right div', $element->text());
+    }
+
     public function testClick()
     {
         $this->url('html/test_click_page1.html');

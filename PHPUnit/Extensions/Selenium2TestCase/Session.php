@@ -150,6 +150,35 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
         throw new BadMethodCallException("The command '$commandName' is not existent or not supported.");
     }
 
+    public function byClassName($value)
+    {
+        return $this->by('class name', $value);
+    }
+
+    public function byCssSelector($value)
+    {
+        return $this->by('css selector', $value);
+    }
+
+    public function byId($value)
+    {
+        return $this->by('id', $value);
+    }
+
+    public function byName($value)
+    {
+        return $this->by('name', $value);
+    }
+
+    public function byXPath($value)
+    {
+        return $this->by('xpath', $value);
+    }
+
+    private function by($strategy, $value) {
+        return $this->element($this->using($strategy)->value($value));
+    }
+
     /**
      * @param string $strategy
      * @return PHPUnit_Extensions_Selenium2TestCase_ElementCriteria
