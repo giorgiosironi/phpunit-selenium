@@ -57,7 +57,7 @@ class PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Value
     extends PHPUnit_Extensions_Selenium2TestCase_Command
 {
 
-    public function __construct($jsonParameters = NULL,
+    public function __construct($jsonParameters,
                                 PHPUnit_Extensions_Selenium2TestCase_URL $url)
     {
         if (is_string($jsonParameters)) {

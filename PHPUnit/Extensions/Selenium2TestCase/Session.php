@@ -103,7 +103,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
 
     public function stop()
     {
-        $this->curl('DELETE', $this->sessionUrl);
+        $this->driver->curl('DELETE', $this->sessionUrl);
     }
 
     public function __call($commandName, $arguments)
@@ -118,7 +118,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
         $this->checkArguments($arguments);
 
         if (count($arguments) == 0) {
-            return null;
+            return NULL;
         }
         if (is_string($arguments[0])) {
             return array('url' => $this->baseUrl->addCommand($arguments[0])->getValue());
@@ -175,7 +175,8 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
         return $this->by('xpath', $value);
     }
 
-    protected function by($strategy, $value) {
+    protected function by($strategy, $value)
+    {
         return $this->element($this->using($strategy)->value($value));
     }
 
@@ -193,9 +194,9 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
      */
     public function element(PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $jsonParameters)
     {
-        $response = $this->curl('POST',
-                                $this->sessionUrl->descend('element'),
-                                $jsonParameters->getArrayCopy());
+        $response = $this->driver->curl('POST',
+                                        $this->sessionUrl->descend('element'),
+                                        $jsonParameters->getArrayCopy());
         $value = $response->getValue();
         $url = $this->sessionUrl->descend('element')->descend($value['ELEMENT']);
         return new PHPUnit_Extensions_Selenium2TestCase_Element($this->driver, $url);
@@ -209,8 +210,4 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
         return $this->element($this->using('id')->value($id))->click();
     }
 
-    private function curl($method, $path, $arguments = NULL)
-    {
-        return $this->driver->curl($method, $path, $arguments);
-    }
 }

@@ -61,7 +61,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase_Command
     /**
      * @param array $jsonParameters     null in case of no parameters
      */
-    public function __construct($jsonParameters = NULL,
+    public function __construct($jsonParameters,
                                 PHPUnit_Extensions_Selenium2TestCase_URL $url)
     {
         $this->jsonParameters = $jsonParameters;
