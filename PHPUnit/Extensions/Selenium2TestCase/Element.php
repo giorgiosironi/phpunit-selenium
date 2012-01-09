@@ -107,9 +107,4 @@ class PHPUnit_Extensions_Selenium2TestCase_Element
         }
         throw new RuntimeException("The command '$commandName' is not supported yet.");
     }
-
-    private function curl($method, $path, $arguments = NULL)
-    {
-        return $this->driver->curl($method, $path, $arguments);
-    }
 }
