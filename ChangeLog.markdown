@@ -1,3 +1,20 @@
+PHPUnit_Selenium 1.2
+====================
+
+This is the list of changes for the PHPUnit_Selenium 1.2 release series.
+
+PHPUnit_Selenium 1.2.0
+----------------------
+
+* Introduced PHPUnit_Extensions_Selenium2TestCase class for using WebDriver API.
+* Introduced session sharing for WebDriver API.
+  Introduced URL opening and element selection in WebDriver API.
+* Introduced clicking on elements and clickOnElement($id) shorthand in WebDriver API.
+* Introduced partial alert() management in WebDriver API.
+* Introduced element manipulation in WebDriver API: text accessor, value mutator.
+* Introduced by*() quick selectors in WebDriver API.
+* Extracted a base Command class for extending the supported Session and Element commands in WebDriver API.
+
 PHPUnit_Selenium 1.1
 ====================
 
