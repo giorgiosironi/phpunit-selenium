@@ -79,7 +79,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
         $this->driver = $driver;
         $this->sessionUrl = $sessionUrl;
         $this->baseUrl = $baseUrl;
-        $this->commands = array(
+        $this->commandFactories = array(
             'acceptAlert' => $this->factoryMethod('PHPUnit_Extensions_Selenium2TestCase_SessionCommand_AcceptAlert'),
             'alertText' => $this->factoryMethod('PHPUnit_Extensions_Selenium2TestCase_SessionCommand_GenericAccessor'),
             'dismissAlert' => $this->factoryMethod('PHPUnit_Extensions_Selenium2TestCase_SessionCommand_DismissAlert'),
@@ -149,8 +149,8 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
      */
     private function newCommand($commandName, $arguments)
     {
-        if (isset($this->commands[$commandName])) {
-            $factoryMethod = $this->commands[$commandName];
+        if (isset($this->commandFactories[$commandName])) {
+            $factoryMethod = $this->commandFactories[$commandName];
             $commandUrl = $this->sessionUrl->addCommand($commandName);
             $commandObject = $factoryMethod($arguments, $commandUrl);
             return $commandObject;
