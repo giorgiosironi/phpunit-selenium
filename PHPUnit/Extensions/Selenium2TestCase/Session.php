@@ -80,12 +80,26 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
         $this->sessionUrl = $sessionUrl;
         $this->baseUrl = $baseUrl;
         $this->commands = array(
-            'acceptAlert' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_AcceptAlert',
-            'alertText' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_GenericAccessor',
-            'dismissAlert' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_DismissAlert',
-            'title' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_GenericAccessor',
-            'url' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Url',
+            'acceptAlert' => $this->factoryMethod('PHPUnit_Extensions_Selenium2TestCase_SessionCommand_AcceptAlert'),
+            'alertText' => $this->factoryMethod('PHPUnit_Extensions_Selenium2TestCase_SessionCommand_GenericAccessor'),
+            'dismissAlert' => $this->factoryMethod('PHPUnit_Extensions_Selenium2TestCase_SessionCommand_DismissAlert'),
+            'title' => $this->factoryMethod('PHPUnit_Extensions_Selenium2TestCase_SessionCommand_GenericAccessor'),
+            'url' => function ($jsonParameters, $commandUrl) use ($baseUrl) {
+                return new PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Url($jsonParameters, $commandUrl, $baseUrl);
+            }
         );
+    }
+
+    /**
+     * @params string $commandClass     a class name, descending from
+                                        PHPUnit_Extensions_Selenium2TestCase_Command
+     * @return callable
+     */
+    private function factoryMethod($commandClass)
+    {
+        return function($jsonParameters, $url) use ($commandClass) {
+            return new $commandClass($jsonParameters, $url);
+        };
     }
 
     public function __destruct()
@@ -120,13 +134,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
         if (count($arguments) == 0) {
             return NULL;
         }
-        if (is_string($arguments[0])) {
-            return array('url' => $this->baseUrl->addCommand($arguments[0])->getValue());
-        }
-        if (is_array($arguments[0])) {
-            return $arguments[0];
-        }
-        throw new Exception("The argument should be an associative array or a single string.");
+        return $arguments[0];
     }
 
     private function checkArguments($arguments)
@@ -142,9 +150,9 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
     private function newCommand($commandName, $arguments)
     {
         if (isset($this->commands[$commandName])) {
-            $class = $this->commands[$commandName];
-            $url = $this->sessionUrl->addCommand($commandName);
-            $commandObject = new $class($arguments, $url);
+            $factoryMethod = $this->commands[$commandName];
+            $commandUrl = $this->sessionUrl->addCommand($commandName);
+            $commandObject = $factoryMethod($arguments, $commandUrl);
             return $commandObject;
         }
         throw new BadMethodCallException("The command '$commandName' is not existent or not supported.");

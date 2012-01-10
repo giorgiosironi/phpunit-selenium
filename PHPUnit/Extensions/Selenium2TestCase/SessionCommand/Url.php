@@ -56,6 +56,17 @@
 class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Url
     extends PHPUnit_Extensions_Selenium2TestCase_Command
 {
+    public function __construct($relativeUrl, $commandUrl, $baseUrl)
+    {
+        if ($relativeUrl !== NULL) {
+            $absoluteLocation = $baseUrl->addCommand($relativeUrl)->getValue();
+            $jsonParameters = array('url' => $absoluteLocation);
+        } else {
+            $jsonParameters = NULL;
+        }
+        parent::__construct($jsonParameters, $commandUrl);
+    }
+
     public function httpMethod()
     {
         if ($this->jsonParameters) {

@@ -64,6 +64,9 @@ abstract class PHPUnit_Extensions_Selenium2TestCase_Command
     public function __construct($jsonParameters,
                                 PHPUnit_Extensions_Selenium2TestCase_URL $url)
     {
+        if (!is_array($jsonParameters) && $jsonParameters !== NULL) {
+            throw new InvalidArgumentException("The JSON parameters must be an array, or a NULL value in case they are not required.");
+        }
         $this->jsonParameters = $jsonParameters;
         $this->url = $url;
     }
