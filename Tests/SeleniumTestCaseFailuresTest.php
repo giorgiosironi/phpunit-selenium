@@ -68,23 +68,28 @@ class Extensions_SeleniumTestCaseFailuresTest extends PHPUnit_Extensions_Seleniu
         $this->setBrowserUrl(PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL);
     }
 
-    /**
-     * @expectedException BadMethodCallException
-     */
     public function testOrdinaryExceptionsAreRethrown()
     {
-        $exception = new BadMethodCallException();
-        $this->onNotSuccessfulTest($exception);
+        $exception = new BadMethodCallException('some error from production code'); // LINE 73
+        try {
+            $this->onNotSuccessfulTest($exception);
+        } catch (PHPUnit_Framework_Error $e) {
+            $this->assertTrue((bool) strstr($e->getMessage(), 'some error from production code'));
+            $this->assertEquals(73, $e->getLine());
+        }
     }
 
     /**
      * Fixes #78
-     * @expectedException PHPUnit_Framework_ExpectationFailedException
      */
     public function testExpectationFailuresAreRethrownCorrectly()
     {
-        $exception = new PHPUnit_Framework_ExpectationFailedException("Some error.");
-        $this->onNotSuccessfulTest($exception);
+        $exception = new PHPUnit_Framework_ExpectationFailedException("Some comparison error.");
+        try {
+            $this->onNotSuccessfulTest($exception);
+        } catch (PHPUnit_Framework_Error $e) {
+            $this->assertTrue((bool) strstr($e->getMessage(), 'Some comparison error.'));
+        }
     }
 
     public function testWhenAComparisonFailureIsPresentItIsIncludedInTheMessage()
@@ -93,7 +98,7 @@ class Extensions_SeleniumTestCaseFailuresTest extends PHPUnit_Extensions_Seleniu
         $exception = new PHPUnit_Framework_ExpectationFailedException('1 is not 2', $failure);
         try {
             $this->onNotSuccessfulTest($exception);
-        } catch (PHPUnit_Framework_ExpectationFailedException $e) {
+        } catch (PHPUnit_Framework_Error $e) {
             $this->assertTrue((bool) strstr($e->getMessage(), '--- Expected'));
         }
     }
@@ -107,7 +112,7 @@ class Extensions_SeleniumTestCaseFailuresTest extends PHPUnit_Extensions_Seleniu
         try {
             $exception = new BadMethodCallException();
             $this->onNotSuccessfulTest($exception);
-        } catch (BadMethodCallException $e) {
+        } catch (PHPUnit_Framework_Error $e) {
             $this->assertTrue(file_exists($this->screenshotPath));
             $this->assertTrue((bool) strstr($e->getMessage(), 'Screenshot: http://.../'));
             return;

@@ -408,7 +408,7 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
                     $browserSuite->setName($className . ': ' . $browser['name']);
 
                     foreach ($files as $file) {
-                        $browserSuite->addTest(
+                        self::addConfiguredTestTo($browserSuite,
                           new $className($file, array(), '', $browser),
                           $classGroups
                         );
@@ -421,7 +421,9 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
             // Create tests from Selenese/HTML files for single browser.
             else {
                 foreach ($files as $file) {
-                    $suite->addTest(new $className($file), $classGroups);
+                    self::addConfiguredTestTo($suite,
+                                              new $className($file),
+                                              $classGroups);
                 }
             }
         }
@@ -445,10 +447,9 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
                             );
 
                             foreach ($data as $_dataName => $_data) {
-                                $dataSuite->addTest(
-                                  new $className($name, $_data, $_dataName, $browser),
-                                  $groups
-                                );
+                                self::addConfiguredTestTo($dataSuite,
+                                                          new $className($name, $_data, $_dataName, $browser),
+                                                          $groups);
                             }
 
                             $browserSuite->addTest($dataSuite);
@@ -469,9 +470,9 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
 
                         // Test method without @dataProvider.
                         else {
-                            $browserSuite->addTest(
-                              new $className($name, array(), '', $browser), $groups
-                            );
+                            self::addConfiguredTestTo($browserSuite,
+                                                      new $className($name, array(), '', $browser),
+                                                      $groups);
                         }
                     }
                 }
@@ -495,9 +496,9 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
                         );
 
                         foreach ($data as $_dataName => $_data) {
-                            $dataSuite->addTest(
-                              new $className($name, $_data, $_dataName),
-                              $groups
+                            self::addConfiguredTestTo($dataSuite,
+                                                      new $className($name, $_data, $_dataName),
+                                                      $groups
                             );
                         }
 
@@ -519,15 +520,24 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
 
                     // Test method without @dataProvider.
                     else {
-                        $suite->addTest(
-                          new $className($name), $groups
-                        );
+                        self::addConfiguredTestTo($suite,
+                                                  new $className($name),
+                                                  $groups);
                     }
                 }
             }
         }
 
         return $suite;
+    }
+
+    private static function addConfiguredTestTo(PHPUnit_Framework_TestSuite $suite, PHPUnit_Framework_TestCase $test, $classGroups)
+    {
+        list ($methodName, ) = explode(' ', $test->getName());
+        $test->setDependencies(
+              PHPUnit_Util_Test::getDependencies(get_class($test), $methodName)
+        );
+        $suite->addTest($test, $classGroups);
     }
 
     /**
@@ -1105,8 +1115,7 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
 
         $buffer .= "\n" . $message;
 
-        $exceptionClass = get_class($e);
-        throw new $exceptionClass($buffer);
+        throw new PHPUnit_Framework_Error($buffer, $e->getCode(), $e->getFile(), $e->getLine(), $e->getTrace());
     }
 
     private function restoreSessionStateAfterFailedTest()
