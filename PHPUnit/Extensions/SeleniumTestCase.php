@@ -1115,6 +1115,10 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
 
         $buffer .= "\n" . $message;
 
+        if ($e instanceof PHPUnit_Framework_IncompleteTestError
+         || $e instanceof PHPUnit_Framework_SkippedTestError) {
+            throw $e;
+        }
         throw new PHPUnit_Framework_Error($buffer, $e->getCode(), $e->getFile(), $e->getLine(), $e->getTrace());
     }
 

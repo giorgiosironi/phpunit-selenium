@@ -132,4 +132,26 @@ class Extensions_SeleniumTestCaseFailuresTest extends PHPUnit_Extensions_Seleniu
             $this->assertEquals('ERROR: Element inexistentSelector not found', $e->getMessage());
         }
     }
+
+    public function testIncompleteTestsAreTreatedAsSuchAndNotAsFailing()
+    {
+        $original = new PHPUnit_Framework_IncompleteTestError('problem description');
+        $this->isRethrownWithSameMessage($original);
+    }
+
+    public function testSkippedTestsAreTreatedAsSuchAndNotAsFailing()
+    {
+        $original = new PHPUnit_Framework_SkippedTestError('problem description');
+        $this->isRethrownWithSameMessage($original);
+    }
+
+    private function isRethrownWithSameMessage(Exception $original)
+    {
+        try {
+            $this->onNotSuccessfulTest($original);
+        } catch (Exception $e) {
+            $this->assertInstanceOf(get_class($original), $e);
+            $this->assertEquals($original->getMessage(), $e->getMessage());
+        }
+    }
 }
