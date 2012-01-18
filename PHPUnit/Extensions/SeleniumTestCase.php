@@ -554,8 +554,6 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
             $result = $this->createResult();
         }
 
-        $this->setTestResultObject($result);
-
         $this->collectCodeCoverageInformation = $result->getCollectCodeCoverageInformation();
 
         foreach ($this->drivers as $driver) {
@@ -564,11 +562,7 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
             );
         }
 
-        if (!$this->handleDependencies()) {
-            return;
-        }
-
-        $result->run($this);
+        parent::run($result);
 
         if ($this->collectCodeCoverageInformation) {
             $result->getCodeCoverage()->append(
@@ -689,7 +683,7 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
         }
 
         if (!is_file($this->getName(FALSE))) {
-            parent::runTest();
+            $result = parent::runTest();
         } else {
             $this->runSelenese($this->getName(FALSE));
         }
@@ -701,6 +695,8 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
         if (!self::$shareSession) {
             $this->stopSession();
         }
+
+        return $result;
     }
 
     private function stopSession()

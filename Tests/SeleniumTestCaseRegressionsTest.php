@@ -82,6 +82,6 @@ class Extensions_SeleniumTestCaseRegressionsTest extends PHPUnit_Extensions_Sele
     {
         $this->open("html/test_open.html");
         $actualTitle = $this->getTitle();
-        $this->assertEquals($expectedTitle, $actualTitle);
+        $this->assertSame($expectedTitle, $actualTitle);
     }
 }
