@@ -3,6 +3,11 @@ PHPUnit_Selenium 1.2
 
 This is the list of changes for the PHPUnit_Selenium 1.2 release series.
 
+PHPUnit_Selenium 1.2.1
+----------------------
+
+* Fixed #82: @depends annotation on SeleniumTestCase
+
 PHPUnit_Selenium 1.2.0
 ----------------------
 
