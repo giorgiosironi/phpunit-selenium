@@ -7,6 +7,7 @@ PHPUnit_Selenium 1.2.1
 ----------------------
 
 * Fixed #82: @depends annotation on SeleniumTestCase
+* Fixed package.xml, including Selenium 2 support classes
 
 PHPUnit_Selenium 1.2.0
 ----------------------
