@@ -2,7 +2,7 @@
 /**
  * PHPUnit
  *
- * Copyright (c) 2010-2012, Sebastian Bergmann <sb@sebastian-bergmann.de>.
+ * Copyright (c) 2010-2011, Sebastian Bergmann <sb@sebastian-bergmann.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,64 +36,28 @@
  *
  * @package    PHPUnit_Selenium
  * @author     Giorgio Sironi <giorgio.sironi@asp-poli.it>
- * @copyright  2010-2012 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright  2010-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link       http://www.phpunit.de/
- * @since      File available since Release 1.2.1
+ * @since      File available since Release 1.2.2
  */
 
 /**
- * Tests for PHPUnit_Extensions_SeleniumTestCase.
+ * TestSuite class for Selenium 1 tests
  *
  * @package    PHPUnit_Selenium
  * @author     Giorgio Sironi <giorgio.sironi@asp-poli.it>
- * @copyright  2010-2012 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright  2010-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
- * @since      Class available since Release 1.2.1
+ * @since      Class available since Release 1.2.0
  */
-class Extensions_SeleniumTestCaseRegressionsTest extends PHPUnit_Extensions_SeleniumTestCase
+class PHPUnit_Extensions_SeleniumTestSuite extends PHPUnit_Framework_TestSuite
 {
-    private static $setUpBeforeClassExecuted = false;
-
-    public static function setUpBeforeClass()
-    {
-        self::$setUpBeforeClassExecuted = true;
-    }
-
-    function setUp()
-    {
-        $this->setHost(PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_HOST);
-        $this->setPort((int)PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_PORT);
-        $this->setBrowser(PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_BROWSER);
-        $this->setBrowserUrl(PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL);
-    }
-
     /**
-     * @return string
+     * Overriding the default: Selenium suites are always built from a TestCase class.
+     * @var boolean
      */
-    public function testDependency()
-    {
-        $this->open("html/test_open.html");
-        $title = $this->getTitle();
-        return $title;
-    }
-
-    /**
-     * @depends testDependency
-     *
-     * @param $expectedTitle
-     */
-    public function testDependent($expectedTitle)
-    {
-        $this->open("html/test_open.html");
-        $actualTitle = $this->getTitle();
-        $this->assertSame($expectedTitle, $actualTitle);
-    }
-
-    public function testSetUpBeforeClassIsExecuted()
-    {
-        $this->assertTrue(self::$setUpBeforeClassExecuted);
-    }
+    protected $testCase = TRUE;
 }

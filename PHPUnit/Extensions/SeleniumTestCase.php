@@ -386,7 +386,7 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
      */
     public static function suite($className)
     {
-        $suite = new PHPUnit_Framework_TestSuite;
+        $suite = new PHPUnit_Extensions_SeleniumTestSuite();
         $suite->setName($className);
 
         $class            = new ReflectionClass($className);
