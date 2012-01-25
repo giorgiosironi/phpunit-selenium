@@ -949,11 +949,15 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
         $response = curl_exec($curl);
         $info     = curl_getinfo($curl);
 
+        curl_close($curl);
+
+        if (strstr($response, 'ERROR: ') == $response) {
+            throw new RuntimeException($response);
+        }
+
         if (!$response) {
             throw new RuntimeException(curl_error($curl));
         }
-
-        curl_close($curl);
 
         if ($info['http_code'] != 200) {
             throw new RuntimeException(
@@ -1045,9 +1049,6 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
             throw $e;
         }
 
-        if (strstr($result, 'ERROR: ') == $result) {
-            throw new RuntimeException($result);
-        }
 
         return (strlen($result) > 3) ? substr($result, 3) : '';
     }

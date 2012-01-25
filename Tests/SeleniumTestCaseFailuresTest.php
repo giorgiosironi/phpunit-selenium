@@ -145,6 +145,17 @@ class Extensions_SeleniumTestCaseFailuresTest extends PHPUnit_Extensions_Seleniu
         $this->isRethrownWithSameMessage($original);
     }
 
+    public function testErrorsInExecutionMustBeSignaled()
+    {
+        $this->open('/');
+        try {
+            $this->type('id=wrongId', 'Search');
+            $this->fail('A command not executed successfully should stop the test.');
+        } catch (RuntimeException $e) {
+            $this->assertEquals('ERROR: Element id=wrongId not found', $e->getMessage());
+        }
+    }
+
     private function isRethrownWithSameMessage(Exception $original)
     {
         try {
