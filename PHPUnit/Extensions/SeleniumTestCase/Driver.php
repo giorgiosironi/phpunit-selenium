@@ -918,31 +918,35 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
     protected function doCommand($command, array $arguments = array())
     {
         $url = sprintf(
-          'http://%s:%s/selenium-server/driver/?cmd=%s',
+          'http://%s:%s/selenium-server/driver/',
           $this->host,
-          $this->port,
-          urlencode($command)
+          $this->port
         );
 
         $numArguments = count($arguments);
-
+        $postData = sprintf('cmd=%s', urlencode($command));
         for ($i = 0; $i < $numArguments; $i++) {
             $argNum = strval($i + 1);
 
             if ($arguments[$i] == ' ') {
-                $url .= sprintf('&%s=%s', $argNum, urlencode($arguments[$i]));
+                $postData .= sprintf('&%s=%s', $argNum, urlencode($arguments[$i]));
             } else {
-                $url .= sprintf('&%s=%s', $argNum, urlencode(trim($arguments[$i])));
+                $postData .= sprintf('&%s=%s', $argNum, urlencode(trim($arguments[$i])));
             }
         }
 
         if (isset($this->sessionId)) {
-            $url .= sprintf('&%s=%s', 'sessionId', $this->sessionId);
+            $postData .= sprintf('&%s=%s', 'sessionId', $this->sessionId);
         }
 
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_HEADER, 0);
+        curl_setopt($curl, CURLOPT_POST, true);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $postData);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/x-www-form-urlencoded; charset=utf-8'
+        ));
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 60);
 
