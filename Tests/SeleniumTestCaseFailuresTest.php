@@ -112,7 +112,7 @@ class Extensions_SeleniumTestCaseFailuresTest extends PHPUnit_Extensions_Seleniu
         try {
             $exception = $this->getAFailure();
             $this->onNotSuccessfulTest($exception);
-        } catch (PHPUnit_Framework_AssertionFailedError $e) {
+        } catch (PHPUnit_Framework_Error $e) {
             $this->assertTrue(file_exists($this->screenshotPath));
             $this->assertTrue((bool) strstr($e->getMessage(), 'Screenshot: http://.../'));
             return;
