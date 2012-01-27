@@ -80,26 +80,26 @@ class Extensions_SeleniumTestCaseFailuresTest extends PHPUnit_Extensions_Seleniu
     }
 
     /**
-     * Fixes #78
+     * Fixes #78.
+     * Also of interest for #84.
      */
     public function testExpectationFailuresAreRethrownCorrectly()
     {
         $exception = new PHPUnit_Framework_ExpectationFailedException("Some comparison error.");
         try {
             $this->onNotSuccessfulTest($exception);
-        } catch (PHPUnit_Framework_Error $e) {
+        } catch (PHPUnit_Framework_AssertionFailedError $e) {
             $this->assertTrue((bool) strstr($e->getMessage(), 'Some comparison error.'));
         }
     }
 
     public function testWhenAComparisonFailureIsPresentItIsIncludedInTheMessage()
     {
-        $failure = new PHPUnit_Framework_ComparisonFailure(1, 2, '1', '2');
-        $exception = new PHPUnit_Framework_ExpectationFailedException('1 is not 2', $failure);
+        $exception = $this->getAFailure();
         try {
             $this->onNotSuccessfulTest($exception);
-        } catch (PHPUnit_Framework_Error $e) {
-            $this->assertTrue((bool) strstr($e->getMessage(), '--- Expected'));
+        } catch (PHPUnit_Framework_ExpectationFailedException $e) {
+            $this->assertSame($exception, $e);
         }
     }
 
@@ -110,14 +110,20 @@ class Extensions_SeleniumTestCaseFailuresTest extends PHPUnit_Extensions_Seleniu
         $this->screenshotUrl = 'http://...';
 
         try {
-            $exception = new BadMethodCallException();
+            $exception = $this->getAFailure();
             $this->onNotSuccessfulTest($exception);
-        } catch (PHPUnit_Framework_Error $e) {
+        } catch (PHPUnit_Framework_AssertionFailedError $e) {
             $this->assertTrue(file_exists($this->screenshotPath));
             $this->assertTrue((bool) strstr($e->getMessage(), 'Screenshot: http://.../'));
             return;
         }
         $this->fail('An exception should have been raised by now.');
+    }
+
+    private function getAFailure()
+    {
+        $failure = new PHPUnit_Framework_ComparisonFailure(1, 2, '1', '2');
+        return new PHPUnit_Framework_ExpectationFailedException('1 is not 2', $failure);
     }
 
     /**
@@ -145,6 +151,9 @@ class Extensions_SeleniumTestCaseFailuresTest extends PHPUnit_Extensions_Seleniu
         $this->isRethrownWithSameMessage($original);
     }
 
+    /**
+     * Issue #84.
+     */
     public function testErrorsInExecutionMustBeSignaled()
     {
         $this->open('/');

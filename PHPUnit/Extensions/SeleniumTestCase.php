@@ -1111,10 +1111,20 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
 
         $buffer .= "\n" . $message;
 
+        
+        // gain the screenshot path, lose the stack trace
+        if ($this->captureScreenshotOnFailure) {
+            throw new PHPUnit_Framework_Error($buffer, $e->getCode(), $e->getFile(), $e->getLine(), $e->getTrace());
+        }
+
+        // yes to stack trace and everything
         if ($e instanceof PHPUnit_Framework_IncompleteTestError
-         || $e instanceof PHPUnit_Framework_SkippedTestError) {
+         || $e instanceof PHPUnit_Framework_SkippedTestError
+         || $e instanceof PHPUnit_Framework_AssertionFailedError) {
             throw $e;
         }
+
+        // yes to stack trace, only for F tests
         throw new PHPUnit_Framework_Error($buffer, $e->getCode(), $e->getFile(), $e->getLine(), $e->getTrace());
     }
 
