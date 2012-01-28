@@ -175,4 +175,12 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $h2 = $this->byCssSelector('h2');
         $this->assertRegExp('/Welcome, TestUser!/', $h2->text());
     }
+    
+    public function testTypingNonLatinText()
+    {
+        $this->url('html/test_type_page1.html');
+        $usernameInput = $this->byName('username');
+        $usernameInput->value('テストユーザ');
+        $this->assertEquals('テストユーザ', $usernameInput->value());
+    }
 }
