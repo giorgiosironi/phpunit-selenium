@@ -1089,15 +1089,11 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
         $buffer  = 'Current URL: ' . $this->drivers[0]->getLocation() .
                    "\n";
 
-        if ($this->captureScreenshotOnFailure &&
-            !empty($this->screenshotPath) &&
-            !empty($this->screenshotUrl)) {
-            $filename = $this->getScreenshotPath() . $this->testId . '.png';
-
-            $this->drivers[0]->captureEntirePageScreenshot($filename);
-
-            $buffer .= 'Screenshot: ' . $this->screenshotUrl . '/' .
-                       $this->testId . ".png\n";
+        if ($this->captureScreenshotOnFailure) {
+            $screenshotInfo = $this->takeScreenshot();
+            if ($screenshotInfo != '') {
+                $buffer .= $screenshotInfo;
+            }
         }
 
         $this->stopSession();
@@ -1148,5 +1144,29 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
         }
 
         return $path;
+    }
+
+    /**
+     * Take a screenshot and return information about it.
+     * Return an empty string if the screenshotPath and screenshotUrl
+     * properties are empty.
+     * Issue #88.
+     * 
+     * @access protected
+     * @return string
+     */
+    protected function takeScreenshot()
+    {
+        if (!empty($this->screenshotPath) &&
+            !empty($this->screenshotUrl)) {
+            $filename = $this->getScreenshotPath() . $this->testId . '.png';
+
+            $this->drivers[0]->captureEntirePageScreenshot($filename);
+
+            return 'Screenshot: ' . $this->screenshotUrl . '/' .
+                   $this->testId . ".png\n";
+        } else {
+            return '';
+        }
     }
 }
