@@ -183,4 +183,36 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $usernameInput->value('テストユーザ');
         $this->assertEquals('テストユーザ', $usernameInput->value());
     }
+
+    public function testSelectElements()
+    {
+        $this->url('html/test_select.html');
+        $option = $this->byId('o2');
+        $this->assertEquals('Second Option', $option->text());
+        $this->assertEquals('option2', $option->value());
+        return;
+
+        $this->select('theSelect', 'index=4');
+        $this->assertEquals('Fifth Option', $this->getSelectedLabel('theSelect'));
+        $this->assertEquals('o4', $this->getSelectedId('theSelect'));
+
+        $this->select('theSelect', 'Third Option');
+        $this->assertEquals('Third Option', $this->getSelectedLabel('theSelect'));
+
+        $this->select('theSelect', 'label=Fourth Option');
+        $this->assertEquals('Fourth Option', $this->getSelectedLabel('theSelect'));
+
+        $this->select('theSelect', 'value=option6');
+        $this->assertEquals('Sixth Option', $this->getSelectedLabel('theSelect'));
+
+        $this->select('theSelect', 'value=');
+        $this->assertEquals('Empty Value Option', $this->getSelectedLabel('theSelect'));
+
+        $this->select('theSelect', 'id=o4');
+        $this->assertEquals('Fourth Option', $this->getSelectedLabel('theSelect'));
+
+        $this->select('theSelect', '');
+        $this->assertEquals('', $this->getSelectedLabel('theSelect'));
+
+    }
 }
