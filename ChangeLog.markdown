@@ -8,6 +8,7 @@ PHPUnit_Selenium 1.2.2
 
 * Fixed #83: `setUpBeforeClass` and `tearDownAfterClass` do not work with `PHPUnit_Extensions_SeleniumTestCase`.
 * Fixed #85: using POST instead of GET in Selenium RC Driver.
+* Supporting AndroidDriver, both on devices and emulators
 
 PHPUnit_Selenium 1.2.1
 ----------------------
