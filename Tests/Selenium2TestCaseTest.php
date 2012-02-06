@@ -196,6 +196,12 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $option->click();
         $this->assertTrue($option->selected());
         return;
+    }
+
+    public function testASelectObjectCanBeBuildWithASpecificAPI()
+    {
+        $this->markTestIncomplete('Need to create the class and the Factory Method.');
+        $select = $this->select($this->byCssSelector('select'));
 
         $this->select('theSelect', 'index=4');
         $this->assertEquals('Fifth Option', $this->getSelectedLabel('theSelect'));
