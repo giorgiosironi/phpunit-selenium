@@ -52,6 +52,9 @@
  * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.0
+ * @method void click()
+ * @method string value($newValue = NULL) Get or set value of form elements
+ * @method string text() Get content of ordinary elements
  */
 class PHPUnit_Extensions_Selenium2TestCase_Element
 {
