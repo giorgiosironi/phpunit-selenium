@@ -79,6 +79,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Element
         $this->commands = array(
             'click' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Click',
             'value' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Value',
+            'selected' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor',
             'text' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor'
         );
     }
