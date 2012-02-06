@@ -54,6 +54,14 @@
  * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.0
+ * @method \PHPUnit_Extensions_Selenium2TestCase_Element byCssSelector($value)
+ * @method \PHPUnit_Extensions_Selenium2TestCase_Element byClassName($vaue)
+ * @method \PHPUnit_Extensions_Selenium2TestCase_Element byId($value)
+ * @method \PHPUnit_Extensions_Selenium2TestCase_Element byName($value)
+ * @method \PHPUnit_Extensions_Selenium2TestCase_Element byXPath($value)
+ * @method void clickOnElement($id)
+ * @method string title()
+ * @method void url($url)
  */
 abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_TestCase
 {
