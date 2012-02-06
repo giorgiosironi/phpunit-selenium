@@ -193,6 +193,8 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $this->assertTrue($option->selected());
         $option = $this->byId('o3');
         $this->assertFalse($option->selected());
+        $option->click();
+        $this->assertTrue($option->selected());
         return;
 
         $this->select('theSelect', 'index=4');
