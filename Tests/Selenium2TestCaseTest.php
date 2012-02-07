@@ -83,6 +83,14 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $this->assertEquals('Click here for next page', $link->text());
     }
 
+    public function testElementsCanBeSelectedAsChildrenOfAlreadyFoundElements()
+    {
+        $this->url('html/test_element_selection.html');
+        $parent = $this->byCssSelector('div#parentElement');
+        $child = $parent->element($this->using('css selector')->value('span'));
+        $this->assertEquals('Child span', $child->text());
+    }
+
     public function testShortenedApiForSelectionOfElement()
     {
         $this->url('html/test_element_selection.html');

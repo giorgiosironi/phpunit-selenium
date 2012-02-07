@@ -102,6 +102,19 @@ class PHPUnit_Extensions_Selenium2TestCase_Element
         return $response->getValue();
     }
 
+    /**
+     * @return PHPUnit_Extensions_Selenium2TestCase_Element
+     */
+    public function element(PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $jsonParameters)
+    {
+        $response = $this->driver->curl('POST',
+                                        $this->url->descend('element'),
+                                        $jsonParameters->getArrayCopy());
+        $value = $response->getValue();
+        $newUrl = $this->url->ascend()->descend($value['ELEMENT']);
+        return new PHPUnit_Extensions_Selenium2TestCase_Element($this->driver, $newUrl);
+    }
+
     private function newCommand($commandName, $jsonParameters)
     {
         if (isset($this->commands[$commandName])) {

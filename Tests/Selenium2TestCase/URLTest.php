@@ -59,6 +59,12 @@ class Extensions_Selenium2TestCase_URLTest extends PHPUnit_Framework_TestCase
                             $this->url('/posts')->descend('1'));
     }
 
+    public function testAscendsAnURByEliminatingAnAdditionalFolder()
+    {
+        $this->assertEquals($this->url('/posts'),
+                            $this->url('/posts/1')->ascend());
+    }
+
     public function testTransformsCamelCaseIntoWhileAddingACommandToAnURL()
     {
         $this->assertEquals($this->url('/posts/alert_text'),

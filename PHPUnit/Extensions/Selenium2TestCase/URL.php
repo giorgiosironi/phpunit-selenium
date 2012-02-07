@@ -86,6 +86,13 @@ final class PHPUnit_Extensions_Selenium2TestCase_URL
         return new self($newValue);
     }
 
+    public function ascend()
+    {
+        $lastSlash = strrpos($this->value, "/");
+        $newValue = substr($this->value, 0, $lastSlash);
+        return new self($newValue);
+    }
+
     public function addCommand($command)
     {
         return $this->descend($this->camelCaseToUnderScores($command));
