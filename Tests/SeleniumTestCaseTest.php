@@ -710,7 +710,7 @@ class Extensions_SeleniumTestCaseTest extends PHPUnit_Extensions_SeleniumTestCas
      */
     public function testWaitForVisible()
     {
-        $this->open($this->url . 'html/test_wait.html');
+        $this->open('html/test_wait.html');
         $this->waitForVisible('testBox');
         $this->assertTrue($this->isVisible('testBox'));
     }
