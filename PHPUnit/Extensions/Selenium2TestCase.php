@@ -61,7 +61,7 @@
  * @method \PHPUnit_Extensions_Selenium2TestCase_Element byXPath($value)
  * @method void clickOnElement($id)
  * @method string title()
- * @method void url($url)
+ * @method void|string url($url = NULL)
  */
 abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_TestCase
 {
