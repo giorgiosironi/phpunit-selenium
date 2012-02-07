@@ -223,7 +223,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
     }
 
     /**
-     * @return PHPUnit_Extensions_Selenium2TestCase_ElementCriteria
+     * @return PHPUnit_Extensions_Selenium2TestCase_Element
      */
     public function element(PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $jsonParameters)
     {
