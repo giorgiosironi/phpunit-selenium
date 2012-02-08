@@ -62,18 +62,18 @@ class PHPUnit_Extensions_Selenium2TestCase_Element
     /**
      * @var PHPUnit_Extensions_Selenium2TestCase_Driver
      */
-    private $driver;
+    protected $driver;
 
     /**
      * @var string  the API URL for this element,
      */
-    private $url;
+    protected $url;
 
     /**
      * @var array   instances of 
      *              PHPUnit_Extensions_Selenium2TestCase_ElementCommand
      */
-    private $commands;
+    protected $commands;
 
     public function __construct($driver,
                                 PHPUnit_Extensions_Selenium2TestCase_URL $url)

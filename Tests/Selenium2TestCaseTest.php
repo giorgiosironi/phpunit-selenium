@@ -208,11 +208,14 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
 
     public function testASelectObjectCanBeBuildWithASpecificAPI()
     {
-        $this->markTestIncomplete('Need to create the class and the Factory Method.');
+        $this->url('html/test_select.html');
         $select = $this->select($this->byCssSelector('select'));
+        $this->assertEquals('Second Option', $select->selectedLabel());
+        $this->assertEquals('option2', $select->selectedValue());
+        return;
 
-        $this->select('theSelect', 'index=4');
-        $this->assertEquals('Fifth Option', $this->getSelectedLabel('theSelect'));
+        $select->selectOptionByLabel();
+        $this->assertEquals('Fifth Option', $select->selectedLabel());
         $this->assertEquals('o4', $this->getSelectedId('theSelect'));
 
         $this->select('theSelect', 'Third Option');

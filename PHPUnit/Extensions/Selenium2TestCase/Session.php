@@ -236,6 +236,14 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
     }
 
     /**
+     * @return PHPUnit_Extensions_Selenium2TestCase_Element_Select
+     */
+    public function select(PHPUnit_Extensions_Selenium2TestCase_Element $element)
+    {
+        return PHPUnit_Extensions_Selenium2TestCase_Element_Select::fromElement($element);
+    }
+
+    /**
      * @param string $id    id attribute, e.g. 'container'
      * @return void
      */

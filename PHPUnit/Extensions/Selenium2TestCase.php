@@ -59,6 +59,7 @@
  * @method \PHPUnit_Extensions_Selenium2TestCase_Element byId($value)
  * @method \PHPUnit_Extensions_Selenium2TestCase_Element byName($value)
  * @method \PHPUnit_Extensions_Selenium2TestCase_Element byXPath($value)
+ * @method \PHPUnit_Extensions_Selenium2TestCase_Element_Select select($element)
  * @method void clickOnElement($id)
  * @method string title()
  * @method void|string url($url = NULL)

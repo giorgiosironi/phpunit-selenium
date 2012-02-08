@@ -59,6 +59,11 @@
       <file baseinstalldir="/" name="Driver.php" role="php">
        <tasks:replace from="@package_version@" to="version" type="package-info" />
       </file>
+      <dir name="Element">
+       <file baseinstalldir="/" name="Select.php" role="php">
+        <tasks:replace from="@package_version@" to="version" type="package-info" />
+       </file>
+      </dir>
       <dir name="ElementCommand">
        <file baseinstalldir="/" name="Click.php" role="php">
         <tasks:replace from="@package_version@" to="version" type="package-info" />
