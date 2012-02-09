@@ -80,10 +80,41 @@ class PHPUnit_Extensions_Selenium2TestCase_Element_Select
         return $this->selectedOption()->value();
     }
 
+    /**
+     * @param string $label the text appearing in the option
+     * @return void
+     */
+    public function selectOptionByLabel($label)
+    {
+        $toSelect = new PHPUnit_Extensions_Selenium2TestCase_ElementCriteria('xpath');
+        $toSelect->value("//option[text()='$label']");
+
+        $option = $this->element($toSelect);
+        $option->click();
+    }
+
     private function selectedOption()
     {
-        $onlyTheSelected = new PHPUnit_Extensions_Selenium2TestCase_ElementCriteria('css selector');
-        $onlyTheSelected->value('option[selected]');
-        return $this->element($onlyTheSelected);
+        foreach ($this->options() as $option) {
+            if ($option->selected()) {
+                return $option;
+            }
+        }
+    }
+
+    private function options()
+    {
+        $onlyTheOptions = new PHPUnit_Extensions_Selenium2TestCase_ElementCriteria('css selector');
+        $onlyTheOptions->value('option');
+        $response = $this->driver->curl('POST',
+                                        $this->url->descend('elements'),
+                                        $onlyTheOptions->getArrayCopy());
+        $values = $response->getValue();
+        $options = array();
+        foreach ($values as $value) {
+            $newUrl = $this->url->ascend()->descend($value['ELEMENT']);
+            $options[] = new PHPUnit_Extensions_Selenium2TestCase_Element($this->driver, $newUrl);
+        }
+        return $options;
     }
 }

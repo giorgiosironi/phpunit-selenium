@@ -203,7 +203,6 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $this->assertFalse($option->selected());
         $option->click();
         $this->assertTrue($option->selected());
-        return;
     }
 
     public function testASelectObjectCanBeBuildWithASpecificAPI()
@@ -212,11 +211,13 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $select = $this->select($this->byCssSelector('select'));
         $this->assertEquals('Second Option', $select->selectedLabel());
         $this->assertEquals('option2', $select->selectedValue());
-        return;
 
-        $select->selectOptionByLabel();
-        $this->assertEquals('Fifth Option', $select->selectedLabel());
-        $this->assertEquals('o4', $this->getSelectedId('theSelect'));
+        $select->selectOptionByLabel('Fourth Option');
+        $this->assertEquals('option4', $select->selectedValue());
+
+        return;
+        $select->selectOptionByValue('option3');
+        $this->assertEquals('Third Option', $select->selectedLabel());
 
         $this->select('theSelect', 'Third Option');
         $this->assertEquals('Third Option', $this->getSelectedLabel('theSelect'));
