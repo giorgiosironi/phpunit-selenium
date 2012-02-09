@@ -218,9 +218,9 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $select->selectOptionByLabel('Fourth Option');
         $this->assertEquals('option4', $select->selectedValue());
 
-        return;
         $select->selectOptionByValue('option3');
         $this->assertEquals('Third Option', $select->selectedLabel());
+        return;
 
         $this->select('theSelect', 'Third Option');
         $this->assertEquals('Third Option', $this->getSelectedLabel('theSelect'));

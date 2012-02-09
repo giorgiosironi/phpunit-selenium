@@ -61,7 +61,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Element_Select
      */
     public static function fromElement(PHPUnit_Extensions_Selenium2TestCase_Element $element)
     {
-        return new PHPUnit_Extensions_Selenium2TestCase_Element_Select($element->driver, $element->url);
+        return new self($element->driver, $element->url);
     }
 
     /**
@@ -86,10 +86,23 @@ class PHPUnit_Extensions_Selenium2TestCase_Element_Select
      */
     public function selectOptionByLabel($label)
     {
-        $toSelect = new PHPUnit_Extensions_Selenium2TestCase_ElementCriteria('xpath');
-        $toSelect->value("//option[text()='$label']");
+        $toSelect = $this->criteria('xpath')->value("//option[text()='$label']");
+        $this->selectOption($toSelect);
+    }
 
-        $option = $this->element($toSelect);
+    /**
+     * @param string $value the value attribute of the option
+     * @return void
+     */
+    public function selectOptionByValue($value)
+    {
+        $toSelect = $this->criteria('xpath')->value("//option[@value='$value']");
+        $this->selectOption($toSelect);
+    }
+
+    private function selectOption(PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $localCriteria)
+    {
+        $option = $this->element($localCriteria);
         $option->click();
     }
 
@@ -104,18 +117,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Element_Select
 
     private function options()
     {
-        $onlyTheOptions = new PHPUnit_Extensions_Selenium2TestCase_ElementCriteria('css selector');
-        $onlyTheOptions->value('option');
+        $onlyTheOptions = $this->criteria('css selector')->value('option');
         return $this->elements($onlyTheOptions);
-        $response = $this->driver->curl('POST',
-                                        $this->url->descend('elements'),
-                                        $onlyTheOptions->getArrayCopy());
-        $values = $response->getValue();
-        $options = array();
-        foreach ($values as $value) {
-            $newUrl = $this->url->ascend()->descend($value['ELEMENT']);
-            $options[] = new PHPUnit_Extensions_Selenium2TestCase_Element($this->driver, $newUrl);
-        }
-        return $options;
     }
 }

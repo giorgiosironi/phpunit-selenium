@@ -126,6 +126,14 @@ class PHPUnit_Extensions_Selenium2TestCase_Element
         return $elements;
     }
 
+    /**
+     * @return PHPUnit_Extensions_Selenium2TestCase_ElementCriteria
+     */
+    protected function criteria($using)
+    {
+        return new PHPUnit_Extensions_Selenium2TestCase_ElementCriteria($using);
+    }
+
     private function postCommand($name, PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $criteria)
     {
         $response = $this->driver->curl('POST',
