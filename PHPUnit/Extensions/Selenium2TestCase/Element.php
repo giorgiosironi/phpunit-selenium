@@ -105,14 +105,31 @@ class PHPUnit_Extensions_Selenium2TestCase_Element
     /**
      * @return PHPUnit_Extensions_Selenium2TestCase_Element
      */
-    public function element(PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $jsonParameters)
+    public function element(PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $criteria)
     {
         $response = $this->driver->curl('POST',
                                         $this->url->descend('element'),
-                                        $jsonParameters->getArrayCopy());
+                                        $criteria->getArrayCopy());
         $value = $response->getValue();
         $newUrl = $this->url->ascend()->descend($value['ELEMENT']);
-        return new PHPUnit_Extensions_Selenium2TestCase_Element($this->driver, $newUrl);
+        return new self($this->driver, $newUrl);
+    }
+
+    /**
+     * @return array    instances of PHPUnit_Extensions_Selenium2TestCase_Element
+     */
+    public function elements(PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $criteria)
+    {
+        $response = $this->driver->curl('POST',
+                                        $this->url->descend('elements'),
+                                        $criteria->getArrayCopy());
+        $values = $response->getValue();
+        $elements = array();
+        foreach ($values as $value) {
+            $newUrl = $this->url->ascend()->descend($value['ELEMENT']);
+            $elements[] = new self($this->driver, $newUrl);
+        }
+        return $elements;
     }
 
     private function newCommand($commandName, $jsonParameters)

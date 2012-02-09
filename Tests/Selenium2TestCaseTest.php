@@ -89,6 +89,9 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $parent = $this->byCssSelector('div#parentElement');
         $child = $parent->element($this->using('css selector')->value('span'));
         $this->assertEquals('Child span', $child->text());
+
+        $rows = $this->byCssSelector('table')->elements($this->using('css selector')->value('tr'));
+        $this->assertEquals(2, count($rows));
     }
 
     public function testShortenedApiForSelectionOfElement()

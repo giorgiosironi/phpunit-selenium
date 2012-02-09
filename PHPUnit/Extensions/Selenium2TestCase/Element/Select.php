@@ -106,6 +106,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Element_Select
     {
         $onlyTheOptions = new PHPUnit_Extensions_Selenium2TestCase_ElementCriteria('css selector');
         $onlyTheOptions->value('option');
+        return $this->elements($onlyTheOptions);
         $response = $this->driver->curl('POST',
                                         $this->url->descend('elements'),
                                         $onlyTheOptions->getArrayCopy());
