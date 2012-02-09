@@ -107,10 +107,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Element
      */
     public function element(PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $criteria)
     {
-        $response = $this->driver->curl('POST',
-                                        $this->url->descend('element'),
-                                        $criteria->getArrayCopy());
-        $value = $response->getValue();
+        $value = $this->postCommand('element', $criteria);
         $newUrl = $this->url->ascend()->descend($value['ELEMENT']);
         return new self($this->driver, $newUrl);
     }
@@ -120,16 +117,21 @@ class PHPUnit_Extensions_Selenium2TestCase_Element
      */
     public function elements(PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $criteria)
     {
-        $response = $this->driver->curl('POST',
-                                        $this->url->descend('elements'),
-                                        $criteria->getArrayCopy());
-        $values = $response->getValue();
+        $values = $this->postCommand('elements', $criteria);
         $elements = array();
         foreach ($values as $value) {
             $newUrl = $this->url->ascend()->descend($value['ELEMENT']);
             $elements[] = new self($this->driver, $newUrl);
         }
         return $elements;
+    }
+
+    private function postCommand($name, PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $criteria)
+    {
+        $response = $this->driver->curl('POST',
+                                        $this->url->addCommand($name),
+                                        $criteria->getArrayCopy());
+        return $response->getValue();
     }
 
     private function newCommand($commandName, $jsonParameters)
