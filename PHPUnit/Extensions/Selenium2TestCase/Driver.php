@@ -132,7 +132,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Driver
     {
         if ($this->browser == 'android'
          && preg_match('/wd\/hub\/session\/[0-9]*/', $info['url'])) {
-            return false;
+            return FALSE;
         }
     }
 }

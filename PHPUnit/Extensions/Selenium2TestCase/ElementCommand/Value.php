@@ -83,7 +83,7 @@ class PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Value
     {
         $characters = array();
         for ($i = 0, $length = strlen($string); $i < $length; $i++) {
-            $characters[] = mb_substr($string, $i, 1, 'UTF-8');;
+            $characters[] = mb_substr($string, $i, 1, 'UTF-8');
         }
         return array(
             'value' => $characters

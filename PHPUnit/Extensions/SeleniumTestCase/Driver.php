@@ -942,7 +942,7 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_HEADER, 0);
-        curl_setopt($curl, CURLOPT_POST, true);
+        curl_setopt($curl, CURLOPT_POST, TRUE);
         curl_setopt($curl, CURLOPT_POSTFIELDS, $postData);
         curl_setopt($curl, CURLOPT_HTTPHEADER, array(
             'Content-Type: application/x-www-form-urlencoded; charset=utf-8'
@@ -1052,7 +1052,6 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
         catch (RuntimeException $e) {
             throw $e;
         }
-
 
         return (strlen($result) > 3) ? substr($result, 3) : '';
     }

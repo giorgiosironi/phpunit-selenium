@@ -1107,7 +1107,6 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
 
         $buffer .= "\n" . $message;
 
-        
         // gain the screenshot path, lose the stack trace
         if ($this->captureScreenshotOnFailure) {
             throw new PHPUnit_Framework_Error($buffer, $e->getCode(), $e->getFile(), $e->getLine(), $e->getTrace());
