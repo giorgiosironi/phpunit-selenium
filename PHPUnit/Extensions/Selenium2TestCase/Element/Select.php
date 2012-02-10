@@ -39,7 +39,7 @@
  * @copyright  2010-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link       http://www.phpunit.de/
- * @since      File available since Release 1.2.333
+ * @since      File available since Release 1.2.2
  */
 
 /**
@@ -51,7 +51,7 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
- * @since      Class available since Release 1.2.3
+ * @since      Class available since Release 1.2.2
  */
 class PHPUnit_Extensions_Selenium2TestCase_Element_Select
     extends PHPUnit_Extensions_Selenium2TestCase_Element

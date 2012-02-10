@@ -6,9 +6,12 @@ This is the list of changes for the PHPUnit_Selenium 1.2 release series.
 PHPUnit_Selenium 1.2.2
 ----------------------
 
+* Implemented Select object, available via $this->select()
+* Added defaults for Selenium Server host and port
 * Fixed #83: `setUpBeforeClass` and `tearDownAfterClass` do not work with `PHPUnit_Extensions_SeleniumTestCase`.
 * Fixed #85: using POST instead of GET in Selenium RC Driver.
 * Supporting AndroidDriver, both on devices and emulators
+* Supporting UTF-8 characters
 
 PHPUnit_Selenium 1.2.1
 ----------------------
