@@ -212,33 +212,27 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
     {
         $this->url('html/test_select.html');
         $select = $this->select($this->byCssSelector('select'));
+        
+        // basic
         $this->assertEquals('Second Option', $select->selectedLabel());
         $this->assertEquals('option2', $select->selectedValue());
 
+        // by text, value attribute or generic criteria
         $select->selectOptionByLabel('Fourth Option');
         $this->assertEquals('option4', $select->selectedValue());
 
         $select->selectOptionByValue('option3');
         $this->assertEquals('Third Option', $select->selectedLabel());
-        return;
 
-        $this->select('theSelect', 'Third Option');
-        $this->assertEquals('Third Option', $this->getSelectedLabel('theSelect'));
+        $select->selectOptionByCriteria($this->using('id')->value('o4'));
+        $this->assertEquals('option4', $select->selectedValue());
 
-        $this->select('theSelect', 'label=Fourth Option');
-        $this->assertEquals('Fourth Option', $this->getSelectedLabel('theSelect'));
+        // empty values
+        $select->selectOptionByValue('');
+        $this->assertEquals('Empty Value Option', $select->selectedLabel());
 
-        $this->select('theSelect', 'value=option6');
-        $this->assertEquals('Sixth Option', $this->getSelectedLabel('theSelect'));
-
-        $this->select('theSelect', 'value=');
-        $this->assertEquals('Empty Value Option', $this->getSelectedLabel('theSelect'));
-
-        $this->select('theSelect', 'id=o4');
-        $this->assertEquals('Fourth Option', $this->getSelectedLabel('theSelect'));
-
-        $this->select('theSelect', '');
-        $this->assertEquals('', $this->getSelectedLabel('theSelect'));
+        $select->selectOptionByLabel('');
+        $this->assertEquals('', $select->selectedLabel());
 
     }
 }

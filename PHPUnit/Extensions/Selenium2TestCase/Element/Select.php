@@ -86,8 +86,8 @@ class PHPUnit_Extensions_Selenium2TestCase_Element_Select
      */
     public function selectOptionByLabel($label)
     {
-        $toSelect = $this->criteria('xpath')->value("//option[text()='$label']");
-        $this->selectOption($toSelect);
+        $toSelect = $this->criteria('xpath')->value("//option[.='$label']");
+        $this->selectOptionByCriteria($toSelect);
     }
 
     /**
@@ -97,10 +97,14 @@ class PHPUnit_Extensions_Selenium2TestCase_Element_Select
     public function selectOptionByValue($value)
     {
         $toSelect = $this->criteria('xpath')->value("//option[@value='$value']");
-        $this->selectOption($toSelect);
+        $this->selectOptionByCriteria($toSelect);
     }
 
-    private function selectOption(PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $localCriteria)
+    /**
+     * @param PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $localCriteria  condiotions for selecting an option
+     * @return void
+     */
+    public function selectOptionByCriteria(PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $localCriteria)
     {
         $option = $this->element($localCriteria);
         $option->click();
