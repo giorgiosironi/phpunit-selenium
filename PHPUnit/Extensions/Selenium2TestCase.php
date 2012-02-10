@@ -74,12 +74,12 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
     /**
      * @var string
      */
-    private $host;
+    private $host = 'localhost';
 
     /**
      * @var int
      */
-    private $port;
+    private $port = 4444;
 
     /**
      * @var string
