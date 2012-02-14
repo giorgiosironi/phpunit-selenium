@@ -252,4 +252,18 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $this->assertEquals('form submitted', $this->alertText());
     }
 
+    public function testCheckboxesCanBeSelectedAndDeselected()
+    {
+        $this->url('html/test_check_uncheck.html');
+        $beans = $this->byId('option-beans');
+        $butter = $this->byId('option-butter');
+
+        $this->assertTrue($beans->selected());
+        $this->assertFalse($butter->selected());
+
+        $butter->click();
+        $this->assertTrue($butter->selected());
+        $butter->click();
+        $this->assertFalse($butter->selected());
+    }
 }
