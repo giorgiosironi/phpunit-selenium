@@ -74,10 +74,10 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
     {
         $baseUrl = $this->baseUrl;
         return array(
-            'acceptAlert' => $this->factoryMethod('PHPUnit_Extensions_Selenium2TestCase_SessionCommand_AcceptAlert'),
-            'alertText' => $this->factoryMethod('PHPUnit_Extensions_Selenium2TestCase_SessionCommand_GenericAccessor'),
-            'dismissAlert' => $this->factoryMethod('PHPUnit_Extensions_Selenium2TestCase_SessionCommand_DismissAlert'),
-            'title' => $this->factoryMethod('PHPUnit_Extensions_Selenium2TestCase_SessionCommand_GenericAccessor'),
+            'acceptAlert' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_AcceptAlert',
+            'alertText' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_GenericAccessor',
+            'dismissAlert' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_DismissAlert',
+            'title' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_GenericAccessor',
             'url' => function ($jsonParameters, $commandUrl) use ($baseUrl) {
                 return new PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Url($jsonParameters, $commandUrl, $baseUrl);
             }
