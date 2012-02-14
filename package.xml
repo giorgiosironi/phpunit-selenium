@@ -90,6 +90,11 @@
       <file baseinstalldir="/" name="Response.php" role="php">
        <tasks:replace from="@package_version@" to="version" type="package-info" />
       </file>
+      <dir name="Session">
+       <file baseinstalldir="/" name="Timeouts.php" role="php">
+        <tasks:replace from="@package_version@" to="version" type="package-info" />
+       </file>
+      </dir>
       <dir name="SessionCommand">
        <file baseinstalldir="/" name="AcceptAlert.php" role="php">
         <tasks:replace from="@package_version@" to="version" type="package-info" />
