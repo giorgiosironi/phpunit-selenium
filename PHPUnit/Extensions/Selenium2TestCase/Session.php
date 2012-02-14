@@ -251,4 +251,11 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
     {
         return $this->element($this->using('id')->value($id))->click();
     }
+
+    public function timeouts_implicitWait($ms)
+    {
+        $this->driver->curl('POST',
+                            $this->sessionUrl->descend('timeouts')->addCommand('implicitWait'),
+                            array('ms' => $ms));
+    }
 }
