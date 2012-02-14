@@ -146,6 +146,6 @@ abstract class PHPUnit_Extensions_Selenium2TestCase_CommandsHolder
             $command = $factoryMethod($jsonParameters, $url);
             return $command;
         }
-        throw new RuntimeException("The command '$commandName' is not supported yet.");
+        throw new BadMethodCallException("The command '$commandName' is not existent or not supported yet.");
     }
 }
