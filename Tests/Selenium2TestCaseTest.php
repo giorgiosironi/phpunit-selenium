@@ -287,17 +287,10 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
 
     public function testWaitPeriodsAreImplicitInSelection()
     {
-        //is* wait for
         $this->timeouts_implicitWait(10000);
         $this->url('html/test_delayed_element.html');
         $element = $this->byId('createElementButton')->click();
         $div = $this->byXPath("//div[@id='delayedDiv']");
         $this->assertEquals('Delayed div.', $div->text());
-        return;
-
-        //get* wait for
-        $this->open('html/test_delayed_element.html');
-        $this->click('createElementButton');
-        $this->waitForXpathCount("//div[@id='delayedDiv']", 1);
     }
 }
