@@ -101,7 +101,8 @@ abstract class PHPUnit_Extensions_Selenium2TestCase_CommandsHolder
     }
 
     /**
-     * @return array    class names
+     * @return array    class names, or
+     *                  callables of the form function($parameter, $commandUrl)
      */
     protected abstract function initCommands();
 
