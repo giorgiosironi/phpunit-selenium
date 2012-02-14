@@ -52,6 +52,7 @@ function phpunit_selenium_autoload($class = NULL) {
         $classes = array(
           'phpunit_extensions_selenium2testcase' => '/Extensions/Selenium2TestCase.php',
           'phpunit_extensions_selenium2testcase_command' => '/Extensions/Selenium2TestCase/Command.php',
+          'phpunit_extensions_selenium2testcase_commandsholder' => '/Extensions/Selenium2TestCase/CommandsHolder.php',
           'phpunit_extensions_selenium2testcase_driver' => '/Extensions/Selenium2TestCase/Driver.php',
           'phpunit_extensions_selenium2testcase_element' => '/Extensions/Selenium2TestCase/Element.php',
           'phpunit_extensions_selenium2testcase_element_select' => '/Extensions/Selenium2TestCase/Element/Select.php',

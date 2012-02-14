@@ -54,17 +54,15 @@
  * @since      Class available since Release 1.2.4
  */
 class PHPUnit_Extensions_Selenium2TestCase_Session_Timeouts
+    extends PHPUnit_Extensions_Selenium2TestCase_CommandsHolder
 {
-    public function __construct(PHPUnit_Extensions_Selenium2TestCase_Driver $driver, PHPUnit_Extensions_Selenium2TestCase_URL $url)
+    protected function initCommands()
     {
-        $this->driver = $driver;
-        $this->url = $url;
-    }
-
-    public function implicitWait($ms)
-    {
-        $this->driver->curl('POST',
-                            $this->url->addCommand('implicitWait'),
-                            array('ms' => $ms));
+        return array(
+            'implicitWait' => function ($parameter, $commandUrl) {
+                $jsonParameters = array('ms' => $parameter);
+                return new PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost($jsonParameters, $commandUrl);
+            }
+        );
     }
 }

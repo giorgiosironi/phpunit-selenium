@@ -39,11 +39,11 @@
  * @copyright  2010-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link       http://www.phpunit.de/
- * @since      File available since Release 1.2.0
+ * @since      File available since Release 1.2.4
  */
 
 /**
- * Object representing a DOM element.
+ * Object representing elements, or everything that may have subcommands.
  *
  * @package    PHPUnit_Selenium
  * @author     Giorgio Sironi <giorgio.sironi@asp-poli.it>
@@ -51,15 +51,9 @@
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
- * @since      Class available since Release 1.2.0
- * @method void click()
- * @method bool selected() Checks the state of an option or other form element
- * @method void submit() Submits a form; can be called on its children
- * @method string value($newValue = NULL) Get or set value of form elements
- * @method string text() Get content of ordinary elements
+ * @since      Class available since Release 1.2.4
  */
-class PHPUnit_Extensions_Selenium2TestCase_Element
-    extends PHPUnit_Extensions_Selenium2TestCase_CommandsHolder
+abstract class PHPUnit_Extensions_Selenium2TestCase_CommandsHolder
 {
     /**
      * @var PHPUnit_Extensions_Selenium2TestCase_Driver
@@ -82,22 +76,34 @@ class PHPUnit_Extensions_Selenium2TestCase_Element
     {
         $this->driver = $driver;
         $this->url = $url;
-        $this->commands = $this->initCommands();
+        $this->commands = array();
+        foreach ($this->initCommands() as $commandName => $handler) {
+            if (is_string($handler)) {
+                $this->commands[$commandName] = $this->factoryMethod($handler);
+            } else if (is_callable($handler)) {
+                $this->commands[$commandName] = $handler;
+            } else {
+                throw new InvalidArgumentException("Command $commandName is not configured correctly.");
+            }
+        }
+    }
+
+    /**
+     * @params string $commandClass     a class name, descending from
+                                        PHPUnit_Extensions_Selenium2TestCase_Command
+     * @return callable
+     */
+    private function factoryMethod($commandClass)
+    {
+        return function($jsonParameters, $url) use ($commandClass) {
+            return new $commandClass($jsonParameters, $url);
+        };
     }
 
     /**
      * @return array    class names
      */
-    protected function initCommands()
-    {
-        return array(
-            'click' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Click',
-            'value' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Value',
-            'selected' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor',
-            'submit' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
-            'text' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor'
-        );
-    }
+    protected abstract function initCommands();
 
     public function __call($commandName, $arguments)
     {
@@ -113,38 +119,6 @@ class PHPUnit_Extensions_Selenium2TestCase_Element
         return $response->getValue();
     }
 
-    /**
-     * @return PHPUnit_Extensions_Selenium2TestCase_Element
-     */
-    public function element(PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $criteria)
-    {
-        $value = $this->postCommand('element', $criteria);
-        $newUrl = $this->url->ascend()->descend($value['ELEMENT']);
-        return new self($this->driver, $newUrl);
-    }
-
-    /**
-     * @return array    instances of PHPUnit_Extensions_Selenium2TestCase_Element
-     */
-    public function elements(PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $criteria)
-    {
-        $values = $this->postCommand('elements', $criteria);
-        $elements = array();
-        foreach ($values as $value) {
-            $newUrl = $this->url->ascend()->descend($value['ELEMENT']);
-            $elements[] = new self($this->driver, $newUrl);
-        }
-        return $elements;
-    }
-
-    /**
-     * @return PHPUnit_Extensions_Selenium2TestCase_ElementCriteria
-     */
-    protected function criteria($using)
-    {
-        return new PHPUnit_Extensions_Selenium2TestCase_ElementCriteria($using);
-    }
-
     private function postCommand($name, PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $criteria)
     {
         $response = $this->driver->curl('POST',
@@ -156,9 +130,9 @@ class PHPUnit_Extensions_Selenium2TestCase_Element
     private function newCommand($commandName, $jsonParameters)
     {
         if (isset($this->commands[$commandName])) {
-            $className = $this->commands[$commandName];
+            $factoryMethod = $this->commands[$commandName];
             $url = $this->url->addCommand($commandName);
-            $command = new $className($jsonParameters, $url);
+            $command = $factoryMethod($jsonParameters, $url);
             return $command;
         }
         throw new RuntimeException("The command '$commandName' is not supported yet.");
