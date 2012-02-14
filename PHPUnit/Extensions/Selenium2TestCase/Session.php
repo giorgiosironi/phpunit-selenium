@@ -251,5 +251,4 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
     {
         return $this->element($this->using('id')->value($id))->click();
     }
-
 }

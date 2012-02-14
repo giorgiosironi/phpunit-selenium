@@ -54,6 +54,7 @@
  * @since      Class available since Release 1.2.0
  * @method void click()
  * @method bool selected() Checks the state of an option or other form element
+ * @method void submit() Submits a form; can be called on its children
  * @method string value($newValue = NULL) Get or set value of form elements
  * @method string text() Get content of ordinary elements
  */
@@ -84,6 +85,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Element
             'click' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Click',
             'value' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Value',
             'selected' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor',
+            'submit' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
             'text' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor'
         );
     }

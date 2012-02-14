@@ -235,4 +235,21 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $this->assertEquals('', $select->selectedLabel());
 
     }
+
+    public function testFormsCanBeSubmitted()
+    {
+        $this->url('html/test_submit.html');
+        $form = $this->byId('searchForm');
+        $form->submit();
+        $this->assertEquals('onsubmit called', $this->alertText());
+        $this->acceptAlert();
+
+        $box = $this->byName('okayToSubmit');
+        $box->click();
+        $box->submit();
+        $this->assertEquals('onsubmit called', $this->alertText());
+        $this->acceptAlert();
+        $this->assertEquals('form submitted', $this->alertText());
+    }
+
 }
