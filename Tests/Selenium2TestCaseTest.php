@@ -266,4 +266,22 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $butter->click();
         $this->assertFalse($butter->selected());
     }
+
+    public function testRadioBoxesCanBeSelected()
+    {
+        $this->url('html/test_check_uncheck.html');
+        $spud = $this->byId('base-spud');
+        $rice = $this->byId('base-rice');
+
+        $this->assertTrue($spud->selected());
+        $this->assertFalse($rice->selected());
+
+        $rice->click();
+        $this->assertFalse($spud->selected());
+        $this->assertTrue($rice->selected());
+
+        $spud->click();
+        $this->assertTrue($spud->selected());
+        $this->assertFalse($rice->selected());
+    }
 }
