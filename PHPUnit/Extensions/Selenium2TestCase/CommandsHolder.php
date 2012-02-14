@@ -69,7 +69,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase_CommandsHolder
      * @var array   instances of 
      *              PHPUnit_Extensions_Selenium2TestCase_ElementCommand
      */
-    protected $commands;
+    private $commands;
 
     public function __construct($driver,
                                 PHPUnit_Extensions_Selenium2TestCase_URL $url)
@@ -107,16 +107,26 @@ abstract class PHPUnit_Extensions_Selenium2TestCase_CommandsHolder
 
     public function __call($commandName, $arguments)
     {
-        if (count($arguments) > 1) {
-            throw new InvalidArgumentException("At most 1 argument can be passed.");
-        }
-        if ($arguments === array()) {
-            $jsonParameters = NULL;
-        } else {
-            $jsonParameters = $arguments[0];
-        }
+        $jsonParameters = $this->extractJsonParameters($arguments);
         $response = $this->driver->execute($this->newCommand($commandName, $jsonParameters));
         return $response->getValue();
+    }
+
+    private function extractJsonParameters($arguments)
+    {
+        $this->checkArguments($arguments);
+
+        if (count($arguments) == 0) {
+            return NULL;
+        }
+        return $arguments[0];
+    }
+
+    private function checkArguments($arguments)
+    {
+        if (count($arguments) > 1) {
+            throw new Exception('You cannot call a command with multiple method arguments.');
+        }
     }
 
     private function postCommand($name, PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $criteria)

@@ -54,18 +54,8 @@
  * @since      Class available since Release 1.2.0
  */
 class PHPUnit_Extensions_Selenium2TestCase_Session
+    extends PHPUnit_Extensions_Selenium2TestCase_CommandsHolder
 {
-    /**
-     * @var PHPUnit_Extensions_Selenium2TestCase_Driver
-     */
-    private $driver;
-
-    /**
-     * <code>localhost:80/.../session/42</code>
-     * @var string  the session URL in Selenium 2 API
-     */
-    private $sessionUrl;
-
     /**
      * @var string  the base URL for this session,
      *              which all relative URLs will refer to
@@ -73,13 +63,17 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
     private $baseUrl;
 
     public function __construct($driver,
-                                PHPUnit_Extensions_Selenium2TestCase_URL $sessionUrl,
+                                PHPUnit_Extensions_Selenium2TestCase_URL $url,
                                 PHPUnit_Extensions_Selenium2TestCase_URL $baseUrl)
     {
-        $this->driver = $driver;
-        $this->sessionUrl = $sessionUrl;
         $this->baseUrl = $baseUrl;
-        $this->commandFactories = array(
+        parent::__construct($driver, $url);
+    }
+
+    protected function initCommands()
+    {
+        $baseUrl = $this->baseUrl;
+        return array(
             'acceptAlert' => $this->factoryMethod('PHPUnit_Extensions_Selenium2TestCase_SessionCommand_AcceptAlert'),
             'alertText' => $this->factoryMethod('PHPUnit_Extensions_Selenium2TestCase_SessionCommand_GenericAccessor'),
             'dismissAlert' => $this->factoryMethod('PHPUnit_Extensions_Selenium2TestCase_SessionCommand_DismissAlert'),
@@ -112,50 +106,12 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
      */
     public function getSessionUrl()
     {
-        return $this->sessionUrl;
+        return $this->url;
     }
 
     public function stop()
     {
-        $this->driver->curl('DELETE', $this->sessionUrl);
-    }
-
-    public function __call($commandName, $arguments)
-    {
-        $jsonParameters = $this->extractJsonParameters($arguments);
-        $response = $this->driver->execute($this->newCommand($commandName, $jsonParameters));
-        return $response->getValue();
-    }
-
-    private function extractJsonParameters($arguments)
-    {
-        $this->checkArguments($arguments);
-
-        if (count($arguments) == 0) {
-            return NULL;
-        }
-        return $arguments[0];
-    }
-
-    private function checkArguments($arguments)
-    {
-        if (count($arguments) > 1) {
-            throw new Exception('You cannot call a command with multiple method arguments.');
-        }
-    }
-
-    /**
-     * @return string
-     */
-    private function newCommand($commandName, $arguments)
-    {
-        if (isset($this->commandFactories[$commandName])) {
-            $factoryMethod = $this->commandFactories[$commandName];
-            $commandUrl = $this->sessionUrl->addCommand($commandName);
-            $commandObject = $factoryMethod($arguments, $commandUrl);
-            return $commandObject;
-        }
-        throw new BadMethodCallException("The command '$commandName' is not existent or not supported.");
+        $this->driver->curl('DELETE', $this->url);
     }
 
     /**
@@ -228,10 +184,10 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
     public function element(PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $jsonParameters)
     {
         $response = $this->driver->curl('POST',
-                                        $this->sessionUrl->descend('element'),
+                                        $this->url->descend('element'),
                                         $jsonParameters->getArrayCopy());
         $value = $response->getValue();
-        $url = $this->sessionUrl->descend('element')->descend($value['ELEMENT']);
+        $url = $this->url->descend('element')->descend($value['ELEMENT']);
         return new PHPUnit_Extensions_Selenium2TestCase_Element($this->driver, $url);
     }
 
@@ -255,6 +211,6 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
     public function timeouts()
     {
         return new PHPUnit_Extensions_Selenium2TestCase_Session_Timeouts($this->driver,
-                                                                         $this->sessionUrl->descend('timeouts'));
+                                                                         $this->url->descend('timeouts'));
     }
 }
