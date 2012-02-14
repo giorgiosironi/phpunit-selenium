@@ -254,6 +254,7 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
 
     public function testCheckboxesCanBeSelectedAndDeselected()
     {
+        $this->markTestIncomplete("Flaky: fails on clicking in some browsers.");
         $this->url('html/test_check_uncheck.html');
         $beans = $this->byId('option-beans');
         $butter = $this->byId('option-butter');
