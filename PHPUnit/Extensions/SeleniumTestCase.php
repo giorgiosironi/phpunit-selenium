@@ -656,8 +656,8 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
 
     public function skipWithNoServerRunning()
     {
-        $serverRunning = @fsockopen($this->drivers[0]->getHost(), $this->drivers[0]->getPort(), $errno, $errstr, $this->serverConnectionTimeOut);
-        if (!$serverRunning) {
+        $this->serverRunning = @fsockopen($this->drivers[0]->getHost(), $this->drivers[0]->getPort(), $errno, $errstr, $this->serverConnectionTimeOut);
+        if (!$this->serverRunning) {
             $this->markTestSkipped(
               sprintf(
                 'Could not connect to the Selenium Server on %s:%d.',
@@ -1084,6 +1084,10 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
      */
     protected function onNotSuccessfulTest(Exception $e)
     {
+        if (!$this->serverRunning) {
+            throw $e;
+        }
+
         $this->restoreSessionStateAfterFailedTest();
 
         $buffer  = 'Current URL: ' . $this->drivers[0]->getLocation() .
