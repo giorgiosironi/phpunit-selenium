@@ -669,18 +669,28 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
     }
 
     /**
+     * @return string
+     */
+    protected function prepareTestSession()
+    {
+        if (self::$shareSession && self::$sessionId !== NULL) {
+            $this->setSessionId(self::$sessionId);
+            $this->selectWindow('null');
+        } else {
+            self::$sessionId = $this->start();
+        }
+
+        return self::$sessionId;
+    }
+
+    /**
      * @throws RuntimeException
      */
     protected function runTest()
     {
         $this->skipWithNoServerRunning();
 
-        if (self::$shareSession && self::$sessionId !== NULL) {
-            $this->selectWindow('null');
-            $this->setSessionId(self::$sessionId);
-        } else {
-            self::$sessionId = $this->start();
-        }
+        $this->prepareTestSession();
 
         if (!is_file($this->getName(FALSE))) {
             $result = parent::runTest();
