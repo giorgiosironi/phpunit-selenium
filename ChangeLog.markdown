@@ -3,6 +3,14 @@ PHPUnit_Selenium 1.2
 
 This is the list of changes for the PHPUnit_Selenium 1.2 release series.
 
+PHPUnit_Selenium 1.2.4
+----------------------
+
+* Supporting form submit (also via children elements).
+* Supporting radio boxes.
+* Supporting implicit waits.
+* Correctly marking Selenium 1 tests as skipped when server is not running.
+
 PHPUnit_Selenium 1.2.3
 ----------------------
 
