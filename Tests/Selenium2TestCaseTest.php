@@ -294,4 +294,16 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $div = $this->byXPath("//div[@id='delayedDiv']");
         $this->assertEquals('Delayed div.', $div->text());
     }
+
+    public function testTheBackButtonCanBeUsedToReturnToThePreviousPage()
+    {
+        $this->url('html/test_click_page1.html');
+        $this->assertEquals('Click Page 1', $this->title());
+
+        $this->clickOnElement('link');
+        $this->assertEquals('Click Page Target', $this->title());
+
+        $this->back();
+        $this->assertEquals('Click Page 1', $this->title());
+    }
 }
