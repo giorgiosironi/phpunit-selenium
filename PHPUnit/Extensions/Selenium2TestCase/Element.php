@@ -119,8 +119,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Element
     public function element(PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $criteria)
     {
         $value = $this->postCommand('element', $criteria);
-        $newUrl = $this->url->ascend()->descend($value['ELEMENT']);
-        return new self($this->driver, $newUrl);
+        return self::fromResponseValue($value, $this->url->ascend(), $this->driver);
     }
 
     /**
@@ -131,10 +130,17 @@ class PHPUnit_Extensions_Selenium2TestCase_Element
         $values = $this->postCommand('elements', $criteria);
         $elements = array();
         foreach ($values as $value) {
-            $newUrl = $this->url->ascend()->descend($value['ELEMENT']);
-            $elements[] = new self($this->driver, $newUrl);
+            $elements[] = self::fromResponseValue($value, $this->url->ascend(), $this->driver);
         }
         return $elements;
+    }
+
+    public static function fromResponseValue(array $value, PHPUnit_Extensions_Selenium2TestCase_URL $parentFolder, PHPUnit_Extensions_Selenium2TestCase_Driver $driver) {
+        if (!isset($value['ELEMENT'])) {
+            throw new InvalidArgumentException('Element not found.');
+        }
+        $url = $parentFolder->descend($value['ELEMENT']);
+        return new self($driver, $url);
     }
 
     /**
