@@ -10,6 +10,7 @@ PHPUnit_Selenium 1.2.4
 * Supporting radio boxes.
 * Supporting implicit waits.
 * Supporting back button.
+* Supporting refresh of pages.
 * Correctly marking Selenium 1 tests as skipped when server is not running.
 
 PHPUnit_Selenium 1.2.3

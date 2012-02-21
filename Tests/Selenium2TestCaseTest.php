@@ -306,4 +306,19 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $this->back();
         $this->assertEquals('Click Page 1', $this->title());
     }
+
+    public function testThePageCanBeRefreshed()
+    {
+        $this->url('html/test_page.slow.html');
+        $this->assertStringEndsWith('html/test_page.slow.html', $this->url());
+        $this->assertEquals('Slow Loading Page', $this->title());
+
+        $this->clickOnElement('changeSpan');
+        $this->assertEquals('Changed the text', $this->byId('theSpan')->text());
+        $this->refresh();
+        $this->assertEquals('This is a slow-loading page.', $this->byId('theSpan')->text());
+
+        $this->clickOnElement('changeSpan');
+        $this->assertEquals('Changed the text', $this->byId('theSpan')->text());
+    }
 }

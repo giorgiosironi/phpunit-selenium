@@ -78,6 +78,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
             'alertText' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_GenericAccessor',
             'back' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
             'dismissAlert' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_DismissAlert',
+            'refresh' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
             'title' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_GenericAccessor',
             'url' => function ($jsonParameters, $commandUrl) use ($baseUrl) {
                 return new PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Url($jsonParameters, $commandUrl, $baseUrl);
