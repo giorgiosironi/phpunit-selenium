@@ -347,6 +347,25 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
 
         $this->clickOnElement('theSubmit');
         $this->assertContains('{focus(theSubmit)} {click(theSubmit)} {submit}', $eventLog->value());
+    }
 
+    public function testSelectEventsAreGenerated()
+    {
+        $this->url('html/test_form_events.html');
+        $select = $this->select($this->byId('theSelect'));
+        $eventLog = $this->byId('eventlog');
+        $this->assertEquals('', $select->selectedValue());
+        $this->assertEquals('', $eventLog->value());
+
+        $select->selectOptionByLabel('First Option');
+        $this->assertEquals('option1', $select->selectedValue());
+        $this->assertContains('{focus(theSelect)}', $eventLog->value());
+        $this->assertContains('{change(theSelect)}', $eventLog->value());
+
+        $eventLog->value('');
+        $select->selectOptionByLabel('First Option');
+        $this->assertEquals('option1', $select->selectedValue());
+        $this->assertContains('{focus(theSelect)}', $eventLog->value());
+//        $this->assertNotContains('{change(theSelect)}', $eventLog->value());
     }
 }
