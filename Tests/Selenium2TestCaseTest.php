@@ -335,4 +335,18 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $this->assertEquals('link clicked', $this->alertText());
         $this->acceptAlert();
     }
+
+    public function testButtonEventsAreGenerated()
+    {
+        $this->url('html/test_form_events.html');
+        $eventLog = $this->byId('eventlog');
+        $this->assertEquals('', $eventLog->value());
+        $this->clickOnElement('theButton');
+        $this->assertContains('{focus(theButton)} {click(theButton)}', $eventLog->value());
+        $eventLog->value('');
+
+        $this->clickOnElement('theSubmit');
+        $this->assertContains('{focus(theSubmit)} {click(theSubmit)} {submit}', $eventLog->value());
+
+    }
 }
