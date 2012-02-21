@@ -69,7 +69,7 @@ class Extensions_Selenium2TestCaseFailuresTest extends PHPUnit_Extensions_Seleni
     /**
      * @expectedException BadMethodCallException
      */
-    public function testInexistentCommandCauseTheTestToFail()
+    public function testInexistentCommandCausesTheTestToFail()
     {
         $this->inexistentSessionCommand();
     }
@@ -80,5 +80,14 @@ class Extensions_Selenium2TestCaseFailuresTest extends PHPUnit_Extensions_Seleni
     public function testExceptionsAreReThrownOnNotSuccessfulTests()
     {
         $this->onNotSuccessfulTest(new DomainException);
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testInexistentElementCausesTheTestToFail()
+    {
+        $this->url('html/test_open.html');
+        $this->byId('notExistent');
     }
 }

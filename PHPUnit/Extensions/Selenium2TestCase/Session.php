@@ -190,6 +190,9 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
                                         $this->url->descend('element'),
                                         $jsonParameters->getArrayCopy());
         $value = $response->getValue();
+        if (!isset($value['ELEMENT'])) {
+            throw new InvalidArgumentException('Element not found.');
+        }
         $url = $this->url->descend('element')->descend($value['ELEMENT']);
         return new PHPUnit_Extensions_Selenium2TestCase_Element($this->driver, $url);
     }
