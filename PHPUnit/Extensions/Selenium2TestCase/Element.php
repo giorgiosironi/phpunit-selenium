@@ -52,6 +52,7 @@
  * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.0
+ * @method void clear()
  * @method void click()
  * @method bool selected() Checks the state of an option or other form element
  * @method void submit() Submits a form; can be called on its children
@@ -91,6 +92,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Element
     protected function initCommands()
     {
         return array(
+            'clear' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
             'click' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Click',
             'value' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Value',
             'selected' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor',

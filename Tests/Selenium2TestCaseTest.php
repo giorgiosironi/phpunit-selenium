@@ -186,6 +186,18 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $h2 = $this->byCssSelector('h2');
         $this->assertRegExp('/Welcome, TestUser!/', $h2->text());
     }
+
+    /**
+     * @depends testTypingViaTheKeyboard
+     */
+    public function testTextTypedInAreasCanBeCleared()
+    {
+        $this->url('html/test_type_page1.html');
+        $usernameInput = $this->byName('username');
+        $usernameInput->value('TestUser');
+        $usernameInput->clear();
+        $this->assertEquals('', $usernameInput->value());
+    }
     
     public function testTypingNonLatinText()
     {
@@ -343,7 +355,7 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $this->assertEquals('', $eventLog->value());
         $this->clickOnElement('theButton');
         $this->assertContains('{focus(theButton)} {click(theButton)}', $eventLog->value());
-        $eventLog->value('');
+        $eventLog->clear();
 
         $this->clickOnElement('theSubmit');
         $this->assertContains('{focus(theSubmit)} {click(theSubmit)} {submit}', $eventLog->value());
@@ -362,7 +374,7 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $this->assertContains('{focus(theSelect)}', $eventLog->value());
         $this->assertContains('{change(theSelect)}', $eventLog->value());
 
-        $eventLog->value('');
+        $eventLog->clear();
         $select->selectOptionByLabel('First Option');
         $this->assertEquals('option1', $select->selectedValue());
         $this->assertContains('{focus(theSelect)}', $eventLog->value());

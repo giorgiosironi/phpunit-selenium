@@ -11,6 +11,7 @@ PHPUnit_Selenium 1.2.4
 * Supporting implicit waits on $this->by*().
 * Supporting back and forward buttons via $this->back() and $this->forward().
 * Supporting refresh of pages via $this->refresh().
+* Supporting $element->clear().
 * Correctly marking Selenium 1 tests as skipped when server is not running.
 
 PHPUnit_Selenium 1.2.3
