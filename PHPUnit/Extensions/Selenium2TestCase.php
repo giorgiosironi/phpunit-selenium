@@ -61,6 +61,7 @@
  * @method \PHPUnit_Extensions_Selenium2TestCase_Element byName($value)
  * @method \PHPUnit_Extensions_Selenium2TestCase_Element byXPath($value)
  * @method void clickOnElement($id)
+ * @method void forward()
  * @method void refresh()
  * @method \PHPUnit_Extensions_Selenium2TestCase_Element_Select select($element)
  * @method string title()

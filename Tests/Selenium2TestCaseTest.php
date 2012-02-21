@@ -295,7 +295,7 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $this->assertEquals('Delayed div.', $div->text());
     }
 
-    public function testTheBackButtonCanBeUsedToReturnToThePreviousPage()
+    public function testTheBackAndForwardButtonCanBeUsedToNavigate()
     {
         $this->url('html/test_click_page1.html');
         $this->assertEquals('Click Page 1', $this->title());
@@ -305,6 +305,9 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
 
         $this->back();
         $this->assertEquals('Click Page 1', $this->title());
+
+        $this->forward();
+        $this->assertEquals('Click Page Target', $this->title());
     }
 
     public function testThePageCanBeRefreshed()
