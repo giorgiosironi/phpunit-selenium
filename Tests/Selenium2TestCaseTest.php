@@ -324,4 +324,15 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $this->clickOnElement('changeSpan');
         $this->assertEquals('Changed the text', $this->byId('theSpan')->text());
     }
+
+    public function testLinkEventsAreGenerated()
+    {
+        $this->url('html/test_form_events.html');
+        $eventLog = $this->byId('eventlog');
+        $this->assertEquals('', $eventLog->value());
+        $this->clickOnElement('theLink');
+        $this->assertContains('{focus(theLink)} {click(theLink)}', $eventLog->value());
+        $this->assertEquals('link clicked', $this->alertText());
+        $this->acceptAlert();
+    }
 }
