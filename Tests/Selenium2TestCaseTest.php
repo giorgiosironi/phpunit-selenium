@@ -366,6 +366,8 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $select->selectOptionByLabel('First Option');
         $this->assertEquals('option1', $select->selectedValue());
         $this->assertContains('{focus(theSelect)}', $eventLog->value());
-//        $this->assertNotContains('{change(theSelect)}', $eventLog->value());
+
+        $this->markTestIncomplete('Why the change event is launched?');
+        $this->assertNotContains('{change(theSelect)}', $eventLog->value());
     }
 }
