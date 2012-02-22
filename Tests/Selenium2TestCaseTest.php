@@ -405,4 +405,24 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $this->assertContains('{focus(theRadio1)}', $eventLog->value());
         $this->assertContains('{click(theRadio1)}', $eventLog->value());
     }
+
+    public function testCheckboxEventsAreGenerated()
+    {
+        $this->url('html/test_form_events.html');
+        $checkbox = $this->byId('theCheckbox');
+        $eventLog = $this->byId('eventlog');
+        $this->assertFalse($checkbox->selected());
+        $this->assertEquals('', $eventLog->value());
+
+        $checkbox->click();
+        $this->assertContains('{focus(theCheckbox)}', $eventLog->value());
+        $this->assertContains('{click(theCheckbox)}', $eventLog->value());
+        $this->assertContains('{change(theCheckbox)}', $eventLog->value());
+
+        $eventLog->clear();
+        $checkbox->click();
+        $this->assertContains('{focus(theCheckbox)}', $eventLog->value());
+        $this->assertContains('{click(theCheckbox)}', $eventLog->value());
+        $this->assertContains('{change(theCheckbox)}', $eventLog->value());
+    }
 }
