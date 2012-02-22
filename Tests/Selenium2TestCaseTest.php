@@ -475,4 +475,20 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $this->acceptAlert();
         $this->assertEquals('Dummy Page', $this->title());
     }
+
+    public function testPromptsCanBeAnsweredByTyping()
+    {
+        $this->url('html/test_prompt.html');
+
+        $this->clickOnElement('promptAndLeave');
+        $this->assertEquals("Type 'yes' and click OK", $this->alertText());
+        $this->dismissAlert();
+        $this->assertEquals('Test Prompt', $this->title());
+
+        $this->markTestIncomplete('alertText($text) should be possible: transform the command from GenericAccessor to a new class');
+        $this->clickOnElement('promptAndLeave');
+        $this->alertText('yes');
+        $this->acceptAlert();
+        $this->assertEquals('Dummy Page', $this->title());
+    }
 }
