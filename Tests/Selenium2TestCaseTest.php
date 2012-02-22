@@ -382,4 +382,27 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $this->markTestIncomplete('Why the change event is launched?');
         $this->assertNotContains('{change(theSelect)}', $eventLog->value());
     }
+    
+    public function testRadioEventsAreGenerated()
+    {
+        $this->url('html/test_form_events.html');
+        $first = $this->byId('theRadio1');
+        $second = $this->byId('theRadio2');
+        $eventLog = $this->byId('eventlog');
+
+        $this->assertFalse($first->selected());
+        $this->assertFalse($second->selected());
+        $this->assertEquals('', $eventLog->value());
+
+        $first->click();
+        $this->assertContains('{focus(theRadio1)}', $eventLog->value());
+        $this->assertContains('{click(theRadio1)}', $eventLog->value());
+        $this->assertContains('{change(theRadio1)}', $eventLog->value());
+        $this->assertNotContains('theRadio2', $eventLog->value());
+
+        $eventLog->clear();
+        $first->click();
+        $this->assertContains('{focus(theRadio1)}', $eventLog->value());
+        $this->assertContains('{click(theRadio1)}', $eventLog->value());
+    }
 }
