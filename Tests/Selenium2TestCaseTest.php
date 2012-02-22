@@ -449,4 +449,16 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $this->assertContains('{mouseover(theTextbox)}', $eventLog->value()); 
         $this->assertContains('{mousedown(theButton)}', $eventLog->value()); 
     }
+
+    public function testKeyEventsAreGenerated()
+    {
+        $this->url('html/test_form_events.html');
+        $this->byId('theTextbox')->value('t');
+
+        $this->assertContains('{focus(theTextbox)}'
+                           . ' {keydown(theTextbox - 84)}'
+                           . ' {keypress(theTextbox)}'
+                           . ' {keyup(theTextbox - 84)}', 
+                               $this->byId('eventlog')->value());
+    }
 }
