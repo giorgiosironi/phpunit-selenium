@@ -461,4 +461,18 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
                            . ' {keyup(theTextbox - 84)}', 
                                $this->byId('eventlog')->value());
     }
+
+    public function testConfirmationsAreHandledAsAlerts()
+    {
+        $this->url('html/test_confirm.html');
+        $this->clickOnElement('confirmAndLeave');
+        $this->assertEquals('You are about to go to a dummy page.', $this->alertText());
+        $this->dismissAlert();
+        $this->assertEquals('Test Confirm', $this->title());
+
+        $this->clickOnElement('confirmAndLeave');
+        $this->assertEquals('You are about to go to a dummy page.', $this->alertText());
+        $this->acceptAlert();
+        $this->assertEquals('Dummy Page', $this->title());
+    }
 }
