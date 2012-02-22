@@ -437,4 +437,16 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $textBox->value('first value');
         $this->assertContains('{focus(theTextbox)}', $eventLog->value());
     }
+
+    public function testMouseEventsAreGenerated()
+    {
+        $this->url('html/test_form_events.html');
+        $this->clickOnElement('theTextbox');
+        $this->clickOnElement('theButton');
+        $eventLog = $this->byId('eventlog');
+        $this->assertContains('{mouseover(theTextbox)}', $eventLog->value()); 
+        $this->assertContains('{mousedown(theButton)}', $eventLog->value()); 
+        $this->assertContains('{mouseover(theTextbox)}', $eventLog->value()); 
+        $this->assertContains('{mousedown(theButton)}', $eventLog->value()); 
+    }
 }
