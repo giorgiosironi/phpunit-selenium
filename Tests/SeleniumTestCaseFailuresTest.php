@@ -135,7 +135,7 @@ class Extensions_SeleniumTestCaseFailuresTest extends PHPUnit_Extensions_Seleniu
             $result = $this->getValue('inexistentSelector');
             $this->fail('Should have raised an exception.');
         } catch (RuntimeException $e) {
-            $this->assertEquals('ERROR: Element inexistentSelector not found', $e->getMessage());
+            $this->assertContains('ERROR: Element inexistentSelector not found', $e->getMessage());
         }
     }
 
@@ -161,7 +161,7 @@ class Extensions_SeleniumTestCaseFailuresTest extends PHPUnit_Extensions_Seleniu
             $this->type('id=wrongId', 'Search');
             $this->fail('A command not executed successfully should stop the test.');
         } catch (RuntimeException $e) {
-            $this->assertEquals('ERROR: Element id=wrongId not found', $e->getMessage());
+            $this->assertContains('ERROR: Element id=wrongId not found', $e->getMessage());
         }
     }
 
