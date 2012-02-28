@@ -6,6 +6,7 @@ This is the list of changes for the PHPUnit_Selenium 1.2 release series.
 PHPUnit_Selenium 1.2.4
 ----------------------
 
+* Implemented $this->windowHandle(), $this->windowHandles and $this->source().
 * Implemented $this->alertText("...") for answering prompts.
 * Supporting form submit (also via children elements).
 * Supporting radio boxes.
