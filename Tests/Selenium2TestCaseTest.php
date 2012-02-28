@@ -487,9 +487,21 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
 
         $this->clickOnElement('promptAndLeave');
         $this->alertText('yes');
-        sleep(5);
         $this->acceptAlert();
-        sleep(5);
         $this->assertEquals('Dummy Page', $this->title());
+    }
+
+    public function testInvisibleElementsDoNotHaveADisplayedText()
+    {
+        $this->url('html/test_visibility.html');
+        $this->assertEquals('A visible paragraph', $this->byId('visibleParagraph')->text());
+        $this->assertEquals('', $this->byId('hiddenParagraph')->text());
+        $this->assertEquals('', $this->byId('suppressedParagraph')->text());
+        $this->assertEquals('', $this->byId('classSuppressedParagraph')->text());
+        $this->assertEquals('', $this->byId('jsClassSuppressedParagraph')->text());
+        $this->assertEquals('', $this->byId('hiddenSubElement')->text());
+        $this->assertEquals('sub-element that is explicitly visible', $this->byId('visibleSubElement')->text());
+        $this->assertEquals('', $this->byId('suppressedSubElement')->text());
+        $this->assertEquals('', $this->byId('jsHiddenParagraph')->text());
     }
 }
