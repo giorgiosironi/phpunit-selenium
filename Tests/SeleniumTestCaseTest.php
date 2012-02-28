@@ -643,7 +643,7 @@ class Extensions_SeleniumTestCaseTest extends PHPUnit_Extensions_SeleniumTestCas
     public function testVisibility()
     {
         $this->open('html/test_visibility.html');
-        $this->assertEquals('', $this->byId('visibleParagraph')->text());
+        $this->assertTrue($this->isVisible('visibleParagraph'));
         $this->assertFalse($this->isVisible('hiddenParagraph'));
         $this->assertFalse($this->isVisible('suppressedParagraph'));
         $this->assertFalse($this->isVisible('classSuppressedParagraph'));
