@@ -523,4 +523,13 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $allHandles  = $this->windowHandles();
         $this->assertEquals(array('0' => $window), $allHandles);
     }
+
+    public function testThePageSourceCanBeRead()
+    {
+        $this->url('html/test_open.html');
+        $source = $this->source();
+        $this->assertStringStartsWith('<!--', $source);
+        $this->assertContains('<body>', $source);
+        $this->assertStringEndsWith('</html>', $source);
+    }
 }
