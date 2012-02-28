@@ -513,4 +513,14 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $this->assertTrue(strlen($screenshot) > 0);
         $this->markTestIncomplete('By guaranteeing the size of the window, we could add a deterministic assertion for the image.');
     }
+
+    public function testACurrentWindowHandleAlwaysExist()
+    {
+        $this->url('html/test_open.html');
+        $window  = $this->windowHandle();
+        $this->assertTrue(is_string($window));
+        $this->assertTrue(strlen($window) > 0);
+        $allHandles  = $this->windowHandles();
+        $this->assertEquals(array('0' => $window), $allHandles);
+    }
 }
