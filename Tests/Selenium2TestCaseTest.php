@@ -504,4 +504,13 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $this->assertEquals('', $this->byId('suppressedSubElement')->text());
         $this->assertEquals('', $this->byId('jsHiddenParagraph')->text());
     }
+
+    public function testScreenshotsCanBeTakenAtAnyMoment()
+    {
+        $this->url('html/test_open.html');
+        $screenshot = $this->currentScreenshot();
+        $this->assertTrue(is_string($screenshot));
+        $this->assertTrue(strlen($screenshot) > 0);
+        $this->markTestIncomplete('By guaranteeing the size of the window, we could add a deterministic assertion for the image.');
+    }
 }

@@ -80,6 +80,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
             'dismissAlert' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_DismissAlert',
             'forward' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
             'refresh' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
+            'screenshot' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor',
             'title' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_GenericAccessor',
             'url' => function ($jsonParameters, $commandUrl) use ($baseUrl) {
                 return new PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Url($jsonParameters, $commandUrl, $baseUrl);
@@ -216,5 +217,13 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
     {
         return new PHPUnit_Extensions_Selenium2TestCase_Session_Timeouts($this->driver,
                                                                          $this->url->descend('timeouts'));
+    }
+
+    /**
+     * @return string   a BLOB of a PNG file
+     */
+    public function currentScreenshot()
+    {
+        return base64_decode($this->screenshot());
     }
 }
