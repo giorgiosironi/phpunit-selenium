@@ -75,7 +75,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
         $baseUrl = $this->baseUrl;
         return array(
             'acceptAlert' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_AcceptAlert',
-            'alertText' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_GenericAccessor',
+            'alertText' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_AlertText',
             'back' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
             'dismissAlert' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_DismissAlert',
             'forward' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',

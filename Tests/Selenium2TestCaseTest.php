@@ -485,10 +485,11 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $this->dismissAlert();
         $this->assertEquals('Test Prompt', $this->title());
 
-        $this->markTestIncomplete('alertText($text) should be possible: transform the command from GenericAccessor to a new class');
         $this->clickOnElement('promptAndLeave');
         $this->alertText('yes');
+        sleep(5);
         $this->acceptAlert();
+        sleep(5);
         $this->assertEquals('Dummy Page', $this->title());
     }
 }

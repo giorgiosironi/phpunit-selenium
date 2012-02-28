@@ -102,6 +102,9 @@
        <file baseinstalldir="/" name="AcceptAlert.php" role="php">
         <tasks:replace from="@package_version@" to="version" type="package-info" />
        </file>
+       <file baseinstalldir="/" name="AlertText.php" role="php">
+        <tasks:replace from="@package_version@" to="version" type="package-info" />
+       </file>
        <file baseinstalldir="/" name="DismissAlert.php" role="php">
         <tasks:replace from="@package_version@" to="version" type="package-info" />
        </file>
