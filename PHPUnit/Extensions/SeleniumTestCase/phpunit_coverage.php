@@ -60,6 +60,7 @@ if (isset($_GET['PHPUNIT_SELENIUM_TEST_ID'])) {
     );
 
     $coverage = array();
+    $filter = new PHP_CodeCoverage_Filter();
 
     foreach ($files as $file) {
         $data = unserialize(file_get_contents($file));
@@ -67,7 +68,7 @@ if (isset($_GET['PHPUNIT_SELENIUM_TEST_ID'])) {
         unset($file);
 
         foreach ($data as $file => $lines) {
-            if (PHP_CodeCoverage_Filter::isFile($file)) {
+            if ($filter->isFile($file)) {
                 if (!isset($coverage[$file])) {
                     $coverage[$file] = array(
                       'md5' => md5_file($file), 'coverage' => $lines
