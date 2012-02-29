@@ -437,42 +437,13 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
                 foreach ($class->getMethods() as $method) {
                     if (PHPUnit_Framework_TestSuite::isPublicTestMethod($method)) {
                         $name   = $method->getName();
-                        $data   = PHPUnit_Util_Test::getProvidedData($className, $name);
-                        $groups = PHPUnit_Util_Test::getGroups($className, $name);
 
-                        // Test method with @dataProvider.
-                        if (is_array($data) || $data instanceof Iterator) {
-                            $dataSuite = new PHPUnit_Framework_TestSuite_DataProvider(
-                              $className . '::' . $name
-                            );
-
-                            foreach ($data as $_dataName => $_data) {
-                                self::addConfiguredTestTo($dataSuite,
-                                                          new $className($name, $_data, $_dataName, $browser),
-                                                          $groups);
-                            }
-
-                            $browserSuite->addTest($dataSuite);
-                        }
-
-                        // Test method with invalid @dataProvider.
-                        else if ($data === FALSE) {
-                            $browserSuite->addTest(
-                              new PHPUnit_Framework_Warning(
-                                sprintf(
-                                  'The data provider specified for %s::%s is invalid.',
-                                  $className,
-                                  $name
-                                )
-                              )
-                            );
-                        }
-
-                        // Test method without @dataProvider.
-                        else {
-                            self::addConfiguredTestTo($browserSuite,
-                                                      new $className($name, array(), '', $browser),
-                                                      $groups);
+                        $test = PHPUnit_Framework_TestSuite::createTest($class, $name);
+                        if ($test instanceof PHPUnit_Framework_TestCase) {
+                            $groups = PHPUnit_Util_Test::getGroups($className, $name);
+                            self::addConfiguredTestTo($browserSuite, $test, $groups);
+                        } else {
+                            $browserSuite->addTest($test);
                         }
                     }
                 }
@@ -486,43 +457,13 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
             foreach ($class->getMethods() as $method) {
                 if (PHPUnit_Framework_TestSuite::isPublicTestMethod($method)) {
                     $name   = $method->getName();
-                    $data   = PHPUnit_Util_Test::getProvidedData($className, $name);
-                    $groups = PHPUnit_Util_Test::getGroups($className, $name);
 
-                    // Test method with @dataProvider.
-                    if (is_array($data) || $data instanceof Iterator) {
-                        $dataSuite = new PHPUnit_Framework_TestSuite_DataProvider(
-                          $className . '::' . $name
-                        );
-
-                        foreach ($data as $_dataName => $_data) {
-                            self::addConfiguredTestTo($dataSuite,
-                                                      new $className($name, $_data, $_dataName),
-                                                      $groups
-                            );
-                        }
-
-                        $suite->addTest($dataSuite);
-                    }
-
-                    // Test method with invalid @dataProvider.
-                    else if ($data === FALSE) {
-                        $suite->addTest(
-                          new PHPUnit_Framework_Warning(
-                            sprintf(
-                              'The data provider specified for %s::%s is invalid.',
-                              $className,
-                              $name
-                            )
-                          )
-                        );
-                    }
-
-                    // Test method without @dataProvider.
-                    else {
-                        self::addConfiguredTestTo($suite,
-                                                  new $className($name),
-                                                  $groups);
+                    $test = PHPUnit_Framework_TestSuite::createTest($class, $name);
+                    if ($test instanceof PHPUnit_Framework_TestCase) {
+                        $groups = PHPUnit_Util_Test::getGroups($className, $name);
+                        self::addConfiguredTestTo($suite, $test, $groups);
+                    } else {
+                        $suite->addTest($test);
                     }
                 }
             }
