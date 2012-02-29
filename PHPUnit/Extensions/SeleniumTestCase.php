@@ -616,7 +616,7 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
     {
         if (self::$shareSession && self::$sessionId !== NULL) {
             $this->setSessionId(self::$sessionId);
-//            $this->selectWindow('null');
+            $this->selectWindow('null');
         } else {
             self::$sessionId = $this->start();
         }
