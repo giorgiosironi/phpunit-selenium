@@ -48,9 +48,7 @@ require_once 'PHP/CodeCoverage/Autoload.php';
 // Set this to the directory that contains the code coverage files.
 // It defaults to getcwd(). If you have configured a different directory
 // in prepend.php, you need to configure the same directory here.
-if (!isset($GLOBALS['PHPUNIT_COVERAGE_DATA_DIRECTORY'])) {
-    $GLOBALS['PHPUNIT_COVERAGE_DATA_DIRECTORY'] = getcwd();
-}
+$GLOBALS['PHPUNIT_COVERAGE_DATA_DIRECTORY'] = getcwd();
 
 if (isset($_GET['PHPUNIT_SELENIUM_TEST_ID'])) {
     $facade = new File_Iterator_Facade;
@@ -60,12 +58,12 @@ if (isset($_GET['PHPUNIT_SELENIUM_TEST_ID'])) {
     );
 
     $coverage = array();
-    $filter = new PHP_CodeCoverage_Filter();
 
     foreach ($files as $file) {
         $data = unserialize(file_get_contents($file));
-        @unlink($file);
+        unlink($file);
         unset($file);
+        $filter = new PHP_CodeCoverage_Filter();
 
         foreach ($data as $file => $lines) {
             if ($filter->isFile($file)) {
