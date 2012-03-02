@@ -591,6 +591,13 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
     {
         $this->url('html/test_select_window.html');
         $this->byId('popupPage')->click();
+
+        $this->window('myPopupWindow');
+        $this->assertEquals('Select Window Popup', $this->title());
+
+        $this->window('');
+        $this->assertEquals('Select Window Base', $this->title());
+
         $this->window('myPopupWindow');
         $this->byId('closePage')->click();
     }
