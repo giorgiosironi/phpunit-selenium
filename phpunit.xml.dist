@@ -3,7 +3,6 @@
 
 <phpunit bootstrap="phpunit-selenium-bootstrap.php"
          backupGlobals="false"
-         verbose="true"
          colors="true">
 
   <php>
