@@ -94,6 +94,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Element
         return array(
             'clear' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
             'click' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Click',
+            'name' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor',
             'value' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Value',
             'selected' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor',
             'submit' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',

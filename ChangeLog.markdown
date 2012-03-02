@@ -6,7 +6,8 @@ This is the list of changes for the PHPUnit_Selenium 1.2 release series.
 PHPUnit_Selenium 1.2.4
 ----------------------
 
-* Implements $this->elements() for multiple element selection in the whole page.
+* Implemented $element->name().
+* Implemented $this->elements() for multiple element selection in the whole page.
 * Implemented $this->frame() to switch focus between frames on a page.
 * Implemented $this->execute() and $this->executeAsync() for executing arbitrary JavaScript.
 * Implemented $this->windowHandle(), $this->windowHandles and $this->source().

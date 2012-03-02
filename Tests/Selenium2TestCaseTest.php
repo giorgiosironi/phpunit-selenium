@@ -91,6 +91,12 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $this->assertEquals('Other div', $elements[0]->text());
     }
 
+    public function testTheElementWithFocusCanBeInspected()
+    {
+        $this->markTestIncomplete('Which API to call session/1/element/active?');
+        $this->keys(array('value' => array())); // should send key strokes to the active element
+    }
+
     public function testElementsCanBeSelectedAsChildrenOfAlreadyFoundElements()
     {
         $this->url('html/test_element_selection.html');
@@ -120,6 +126,13 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
 
         $element = $this->byXPath('//div[@id]');
         $this->assertEquals('The right div', $element->text());
+    }
+
+    public function testElementsKnowTheirTagName()
+    {
+        $this->url('html/test_element_selection.html');
+        $element = $this->byClassName('theDivClass');
+        $this->assertEquals('div', $element->name());
     }
 
     public function testClick()
