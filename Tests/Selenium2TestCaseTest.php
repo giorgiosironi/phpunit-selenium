@@ -555,4 +555,15 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         ));
         $this->assertEquals("Test open", $result);
     }
+
+    public function testAsynchronousJavaScriptCanBeEmbeddedForExecution()
+    {
+        $this->url('html/test_open.html');
+        $script = 'var callback = arguments[0]; callback(document.title);';
+        $result = $this->executeAsync(array(
+            'script' => $script,
+            'args'   => array()
+        ));
+        $this->assertEquals("Test open", $result);
+    }
 }
