@@ -607,6 +607,6 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $this->url('html/test_select_window.html');
         $this->byId('popupPage')->click();
         $this->markTestIncomplete();
-        $this->window(/* ...? */);
+        $this->window(/* which API for a DELETE request? */);
     }
 }
