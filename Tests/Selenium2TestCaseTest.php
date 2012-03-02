@@ -533,7 +533,7 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
     public function testWindowsCanBeManipulatedAsAnObject()
     {
         $this->markTestIncomplete();
-        $this->window($this->windowHandle())->someCommand();
+        $this->manageWindow($this->windowHandle())->someCommand();
     }
 
     public function testThePageSourceCanBeRead()
@@ -585,5 +585,21 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
 
         $this->frame(null);
         $this->assertContains('This page contains frames.', $this->byCssSelector('body')->text());
+    }
+
+    public function testDifferentWindowsCanBeFocusedOnDuringATest()
+    {
+        $this->url('html/test_select_window.html');
+        $this->byId('popupPage')->click();
+        $this->window('myPopupWindow');
+        $this->byId('closePage')->click();
+    }
+
+    public function testWindowsCanBeClosed()
+    {
+        $this->url('html/test_select_window.html');
+        $this->byId('popupPage')->click();
+        $this->markTestIncomplete();
+        $this->window(/* ...? */);
     }
 }

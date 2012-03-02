@@ -117,6 +117,9 @@
        <file baseinstalldir="/" name="Url.php" role="php">
         <tasks:replace from="@package_version@" to="version" type="package-info" />
        </file>
+       <file baseinstalldir="/" name="Window.php" role="php">
+        <tasks:replace from="@package_version@" to="version" type="package-info" />
+       </file>
       </dir>
       <file baseinstalldir="/" name="Session.php" role="php">
        <tasks:replace from="@package_version@" to="version" type="package-info" />
