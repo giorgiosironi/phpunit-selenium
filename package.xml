@@ -108,6 +108,9 @@
        <file baseinstalldir="/" name="DismissAlert.php" role="php">
         <tasks:replace from="@package_version@" to="version" type="package-info" />
        </file>
+       <file baseinstalldir="/" name="Frame.php" role="php">
+        <tasks:replace from="@package_version@" to="version" type="package-info" />
+       </file>
        <file baseinstalldir="/" name="GenericAccessor.php" role="php">
         <tasks:replace from="@package_version@" to="version" type="package-info" />
        </file>

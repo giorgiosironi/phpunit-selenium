@@ -566,4 +566,24 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         ));
         $this->assertEquals("Test open", $result);
     }
+
+    public function testInputMethodFrameworksCanBeManagedViaTheApi()
+    {
+        $this->markTestIncomplete("Need to create an IME object.");
+        $this->ime()->availableEngines();
+        $this->ime()->activeEngine();
+        $this->ime()->activated();
+        $this->ime()->deactive();
+        $this->ime()->activate();
+    }
+
+    public function testDifferentFramesFromTheMainOneCanGetFocus()
+    {
+        $this->url('html/test_frames.html');
+        $this->frame('my_iframe_id');
+        $this->assertEquals('This is a test of the open command.', $this->byCssSelector('body')->text());
+
+        $this->frame(null);
+        $this->assertContains('This page contains frames.', $this->byCssSelector('body')->text());
+    }
 }

@@ -81,6 +81,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
             'execute' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
             'executeAsync' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
             'forward' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
+            'frame' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Frame',
             'refresh' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
             'screenshot' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor',
             'source' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_GenericAccessor',

@@ -6,6 +6,7 @@ This is the list of changes for the PHPUnit_Selenium 1.2 release series.
 PHPUnit_Selenium 1.2.4
 ----------------------
 
+* Implemented $this->frame() to switch focus between frames on a page.
 * Implemented $this->execute() and $this->executeAsync() for executing arbitrary JavaScript.
 * Implemented $this->windowHandle(), $this->windowHandles and $this->source().
 * Implemented $this->alertText("...") for answering prompts.
