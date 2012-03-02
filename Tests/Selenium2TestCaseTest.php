@@ -307,6 +307,12 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $this->assertEquals('Delayed div.', $div->text());
     }
 
+    public function testTimeoutsCanBeDefinedForOperations()
+    {
+        $this->markTestIncomplete('Need to implement async_script execution first.');
+        $this->timeouts()->asyncScript(10000);
+    }
+
     public function testTheBackAndForwardButtonCanBeUsedToNavigate()
     {
         $this->url('html/test_click_page1.html');
@@ -524,6 +530,12 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $this->assertEquals(array('0' => $window), $allHandles);
     }
 
+    public function testWindowsCanBeManipulatedAsAnObject()
+    {
+        $this->markTestIncomplete();
+        $this->window($this->windowHandle())->someCommand();
+    }
+
     public function testThePageSourceCanBeRead()
     {
         $this->url('html/test_open.html');
@@ -531,5 +543,16 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $this->assertStringStartsWith('<!--', $source);
         $this->assertContains('<body>', $source);
         $this->assertStringEndsWith('</html>', $source);
+    }
+
+    public function testJavaScriptCanBeEmbeddedForExecution()
+    {
+        $this->url('html/test_open.html');
+        $script = 'return document.title;';
+        $result = $this->execute(array(
+            'script' => $script,
+            'args'   => array()
+        ));
+        $this->assertEquals("Test open", $result);
     }
 }
