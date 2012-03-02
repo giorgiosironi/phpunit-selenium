@@ -204,6 +204,19 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
     }
 
     /**
+     * @return array    instances of PHPUnit_Extensions_Selenium2TestCase_Element
+     */
+    public function elements(PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $criteria)
+    {
+        $values = $this->postCommand('elements', $criteria);
+        $elements = array();
+        foreach ($values as $value) {
+            $elements[] = PHPUnit_Extensions_Selenium2TestCase_Element::fromResponseValue($value, $this->url->descend('element'), $this->driver);
+        }
+        return $elements;
+    }
+
+    /**
      * @return PHPUnit_Extensions_Selenium2TestCase_Element_Select
      */
     public function select(PHPUnit_Extensions_Selenium2TestCase_Element $element)
@@ -232,5 +245,13 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
     public function currentScreenshot()
     {
         return base64_decode($this->screenshot());
+    }
+
+    private function postCommand($name, PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $criteria)
+    {
+        $response = $this->driver->curl('POST',
+                                        $this->url->addCommand($name),
+                                        $criteria->getArrayCopy());
+        return $response->getValue();
     }
 }

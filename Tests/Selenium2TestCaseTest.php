@@ -83,6 +83,14 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $this->assertEquals('Click here for next page', $link->text());
     }
 
+    public function testMultipleElementsSelection()
+    {
+        $this->url('html/test_element_selection.html');
+        $elements = $this->elements($this->using('css selector')->value('div'));
+        $this->assertEquals(4, count($elements));
+        $this->assertEquals('Other div', $elements[0]->text());
+    }
+
     public function testElementsCanBeSelectedAsChildrenOfAlreadyFoundElements()
     {
         $this->url('html/test_element_selection.html');
@@ -533,7 +541,12 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
     public function testWindowsCanBeManipulatedAsAnObject()
     {
         $this->markTestIncomplete();
-        $this->manageWindow($this->windowHandle())->someCommand();
+        // $this->window should be fine: when changing focus, return an instance of a Window object to manipulate it
+        $window = $this->manageWindow($this->windowHandle());
+        $window->size(array('width' => 0, 'height' => 0));
+        $window->size();
+        $window->position(array('x' => 0, 'y' => 0));
+        $window->position();
     }
 
     public function testThePageSourceCanBeRead()
@@ -608,5 +621,18 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $this->byId('popupPage')->click();
         $this->markTestIncomplete();
         $this->window(/* which API for a DELETE request? */);
+    }
+
+    public function testCookiesCanBeSetAndRead()
+    {
+        $this->markTestIncomplete();
+        $this->cookie(array('cookie' => array(/* keys? */))); 
+        $this->cookie(); // returns array
+        $this->cookie('name'); // Returns single one
+    }
+
+    public function testCookiesCanBeDeleted()
+    {
+        $this->markTestIncomplete('Which API to use for deleting session/cookie?');
     }
 }
