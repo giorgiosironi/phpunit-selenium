@@ -121,6 +121,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
 
         if (self::$shareSession and self::$sharedSessionUrl !== NULL) {
             $this->session = new PHPUnit_Extensions_Selenium2TestCase_Session($driver, self::$sharedSessionUrl, $this->browserUrl);
+            $this->session->window('');
         } else {
             $this->session = $driver->startSession($this->browser, $this->browserUrl);
             self::$sharedSessionUrl = $this->session->getSessionUrl();
