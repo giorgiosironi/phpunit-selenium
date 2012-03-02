@@ -135,6 +135,48 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $this->assertEquals('div', $element->name());
     }
 
+    public function testFormElementsKnowIfTheyAreEnabled()
+    {
+        $this->markTestIncomplete();
+        $this->assertTrue($element->enabled());
+    }
+
+    public function testElementsKnowTheirAttributes()
+    {
+        $this->markTestIncomplete('Need an attribute() command.');
+        $element->attribute('id');
+    }
+
+    public function testElementsDiscoverTheirEqualityWithOtherElements()
+    {
+        $this->markTestIncomplete();
+        $this->assertTrue($element->equals($otherElement));
+    }
+
+    public function testElementsKnowWhetherTheyAreDisplayedOrInvisible()
+    {
+        $this->markTestIncomplete();
+        $this->assertTrue($element->displayed());
+    }
+
+    public function testElementsKnowWhereTheyAreInThePage()
+    {
+        $this->markTestIncomplete();
+        $this->assertEquals(array('x' => 0, 'y' => 0), $element->location());
+    }
+
+    public function testElementsKnowTheirSize()
+    {
+        $this->markTestIncomplete();
+        $this->assertEquals(array('width' => 0, 'height' => 0), $element->size());
+    }
+
+    public function testElementsKnowTheirCssPropertiesValues()
+    {
+        $this->markTestIncomplete();
+        $this->assertEquals('#FFFFFF', $element->css('background-color'));
+    }
+
     public function testClick()
     {
         $this->url('html/test_click_page1.html');
@@ -647,5 +689,86 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
     public function testCookiesCanBeDeleted()
     {
         $this->markTestIncomplete('Which API to use for deleting session/cookie?');
+    }
+
+    public function testTheBrowsersOrientationCanBeModified()
+    {
+        $this->markTestIncomplete('Which browsers support this functionality?');
+        $this->orientation('LANDSCAPE');
+        $this->orientation('PORTRAIT');
+        $this->orientation();
+    }
+
+    public function testTheMouseCanBeMovedToAKnownPosition()
+    {
+        $this->markTestIncomplete();
+        $this->moveTo(array(
+            'element' => 'id', // or Element object
+            'xoffset' => 0,
+            'yofsset' => 0
+        ));
+        $this->click();
+    }
+
+    public function testMouseButtonsCanBeHeld()
+    {
+        $this->markTestIncomplete();
+        $this->moveTo(array(
+            'element' => 'id', // or Element object
+            'xoffset' => 0,
+            'yofsset' => 0
+        ));
+        $this->buttonDown();
+        $this->buttonUp();
+    }
+
+    public function testMouseButtonsCanBeClickedMultipleTimes()
+    {
+        $this->markTestIncomplete();
+        $this->moveTo(array(
+            'element' => 'id', // or Element object
+            'xoffset' => 0,
+            'yofsset' => 0
+        ));
+        $this->doubleClick();
+    }
+
+    public function testFingersCanBeMovedAndPressedOnTheScreen()
+    {
+        $this->markTestIncomplete('Which browser supports these events?');
+        $this->touch()->click();
+        $this->touch()->down();
+        $this->touch()->up();
+        $this->touch()->move();
+        $this->touch()->scroll();
+        $this->touch()->doubleClick();
+        $this->touch()->longClick();
+        $this->touch()->flick();
+    }
+
+    public function testGeoLocationIsAccessible()
+    {
+        $this->markTestIncomplete();
+        $this->location();
+    }
+
+    public function testTheBrowserLocalStorageIsAccessible()
+    {
+        $this->markTestIncomplete();
+        $this->localStorage(); // all keys
+        $this->localStorage()->key; // gets a value
+        $this->localStorage()->key = 2; // sets a value
+        $this->localStorage()->size(); // a value
+        // how to clear the storage?
+    }
+
+    public function testTheBrowserSessionStorageIsAccessible()
+    {
+        $this->markTestIncomplete();
+        $this->sessionStorage(); // all keys
+        $this->sessionStorage()->key; // gets a value
+        $this->sessionStorage()->key = 2; // sets a value
+        $this->sessionStorage()->size(); // a value
+        // how to clear the storage?
     }
 }
