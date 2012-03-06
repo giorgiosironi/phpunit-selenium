@@ -120,6 +120,10 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
         return $this->url;
     }
 
+    /**
+     * Closed the browser.
+     * @return void
+     */
     public function stop()
     {
         $this->driver->curl('DELETE', $this->url);

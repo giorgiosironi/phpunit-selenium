@@ -52,8 +52,12 @@
  * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.0
- * @method void clear()
- * @method void click()
+ * @method string attribute($name) Retrieves an element's attribute
+ * @method void clear() Empties the content of a form element.
+ * @method void click() 
+ * @method bool enabled() Checks a form element's state
+ * @method bool equals(PHPUnit_Extensions_Selenium2TestCase_Element $another) Checks if the two elements are the same on the page
+ * @method string name() Retrieves the tag name
  * @method bool selected() Checks the state of an option or other form element
  * @method void submit() Submits a form; can be called on its children
  * @method string value($newValue = NULL) Get or set value of form elements
