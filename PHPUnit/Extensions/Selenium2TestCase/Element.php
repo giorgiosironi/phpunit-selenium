@@ -55,6 +55,7 @@
  * @method string attribute($name) Retrieves an element's attribute
  * @method void clear() Empties the content of a form element.
  * @method void click() 
+ * @method bool displayed() Checks an element's visibility
  * @method bool enabled() Checks a form element's state
  * @method bool equals(PHPUnit_Extensions_Selenium2TestCase_Element $another) Checks if the two elements are the same on the page
  * @method string name() Retrieves the tag name
@@ -107,6 +108,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Element
             'attribute' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Attribute',
             'clear' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
             'click' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Click',
+            'displayed' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor',
             'enabled' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor',
             'equals' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Equals',
             'name' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor',

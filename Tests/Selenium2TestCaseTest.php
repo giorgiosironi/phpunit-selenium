@@ -159,12 +159,6 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $this->assertFalse($element->equals($differentElement));
     }
 
-    public function testElementsKnowWhetherTheyAreDisplayedOrInvisible()
-    {
-        $this->markTestIncomplete();
-        $this->assertTrue($element->displayed());
-    }
-
     public function testElementsKnowWhereTheyAreInThePage()
     {
         $this->markTestIncomplete();
@@ -570,7 +564,11 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
     {
         $this->url('html/test_visibility.html');
         $this->assertEquals('A visible paragraph', $this->byId('visibleParagraph')->text());
+        $this->assertTrue($this->byId('visibleParagraph')->displayed());
+
         $this->assertEquals('', $this->byId('hiddenParagraph')->text());
+        $this->assertFalse($this->byId('hiddenParagraph')->displayed());
+
         $this->assertEquals('', $this->byId('suppressedParagraph')->text());
         $this->assertEquals('', $this->byId('classSuppressedParagraph')->text());
         $this->assertEquals('', $this->byId('jsClassSuppressedParagraph')->text());
