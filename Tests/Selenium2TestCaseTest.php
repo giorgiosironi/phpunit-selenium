@@ -150,8 +150,12 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
 
     public function testElementsDiscoverTheirEqualityWithOtherElements()
     {
-        $this->markTestIncomplete();
-        $this->assertTrue($element->equals($otherElement));
+        $this->url('html/test_element_selection.html');
+        $element = $this->byId('theDivId');
+        $differentElement = $this->byId('parentElement');
+        $equalElement = $this->byId('theDivId');
+        $this->assertTrue($element->equals($equalElement));
+        $this->assertFalse($element->equals($differentElement));
     }
 
     public function testElementsKnowWhetherTheyAreDisplayedOrInvisible()

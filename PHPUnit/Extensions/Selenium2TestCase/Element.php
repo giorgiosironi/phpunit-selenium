@@ -87,6 +87,14 @@ class PHPUnit_Extensions_Selenium2TestCase_Element
     }
 
     /**
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->url->lastSegment();
+    }
+
+    /**
      * @return array    class names
      */
     protected function initCommands()
@@ -95,6 +103,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Element
             'attribute' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Attribute',
             'clear' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
             'click' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Click',
+            'equals' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Equals',
             'name' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor',
             'value' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Value',
             'selected' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor',
