@@ -163,15 +163,18 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
     {
         $this->url('html/test_element_selection.html');
         $element = $this->byCssSelector('body');
-        $location = $element->location()
+        $location = $element->location();
         $this->assertEquals(0, $location['x']);
         $this->assertEquals(0, $location['y']);
     }
 
     public function testElementsKnowTheirSize()
     {
-        $this->markTestIncomplete();
-        $this->assertEquals(array('width' => 0, 'height' => 0), $element->size());
+        $this->url('html/test_geometry.html');
+        $element = $this->byId('rectangle');
+        $size = $element->size();
+        $this->assertEquals(200, $size['width']);
+        $this->assertEquals(100, $size['height']);
     }
 
     public function testElementsKnowTheirCssPropertiesValues()

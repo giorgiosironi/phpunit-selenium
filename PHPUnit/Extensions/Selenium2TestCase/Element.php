@@ -61,6 +61,7 @@
  * @method array location() Retrieves the element's position in the page: keys 'x' and 'y' in the returned array
  * @method string name() Retrieves the tag name
  * @method bool selected() Checks the state of an option or other form element
+ * @method array size() Retrieves the dimensions of the element: 'width' and 'height' of the returned array
  * @method void submit() Submits a form; can be called on its children
  * @method string value($newValue = NULL) Get or set value of form elements
  * @method string text() Get content of ordinary elements
@@ -114,10 +115,11 @@ class PHPUnit_Extensions_Selenium2TestCase_Element
             'equals' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Equals',
             'location' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor',
             'name' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor',
-            'value' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Value',
             'selected' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor',
+            'size' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor',
             'submit' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
-            'text' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor'
+            'text' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor',
+            'value' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Value'
         );
     }
 

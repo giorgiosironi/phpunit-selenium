@@ -6,6 +6,7 @@ This is the list of changes for the PHPUnit_Selenium 1.2 release series.
 PHPUnit_Selenium 1.2.4
 ----------------------
 
+* Implemented $element->size().
 * Implemented $element->location().
 * Implemented $element->name(), $element->attribute(), $element->equals(), $element->enabled(), $element->displayed().
 * Implemented $this->elements() for multiple element selection in the whole page.
