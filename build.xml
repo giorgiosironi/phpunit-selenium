@@ -147,4 +147,12 @@
    <arg path="${basedir}/build/code-browser" />
   </exec>
  </target>
+
+ <target name="package_check">
+  <echo msg="Files in package.xml" />
+  <exec command="grep -r 'file.*\.php' package.xml | wc | awk '{print $1;}'" passthru="true"/>
+  <echo msg="Files in PHPUnit/" />
+  <exec command="find PHPUnit/ -name '*.php' | wc | awk '{print $1;}'" passthru="true" />
+
+ </target>
 </project>
