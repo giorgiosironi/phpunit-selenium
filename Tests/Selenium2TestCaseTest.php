@@ -179,8 +179,9 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
 
     public function testElementsKnowTheirCssPropertiesValues()
     {
-        $this->markTestIncomplete();
-        $this->assertEquals('#FFFFFF', $element->css('background-color'));
+        $this->url('html/test_geometry.html');
+        $element = $this->byId('colored');
+        $this->assertEquals('#0000ff', $element->css('background-color'));
     }
 
     public function testClick()

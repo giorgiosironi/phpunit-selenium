@@ -8,7 +8,7 @@ PHPUnit_Selenium 1.2.4
 
 * Implemented $element->size().
 * Implemented $element->location().
-* Implemented $element->name(), $element->attribute(), $element->equals(), $element->enabled(), $element->displayed().
+* Implemented $element->name(), $element->attribute(), $element->equals(), $element->enabled(), $element->displayed(), $element->css().
 * Implemented $this->elements() for multiple element selection in the whole page.
 * Implemented $this->frame() to switch focus between frames on a page.
 * Implemented $this->execute() and $this->executeAsync() for executing arbitrary JavaScript.
