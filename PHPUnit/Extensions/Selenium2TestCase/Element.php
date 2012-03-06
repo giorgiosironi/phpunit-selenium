@@ -161,7 +161,8 @@ class PHPUnit_Extensions_Selenium2TestCase_Element
         return $elements;
     }
 
-    public static function fromResponseValue(array $value, PHPUnit_Extensions_Selenium2TestCase_URL $parentFolder, PHPUnit_Extensions_Selenium2TestCase_Driver $driver) {
+    public static function fromResponseValue(array $value, PHPUnit_Extensions_Selenium2TestCase_URL $parentFolder, PHPUnit_Extensions_Selenium2TestCase_Driver $driver)
+    {
         if (!isset($value['ELEMENT'])) {
             throw new InvalidArgumentException('Element not found.');
         }

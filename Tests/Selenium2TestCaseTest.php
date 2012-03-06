@@ -213,7 +213,6 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $withOnClick = $this->byId('linkWithOnclickReturnsFalse');
         $withOnClick->click();
         $this->assertEquals('Click Page 1', $this->title());
-
     }
 
     public function testClicksOnJavaScriptHref()

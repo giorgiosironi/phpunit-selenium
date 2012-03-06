@@ -963,7 +963,6 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
             throw new RuntimeException("Invalid response while accessing the Selenium Server at '$url': " . $response);
         }
 
-
         if ($info['http_code'] != 200) {
             throw new RuntimeException(
               'The response from the Selenium RC server is invalid: ' .

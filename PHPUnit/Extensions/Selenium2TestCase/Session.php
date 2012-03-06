@@ -202,7 +202,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
                                         $this->url->descend('element'),
                                         $jsonParameters->getArrayCopy());
         $value = $response->getValue();
-        return PHPUnit_Extensions_Selenium2TestCase_Element::fromResponseValue($value, 
+        return PHPUnit_Extensions_Selenium2TestCase_Element::fromResponseValue($value,
                                                                                $this->url->descend('element'),
                                                                                $this->driver);
     }

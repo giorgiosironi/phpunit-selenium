@@ -60,8 +60,8 @@ class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_AlertText
     {
         if (is_string($argument)) {
             $jsonParameters =array('text' => $argument);
-        } else if ($argument == null) {
-            $jsonParameters = null;
+        } else if ($argument == NULL) {
+            $jsonParameters = NULL;
         } else {
             throw new BadMethodCallException('Wrong parameters for alertText().');
         }
