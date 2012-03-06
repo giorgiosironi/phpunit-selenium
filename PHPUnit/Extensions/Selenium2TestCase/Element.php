@@ -58,6 +58,7 @@
  * @method bool displayed() Checks an element's visibility
  * @method bool enabled() Checks a form element's state
  * @method bool equals(PHPUnit_Extensions_Selenium2TestCase_Element $another) Checks if the two elements are the same on the page
+ * @method array location() Retrieves the element's position in the page: keys 'x' and 'y' in the returned array
  * @method string name() Retrieves the tag name
  * @method bool selected() Checks the state of an option or other form element
  * @method void submit() Submits a form; can be called on its children
@@ -111,6 +112,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Element
             'displayed' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor',
             'enabled' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor',
             'equals' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Equals',
+            'location' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor',
             'name' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor',
             'value' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Value',
             'selected' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor',

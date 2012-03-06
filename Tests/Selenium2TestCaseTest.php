@@ -161,8 +161,11 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
 
     public function testElementsKnowWhereTheyAreInThePage()
     {
-        $this->markTestIncomplete();
-        $this->assertEquals(array('x' => 0, 'y' => 0), $element->location());
+        $this->url('html/test_element_selection.html');
+        $element = $this->byCssSelector('body');
+        $location = $element->location()
+        $this->assertEquals(0, $location['x']);
+        $this->assertEquals(0, $location['y']);
     }
 
     public function testElementsKnowTheirSize()
