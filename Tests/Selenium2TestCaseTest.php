@@ -137,8 +137,9 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
 
     public function testFormElementsKnowIfTheyAreEnabled()
     {
-        $this->markTestIncomplete();
-        $this->assertTrue($element->enabled());
+        $this->url('html/test_form_elements.html');
+        $this->assertTrue($this->byId('enabledInput')->enabled());
+        $this->assertFalse($this->byId('disabledInput')->enabled());
     }
 
     public function testElementsKnowTheirAttributes()

@@ -103,6 +103,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Element
             'attribute' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Attribute',
             'clear' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
             'click' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Click',
+            'enabled' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor',
             'equals' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Equals',
             'name' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor',
             'value' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Value',
