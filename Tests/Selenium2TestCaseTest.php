@@ -143,8 +143,9 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
 
     public function testElementsKnowTheirAttributes()
     {
-        $this->markTestIncomplete('Need an attribute() command.');
-        $element->attribute('id');
+        $this->url('html/test_element_selection.html');
+        $element = $this->byId('theDivId');
+        $this->assertEquals('theDivClass', $element->attribute('class'));
     }
 
     public function testElementsDiscoverTheirEqualityWithOtherElements()

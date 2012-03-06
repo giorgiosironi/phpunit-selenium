@@ -71,6 +71,9 @@
        </file>
       </dir>
       <dir name="ElementCommand">
+       <file baseinstalldir="/" name="Attribute.php" role="php">
+        <tasks:replace from="@package_version@" to="version" type="package-info" />
+       </file>
        <file baseinstalldir="/" name="Click.php" role="php">
         <tasks:replace from="@package_version@" to="version" type="package-info" />
        </file>

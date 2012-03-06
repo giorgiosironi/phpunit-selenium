@@ -92,6 +92,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Element
     protected function initCommands()
     {
         return array(
+            'attribute' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Attribute',
             'clear' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
             'click' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Click',
             'name' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor',
