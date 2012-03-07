@@ -59,7 +59,7 @@
       <file baseinstalldir="/" name="Command.php" role="php">
        <tasks:replace from="@package_version@" to="version" type="package-info" />
       </file>
-      <file baseinstalldir="/" name="CommandHolder.php" role="php">
+      <file baseinstalldir="/" name="CommandsHolder.php" role="php">
        <tasks:replace from="@package_version@" to="version" type="package-info" />
       </file>
       <file baseinstalldir="/" name="Driver.php" role="php">
