@@ -62,7 +62,12 @@ class PHPUnit_Extensions_Selenium2TestCase_Session_Timeouts
             'implicitWait' => function ($parameter, $commandUrl) {
                 $jsonParameters = array('ms' => $parameter);
                 return new PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost($jsonParameters, $commandUrl);
-            }
+            },
+            'asyncScript' => function ($parameter, $commandUrl) {
+                $jsonParameters = array('ms' => $parameter);
+                return new PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost($jsonParameters, $commandUrl);
+            },
+
         );
     }
 }

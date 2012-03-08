@@ -376,10 +376,20 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $this->assertEquals('Delayed div.', $div->text());
     }
 
-    public function testTimeoutsCanBeDefinedForOperations()
+    public function testTimeoutsCanBeDefinedForAsynchronousExecutionOfJavaScript()
     {
-        $this->markTestIncomplete('Need to implement async_script execution first.');
+        $this->url('html/test_open.html');
         $this->timeouts()->asyncScript(10000);
+        $script = 'var callback = arguments[0];
+                   window.setTimeout(function() {
+                       callback(document.title);
+                   }, 1000);
+        ';
+        $result = $this->executeAsync(array(
+            'script' => $script,
+            'args'   => array()
+        ));
+        $this->assertEquals("Test open", $result);
     }
 
     public function testTheBackAndForwardButtonCanBeUsedToNavigate()
