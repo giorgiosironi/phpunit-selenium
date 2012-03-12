@@ -6,6 +6,7 @@ This is the list of changes for the PHPUnit_Selenium 1.2 release series.
 PHPUnit_Selenium 1.2.5
 ----------------------
 
+* Added Window object accessible via $this->currentWindow().
 * Implemented $this->timeouts()->asyncScript().
 
 PHPUnit_Selenium 1.2.4

@@ -251,6 +251,15 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
         return base64_decode($this->screenshot());
     }
 
+    /**
+     * @return PHPUnit_Extensions_Selenium2TestCase_Window
+     */
+    public function currentWindow()
+    {
+        $url = $this->url->descend('window')->descend($this->windowHandle());
+        return new PHPUnit_Extensions_Selenium2TestCase_Window($this->driver, $url);
+    }
+
     private function postCommand($name, PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $criteria)
     {
         $response = $this->driver->curl('POST',

@@ -69,7 +69,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase_CommandsHolder
      * @var array   instances of 
      *              PHPUnit_Extensions_Selenium2TestCase_ElementCommand
      */
-    private $commands;
+    protected $commands;
 
     public function __construct($driver,
                                 PHPUnit_Extensions_Selenium2TestCase_URL $url)

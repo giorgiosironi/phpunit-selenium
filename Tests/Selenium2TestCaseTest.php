@@ -613,17 +613,6 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $this->assertEquals(array('0' => $window), $allHandles);
     }
 
-    public function testWindowsCanBeManipulatedAsAnObject()
-    {
-        $this->markTestIncomplete();
-        // $this->window should be fine: when changing focus, return an instance of a Window object to manipulate it
-        $window = $this->manageWindow($this->windowHandle());
-        $window->size(array('width' => 0, 'height' => 0));
-        $window->size();
-        $window->position(array('x' => 0, 'y' => 0));
-        $window->position();
-    }
-
     public function testThePageSourceCanBeRead()
     {
         $this->url('html/test_open.html');
@@ -696,6 +685,33 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $this->byId('popupPage')->click();
         $this->markTestIncomplete();
         $this->window(/* which API for a DELETE request? */);
+    }
+
+    public function testWindowsCanBeManipulatedAsAnObject()
+    {
+        $this->url('html/test_select_window.html');
+        $this->byId('popupPage')->click();
+
+        $this->window('myPopupWindow');
+        $popup = $this->currentWindow();
+        $this->assertTrue($popup instanceof PHPUnit_Extensions_Selenium2TestCase_Window);
+        $popup->size(array('width' => 100, 'height' => 200));
+        $size = $popup->size();
+        $this->assertEquals(100, $size['width']);
+        $this->assertEquals(200, $size['height']);
+
+        $this->markTestIncomplete("We should wait for the window to be moved. How?");
+        $popup->position(array('x' => 300, 'y' => 400));
+        $position = $popup->position();
+        $this->assertEquals(300, $position['x']);
+        $this->assertEquals(400, $position['y']);
+        // method on Window; interface Closeable, better name?
+        $popup->close();
+
+        // delete when automated garbage collection of windows is available
+        $this->window('myPopupWindow');
+        $this->byId('closePage')->click();
+        $this->window('');
     }
 
     public function testCookiesCanBeSetAndRead()
