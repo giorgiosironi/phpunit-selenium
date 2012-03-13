@@ -959,7 +959,7 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
 
         curl_close($curl);
 
-        if (strstr($response, 'ERROR: ') == $response) {
+        if (!preg_match('/^OK/', $response)) {
             throw new RuntimeException("Invalid response while accessing the Selenium Server at '$url': " . $response);
         }
 
