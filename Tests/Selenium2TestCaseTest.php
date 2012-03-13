@@ -700,7 +700,7 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $this->assertEquals(100, $size['width']);
         $this->assertEquals(200, $size['height']);
 
-        $this->markTestIncomplete("We should wait for the window to be moved. How?");
+        $this->markTestIncomplete("We should wait for the window to be moved. How? With aynshcrnous javascript specific for this test");
         $popup->position(array('x' => 300, 'y' => 400));
         $position = $popup->position();
         $this->assertEquals(300, $position['x']);
