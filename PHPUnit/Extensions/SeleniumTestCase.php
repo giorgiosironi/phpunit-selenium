@@ -364,10 +364,15 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
      * @param  array  $browser
      * @throws InvalidArgumentException
      */
-    public function __construct($name = NULL, array $data = array(), $dataName = '', array $browser = array())
+    public function __construct($name = NULL, array $data = array(), $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
         $this->testId = md5(uniqid(rand(), TRUE));
+        $this->getDriver(array());
+    }
+
+    public function setupSpecificBrowser(array $browser)
+    {
         $this->getDriver($browser);
     }
 
@@ -440,6 +445,7 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
 
                         $test = PHPUnit_Framework_TestSuite::createTest($class, $name);
                         if ($test instanceof PHPUnit_Framework_TestCase) {
+                            $test->setupSpecificBrowser($browser);
                             $groups = PHPUnit_Util_Test::getGroups($className, $name);
                             self::addConfiguredTestTo($browserSuite, $test, $groups);
                         } else {
@@ -615,7 +621,7 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
     protected function prepareTestSession()
     {
         $testCaseClass = get_class($this);
-        if (isset($testCaseClass::$browsers)) {
+        if ($testCaseClass::$browsers) {
             return $this->start();
         }
         if (self::$shareSession && self::$sessionId !== NULL) {
