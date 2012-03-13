@@ -373,7 +373,6 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
 
     public function setupSpecificBrowser(array $browser)
     {
-        var_dump($browser);
         $this->getDriver($browser);
     }
 
