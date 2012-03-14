@@ -8,6 +8,7 @@ PHPUnit_Selenium 1.2.5
 
 * Added Window object accessible via $this->currentWindow().
 * Implemented $this->timeouts()->asyncScript().
+* Fixed #105: $browsers static property.
 
 PHPUnit_Selenium 1.2.4
 ----------------------
