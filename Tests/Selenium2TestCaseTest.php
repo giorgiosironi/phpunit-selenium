@@ -679,14 +679,6 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $this->byId('closePage')->click();
     }
 
-    public function testWindowsCanBeClosed()
-    {
-        $this->url('html/test_select_window.html');
-        $this->byId('popupPage')->click();
-        $this->markTestIncomplete();
-        $this->window(/* which API for a DELETE request? */);
-    }
-
     public function testWindowsCanBeManipulatedAsAnObject()
     {
         $this->url('html/test_select_window.html');
@@ -700,18 +692,24 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $this->assertEquals(100, $size['width']);
         $this->assertEquals(200, $size['height']);
 
-        $this->markTestIncomplete("We should wait for the window to be moved. How? With aynshcrnous javascript specific for this test");
-        $popup->position(array('x' => 300, 'y' => 400));
-        $position = $popup->position();
-        $this->assertEquals(300, $position['x']);
-        $this->assertEquals(400, $position['y']);
-        // method on Window; interface Closeable, better name?
-        $popup->close();
 
-        // delete when automated garbage collection of windows is available
+        $this->markTestIncomplete("We should wait for the window to be moved. How? With aynshcrnous javascript specific for this test");
+        //$popup->position(array('x' => 300, 'y' => 400));
+        //$position = $popup->position();
+        //$this->assertEquals(300, $position['x']);
+        //$this->assertEquals(400, $position['y']);
+        // method on Window; interface Closeable, better name?
+    }
+
+    public function testWindowsCanBeClosed()
+    {
+        $this->url('html/test_select_window.html');
+        $this->byId('popupPage')->click();
+
         $this->window('myPopupWindow');
-        $this->byId('closePage')->click();
-        $this->window('');
+        $this->closeWindow();
+
+        $this->assertEquals(1, count($this->windowHandles()));
     }
 
     public function testCookiesCanBeSetAndRead()

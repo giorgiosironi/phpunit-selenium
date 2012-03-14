@@ -267,4 +267,9 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
                                         $criteria->getArrayCopy());
         return $response->getValue();
     }
+
+    public function closeWindow()
+    {
+        $this->driver->curl('DELETE', $this->url->descend('window'));
+    }
 }
