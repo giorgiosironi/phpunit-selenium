@@ -59,7 +59,7 @@ class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Url
     public function __construct($relativeUrl, $commandUrl, $baseUrl)
     {
         if ($relativeUrl !== NULL) {
-            $absoluteLocation = $baseUrl->addCommand($relativeUrl)->getValue();
+            $absoluteLocation = $baseUrl->descend($relativeUrl)->getValue();
             $jsonParameters = array('url' => $absoluteLocation);
         } else {
             $jsonParameters = NULL;
