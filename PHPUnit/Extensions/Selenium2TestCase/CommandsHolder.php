@@ -89,18 +89,6 @@ abstract class PHPUnit_Extensions_Selenium2TestCase_CommandsHolder
     }
 
     /**
-     * @params string $commandClass     a class name, descending from
-                                        PHPUnit_Extensions_Selenium2TestCase_Command
-     * @return callable
-     */
-    private function factoryMethod($commandClass)
-    {
-        return function($jsonParameters, $url) use ($commandClass) {
-            return new $commandClass($jsonParameters, $url);
-        };
-    }
-
-    /**
      * @return array    class names, or
      *                  callables of the form function($parameter, $commandUrl)
      */
@@ -111,6 +99,26 @@ abstract class PHPUnit_Extensions_Selenium2TestCase_CommandsHolder
         $jsonParameters = $this->extractJsonParameters($arguments);
         $response = $this->driver->execute($this->newCommand($commandName, $jsonParameters));
         return $response->getValue();
+    }
+
+    protected function postCommand($name, PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $criteria)
+    {
+        $response = $this->driver->curl('POST',
+                                        $this->url->addCommand($name),
+                                        $criteria->getArrayCopy());
+        return $response->getValue();
+    }
+
+    /**
+     * @params string $commandClass     a class name, descending from
+                                        PHPUnit_Extensions_Selenium2TestCase_Command
+     * @return callable
+     */
+    private function factoryMethod($commandClass)
+    {
+        return function($jsonParameters, $url) use ($commandClass) {
+            return new $commandClass($jsonParameters, $url);
+        };
     }
 
     private function extractJsonParameters($arguments)
@@ -128,14 +136,6 @@ abstract class PHPUnit_Extensions_Selenium2TestCase_CommandsHolder
         if (count($arguments) > 1) {
             throw new Exception('You cannot call a command with multiple method arguments.');
         }
-    }
-
-    private function postCommand($name, PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $criteria)
-    {
-        $response = $this->driver->curl('POST',
-                                        $this->url->addCommand($name),
-                                        $criteria->getArrayCopy());
-        return $response->getValue();
     }
 
     private function newCommand($commandName, $jsonParameters)

@@ -196,12 +196,9 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
     /**
      * @return PHPUnit_Extensions_Selenium2TestCase_Element
      */
-    public function element(PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $jsonParameters)
+    public function element(PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $criteria)
     {
-        $response = $this->driver->curl('POST',
-                                        $this->url->descend('element'),
-                                        $jsonParameters->getArrayCopy());
-        $value = $response->getValue();
+        $value = $this->postCommand('element', $criteria);
         return PHPUnit_Extensions_Selenium2TestCase_Element::fromResponseValue($value,
                                                                                $this->url->descend('element'),
                                                                                $this->driver);
@@ -258,14 +255,6 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
     {
         $url = $this->url->descend('window')->descend($this->windowHandle());
         return new PHPUnit_Extensions_Selenium2TestCase_Window($this->driver, $url);
-    }
-
-    private function postCommand($name, PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $criteria)
-    {
-        $response = $this->driver->curl('POST',
-                                        $this->url->addCommand($name),
-                                        $criteria->getArrayCopy());
-        return $response->getValue();
     }
 
     public function closeWindow()
