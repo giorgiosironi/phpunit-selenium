@@ -160,7 +160,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
     }
 
     /**
-     * Delegate method calls to the driver.
+     * Delegate method calls to the Session.
      *
      * @param  string $command
      * @param  array  $arguments
