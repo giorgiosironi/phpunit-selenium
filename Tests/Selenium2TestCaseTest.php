@@ -72,6 +72,12 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $this->assertStringEndsWith('html/test_open.html', $this->url());
     }
 
+    public function testCamelCaseUrlsAreSupported()
+    {
+        $this->url('html/test_open.html?CamelCase');
+        $this->assertStringEndsWith('html/test_open.html?CamelCase', $this->url());
+    }
+
     public function testElementSelection()
     {
         $this->url('html/test_open.html');
