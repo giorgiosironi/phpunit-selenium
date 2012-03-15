@@ -80,6 +80,14 @@ class Extensions_SeleniumTestCaseFailuresTest extends PHPUnit_Extensions_Seleniu
     }
 
     /**
+     * Checks #3.
+     */
+    public function testSelectingANullWindowIsAllowed()
+    {
+        $this->selectWindow(null);
+    }
+
+    /**
      * Fixes #78.
      * Also of interest for #84.
      */
