@@ -110,21 +110,36 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
     private $browserUrl;
 
     /**
-     * @var boolean
+     * @var PHPUnit_Extensions_Selenium2TestCase_SessionStrategy
      */
-    private static $shareSession;
-
-    /**
-     * @var PHPUnit_Extensions_Selenium2TestCase_URL
-     */
-    private static $sharedSessionUrl;
+    private static $sessionStrategy;
 
     /**
      * @param boolean
      */
     public static function shareSession($shareSession)
     {
-        self::$shareSession = $shareSession;
+        if (!is_bool($shareSession)) {
+            throw new InvalidArgumentException("The shared session support can only be switched on or off.");
+        }
+        if ($shareSession) {
+            self::$sessionStrategy = self::defaultSessionStrategy();
+        } else {
+            self::$sessionStrategy = new PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Shared(self::defaultSessionStrategy());
+        }
+    }
+
+    private static function sessionStrategy() 
+    {
+        if (!self::$sessionStrategy) {
+            self::$sessionStrategy = self::defaultSessionStrategy();
+        }
+        return self::$sessionStrategy;
+    }
+
+    private static function defaultSessionStrategy()
+    {
+        return new PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Isolated;
     }
 
     /**
@@ -132,15 +147,12 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
      */
     protected function runTest()
     {
-        $driver = $this->getDriver();
-
-        if (self::$shareSession and self::$sharedSessionUrl !== NULL) {
-            $this->session = new PHPUnit_Extensions_Selenium2TestCase_Session($driver, self::$sharedSessionUrl, $this->browserUrl);
-            $this->session->window('');
-        } else {
-            $this->session = $driver->startSession($this->browser, $this->browserUrl);
-            self::$sharedSessionUrl = $this->session->getSessionUrl();
-        }
+        $this->session = self::sessionStrategy()->session(array(
+            'host' => $this->host,
+            'port' => $this->port,
+            'browser' => $this->browser,
+            'browserUrl' => $this->browserUrl
+        ));
 
         parent::runTest();
 
@@ -148,14 +160,12 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
             $this->fail(implode("\n", $this->verificationErrors));
         }
 
-        if (!self::$shareSession) {
-            $this->session->stop();
-        }
+        self::sessionStrategy()->endOfTest($this->session);
     }
 
     public function onNotSuccessfulTest(Exception $e)
     {
-        self::$sharedSessionUrl = NULL;
+        self::sessionStrategy()->notSuccessfulTest();
         parent::onNotSuccessfulTest($e);
     }
 
@@ -173,12 +183,6 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
         );
 
         return $result;
-    }
-
-    private function getDriver()
-    {
-        $seleniumServerUrl = PHPUnit_Extensions_Selenium2TestCase_URL::fromHostAndPort($this->host, $this->port);
-        return new PHPUnit_Extensions_Selenium2TestCase_Driver($seleniumServerUrl);
     }
 
     /**

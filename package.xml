@@ -110,6 +110,17 @@
         <tasks:replace from="@package_version@" to="version" type="package-info" />
        </file>
       </dir>
+      <file baseinstalldir="/" name="SessionStrategy.php" role="php">
+       <tasks:replace from="@package_version@" to="version" type="package-info" />
+      </file>
+      <dir name="SessionStrategy">
+       <file baseinstalldir="/" name="Isolated.php" role="php">
+        <tasks:replace from="@package_version@" to="version" type="package-info" />
+       </file>
+       <file baseinstalldir="/" name="Shared.php" role="php">
+        <tasks:replace from="@package_version@" to="version" type="package-info" />
+       </file>
+      </dir>
       <dir name="SessionCommand">
        <file baseinstalldir="/" name="AcceptAlert.php" role="php">
         <tasks:replace from="@package_version@" to="version" type="package-info" />
