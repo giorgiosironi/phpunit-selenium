@@ -620,9 +620,10 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
      */
     protected function prepareTestSession()
     {
-        $testCaseClass = get_class($this);
-        if ($testCaseClass::$browsers) {
-            return $this->start();
+        $testCaseClassVars = get_class_vars(get_class($this));
+        if ($testCaseClassVars['browsers'] && self::$shareSession == NULL) {
+            self::$sessionId = $this->start();
+            return self::$sessionId;
         }
         if (self::$shareSession && self::$sessionId !== NULL) {
             $this->setSessionId(self::$sessionId);
