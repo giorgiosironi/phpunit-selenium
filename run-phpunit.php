@@ -35,19 +35,20 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-$vendor = __DIR__ . '/vendor/';
+$dir = dirname(__FILE__);
+$vendor = $dir . '/vendor/';
 set_include_path(implode(PATH_SEPARATOR, array(
-__DIR__,
+$dir,
 $vendor . 'phpunit/',
 $vendor . 'php-code-coverage/',
-__DIR__ . '/php-file-iterator/',
-__DIR__ . '/php-text-template/',
-__DIR__ . '/phpunit-mock-objects/',
-__DIR__ . '/php-token-stream/',
-__DIR__ . '/dbunit/',
-__DIR__ . '/phpunit-story/',
-__DIR__ . '/php-timer/',
-__DIR__ . '/php-invoker/',
+$dir . '/php-file-iterator/',
+$dir . '/php-text-template/',
+$dir . '/phpunit-mock-objects/',
+$dir . '/php-token-stream/',
+$dir . '/dbunit/',
+$dir . '/phpunit-story/',
+$dir . '/php-timer/',
+$dir . '/php-invoker/',
 get_include_path()
 )));
 require $vendor . 'phpunit/phpunit.php';
