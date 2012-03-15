@@ -620,7 +620,7 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
      */
     protected function prepareTestSession()
     {
-        $testCaseClassVars = get_class_vars();
+        $testCaseClassVars = get_class_vars(get_class($this));
         if ($testCaseClassVars['browsers']) {
             return $this->start();
         }
@@ -1049,19 +1049,23 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
             throw $e;
         }
 
-        $this->restoreSessionStateAfterFailedTest();
+        try {
+            $this->restoreSessionStateAfterFailedTest();
 
-        $buffer  = 'Current URL: ' . $this->drivers[0]->getLocation() .
-                   "\n";
+            $buffer  = 'Current URL: ' . $this->drivers[0]->getLocation() .
+                       "\n";
 
-        if ($this->captureScreenshotOnFailure) {
-            $screenshotInfo = $this->takeScreenshot();
-            if ($screenshotInfo != '') {
-                $buffer .= $screenshotInfo;
+            if ($this->captureScreenshotOnFailure) {
+                $screenshotInfo = $this->takeScreenshot();
+                if ($screenshotInfo != '') {
+                    $buffer .= $screenshotInfo;
+                }
             }
-        }
 
-        $this->stopSession();
+            $this->stopSession();
+        } catch (Exception $another) {
+            $buffer = "Issues while capturing the screenshot:\n" . $e->getMessage();
+        }
 
         if ($e instanceof PHPUnit_Framework_ExpectationFailedException
          && is_object($e->getComparisonFailure())) {
@@ -1090,7 +1094,6 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
 
     private function restoreSessionStateAfterFailedTest()
     {
-        $this->selectWindow('null');
         self::$sessionId = NULL;
     }
 
