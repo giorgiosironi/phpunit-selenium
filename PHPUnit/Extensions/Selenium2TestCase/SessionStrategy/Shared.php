@@ -57,6 +57,7 @@ class PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Shared
     implements PHPUnit_Extensions_Selenium2TestCase_SessionStrategy
 {
     private $original;
+    private $session;
 
     public function __construct(PHPUnit_Extensions_Selenium2TestCase_SessionStrategy $originalStrategy)
     {
@@ -65,7 +66,7 @@ class PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Shared
 
     public function session(array $parameters)
     {
-        if (!$this->session) {
+        if ($this->session === null) {
             $this->session = $this->original->session($parameters);
         } else {
             $this->session->window('');
@@ -75,6 +76,7 @@ class PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Shared
 
     public function notSuccessfulTest()
     {
+        $this->session = null;
     }
 
     public function endOfTest(PHPUnit_Extensions_Selenium2TestCase_Session $session)
