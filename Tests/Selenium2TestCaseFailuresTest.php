@@ -57,6 +57,9 @@ class Extensions_Selenium2TestCaseFailuresTest extends PHPUnit_Extensions_Seleni
 {
     public function setUp()
     {
+        if (version_compare(phpversion(), '5.3.0', '<')) {
+            $this->markTestSkipped('Functionality available only under PHP 5.3.');
+        }
         $this->setHost(PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_HOST);
         $this->setPort((int)PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_PORT);
         $this->setBrowser(PHPUNIT_TESTSUITE_EXTENSION_SELENIUM2_BROWSER);
