@@ -1064,7 +1064,7 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
 
             $this->stopSession();
         } catch (Exception $another) {
-            $buffer = "Issues while capturing the screenshot:\n" . $e->getMessage();
+            $buffer = "Issues while capturing the screenshot:\n" . $another->getMessage();
         }
 
         if ($e instanceof PHPUnit_Framework_ExpectationFailedException

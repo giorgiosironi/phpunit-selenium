@@ -70,12 +70,13 @@ class Extensions_SeleniumTestCaseFailuresTest extends PHPUnit_Extensions_Seleniu
 
     public function testOrdinaryExceptionsAreRethrown()
     {
-        $exception = new BadMethodCallException('some error from production code'); // LINE 73
+        $exception = new BadMethodCallException('some error from production code');
+        $line = __LINE__ - 1;
         try {
             $this->onNotSuccessfulTest($exception);
         } catch (PHPUnit_Framework_Error $e) {
             $this->assertTrue((bool) strstr($e->getMessage(), 'some error from production code'));
-            $this->assertEquals(73, $e->getLine());
+            $this->assertEquals($line, $e->getLine());
         }
     }
 
@@ -111,6 +112,9 @@ class Extensions_SeleniumTestCaseFailuresTest extends PHPUnit_Extensions_Seleniu
         }
     }
 
+    /**
+     * Related also to ticket #81.
+     */
     public function testScreenshotsAreCapturedOnFailuresWhenRequired()
     {
         $this->captureScreenshotOnFailure = true;
@@ -118,11 +122,16 @@ class Extensions_SeleniumTestCaseFailuresTest extends PHPUnit_Extensions_Seleniu
         $this->screenshotUrl = 'http://...';
 
         try {
-            $exception = $this->getAFailure();
-            $this->onNotSuccessfulTest($exception);
+            $originalException = $this->getAFailure();
+            $this->firstTraceLine = __LINE__ - 1;
+            $this->onNotSuccessfulTest($originalException);
         } catch (PHPUnit_Framework_Error $e) {
             $this->assertTrue(file_exists($this->screenshotPath));
             $this->assertTrue((bool) strstr($e->getMessage(), 'Screenshot: http://.../'));
+            // INCOMPLETE
+            $this->captureScreenshotOnFailure = false;
+            $this->markTestIncomplete('Need to have support for setting the trace.');
+            $this->assertOriginalLineAndTraceArePresent($e);
             return;
         }
         $this->fail('An exception should have been raised by now.');
@@ -131,6 +140,7 @@ class Extensions_SeleniumTestCaseFailuresTest extends PHPUnit_Extensions_Seleniu
     private function getAFailure()
     {
         $failure = new PHPUnit_Framework_ComparisonFailure(1, 2, '1', '2');
+        $this->failureLine = __LINE__ + 1;
         return new PHPUnit_Framework_ExpectationFailedException('1 is not 2', $failure);
     }
 
@@ -181,5 +191,12 @@ class Extensions_SeleniumTestCaseFailuresTest extends PHPUnit_Extensions_Seleniu
             $this->assertInstanceOf(get_class($original), $e);
             $this->assertEquals($original->getMessage(), $e->getMessage());
         }
+    }
+
+    private function assertOriginalLineAndTraceArePresent(Exception $e)
+    {
+        $this->assertEquals($this->failureLine, $e->getLine());
+        $trace = $e->getTrace();
+        $this->assertEquals($this->firstTraceLine, $trace[0]['line']);
     }
 }
