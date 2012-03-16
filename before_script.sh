@@ -1,5 +1,8 @@
 git submodule init
 git submodule update
+cd vendor/phpunit
+git checkout 3.6
+cd -
 cd selenium-1-tests
 python -m SimpleHTTPServer 8080 > /dev/null 2>&1 &
 cd ..
