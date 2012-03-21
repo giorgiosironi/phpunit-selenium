@@ -802,8 +802,8 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
             }
             break;
 
-	    case 'getCssCount':
-	    case 'getCursorPosition':
+            case 'getCssCount':
+            case 'getCursorPosition':
             case 'getElementHeight':
             case 'getElementIndex':
             case 'getElementPositionLeft':
