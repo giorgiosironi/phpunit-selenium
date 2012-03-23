@@ -1,5 +1,5 @@
 This package contains a base Testcase Class that can be used to run end-to-end tests against Selenium 2 (using its Selenium 1 backward compatible Api).
-Please direct pull requests to giorgiosironi/phpunit-selenium for automated testing upon merging.
+Please direct *pull requests* to giorgiosironi/phpunit-selenium for automated testing upon merging. A feature branch containing all the commits you want to prose works best.
 
 = Running the test suite =
 To run the test suite for this package, you should serve selenium-1-tests via HTTP:
