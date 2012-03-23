@@ -490,6 +490,7 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
      * @method string   getConfirmation()
      * @method string   getCookie()
      * @method string   getCookieByName(string $name)
+     * @method integer  getCssCount(string $locator)
      * @method integer  getCursorPosition(string $locator)
      * @method integer  getElementHeight(string $locator)
      * @method integer  getElementIndex(string $locator)
@@ -801,6 +802,7 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
             }
             break;
 
+            case 'getCssCount':
             case 'getCursorPosition':
             case 'getElementHeight':
             case 'getElementIndex':
