@@ -193,6 +193,11 @@ class Extensions_SeleniumTestCaseFailuresTest extends PHPUnit_Extensions_Seleniu
         }
     }
 
+    public function test404PagesCanBeLoaded()
+    {
+        $this->open('inexistent.html');
+    }
+
     private function assertOriginalLineAndTraceArePresent(Exception $e)
     {
         $this->assertEquals($this->failureLine, $e->getLine());

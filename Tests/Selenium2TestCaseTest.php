@@ -816,4 +816,9 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $this->sessionStorage()->size(); // a value
         // how to clear the storage?
     }
+
+    public function test404PagesCanBeLoaded()
+    {
+        $this->url('inexistent.html');
+    }
 }
