@@ -60,4 +60,9 @@ class PHPUnit_Extensions_SeleniumTestSuite extends PHPUnit_Framework_TestSuite
      * @var boolean
      */
     protected $testCase = TRUE;
+
+    public function addTestMethod(ReflectionClass $class, ReflectionMethod $method)
+    {
+        return parent::addTestMethod($class, $method);
+    }
 }
