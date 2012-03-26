@@ -821,4 +821,15 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
     {
         $this->url('inexistent.html');
     }
+
+    /**
+     * Ticket #113.
+     */
+    public function testMultipleUrlsCanBeLoadedInATest()
+    {
+        $this->url('html/test_click_page1.html');
+        $this->url('html/test_open.html');
+        $this->assertStringEndsWith('Test open', $this->title());
+        $this->assertStringEndsWith('html/test_open.html', strstr($this->url(), 'html/'));
+    }
 }
