@@ -409,7 +409,7 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
             // Create tests from Selenese/HTML files for multiple browsers.
             if (!empty($staticProperties['browsers'])) {
                 foreach ($staticProperties['browsers'] as $browser) {
-                    $browserSuite = new PHPUnit_Framework_TestSuite;
+                    $browserSuite = new PHPUnit_Extensions_SeleniumBrowserSuite();
                     $browserSuite->setName($className . ': ' . $browser['name']);
 
                     foreach ($files as $file) {
@@ -436,23 +436,13 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
         // Create tests from test methods for multiple browsers.
         if (!empty($staticProperties['browsers'])) {
             foreach ($staticProperties['browsers'] as $browser) {
-                $browserSuite = new PHPUnit_Framework_TestSuite;
+                $browserSuite = new PHPUnit_Extensions_SeleniumBrowserSuite();
                 $browserSuite->setName($className . ': ' . $browser['name']);
 
                 foreach ($class->getMethods() as $method) {
-                    if (PHPUnit_Framework_TestSuite::isPublicTestMethod($method)) {
-                        $name   = $method->getName();
-
-                        $test = PHPUnit_Framework_TestSuite::createTest($class, $name);
-                        if ($test instanceof PHPUnit_Framework_TestCase) {
-                            $test->setupSpecificBrowser($browser);
-                            $groups = PHPUnit_Util_Test::getGroups($className, $name);
-                            self::addConfiguredTestTo($browserSuite, $test, $groups);
-                        } else {
-                            $browserSuite->addTest($test);
-                        }
-                    }
+                    $browserSuite->addTestMethod($class, $method);
                 }
+                $browserSuite->setupSpecificBrowser($browser);
 
                 $suite->addTest($browserSuite);
             }

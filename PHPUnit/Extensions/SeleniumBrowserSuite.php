@@ -2,7 +2,7 @@
 /**
  * PHPUnit
  *
- * Copyright (c) 2010-2012, Sebastian Bergmann <sb@sebastian-bergmann.de>.
+ * Copyright (c) 2010-2011, Sebastian Bergmann <sb@sebastian-bergmann.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,59 +36,50 @@
  *
  * @package    PHPUnit_Selenium
  * @author     Giorgio Sironi <giorgio.sironi@asp-poli.it>
- * @copyright  2010-2012 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright  2010-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link       http://www.phpunit.de/
- * @since      File available since Release 1.2.4
+ * @since      File available since Release 1.2.6
  */
 
 /**
- * Tests for PHPUnit_Extensions_SeleniumTestCase.
+ * TestSuite class for a set of tests from a single Testcase Class 
+ * executed with a particular browser.
  *
  * @package    PHPUnit_Selenium
  * @author     Giorgio Sironi <giorgio.sironi@asp-poli.it>
- * @copyright  2010-2012 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright  2010-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
- * @since      Class available since Release 1.2.4
+ * @since      Class available since Release 1.2.6
  */
-class Extensions_SeleniumTestCaseMultipleBrowsersTest extends PHPUnit_Extensions_SeleniumTestCase
+class PHPUnit_Extensions_SeleniumBrowserSuite extends PHPUnit_Framework_TestSuite
 {
-    public static $browsers = array(
-        array(
-            'name'    => 'Firefox on Linux',
-            'browser' => '*firefox',
-            'host'    => 'localhost',
-            'port'    => 4444
-        )
-    );
-
-    public function setUp()
-    {
-        $this->setBrowserUrl('http://localhost:8080/');
-    }
-
-    public function testSessionIsLaunchedCorrectly()
-    {
-        $this->open('html/test_open.html');
-        $this->assertStringEndsWith('html/test_open.html', $this->getLocation());
-    }
-
     /**
-     * @dataProvider urls
+     * Overriding the default: Selenium suites are always built from a TestCase class.
+     * @var boolean
      */
-    public function testDataProvidersAreRecognized($url)
+    protected $testCase = TRUE;
+
+    public function addTestMethod(ReflectionClass $class, ReflectionMethod $method)
     {
-        $this->open($url);
-        $this->assertStringEndsWith($url, $this->getLocation());
-        $this->assertEquals('This is a test of the open command.', $this->getBodyText());
+        return parent::addTestMethod($class, $method);
     }
 
-    public static function urls()
+    public function setupSpecificBrowser(array $browser)
     {
-        return array(
-            array('html/test_open.html')
-        );
+        $this->browserOnAllTests($this, $browser);
+    }
+
+    private function browserOnAllTests(PHPUnit_Framework_TestSuite $suite, array $browser)
+    {
+        foreach ($suite->tests() as $test) {
+            if ($test instanceof PHPUnit_Framework_TestSuite) {
+                $this->browserOnAllTests($test, $browser);
+            } else {
+                $test->setupSpecificBrowser($browser);
+            }
+        }
     }
 }
