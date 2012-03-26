@@ -190,7 +190,7 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
     {
         $this->url('html/test_geometry.html');
         $element = $this->byId('colored');
-        $this->assertEquals('#0000ff', $element->css('background-color'));
+        $this->assertEquals('rgb(0, 0, 255)', $element->css('background-color'));
     }
 
     public function testClick()
@@ -437,9 +437,9 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $eventLog = $this->byId('eventlog');
         $this->assertEquals('', $eventLog->value());
         $this->clickOnElement('theLink');
-        $this->assertContains('{focus(theLink)} {click(theLink)}', $eventLog->value());
         $this->assertEquals('link clicked', $this->alertText());
         $this->acceptAlert();
+        $this->assertContains('{click(theLink)}', $eventLog->value());
     }
 
     public function testButtonEventsAreGenerated()
