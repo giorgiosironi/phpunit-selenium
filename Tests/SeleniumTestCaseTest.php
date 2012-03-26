@@ -366,6 +366,16 @@ class Extensions_SeleniumTestCaseTest extends PHPUnit_Extensions_SeleniumTestCas
         $this->assertFalse($this->isElementPresent('dom=foo'));
     }
 
+    /**
+     * Ticket #27.
+     */
+    public function testAssertionsCanBePerformedDirectlyWithLocators()
+    {
+        $this->open('html/test_locators.html');
+        $this->assertText('id=id1', 'this is the first element');
+        $this->assertText('//a[@id="id1"]', 'this is the first element');
+    }
+
     public function testImplicitLocators()
     {
         $this->open('html/test_locators.html');
