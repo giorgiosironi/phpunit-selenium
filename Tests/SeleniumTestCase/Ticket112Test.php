@@ -1,22 +1,12 @@
 <?php
-class GitHub404Test extends PHPUnit_Extensions_SeleniumTestCase
+class Tests_SeleniumTestCase_Ticket112Test extends PHPUnit_Extensions_SeleniumTestCase
 {
     public function setUp()
     {
-        parent::setUp();
-
+        $this->setHost(PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_HOST);
+        $this->setPort((int)PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_PORT);
         $this->setBrowser('*chrome');
         $this->setBrowserUrl('https://www.github.com');
-        $this->start();
-    }
-
-    public function testPage()
-    {
-        $this->open('sebastianbergmann');
-        $this->assertTrue(
-            $this->isTextPresent('Rackspace Hosting'),
-            'Hosting message not present.'
-        );
     }
 
     public function test404Page()
@@ -24,17 +14,7 @@ class GitHub404Test extends PHPUnit_Extensions_SeleniumTestCase
         $this->open('asdddsadfjjfjfffd');
         $this->assertTrue(
             $this->isTextPresent('Rackspace Hosting'),
-            'Hosting message not present.'
-        );
-    }
-
-    public function test404PageAndWait()
-    {
-        $this->open('asdddsadfjjfjfffd');
-        $this->waitForPageToLoad();
-        $this->assertTrue(
-            $this->isTextPresent('Rackspace Hosting'),
-            'Hosting message not present.'
+            '404 page not present'
         );
     }
 }
