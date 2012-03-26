@@ -376,6 +376,15 @@ class Extensions_SeleniumTestCaseTest extends PHPUnit_Extensions_SeleniumTestCas
         $this->assertText('//a[@id="id1"]', 'this is the first element');
     }
 
+    /**
+     * Ticket #12.
+     */
+    public function testAssertionsCanBePerformedOnTheValueOfInputs()
+    {
+        $this->open('html/test_locators.html');
+        $this->assertValue('//div/span/div/span/input', 'winner');
+    }
+
     public function testImplicitLocators()
     {
         $this->open('html/test_locators.html');
