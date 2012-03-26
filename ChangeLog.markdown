@@ -3,6 +3,11 @@ PHPUnit_Selenium 1.2
 
 This is the list of changes for the PHPUnit_Selenium 1.2 release series.
 
+PHPUnit_Selenium 1.2.6
+----------------------
+
+* Fixed #114 and #115: regressions of @depends/@dataProvider.
+
 PHPUnit_Selenium 1.2.5
 ----------------------
 

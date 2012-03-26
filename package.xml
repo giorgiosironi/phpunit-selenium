@@ -32,6 +32,9 @@
   <dir name="/">
    <dir name="PHPUnit">
     <dir name="Extensions">
+     <file baseinstalldir="/" name="SeleniumBrowserSuite.php" role="php">
+      <tasks:replace from="@package_version@" to="version" type="package-info" />
+     </file>
      <file baseinstalldir="/" name="SeleniumTestSuite.php" role="php">
       <tasks:replace from="@package_version@" to="version" type="package-info" />
      </file>

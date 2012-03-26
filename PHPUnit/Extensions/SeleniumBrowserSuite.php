@@ -67,6 +67,13 @@ class PHPUnit_Extensions_SeleniumBrowserSuite extends PHPUnit_Framework_TestSuit
         return parent::addTestMethod($class, $method);
     }
 
+    public static function fromClassAndBrowser($className, array $browser)
+    {
+        $browserSuite = new self();
+        $browserSuite->setName($className . ': ' . $browser['name']);
+        return $browserSuite;
+    }
+
     public function setupSpecificBrowser(array $browser)
     {
         $this->browserOnAllTests($this, $browser);

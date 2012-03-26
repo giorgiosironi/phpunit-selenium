@@ -72,7 +72,7 @@ class PHPUnit_Extensions_SeleniumTestSuite extends PHPUnit_Framework_TestSuite
      */
     public static function fromTestCaseClass($className)
     {
-        $suite = new PHPUnit_Extensions_SeleniumTestSuite();
+        $suite = new self();
         $suite->setName($className);
 
         $class            = new ReflectionClass($className);
@@ -90,11 +90,10 @@ class PHPUnit_Extensions_SeleniumTestSuite extends PHPUnit_Framework_TestSuite
             // Create tests from Selenese/HTML files for multiple browsers.
             if (!empty($staticProperties['browsers'])) {
                 foreach ($staticProperties['browsers'] as $browser) {
-                    $browserSuite = new PHPUnit_Extensions_SeleniumBrowserSuite();
-                    $browserSuite->setName($className . ': ' . $browser['name']);
+                    $browserSuite = PHPUnit_Extensions_SeleniumBrowserSuite::fromClassAndBrowser($className, $browser);
 
                     foreach ($files as $file) {
-                        self::addConfiguredTestTo($browserSuite,
+                        self::addGeneratedTestTo($browserSuite,
                           new $className($file, array(), '', $browser),
                           $classGroups
                         );
@@ -107,7 +106,7 @@ class PHPUnit_Extensions_SeleniumTestSuite extends PHPUnit_Framework_TestSuite
             // Create tests from Selenese/HTML files for single browser.
             else {
                 foreach ($files as $file) {
-                    self::addConfiguredTestTo($suite,
+                    self::addGeneratedTestTo($suite,
                                               new $className($file),
                                               $classGroups);
                 }
@@ -117,9 +116,7 @@ class PHPUnit_Extensions_SeleniumTestSuite extends PHPUnit_Framework_TestSuite
         // Create tests from test methods for multiple browsers.
         if (!empty($staticProperties['browsers'])) {
             foreach ($staticProperties['browsers'] as $browser) {
-                $browserSuite = new PHPUnit_Extensions_SeleniumBrowserSuite();
-                $browserSuite->setName($className . ': ' . $browser['name']);
-
+                $browserSuite = PHPUnit_Extensions_SeleniumBrowserSuite::fromClassAndBrowser($className, $browser);
                 foreach ($class->getMethods() as $method) {
                     $browserSuite->addTestMethod($class, $method);
                 }
@@ -139,7 +136,7 @@ class PHPUnit_Extensions_SeleniumTestSuite extends PHPUnit_Framework_TestSuite
         return $suite;
     }
 
-    private static function addConfiguredTestTo(PHPUnit_Framework_TestSuite $suite, PHPUnit_Framework_TestCase $test, $classGroups)
+    private static function addGeneratedTestTo(PHPUnit_Framework_TestSuite $suite, PHPUnit_Framework_TestCase $test, $classGroups)
     {
         list ($methodName, ) = explode(' ', $test->getName());
         $test->setDependencies(
