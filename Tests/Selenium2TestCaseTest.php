@@ -82,6 +82,12 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $this->assertEquals('CamelCase page', $this->title());
     }
 
+    public function testAbsoluteUrlsAreSupported()
+    {
+        $this->url(PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL . 'html/test_open.html');
+        $this->assertEquals('Test open', $this->title());
+    }
+
     public function testElementSelection()
     {
         $this->url('html/test_open.html');
@@ -830,7 +836,7 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
     {
         $this->url('html/test_click_page1.html');
         $this->url('html/test_open.html');
-        $this->assertStringEndsWith('Test open', $this->title());
+        $this->assertEquals('Test open', $this->title());
         $this->assertStringEndsWith('html/test_open.html', strstr($this->url(), 'html/'));
     }
 }

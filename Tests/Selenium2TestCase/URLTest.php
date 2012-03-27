@@ -55,20 +55,41 @@ class Extensions_Selenium2TestCase_URLTest extends PHPUnit_Framework_TestCase
 {
     public function testDescendsAnURLWithAnAdditionalFolder()
     {
-        $this->assertEquals($this->url('/posts/1'),
+        $this->assertURLEquals($this->url('/posts/1'),
                             $this->url('/posts')->descend('1'));
     }
 
     public function testAscendsAnURByEliminatingAnAdditionalFolder()
     {
-        $this->assertEquals($this->url('/posts'),
+        $this->assertURLEquals($this->url('/posts'),
                             $this->url('/posts/1')->ascend());
     }
 
     public function testTransformsCamelCaseIntoWhileAddingACommandToAnURL()
     {
-        $this->assertEquals($this->url('/posts/alert_text'),
+        $this->assertURLEquals($this->url('/posts/alert_text'),
                             $this->url('/posts')->addCommand('alertText'));
+    }
+
+    public function testCompletesARelativeUrl()
+    {
+        $exampleFolder = 'example/';
+        $this->assertURLEquals($this->url('http://localhost/example/'),
+                            $this->url('http://localhost')->jump($exampleFolder));
+    }
+
+    public function testJumpsToAnAbsoluteUrl()
+    {
+        $exampleDotCom = 'http://www.example.com';
+        $this->assertURLEquals($this->url($exampleDotCom),
+                            $this->url('http://localhost')->jump($exampleDotCom));
+    }
+
+    private function assertURLEquals($expected, $actual)
+    {
+        $this->assertInstanceOf('PHPUnit_Extensions_Selenium2TestCase_URL', $expected);
+        $this->assertInstanceOf('PHPUnit_Extensions_Selenium2TestCase_URL', $actual);
+        $this->assertEquals($expected, $actual);
     }
 
     private function url($value)

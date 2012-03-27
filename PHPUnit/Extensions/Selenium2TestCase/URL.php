@@ -60,9 +60,22 @@ final class PHPUnit_Extensions_Selenium2TestCase_URL
      */
     private $value;
 
+    /**
+     * @param string $value
+     */
     public function __construct($value)
     {
         $this->value = $value;
+    }
+
+    /**
+     * @param string $host
+     * @param int port
+     * @return PHPUnit_Extensions_Selenium2TestCase_URL
+     */
+    public static function fromHostAndPort($host, $port)
+    {
+        return new self("http://{$host}:{$port}");
     }
 
     /**
@@ -78,6 +91,10 @@ final class PHPUnit_Extensions_Selenium2TestCase_URL
         return $this->getValue();
     }
 
+    /**
+     * @param string $addition
+     * @return PHPUnit_Extensions_Selenium2TestCase_URL
+     */
     public function descend($addition)
     {
         $newValue = rtrim($this->value, '/')
@@ -86,6 +103,9 @@ final class PHPUnit_Extensions_Selenium2TestCase_URL
         return new self($newValue);
     }
 
+    /**
+     * @return PHPUnit_Extensions_Selenium2TestCase_URL
+     */
     public function ascend()
     {
         $lastSlash = strrpos($this->value, "/");
@@ -102,9 +122,26 @@ final class PHPUnit_Extensions_Selenium2TestCase_URL
         return end($segments);
     }
 
+    /**
+     * @param string $command
+     * @return PHPUnit_Extensions_Selenium2TestCase_URL
+     */
     public function addCommand($command)
     {
         return $this->descend($this->camelCaseToUnderScores($command));
+    }
+
+    /**
+     * @param string $newUrl
+     * @return PHPUnit_Extensions_Selenium2TestCase_URL
+     */
+    public function jump($newUrl)
+    {
+        if ($this->isAbsolute($newUrl)) {
+            return new self($newUrl);
+        } else {
+            return $this->descend($newUrl);
+        }
     }
 
     private function camelCaseToUnderScores($string)
@@ -114,8 +151,8 @@ final class PHPUnit_Extensions_Selenium2TestCase_URL
         return str_replace(' ', '_', $string);
     }
 
-    public static function fromHostAndPort($host, $port)
+    private function isAbsolute($urlValue)
     {
-        return new self("http://{$host}:{$port}");
+        return strstr($urlValue, 'http://') == $urlValue;
     }
 }
