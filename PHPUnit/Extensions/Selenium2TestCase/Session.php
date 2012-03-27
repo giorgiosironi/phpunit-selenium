@@ -261,4 +261,13 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
     {
         $this->driver->curl('DELETE', $this->url->descend('window'));
     }
+
+    /**
+     * @return PHPUnit_Extensions_Selenium2TestCase_Session_Cookie
+     */
+    public function cookie()
+    {
+        $url = $this->url->descend('cookie');
+        return new PHPUnit_Extensions_Selenium2TestCase_Session_Cookie($this->driver, $url);
+    }
 }

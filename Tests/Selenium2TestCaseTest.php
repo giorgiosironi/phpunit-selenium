@@ -732,10 +732,10 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
 
     public function testCookiesCanBeSetAndRead()
     {
-        $this->markTestIncomplete();
-        $this->cookie(array('cookie' => array(/* keys? */))); 
-        $this->cookie(); // returns array
-        $this->cookie('name'); // Returns single one
+        $this->url('html/');
+        $cookies = $this->cookie();
+        $cookies->add('name', 'value')->set();
+        $this->assertEquals('value', $cookies->get('name'));
     }
 
     public function testCookiesCanBeDeleted()

@@ -109,6 +109,14 @@
        <tasks:replace from="@package_version@" to="version" type="package-info" />
       </file>
       <dir name="Session">
+       <file baseinstalldir="/" name="Cookie.php" role="php">
+        <tasks:replace from="@package_version@" to="version" type="package-info" />
+       </file>
+       <dir name="Cookie">
+        <file baseinstalldir="/" name="Builder.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+       </dir>
        <file baseinstalldir="/" name="Timeouts.php" role="php">
         <tasks:replace from="@package_version@" to="version" type="package-info" />
        </file>
