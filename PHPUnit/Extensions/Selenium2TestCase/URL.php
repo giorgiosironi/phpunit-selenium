@@ -153,6 +153,6 @@ final class PHPUnit_Extensions_Selenium2TestCase_URL
 
     private function isAbsolute($urlValue)
     {
-        return strstr($urlValue, 'http://') == $urlValue;
+        return preg_match('/^(http|https):\/\//', $urlValue) > 0;
     }
 }

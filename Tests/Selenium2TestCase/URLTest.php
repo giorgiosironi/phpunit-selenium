@@ -85,6 +85,13 @@ class Extensions_Selenium2TestCase_URLTest extends PHPUnit_Framework_TestCase
                             $this->url('http://localhost')->jump($exampleDotCom));
     }
 
+    public function testJumpsToASecureAbsoluteUrl()
+    {
+        $exampleDotCom = 'https://www.example.com';
+        $this->assertURLEquals($this->url($exampleDotCom),
+                            $this->url('http://localhost')->jump($exampleDotCom));
+    }
+
     private function assertURLEquals($expected, $actual)
     {
         $this->assertInstanceOf('PHPUnit_Extensions_Selenium2TestCase_URL', $expected);
