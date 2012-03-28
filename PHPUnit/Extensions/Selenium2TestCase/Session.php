@@ -62,6 +62,11 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
      */
     private $baseUrl;
 
+    /**
+     * @var boolean
+     */
+    private $stopped = FALSE;
+
     public function __construct($driver,
                                 PHPUnit_Extensions_Selenium2TestCase_URL $url,
                                 PHPUnit_Extensions_Selenium2TestCase_URL $baseUrl)
@@ -126,7 +131,11 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
      */
     public function stop()
     {
+        if ($this->stopped) {
+            return;
+        }
         $this->driver->curl('DELETE', $this->url);
+        $this->stopped = TRUE;
     }
 
     /**
