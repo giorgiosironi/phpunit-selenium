@@ -122,7 +122,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
         if (!is_bool($shareSession)) {
             throw new InvalidArgumentException("The shared session support can only be switched on or off.");
         }
-        if ($shareSession) {
+        if (!$shareSession) {
             self::$sessionStrategy = self::defaultSessionStrategy();
         } else {
             self::$sessionStrategy = new PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Shared(self::defaultSessionStrategy());
