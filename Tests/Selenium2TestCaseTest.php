@@ -738,9 +738,21 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $this->assertEquals('value', $cookies->get('name'));
     }
 
+    /**
+     * @depends testCookiesCanBeSetAndRead
+     */
     public function testCookiesCanBeDeleted()
     {
-        $this->markTestIncomplete('Which API to use for deleting session/cookie?');
+        $this->url('html/');
+        $cookies = $this->cookie();
+        $cookies->add('name', 'value')->set();
+        $cookies->remove('name');
+        try {
+            $cookies->get('name');
+            $this->fail('The cookie shouldn\'t exist anymore.');
+        } catch (RuntimeException $e) {
+            $this->assertEquals("There is no 'name' cookie available on this page.", $e->getMessage()); 
+        }
     }
 
     public function testTheBrowsersOrientationCanBeModified()

@@ -78,7 +78,13 @@ class PHPUnit_Extensions_Selenium2TestCase_Session_Cookie
                 return $cookie['value'];
             }
         }
-        throw new RuntimeException("There is no `$name` cookie available on this page.");
+        throw new RuntimeException("There is no '$name' cookie available on this page.");
+    }
+
+    public function remove($name)
+    {
+        $url = $this->url->descend($name);
+        $this->driver->curl('DELETE', $url);
     }
 
     public function postCookie(array $data)
