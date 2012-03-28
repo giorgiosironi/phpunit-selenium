@@ -114,6 +114,9 @@ class PHPUnit_Extensions_Selenium2TestCase_Driver
         }
         curl_close($curl);
         $content = json_decode($rawResponse, TRUE);
+        if ($info['http_code'] == 500 && isset($content['value']['message'])) {
+            throw new RuntimeException($content['value']['message']);
+        }
         return new PHPUnit_Extensions_Selenium2TestCase_Response($content, $info);
     }
 

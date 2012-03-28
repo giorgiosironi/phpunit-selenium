@@ -93,4 +93,17 @@ class Extensions_Selenium2TestCaseFailuresTest extends PHPUnit_Extensions_Seleni
         $this->url('html/test_open.html');
         $this->byId('notExistent');
     }
+
+    public function testStaleElementsCannotBeAccessed()
+    {
+        $this->url('html/test_element_selection.html');
+        $div = $this->byId('theDivId');
+        $this->url('html/test_element_selection.html');
+        try {
+            $div->text();
+            $this->fail('The element shouldn\'t be accessible.');
+        } catch (RuntimeException $e) {
+            $this->assertContains('Element not found in the cache', $e->getMessage());
+        }
+    }
 }
