@@ -86,7 +86,7 @@ class Extensions_Selenium2TestCaseFailuresTest extends PHPUnit_Extensions_Seleni
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException RuntimeException
      */
     public function testInexistentElementCausesTheTestToFail()
     {
