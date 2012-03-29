@@ -279,4 +279,13 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
         $url = $this->url->descend('cookie');
         return new PHPUnit_Extensions_Selenium2TestCase_Session_Cookie($this->driver, $url);
     }
+
+    /**
+     * @return PHPUnit_Extensions_Selenium2TestCase_Session_Storage
+     */
+    public function localStorage()
+    {
+        $url = $this->url->addCommand('localStorage');
+        return new PHPUnit_Extensions_Selenium2TestCase_Session_Storage($this->driver, $url);
+    }
 }

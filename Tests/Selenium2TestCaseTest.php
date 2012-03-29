@@ -849,11 +849,12 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
 
     public function testTheBrowserLocalStorageIsAccessible()
     {
-        $this->markTestIncomplete();
-        $this->localStorage(); // all keys
-        $this->localStorage()->key; // gets a value
-        $this->localStorage()->key = 2; // sets a value
-        $this->localStorage()->size(); // a value
+        $this->markTestIncomplete('We need a browser which supports WebStorage.');
+        //$this->localStorage(); // all keys
+        $storage = $this->localStorage();
+        $storage->key = 42;
+        $this->assertSame("42", $storage->key);
+        //$this->localStorage()->size(); // a value
         // how to clear the storage?
     }
 
