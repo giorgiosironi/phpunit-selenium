@@ -64,12 +64,12 @@ class PHPUnit_Extensions_Selenium2TestCase_Session_Storage
         $this->driver = $driver;
         $this->url = $url;
     }
-    
+
     public function __set($name, $value)
     {
         $this->driver->curl('POST', $this->url, array(
             'key' => $name,
-            'value' => (string) $value
+            'value' => (string)$value
         ));
     }
 

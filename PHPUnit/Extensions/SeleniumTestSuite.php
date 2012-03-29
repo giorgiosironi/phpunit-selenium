@@ -61,6 +61,9 @@ class PHPUnit_Extensions_SeleniumTestSuite extends PHPUnit_Framework_TestSuite
      */
     protected $testCase = TRUE;
 
+    /**
+     * Making the method public.
+     */
     public function addTestMethod(ReflectionClass $class, ReflectionMethod $method)
     {
         return parent::addTestMethod($class, $method);
@@ -102,9 +105,8 @@ class PHPUnit_Extensions_SeleniumTestSuite extends PHPUnit_Framework_TestSuite
                     $suite->addTest($browserSuite);
                 }
             }
-
-            // Create tests from Selenese/HTML files for single browser.
             else {
+                // Create tests from Selenese/HTML files for single browser.
                 foreach ($files as $file) {
                     self::addGeneratedTestTo($suite,
                                               new $className($file),
@@ -125,11 +127,10 @@ class PHPUnit_Extensions_SeleniumTestSuite extends PHPUnit_Framework_TestSuite
                 $suite->addTest($browserSuite);
             }
         }
-
-        // Create tests from test methods for single browser.
         else {
+            // Create tests from test methods for single browser.
             foreach ($class->getMethods() as $method) {
-                $suite->addTestMethod($class, $method); 
+                $suite->addTestMethod($class, $method);
             }
         }
 

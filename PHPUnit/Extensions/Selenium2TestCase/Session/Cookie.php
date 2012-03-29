@@ -99,7 +99,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Session_Cookie
         $url = $this->url->descend($name);
         $this->driver->curl('DELETE', $url);
     }
-    
+
     /**
      * @return void
      */

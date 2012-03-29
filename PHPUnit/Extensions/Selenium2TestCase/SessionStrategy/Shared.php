@@ -67,7 +67,7 @@ class PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Shared
 
     public function session(array $parameters)
     {
-        if ($this->session === null) {
+        if ($this->session === NULL) {
             $this->session = $this->original->session($parameters);
             $this->mainWindow = $this->session->windowHandle();
         } else {
@@ -78,7 +78,7 @@ class PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Shared
 
     public function notSuccessfulTest()
     {
-        $this->session = null;
+        $this->session = NULL;
     }
 
     public function endOfTest(PHPUnit_Extensions_Selenium2TestCase_Session $session)

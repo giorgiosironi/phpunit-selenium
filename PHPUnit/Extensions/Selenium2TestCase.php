@@ -129,7 +129,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
         }
     }
 
-    private static function sessionStrategy() 
+    private static function sessionStrategy()
     {
         if (!self::$sessionStrategy) {
             self::$sessionStrategy = self::defaultSessionStrategy();
