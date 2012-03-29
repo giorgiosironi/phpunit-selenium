@@ -87,6 +87,11 @@ class PHPUnit_Extensions_Selenium2TestCase_Session_Cookie
         $this->driver->curl('DELETE', $url);
     }
 
+    public function clear()
+    {
+        $this->driver->curl('DELETE', $this->url);
+    }
+
     public function postCookie(array $data)
     {
         $this->driver->curl('POST',

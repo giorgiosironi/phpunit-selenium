@@ -741,12 +741,27 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
     /**
      * @depends testCookiesCanBeSetAndRead
      */
-    public function testCookiesCanBeDeleted()
+    public function testCookiesCanBeDeletedOneAtTheTime()
     {
         $this->url('html/');
         $cookies = $this->cookie();
         $cookies->add('name', 'value')->set();
         $cookies->remove('name');
+        try {
+            $cookies->get('name');
+            $this->fail('The cookie shouldn\'t exist anymore.');
+        } catch (RuntimeException $e) {
+            $this->assertEquals("There is no 'name' cookie available on this page.", $e->getMessage()); 
+        }
+    }
+
+    public function testCookiesCanBeDeletedAllAtOnce()
+    {
+        $this->url('html/');
+        $cookies = $this->cookie();
+        $cookies->add('id', 'id_value')->set();
+        $cookies->add('name', 'name_value')->set();
+        $cookies->clear();
         try {
             $cookies->get('name');
             $this->fail('The cookie shouldn\'t exist anymore.');
