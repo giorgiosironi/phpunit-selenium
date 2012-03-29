@@ -14,7 +14,7 @@ class Tests_SeleniumTestCase_Ticket114Test extends PHPUnit_Extensions_SeleniumTe
 
     /**
      * @dataProvider exampleDataProvider
-     * @depends example
+     * @depends testDependable
      */
     public function testDependent($dataProvider, $depends)
     {
