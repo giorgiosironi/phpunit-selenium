@@ -747,12 +747,7 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $cookies = $this->cookie();
         $cookies->add('name', 'value')->set();
         $cookies->remove('name');
-        try {
-            $cookies->get('name');
-            $this->fail('The cookie shouldn\'t exist anymore.');
-        } catch (RuntimeException $e) {
-            $this->assertEquals("There is no 'name' cookie available on this page.", $e->getMessage()); 
-        }
+        $this->assertThereIsNoCookieNamed('name');
     }
 
     public function testCookiesCanBeDeletedAllAtOnce()
@@ -762,11 +757,17 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $cookies->add('id', 'id_value')->set();
         $cookies->add('name', 'name_value')->set();
         $cookies->clear();
+        $this->assertThereIsNoCookieNamed('id');
+        $this->assertThereIsNoCookieNamed('name');
+    }
+
+    private function assertThereIsNoCookieNamed($name)
+    {
         try {
-            $cookies->get('name');
+            $this->cookie()->get($name);
             $this->fail('The cookie shouldn\'t exist anymore.');
         } catch (RuntimeException $e) {
-            $this->assertEquals("There is no 'name' cookie available on this page.", $e->getMessage()); 
+            $this->assertEquals("There is no '$name' cookie available on this page.", $e->getMessage()); 
         }
     }
 

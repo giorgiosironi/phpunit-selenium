@@ -65,11 +65,20 @@ class PHPUnit_Extensions_Selenium2TestCase_Session_Cookie
         $this->url = $url;
     }
 
+    /**
+     * @param string $name
+     * @param string $value
+     * @return void
+     */
     public function add($name, $value)
     {
         return new PHPUnit_Extensions_Selenium2TestCase_Session_Cookie_Builder($this, $name, $value);
     }
 
+    /**
+     * @param string $name
+     * @return string
+     */
     public function get($name)
     {
         $cookies = $this->driver->curl('GET', $this->url)->getValue();
@@ -81,17 +90,29 @@ class PHPUnit_Extensions_Selenium2TestCase_Session_Cookie
         throw new RuntimeException("There is no '$name' cookie available on this page.");
     }
 
+    /**
+     * @param string $name
+     * @return void
+     */
     public function remove($name)
     {
         $url = $this->url->descend($name);
         $this->driver->curl('DELETE', $url);
     }
-
+    
+    /**
+     * @return void
+     */
     public function clear()
     {
         $this->driver->curl('DELETE', $this->url);
     }
 
+    /**
+     * @internal
+     * @param array $data
+     * @return void
+     */
     public function postCookie(array $data)
     {
         $this->driver->curl('POST',
