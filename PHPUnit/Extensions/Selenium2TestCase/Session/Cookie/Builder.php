@@ -69,30 +69,49 @@ class PHPUnit_Extensions_Selenium2TestCase_Session_Cookie_Builder
         $this->value = $value;
     }
 
+    /**
+     * @param string
+     * @return PHPUnit_Extensions_Selenium2TestCase_Session_Cookie_Builder
+     */
     public function path($path)
     {
         $this->path = $path;
         return $this;
     }
 
+    /**
+     * @param string
+     * @return PHPUnit_Extensions_Selenium2TestCase_Session_Cookie_Builder
+     */
     public function domain($domain)
     {
         $this->domain = $domain;
         return $this;
     }
 
+    /**
+     * @param boolean
+     * @return PHPUnit_Extensions_Selenium2TestCase_Session_Cookie_Builder
+     */
     public function secure($secure)
     {
         $this->secure = $secure;
         return $this;
     }
 
+    /**
+     * @param integer
+     * @return PHPUnit_Extensions_Selenium2TestCase_Session_Cookie_Builder
+     */
     public function expiry($expiry)
     {
         $this->expiry = $expiry;
         return $this;
     }
 
+    /**
+     * @return void
+     */
     public function set()
     {
         $cookieData = array(
