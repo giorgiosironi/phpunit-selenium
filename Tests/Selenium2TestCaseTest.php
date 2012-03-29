@@ -272,6 +272,17 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $this->assertRegExp('/Welcome, TestUser!/', $h2->text());
     }
 
+    public function testFormsCanBeSubmitted()
+    {
+        $this->url('html/test_type_page1.html');
+        $usernameInput = $this->byName('username');
+        $usernameInput->value('TestUser');
+
+        $this->byCssSelector('form')->submit();
+        $h2 = $this->byCssSelector('h2');
+        $this->assertRegExp('/Welcome, TestUser!/', $h2->text());
+    }
+
     /**
      * @depends testTypingViaTheKeyboard
      */
@@ -331,22 +342,6 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $select->selectOptionByLabel('');
         $this->assertEquals('', $select->selectedLabel());
 
-    }
-
-    public function testFormsCanBeSubmitted()
-    {
-        $this->url('html/test_submit.html');
-        $form = $this->byId('searchForm');
-        $form->submit();
-        $this->assertEquals('onsubmit called', $this->alertText());
-        $this->acceptAlert();
-
-        $box = $this->byName('okayToSubmit');
-        $box->click();
-        $box->submit();
-        $this->assertEquals('onsubmit called', $this->alertText());
-        $this->acceptAlert();
-        $this->assertEquals('form submitted', $this->alertText());
     }
 
     public function testCheckboxesCanBeSelectedAndDeselected()

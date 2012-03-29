@@ -103,7 +103,7 @@ class Extensions_Selenium2TestCaseFailuresTest extends PHPUnit_Extensions_Seleni
             $div->text();
             $this->fail('The element shouldn\'t be accessible.');
         } catch (RuntimeException $e) {
-            $this->assertContains('Element not found in the cache', $e->getMessage());
+            $this->assertContains('http://seleniumhq.org/exceptions/stale_element_reference.html', $e->getMessage());
         }
     }
 }

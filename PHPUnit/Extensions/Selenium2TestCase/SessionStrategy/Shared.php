@@ -58,6 +58,7 @@ class PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Shared
 {
     private $original;
     private $session;
+    private $mainWindow;
 
     public function __construct(PHPUnit_Extensions_Selenium2TestCase_SessionStrategy $originalStrategy)
     {
@@ -68,8 +69,9 @@ class PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Shared
     {
         if ($this->session === null) {
             $this->session = $this->original->session($parameters);
+            $this->mainWindow = $this->session->windowHandle();
         } else {
-            $this->session->window('');
+            $this->session->window($this->mainWindow);
         }
         return $this->session;
     }
