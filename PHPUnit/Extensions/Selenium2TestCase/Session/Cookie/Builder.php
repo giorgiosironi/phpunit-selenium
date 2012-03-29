@@ -57,6 +57,10 @@ class PHPUnit_Extensions_Selenium2TestCase_Session_Cookie_Builder
 {
     private $name;
     private $value;
+    private $path;
+    private $domain;
+    private $secure = FALSE;
+    private $expiry;
 
     public function __construct($cookieFacade, $name, $value)
     {
@@ -65,12 +69,42 @@ class PHPUnit_Extensions_Selenium2TestCase_Session_Cookie_Builder
         $this->value = $value;
     }
 
+    public function path($path)
+    {
+        $this->path = $path;
+        return $this;
+    }
+
+    public function domain($domain)
+    {
+        $this->domain = $domain;
+        return $this;
+    }
+
+    public function secure($secure)
+    {
+        $this->secure = $secure;
+        return $this;
+    }
+
+    public function expiry($expiry)
+    {
+        $this->expiry = $expiry;
+        return $this;
+    }
+
     public function set()
     {
-        $this->cookieFacade->postCookie(array(
+        $cookieData = array(
             'name' => $this->name,
             'value' => $this->value,
-            'secure' => FALSE
-        ));
+            'secure' => $this->secure,
+        );
+        foreach (array('path', 'domain', 'expiry') as $parameter) {
+            if ($this->$parameter !== NULL) {
+                $cookieData[$parameter] = $this->$parameter;
+            }
+        }
+        $this->cookieFacade->postCookie($cookieData);
     }
 }

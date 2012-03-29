@@ -761,6 +761,21 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $this->assertThereIsNoCookieNamed('name');
     }
 
+    public function testAdvancedParametersOfCookieCanBeSet()
+    {
+        $this->url('/');
+        $cookies = $this->cookie();
+        $cookies->add('name', 'value')
+                ->path('/html')
+                ->domain('127.0.0.1')
+                ->expiry(time()+60*60*24)
+                ->secure(FALSE)
+                ->set();
+        $this->assertThereIsNoCookieNamed('name');
+        $this->url('/html');
+        $this->assertEquals('value', $cookies->get('name'));
+    }
+
     private function assertThereIsNoCookieNamed($name)
     {
         try {
