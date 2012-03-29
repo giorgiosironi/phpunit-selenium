@@ -781,7 +781,7 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         try {
             $this->cookie()->get($name);
             $this->fail('The cookie shouldn\'t exist anymore.');
-        } catch (RuntimeException $e) {
+        } catch (PHPUnit_Extensions_Selenium2TestCase_Exception $e) {
             $this->assertEquals("There is no '$name' cookie available on this page.", $e->getMessage()); 
         }
     }

@@ -2,7 +2,7 @@
 /**
  * PHPUnit
  *
- * Copyright (c) 2010-2012, Sebastian Bergmann <sb@sebastian-bergmann.de>.
+ * Copyright (c) 2010-2011, Sebastian Bergmann <sb@sebastian-bergmann.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,89 +36,23 @@
  *
  * @package    PHPUnit_Selenium
  * @author     Giorgio Sironi <giorgio.sironi@asp-poli.it>
- * @copyright  2010-2012 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright  2010-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link       http://www.phpunit.de/
  * @since      File available since Release 1.2.6
  */
 
 /**
- * Adds and remove cookies.
+ * Indicates an exception during the execution of Selenium 2 commands.
  *
  * @package    PHPUnit_Selenium
  * @author     Giorgio Sironi <giorgio.sironi@asp-poli.it>
- * @copyright  2010-2012 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright  2010-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.6
  */
-class PHPUnit_Extensions_Selenium2TestCase_Session_Cookie
+class PHPUnit_Extensions_Selenium2TestCase_Exception extends RuntimeException
 {
-    private $driver;
-    private $url;
-
-    public function __construct(PHPUnit_Extensions_Selenium2TestCase_Driver $driver,
-                                PHPUnit_Extensions_Selenium2TestCase_URL $url)
-    {
-        $this->driver = $driver;
-        $this->url = $url;
-    }
-
-    /**
-     * @param string $name
-     * @param string $value
-     * @return void
-     */
-    public function add($name, $value)
-    {
-        return new PHPUnit_Extensions_Selenium2TestCase_Session_Cookie_Builder($this, $name, $value);
-    }
-
-    /**
-     * @param string $name
-     * @return string
-     */
-    public function get($name)
-    {
-        $cookies = $this->driver->curl('GET', $this->url)->getValue();
-        foreach ($cookies as $cookie) {
-            if ($cookie['name'] == $name) {
-                return $cookie['value'];
-            }
-        }
-        throw new PHPUnit_Extensions_Selenium2TestCase_Exception("There is no '$name' cookie available on this page.");
-    }
-
-    /**
-     * @param string $name
-     * @return void
-     */
-    public function remove($name)
-    {
-        $url = $this->url->descend($name);
-        $this->driver->curl('DELETE', $url);
-    }
-    
-    /**
-     * @return void
-     */
-    public function clear()
-    {
-        $this->driver->curl('DELETE', $this->url);
-    }
-
-    /**
-     * @internal
-     * @param array $data
-     * @return void
-     */
-    public function postCookie(array $data)
-    {
-        $this->driver->curl('POST',
-                            $this->url,
-                            array(
-                                'cookie' => $data
-                            ));
-    }
 }
