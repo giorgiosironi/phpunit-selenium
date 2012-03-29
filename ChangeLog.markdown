@@ -7,6 +7,16 @@ PHPUnit_Selenium 1.2.6
 ----------------------
 
 * Fixed #114 and #115: regressions of @depends/@dataProvider.
+* Added $this->cookie() for adding and removing cookies via a Builder.
+* Added Selenium2TestCase_Exception in the Cookie api.
+* Supporting absolute URLs (http://...) in $this->url().
+* Supporting uppercase URLs.
+* Raising error message for stale elements reference (#117).
+* No 500 errors when communicating with Selenium Server.
+* Supporting Selenium 2.20.
+* Tests for 404 pages.
+* Supporting @depends/@dataProvider and similar annotations in SeleniumTestCase.
+* Added getCssCount() in SeleniumTestCase.
 
 PHPUnit_Selenium 1.2.5
 ----------------------
