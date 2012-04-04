@@ -52,6 +52,21 @@
  * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.0
+ * @method void acceptAlert() Press OK on an alert, or confirms a dialog
+ * @method mixed alertText($value = NULL) Gets the alert dialog text, or sets the text for a prompt dialog
+ * @method void back()
+ * @method void dismissAlert() Press Cancel on an alert, or does not confirm a dialog
+ * @method string execute($javaScriptCode) Injects arbitrary JavaScript in the page and returns the last
+ * @method string executeAsync($javaScriptCode) Injects arbitrary JavaScript and wait for the callback (last element of arguments) to be called
+ * @method void forward()
+ * @method void frame($elementId) Changes the focus to a frame in the page
+ * @method void refresh()
+ * @method string source() Returns the HTML source of the page
+ * @method string title()
+ * @method void|string url($url = NULL)
+ * @method void window($name) Changes the focus to another window
+ * @method string windowHandle() Retrieves the current window handle
+ * @method string windowHandles() Retrieves a list of all available window handles
  */
 class PHPUnit_Extensions_Selenium2TestCase_Session
     extends PHPUnit_Extensions_Selenium2TestCase_CommandsHolder
