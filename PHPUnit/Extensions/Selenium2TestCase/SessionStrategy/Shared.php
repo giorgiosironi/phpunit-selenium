@@ -78,6 +78,7 @@ class PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Shared
 
     public function notSuccessfulTest()
     {
+        $this->session->stop();
         $this->session = NULL;
     }
 
