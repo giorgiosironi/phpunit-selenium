@@ -343,15 +343,18 @@ class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestC
         $this->assertEquals('', $select->selectedLabel());
 
     }
-    
+
+    /**
+     * Ticket 119
+     */
     public function testSelectOptionSelectsDescendantElement(){
         $this->url('html/test_select.html');
         $select = $this->select($this->byCssSelector('#secondSelect'));
         $this->assertEquals("option2", $select->selectedValue());
-        
+
         $select->selectOptionByLabel("First Option");
         $this->assertEquals("option1", $select->selectedValue());
-        
+
         $select->selectOptionByValue("option2");
         $this->assertEquals("option2", $select->selectedValue());
     }
