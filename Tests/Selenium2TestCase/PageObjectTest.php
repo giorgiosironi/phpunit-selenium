@@ -1,20 +1,13 @@
 <?php
-class Tests_PageObjectTest extends PHPUnit_Extensions_Selenium2TestCase
+class Tests_PageObjectTest extends Tests_Selenium2TestCase_BaseTestCase
 {
-    public function setUp()
-    {
-        $this->setBrowser('firefox');
-        $this->setBrowserUrl(PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL);
-    }
-
     public function testAPageInteractsWithElementsExposingAnHigherLevelApi()
     {
         $this->url('html/test_type_page1.html');
         $page = new Tests_AuthenticationPage($this);
-        $page->username('TestUser')
-             ->password('TestPassword')
-             ->submit();
-        $welcomePage = new Tests_WelcomePage($this);
+        $welcomePage = $page->username('TestUser')
+                            ->password('TestPassword')
+                            ->submit();
         $welcomePage->assertWelcomeIs('Welcome, TestUser!');
 
     }
@@ -22,11 +15,11 @@ class Tests_PageObjectTest extends PHPUnit_Extensions_Selenium2TestCase
 
 class Tests_AuthenticationPage
 {
-    public function __construct($session)
+    public function __construct($test)
     {
-        $this->usernameInput = $session->byName('username');
-        $this->passwordInput = $session->byName('password');
-        $this->session = $session;
+        $this->usernameInput = $test->byName('username');
+        $this->passwordInput = $test->byName('password');
+        $this->test = $test;
     }
 
     public function username($value)
@@ -43,7 +36,8 @@ class Tests_AuthenticationPage
 
     public function submit()
     {
-        $this->session->clickOnElement('submitButton');
+        $this->test->clickOnElement('submitButton');
+        return new Tests_WelcomePage($this->test);
     }
 }
 
