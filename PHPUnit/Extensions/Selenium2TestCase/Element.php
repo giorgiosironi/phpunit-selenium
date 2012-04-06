@@ -54,7 +54,7 @@
  * @since      Class available since Release 1.2.0
  * @method string attribute($name) Retrieves an element's attribute
  * @method void clear() Empties the content of a form element.
- * @method void click() 
+ * @method void click() Clicks on element
  * @method string css($propertyName) Retrieves the value of a CSS property
  * @method bool displayed() Checks an element's visibility
  * @method bool enabled() Checks a form element's state
