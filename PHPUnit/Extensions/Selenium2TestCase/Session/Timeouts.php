@@ -52,6 +52,8 @@
  * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.4
+ * @method implicitWait(int $ms)
+ * @method asyncScript(int $ms)
  */
 class PHPUnit_Extensions_Selenium2TestCase_Session_Timeouts
     extends PHPUnit_Extensions_Selenium2TestCase_CommandsHolder
