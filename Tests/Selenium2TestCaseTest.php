@@ -53,7 +53,7 @@
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.0.0
  */
-class Extensions_Selenium2TestCaseTest extends PHPUnit_Extensions_Selenium2TestCase
+class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestCase
 {
     public function testOpen()
     {

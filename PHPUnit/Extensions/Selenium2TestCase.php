@@ -125,6 +125,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
         if (!$shareSession) {
             self::$sessionStrategy = self::defaultSessionStrategy();
         } else {
+            echo "Shared strategy\n";
             self::$sessionStrategy = new PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Shared(self::defaultSessionStrategy());
         }
     }
