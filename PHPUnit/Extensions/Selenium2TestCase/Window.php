@@ -52,6 +52,8 @@
  * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.5
+ * @method array size(array $size = null) Window size as array('width' => $x, 'height' => $y)
+ * @method array position(array $position = null) Window position as array('x' => $x, 'y' => $y)
  */
 class PHPUnit_Extensions_Selenium2TestCase_Window extends PHPUnit_Extensions_Selenium2TestCase_CommandsHolder
 {
