@@ -265,6 +265,7 @@
  * @method unknown  useXpathLibraryAndWait()
  * @method unknown  waitForCondition()
  * @method unknown  waitForElementPresent()
+ * @method unknown  waitForElementNotPresent()
  * @method unknown  waitForPageToLoad()
  * @method unknown  waitForPopUp()
  * @method unknown  windowFocus()
