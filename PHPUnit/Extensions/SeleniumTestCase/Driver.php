@@ -624,6 +624,8 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
      * @method unknown  useXpathLibrary()
      * @method unknown  useXpathLibraryAndWait()
      * @method unknown  waitForCondition()
+     * @method unknown  waitForElementPresent()
+     * @method unknown  waitForElementNotPresent()
      * @method unknown  waitForPageToLoad()
      * @method unknown  waitForPopUp()
      * @method unknown  windowFocus()
@@ -877,6 +879,8 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
             break;
 
             case 'waitForCondition':
+            case 'waitForElementPresent':
+            case 'waitForElementNotPresent':
             case 'waitForFrameToLoad':
             case 'waitForPopUp': {
                 if (count($arguments) == 1) {
