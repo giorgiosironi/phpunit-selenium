@@ -264,6 +264,7 @@
  * @method unknown  useXpathLibrary()
  * @method unknown  useXpathLibraryAndWait()
  * @method unknown  waitForCondition()
+ * @method unknown  waitForElementPresent()
  * @method unknown  waitForPageToLoad()
  * @method unknown  waitForPopUp()
  * @method unknown  windowFocus()
@@ -1029,7 +1030,7 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
      * Return an empty string if the screenshotPath and screenshotUrl
      * properties are empty.
      * Issue #88.
-     * 
+     *
      * @access protected
      * @return string
      */
