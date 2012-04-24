@@ -143,17 +143,23 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
         return new PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Isolated;
     }
 
+    public function prepareSession()
+    {
+        if (!$this->session) {
+            $this->session = self::sessionStrategy()->session(array('host'      => $this->host,
+                                                                   'port'       => $this->port,
+                                                                   'browser'    => $this->browser,
+                                                                   'browserUrl' => $this->browserUrl));
+        }
+        return $this->session;
+    }
+
     /**
      * @throws RuntimeException
      */
     protected function runTest()
     {
-        $this->session = self::sessionStrategy()->session(array(
-            'host' => $this->host,
-            'port' => $this->port,
-            'browser' => $this->browser,
-            'browserUrl' => $this->browserUrl
-        ));
+        $this->prepareSession();
 
         parent::runTest();
 
