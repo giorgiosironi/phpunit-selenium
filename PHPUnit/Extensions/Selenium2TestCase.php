@@ -164,7 +164,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
     {
         $this->prepareSession();
 
-        $thrownException = null;
+        $thrownException = NULL;
 
         try {
             parent::runTest();
@@ -178,7 +178,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
 
         self::sessionStrategy()->endOfTest($this->session);
 
-        if (null !== $thrownException) {
+        if (NULL !== $thrownException) {
             throw $thrownException;
         }
     }
