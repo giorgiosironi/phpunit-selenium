@@ -106,13 +106,10 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
     {
         $this->timeouts()->implicitWait(10000);
 
-        $this->url('http://www.emagister.com.devel/');
-        $qInput = $this->byId('q');
-        $qInput->click();
-        // $this->keys(array('value' => preg_split('//u', 'java', -1, PREG_SPLIT_NO_EMPTY)));
-        $qInput->value('j');
-        sleep(5);
-        // $this->assertEquals('java', $this->byId('result')->text());
+        $this->url('html/test_send_keys.html');
+        $this->byId('q')->click();
+        $this->keys(array('value' => preg_split('//u', 'phpunit ', -1, PREG_SPLIT_NO_EMPTY)));
+        $this->assertEquals('phpunit', $this->byId('result')->text());
     }
 
     public function testElementsCanBeSelectedAsChildrenOfAlreadyFoundElements()
