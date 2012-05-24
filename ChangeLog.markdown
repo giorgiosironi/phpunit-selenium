@@ -3,6 +3,15 @@ PHPUnit_Selenium 1.2
 
 This is the list of changes for the PHPUnit_Selenium 1.2 release series.
 
+PHPUnit_Selenium 1.2.7
+----------------------
+
+* Implemented #130: version number available programmatically.
+* Implemented $this->keys().
+* Session is now closed on failure.
+* Added various docblocks for SeleniumTestCase.
+* Browser session can now be started even in setUp().
+
 PHPUnit_Selenium 1.2.6
 ----------------------
 
