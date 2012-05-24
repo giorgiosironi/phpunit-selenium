@@ -99,6 +99,22 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->keys(array('value' => array())); // should send key strokes to the active element
     }
 
+    /**
+     * @group keys
+     */
+    public function testActivePageElementReceivesTheKeyStrokes()
+    {
+        $this->timeouts()->implicitWait(10000);
+
+        $this->url('http://www.emagister.com.devel/');
+        $qInput = $this->byId('q');
+        $qInput->click();
+        // $this->keys(array('value' => preg_split('//u', 'java', -1, PREG_SPLIT_NO_EMPTY)));
+        $qInput->value('j');
+        sleep(5);
+        // $this->assertEquals('java', $this->byId('result')->text());
+    }
+
     public function testElementsCanBeSelectedAsChildrenOfAlreadyFoundElements()
     {
         $this->url('html/test_element_selection.html');
