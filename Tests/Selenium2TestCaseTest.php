@@ -61,6 +61,11 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->assertStringEndsWith('html/test_open.html', $this->url());
     }
 
+    public function testVersionCanBeReadFromTheTestCaseClass()
+    {
+        $this->assertEquals(1, version_compare(PHPUnit_Extensions_Selenium2TestCase::VERSION, "1.2.0"));
+    }
+
     public function testCamelCaseUrlsAreSupported()
     {
         $this->url('html/CamelCasePage.html');
