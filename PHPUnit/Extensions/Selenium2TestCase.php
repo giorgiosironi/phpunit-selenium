@@ -81,6 +81,7 @@
  * @method void window($name) Changes the focus to another window
  * @method string windowHandle() Retrieves the current window handle
  * @method string windowHandles() Retrieves a list of all available window handles
+ * @method string keys() Send a sequence of key strokes to the active element.
  */
 abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_TestCase
 {
@@ -161,13 +162,23 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
     {
         $this->prepareSession();
 
-        parent::runTest();
+        $thrownException = null;
 
-        if (!empty($this->verificationErrors)) {
-            $this->fail(implode("\n", $this->verificationErrors));
+        try {
+            parent::runTest();
+
+            if (!empty($this->verificationErrors)) {
+                $this->fail(implode("\n", $this->verificationErrors));
+            }
+        } catch (Exception $e) {
+            $thrownException = $e;
         }
 
         self::sessionStrategy()->endOfTest($this->session);
+
+        if (null !== $thrownException) {
+            throw $thrownException;
+        }
     }
 
     public function onNotSuccessfulTest(Exception $e)
