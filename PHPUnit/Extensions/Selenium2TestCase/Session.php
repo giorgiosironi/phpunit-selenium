@@ -67,6 +67,7 @@
  * @method void window($name) Changes the focus to another window
  * @method string windowHandle() Retrieves the current window handle
  * @method string windowHandles() Retrieves a list of all available window handles
+ * @method string keys() Send a sequence of key strokes to the active element.
  */
 class PHPUnit_Extensions_Selenium2TestCase_Session
     extends PHPUnit_Extensions_Selenium2TestCase_CommandsHolder
@@ -111,7 +112,8 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
             },
             'window' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Window',
             'windowHandle' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_GenericAccessor',
-            'windowHandles' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_GenericAccessor'
+            'windowHandles' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_GenericAccessor',
+            'keys' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Keys'
         );
     }
 
