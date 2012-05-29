@@ -99,16 +99,13 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->keys(array('value' => array())); // should send key strokes to the active element
     }
 
-    /**
-     * @group keys
-     */
     public function testActivePageElementReceivesTheKeyStrokes()
     {
         $this->timeouts()->implicitWait(10000);
 
         $this->url('html/test_send_keys.html');
         $this->byId('q')->click();
-        $this->keys(array('value' => preg_split('//u', 'phpunit ', -1, PREG_SPLIT_NO_EMPTY)));
+        $this->keys('phpunit ');
         $this->assertEquals('phpunit', $this->byId('result')->text());
     }
 
