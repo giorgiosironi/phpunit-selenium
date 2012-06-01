@@ -54,40 +54,14 @@
  * @since      Class available since Release 1.2.0
  */
 class PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Value
-    extends PHPUnit_Extensions_Selenium2TestCase_Command
+    extends PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Keys
 {
-
-    public function __construct($jsonParameters,
-                                PHPUnit_Extensions_Selenium2TestCase_URL $url)
-    {
-        if (is_string($jsonParameters)) {
-            $jsonParameters = $this->charactersToType($jsonParameters);
-        }
-        parent::__construct($jsonParameters, $url);
-    }
-
     public function httpMethod()
     {
         if ($this->jsonParameters) {
             return 'POST';
-        } else {
-            return 'GET';
         }
-    }
 
-    /**
-     * @param string $string
-     * @return array    array of characters to type
-     */
-    private function charactersToType($string)
-    {
-        $characters = array();
-        for ($i = 0, $length = strlen($string); $i < $length; $i++) {
-            $characters[] = mb_substr($string, $i, 1, 'UTF-8');
-        }
-        return array(
-            'value' => $characters
-        );
+        return 'GET';
     }
-
 }

@@ -56,11 +56,37 @@
 class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Keys
     extends PHPUnit_Extensions_Selenium2TestCase_Command
 {
+    public function __construct($jsonParameters,
+                                PHPUnit_Extensions_Selenium2TestCase_URL $url)
+    {
+        if (is_string($jsonParameters)) {
+            $jsonParameters = $this->keysForText($jsonParameters);
+        }
+
+        parent::__construct($jsonParameters, $url);
+    }
+
     /**
      * @return string
      */
     public function httpMethod()
     {
         return 'POST';
+    }
+
+    /**
+     * Given a string returns an array of the characters that compose the string
+     *
+     * @param string $text
+     * @throws InvalidArgumentException
+     * @return array
+     */
+    public function keysForText($text)
+    {
+        if (!is_string($text)) {
+            throw new InvalidArgumentException('The "text" argument should be a string!');
+        }
+
+        return array('value' => preg_split('//u', $text, -1, PREG_SPLIT_NO_EMPTY));
     }
 }
