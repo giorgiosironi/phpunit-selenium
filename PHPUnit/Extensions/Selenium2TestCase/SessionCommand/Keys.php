@@ -83,10 +83,12 @@ class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Keys
      */
     public function keysForText($text)
     {
-        if (!is_string($text)) {
-            throw new InvalidArgumentException('The "text" argument should be a string!');
+        if (is_string($text)) {
+            return array('value' => preg_split('//u', $text, -1, PREG_SPLIT_NO_EMPTY));
         }
-
-        return array('value' => preg_split('//u', $text, -1, PREG_SPLIT_NO_EMPTY));
+        if (is_array($text)) {
+            return $text;
+        }
+        throw new InvalidArgumentException('The "text" argument should be a string or an array of special characters!');
     }
 }
