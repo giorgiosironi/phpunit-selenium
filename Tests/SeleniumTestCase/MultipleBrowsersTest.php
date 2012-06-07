@@ -66,7 +66,7 @@ class Extensions_SeleniumTestCaseMultipleBrowsersTest extends PHPUnit_Extensions
 
     public function setUp()
     {
-        $this->setBrowserUrl('http://localhost:8080/');
+        $this->setBrowserUrl(PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL);
     }
 
     public function testSessionIsLaunchedCorrectly()
