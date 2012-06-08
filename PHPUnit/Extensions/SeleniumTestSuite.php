@@ -145,4 +145,17 @@ class PHPUnit_Extensions_SeleniumTestSuite extends PHPUnit_Framework_TestSuite
         );
         $suite->addTest($test, $classGroups);
     }
+
+    /**
+     * @param  string $directory
+     * @param  string $suffix
+     * @return array
+     */
+    private static function getSeleneseFiles($directory, $suffix)
+    {
+        $facade = new File_Iterator_Facade;
+
+        return $facade->getFilesAsArray($directory, $suffix);
+    }
+
 }

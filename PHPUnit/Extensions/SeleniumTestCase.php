@@ -781,6 +781,7 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
             $result = parent::runTest();
         } else {
             $this->runSelenese($this->getName(FALSE));
+            $result = NULL;
         }
 
         if (!empty($this->verificationErrors)) {
@@ -1146,18 +1147,6 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
     protected function explodeDirectories($path)
     {
         return explode($this->findDirectorySeparator($path), dirname($path));
-    }
-
-    /**
-     * @param  string $directory
-     * @param  string $suffix
-     * @return array
-     */
-    protected static function getSeleneseFiles($directory, $suffix)
-    {
-        $facade = new File_Iterator_Facade;
-
-        return $facade->getFilesAsArray($directory, $suffix);
     }
 
     /**
