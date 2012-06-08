@@ -1165,9 +1165,9 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
                         $expected = substr($expected, strlen('glob:'));
                     }
 
-                    $expected = str_replace(
+                    $expected = '^' . str_replace(
                       array('*', '?'), array('.*', '.?'), $expected
-                    );
+                    ) . '$';
                 }
 
                 $expected = '/' . str_replace('/', '\/', $expected) . '/';
