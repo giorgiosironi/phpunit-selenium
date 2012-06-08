@@ -198,7 +198,7 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
     {
         $this->url('html/test_geometry.html');
         $element = $this->byId('colored');
-        $this->assertEquals('rgb(0, 0, 255)', $element->css('background-color'));
+        $this->assertEquals('rgba(0,0,255,1)', $element->css('background-color'));
     }
 
     public function testClick()
