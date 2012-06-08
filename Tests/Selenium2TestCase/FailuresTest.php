@@ -106,4 +106,14 @@ class Extensions_Selenium2TestCaseFailuresTest extends PHPUnit_Extensions_Seleni
             $this->assertContains('http://seleniumhq.org/exceptions/stale_element_reference.html', $e->getMessage());
         }
     }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testSelectObjectsCanOnlyBeCreatedOverSelectTags()
+    {
+        $this->url('html/test_element_selection.html');
+        $div = $this->byId('theDivId');
+        $select = $this->select($div);
+    }
 }
