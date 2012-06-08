@@ -41,14 +41,14 @@ set_include_path(implode(PATH_SEPARATOR, array(
 $dir,
 $vendor . 'phpunit/',
 $vendor . 'php-code-coverage/',
-$vendor . '/php-file-iterator/',
-$vendor . '/php-text-template/',
-$vendor . '/phpunit-mock-objects/',
-$vendor . '/php-token-stream/',
-$vendor . '/dbunit/',
-$vendor . '/phpunit-story/',
-$vendor . '/php-timer/',
-$vendor . '/php-invoker/',
+$vendor . 'php-file-iterator/',
+$vendor . 'php-text-template/',
+$vendor . 'phpunit-mock-objects/',
+$vendor . 'php-token-stream/',
+$vendor . 'dbunit/',
+$vendor . 'phpunit-story/',
+$vendor . 'php-timer/',
+$vendor . 'php-invoker/',
 get_include_path()
 )));
 require $vendor . 'phpunit/phpunit.php';
