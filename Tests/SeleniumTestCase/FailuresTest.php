@@ -137,11 +137,38 @@ class Extensions_SeleniumTestCaseFailuresTest extends PHPUnit_Extensions_Seleniu
         $this->fail('An exception should have been raised by now.');
     }
 
+    /**
+     * Related also to ticket #135.
+     */
+    public function testScreenshotsAreCapturedOnErrorsWhenRequired()
+    {
+        $this->captureScreenshotOnFailure = true;
+        $this->screenshotPath = sys_get_temp_dir();
+        $this->screenshotUrl = 'http://...';
+
+        try {
+            $originalException = $this->getAnError();
+            $this->onNotSuccessfulTest($originalException);
+        } catch (Exception $e) {
+            $this->assertTrue(file_exists($this->screenshotPath));
+            $this->assertTrue((bool) strstr($e->getMessage(), 'Screenshot: http://.../'));
+            return;
+        }
+        $this->fail('An exception should have been raised by now.');
+    }
+
     private function getAFailure()
     {
         $failure = new PHPUnit_Framework_ComparisonFailure(1, 2, '1', '2');
         $this->failureLine = __LINE__ + 1;
         return new PHPUnit_Framework_ExpectationFailedException('1 is not 2', $failure);
+    }
+
+    private function getAnError()
+    {
+        $error = new PHPUnit_Framework_Error('an error', 1, __FILE__, __LINE__, '');
+        $this->errorLine = __LINE__ - 1;
+        return $error;
     }
 
     /**
