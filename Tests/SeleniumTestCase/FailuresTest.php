@@ -39,7 +39,6 @@
  * @copyright  2010-2012 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
- * @since      File available since Release 1.1.2
  */
 
 require_once 'PHPUnit/Extensions/SeleniumTestCase.php';
@@ -51,9 +50,7 @@ require_once 'PHPUnit/Extensions/SeleniumTestCase.php';
  * @author     Giorgio Sironi <giorgio.sironi@asp-poli.it>
  * @copyright  2010-2012 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
- * @since      Class available since Release 1.1.2
  */
 class Extensions_SeleniumTestCaseFailuresTest extends Tests_SeleniumTestCase_BaseTestCase
 {

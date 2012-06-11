@@ -48,7 +48,6 @@
  * @author     Giorgio Sironi <info@giorgiosironi.com>
  * @copyright  2010-2012 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
  */
 abstract class Tests_SeleniumTestCase_BaseTestCase extends PHPUnit_Extensions_SeleniumTestCase

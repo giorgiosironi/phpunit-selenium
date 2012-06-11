@@ -48,7 +48,6 @@
  * @author     Lex Vjatkin <lex@vjatkin.cz>
  * @copyright  2010-2012 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
  */
 class Tests_SeleniumTestCase_CountMethodsTest extends Tests_SeleniumTestCase_BaseTestCase
