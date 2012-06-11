@@ -3,6 +3,11 @@ PHPUnit_Selenium 1.2
 
 This is the list of changes for the PHPUnit_Selenium 1.2 release series.
 
+PHPUnit_Selenium 1.2.8
+----------------------
+
+* Implemented ScreenshotListener for taking screenshots in a red Selenium2TestCase.
+
 PHPUnit_Selenium 1.2.7
 ----------------------
 

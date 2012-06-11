@@ -82,6 +82,9 @@
       <file baseinstalldir="/" name="Response.php" role="php">
        <tasks:replace from="@package_version@" to="version" type="package-info" />
       </file>
+      <file baseinstalldir="/" name="ScreenshotListener.php" role="php">
+       <tasks:replace from="@package_version@" to="version" type="package-info" />
+      </file>
       <dir name="Session">
        <dir name="Cookie">
         <file baseinstalldir="/" name="Builder.php" role="php">
