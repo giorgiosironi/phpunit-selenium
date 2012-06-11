@@ -167,7 +167,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
         $thrownException = NULL;
 
         try {
-            parent::runTest();
+            $result = parent::runTest();
 
             if (!empty($this->verificationErrors)) {
                 $this->fail(implode("\n", $this->verificationErrors));
@@ -181,6 +181,8 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
         if (NULL !== $thrownException) {
             throw $thrownException;
         }
+
+        return $result;
     }
 
     public function onNotSuccessfulTest(Exception $e)
