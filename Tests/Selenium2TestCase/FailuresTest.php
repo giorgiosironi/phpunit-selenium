@@ -53,22 +53,8 @@
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.0
  */
-class Extensions_Selenium2TestCaseFailuresTest extends PHPUnit_Extensions_Selenium2TestCase
+class Extensions_Selenium2TestCaseFailuresTest extends Tests_Selenium2TestCase_BaseTestCase
 {
-    public function setUp()
-    {
-        if (version_compare(phpversion(), '5.3.0', '<')) {
-            $this->markTestSkipped('Functionality available only under PHP 5.3.');
-        }
-        $this->setHost(PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_HOST);
-        $this->setPort((int)PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_PORT);
-        $this->setBrowser(PHPUNIT_TESTSUITE_EXTENSION_SELENIUM2_BROWSER);
-        if (!defined('PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL')) {
-            $this->markTestSkipped("You must serve the selenium-1-tests folder from an HTTP server and configure the PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL constant accordingly.");
-        }
-        $this->setBrowserUrl(PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL);
-    }
-
     /**
      * @expectedException BadMethodCallException
      */

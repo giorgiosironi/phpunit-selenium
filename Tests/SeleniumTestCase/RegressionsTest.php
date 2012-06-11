@@ -53,21 +53,13 @@
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.1
  */
-class Extensions_SeleniumTestCaseRegressionsTest extends PHPUnit_Extensions_SeleniumTestCase
+class Extensions_SeleniumTestCaseRegressionsTest extends Tests_SeleniumTestCase_BaseTestCase
 {
     private static $setUpBeforeClassExecuted = false;
 
     public static function setUpBeforeClass()
     {
         self::$setUpBeforeClassExecuted = true;
-    }
-
-    function setUp()
-    {
-        $this->setHost(PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_HOST);
-        $this->setPort((int)PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_PORT);
-        $this->setBrowser(PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_BROWSER);
-        $this->setBrowserUrl(PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL);
     }
 
     /**

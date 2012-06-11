@@ -1,12 +1,6 @@
 <?php
-class Tests_SeleniumTestCase_Ticket114Test extends PHPUnit_Extensions_SeleniumTestCase
+class Tests_SeleniumTestCase_Ticket114Test extends Tests_SeleniumTestCase_BaseTestCase
 {
-    protected function setUp()
-    {
-        $this->setBrowser('firefox');
-        $this->setBrowserUrl('http://www.example.com/');
-    }
-
     public function testDependable()
     {
         return 'dependsValue';

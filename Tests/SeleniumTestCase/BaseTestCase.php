@@ -35,44 +35,32 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @package    PHPUnit_Selenium
- * @author     Lex Vjatkin <lex@vjatkin.cz>
+ * @author     Giorgio Sironi <info@giorgiosironi.com>
  * @copyright  2010-2012 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
  */
 
 /**
- * Tests for PHPUnit_Extensions_SeleniumTestCase.
+ * Includes the default configuration for SeleniumTestCase subclasses.
  *
  * @package    PHPUnit_Selenium
- * @author     Lex Vjatkin <lex@vjatkin.cz>
+ * @author     Giorgio Sironi <info@giorgiosironi.com>
  * @copyright  2010-2012 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
  */
-class Tests_SeleniumTestCase_StringMatchPattersTest extends Tests_SeleniumTestCase_BaseTestCase
+abstract class Tests_SeleniumTestCase_BaseTestCase extends PHPUnit_Extensions_SeleniumTestCase
 {
-    /**
-     * @return string
-     */
-    public function testGlob()
+    public function setUp()
     {
-        $this->open('html/test_text_patterns.html');
-
-        //http://release.seleniumhq.org/selenium-core/0.8.0/reference.html#patterns
-
-        //page title is <title>"Test page" not found</title>
-        //so:
-
-        //default pattern should be glob and "match_all":
-        $this->verifyNotTitle('Test page');
-        $this->verifyTitle('"Test page" not found');
-        $this->verifyTitle('"*" not found');
-
-        //explicit glob: should work too:
-        $this->verifyNotTitle('glob:Test page');
-        $this->verifyTitle('glob:"Test page" not found');
-        $this->verifyTitle('glob:"*" not found');
+        $this->setHost(PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_HOST);
+        $this->setPort((int)PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_PORT);
+        $this->setBrowser(PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_BROWSER);
+        if (!defined('PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL')) {
+            $this->markTestSkipped("You must serve the selenium-1-tests folder from an HTTP server and configure the PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL constant accordingly.");
+        }
+        $this->setBrowserUrl(PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL);
     }
 }

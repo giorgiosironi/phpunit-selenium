@@ -53,7 +53,7 @@
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.4
  */
-class Extensions_SeleniumTestCaseMultipleBrowsersTest extends PHPUnit_Extensions_SeleniumTestCase
+class Extensions_SeleniumTestCaseMultipleBrowsersTest extends Tests_SeleniumTestCase_BaseTestCase
 {
     public static $browsers = array(
         array(
