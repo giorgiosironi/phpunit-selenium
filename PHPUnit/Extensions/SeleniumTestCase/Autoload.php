@@ -87,6 +87,7 @@ function phpunit_selenium_autoload($class = NULL) {
           'phpunit_extensions_selenium2testcase_url' => '/Extensions/Selenium2TestCase/URL.php',
           'phpunit_extensions_selenium2testcase_window' => '/Extensions/Selenium2TestCase/Window.php',
           'phpunit_extensions_seleniumbrowsersuite' => '/Extensions/SeleniumBrowserSuite.php',
+          'phpunit_extensions_seleniumcommon_remotecoverage' => '/Extensions/SeleniumCommon/RemoteCoverage.php',
           'phpunit_extensions_seleniumtestcase' => '/Extensions/SeleniumTestCase.php',
           'phpunit_extensions_seleniumtestcase_driver' => '/Extensions/SeleniumTestCase/Driver.php',
           'phpunit_extensions_seleniumtestsuite' => '/Extensions/SeleniumTestSuite.php'
