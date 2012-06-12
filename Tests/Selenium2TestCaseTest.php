@@ -463,7 +463,8 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $eventLog = $this->byId('eventlog');
         $this->assertEquals('', $eventLog->value());
         $this->clickOnElement('theButton');
-        $this->assertContains('{focus(theButton)} {click(theButton)}', $eventLog->value());
+        $this->assertContains('{focus(theButton)}', $eventLog->value());
+        $this->assertContains('{click(theButton)}', $eventLog->value());
         $eventLog->clear();
 
         $this->clickOnElement('theSubmit');
