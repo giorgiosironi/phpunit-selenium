@@ -157,13 +157,7 @@
      <file baseinstalldir="/" name="SeleniumBrowserSuite.php" role="php">
       <tasks:replace from="@package_version@" to="version" type="package-info" />
      </file>
-     <dir name="SeleniumTestCase">
-      <file baseinstalldir="/" name="Autoload.php" role="php">
-       <tasks:replace from="@package_version@" to="version" type="package-info" />
-      </file>
-      <file baseinstalldir="/" name="Driver.php" role="php">
-       <tasks:replace from="@package_version@" to="version" type="package-info" />
-      </file>
+     <dir name="SeleniumCommon">
       <file baseinstalldir="/" name="append.php" role="php">
        <tasks:replace from="@package_version@" to="version" type="package-info" />
       </file>
@@ -171,6 +165,14 @@
        <tasks:replace from="@package_version@" to="version" type="package-info" />
       </file>
       <file baseinstalldir="/" name="prepend.php" role="php">
+       <tasks:replace from="@package_version@" to="version" type="package-info" />
+      </file>
+     </dir>
+     <dir name="SeleniumTestCase">
+      <file baseinstalldir="/" name="Autoload.php" role="php">
+       <tasks:replace from="@package_version@" to="version" type="package-info" />
+      </file>
+      <file baseinstalldir="/" name="Driver.php" role="php">
        <tasks:replace from="@package_version@" to="version" type="package-info" />
       </file>
      </dir>
