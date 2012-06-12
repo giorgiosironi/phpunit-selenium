@@ -88,6 +88,11 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
     const VERSION = "1.2.7";
 
     /**
+     * @var string  override to provide code coverage data from the server
+     */
+    protected $coverageScriptUrl;
+
+    /**
      * @var PHPUnit_Extensions_Selenium2TestCase_Session
      */
     private $session;
@@ -116,6 +121,16 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
      * @var PHPUnit_Extensions_Selenium2TestCase_SessionStrategy
      */
     private static $sessionStrategy;
+
+    /**
+     * @var string
+     */
+    private $testId;
+
+    /**
+     * @var boolean
+     */
+    private $collectCodeCoverageInformation;
 
     /**
      * @param boolean
@@ -157,14 +172,45 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
         return $this->session;
     }
 
+    public function run(PHPUnit_Framework_TestResult $result = NULL)
+    {
+        $this->testId = get_class($this) . '__' . $this->getName();
+
+        if ($result === NULL) {
+            $result = $this->createResult();
+        }
+
+        $this->collectCodeCoverageInformation = $result->getCollectCodeCoverageInformation();
+
+        parent::run($result);
+
+        if ($this->collectCodeCoverageInformation) {
+            $coverage = new PHPUnit_Extensions_SeleniumCommon_RemoteCoverage(
+                $this->coverageScriptUrl,
+                $this->testId
+            );
+            $result->getCodeCoverage()->append(
+                $coverage->get(), $this
+            );
+        }
+
+        return $result;
+    }
+
     /**
      * @throws RuntimeException
      */
     protected function runTest()
     {
         $this->prepareSession();
+        $this->url('');
 
         $thrownException = NULL;
+
+        if ($this->collectCodeCoverageInformation) {
+            $this->session->cookie()->remove('PHPUNIT_SELENIUM_TEST_ID');
+            $this->session->cookie()->add('PHPUNIT_SELENIUM_TEST_ID', $this->testId)->set();
+        }
 
         try {
             $result = parent::runTest();
