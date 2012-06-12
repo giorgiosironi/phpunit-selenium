@@ -1077,76 +1077,11 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
      */
     protected function getCodeCoverage()
     {
-        if (!empty($this->coverageScriptUrl)) {
-            $url = sprintf(
-              '%s?PHPUNIT_SELENIUM_TEST_ID=%s',
-              $this->coverageScriptUrl,
-              $this->testId
-            );
-
-            $buffer = @file_get_contents($url);
-
-            if ($buffer !== FALSE) {
-                $coverageData = unserialize($buffer);
-                if (is_array($coverageData)) {
-                    return $this->matchLocalAndRemotePaths($coverageData);
-                } else {
-                    throw new Exception('Empty or invalid code coverage data received from url "' . $url . '"');
-                }
-            }
-        }
-
-        return array();
-    }
-
-    /**
-     * @param  array $coverage
-     * @return array
-     * @author Mattis Stordalen Flister <mattis@xait.no>
-     */
-    protected function matchLocalAndRemotePaths(array $coverage)
-    {
-        $coverageWithLocalPaths = array();
-
-        foreach ($coverage as $originalRemotePath => $data) {
-            $remotePath = $originalRemotePath;
-            $separator  = $this->findDirectorySeparator($remotePath);
-
-            while (!($localpath = PHPUnit_Util_Filesystem::fileExistsInIncludePath($remotePath)) &&
-                   strpos($remotePath, $separator) !== FALSE) {
-                $remotePath = substr($remotePath, strpos($remotePath, $separator) + 1);
-            }
-
-            if ($localpath && md5_file($localpath) == $data['md5']) {
-                $coverageWithLocalPaths[$localpath] = $data['coverage'];
-            }
-        }
-
-        return $coverageWithLocalPaths;
-    }
-
-    /**
-     * @param  string $path
-     * @return string
-     * @author Mattis Stordalen Flister <mattis@xait.no>
-     */
-    protected function findDirectorySeparator($path)
-    {
-        if (strpos($path, '/') !== FALSE) {
-            return '/';
-        }
-
-        return '\\';
-    }
-
-    /**
-     * @param  string $path
-     * @return array
-     * @author Mattis Stordalen Flister <mattis@xait.no>
-     */
-    protected function explodeDirectories($path)
-    {
-        return explode($this->findDirectorySeparator($path), dirname($path));
+        $coverage = new PHPUnit_Extensions_SeleniumCommon_RemoteCoverage(
+            $this->coverageScriptUrl,
+            $this->testId
+        );
+        return $coverage->get();
     }
 
     /**
