@@ -3,14 +3,13 @@ class Tests_Selenium2TestCase_Coverage_RemoteCoverageTest extends PHPUnit_Framew
 {
     public function testObtainsCodeCoverageInformationFromAPossiblyRemoteHttpServer()
     {
-
         $coverageScriptUrl = PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL . '/coverage/dummy.txt';
         $coverage = new PHPUnit_Extensions_SeleniumCommon_RemoteCoverage(
             $coverageScriptUrl,
             'dummyTestId'
         );
         $content = $coverage->get();
-        $dummyClassSourceFile = __DIR__ . '/DummyClass.php';
+        $dummyClassSourceFile = dirname(__FILE__) . '/DummyClass.php';
         $expectedCoverage = array(
             3 => 1,
             6 => 1,
