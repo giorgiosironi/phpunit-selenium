@@ -91,6 +91,14 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
         parent::__construct($driver, $url);
     }
 
+    /**
+     * @return string
+     */
+    public function id()
+    {
+        return $this->url->lastSegment();
+    }
+
     protected function initCommands()
     {
         $baseUrl = $this->baseUrl;
