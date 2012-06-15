@@ -122,7 +122,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Driver
             if (isset($content['value']['message'])) {
                 $message = $content['value']['message'];
             } else {
-                $message = "Internal server error while executing $http_method request at $url";
+                $message = "Internal server error while executing $http_method request at $url. Response: " . var_export($content, TRUE);
             }
             throw new RuntimeException($message);
         }
