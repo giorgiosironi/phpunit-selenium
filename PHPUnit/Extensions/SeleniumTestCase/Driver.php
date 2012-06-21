@@ -177,10 +177,9 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
         }
 
         if ($this->webDriverCapabilities !== NULL) {
-
-        $seleniumServerUrl = PHPUnit_Extensions_Selenium2TestCase_URL::fromHostAndPort($this->host, $this->port);
-        $driver = new PHPUnit_Extensions_Selenium2TestCase_Driver($seleniumServerUrl);
-        $session = $driver->startSession($this->webDriverCapabilities['browserName'], new PHPUnit_Extensions_Selenium2TestCase_URL($this->browserUrl));
+            $seleniumServerUrl = PHPUnit_Extensions_Selenium2TestCase_URL::fromHostAndPort($this->host, $this->port);
+            $driver = new PHPUnit_Extensions_Selenium2TestCase_Driver($seleniumServerUrl);
+            $session = $driver->startSession($this->webDriverCapabilities, new PHPUnit_Extensions_Selenium2TestCase_URL($this->browserUrl));
             $webDriverSessionId = $session->id();
             $this->sessionId = $this->getString(
               'getNewBrowserSession',

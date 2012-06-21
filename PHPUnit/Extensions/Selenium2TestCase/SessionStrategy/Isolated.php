@@ -60,7 +60,11 @@ class PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Isolated
     {
         $seleniumServerUrl = PHPUnit_Extensions_Selenium2TestCase_URL::fromHostAndPort($parameters['host'], $parameters['port']);
         $driver = new PHPUnit_Extensions_Selenium2TestCase_Driver($seleniumServerUrl);
-        $session = $driver->startSession($parameters['browser'], $parameters['browserUrl']);
+        $capabilities = array_merge($parameters['desiredCapabilities'],
+                                    array(
+                                        'browserName' => $parameters['browserName']
+                                    ));
+        $session = $driver->startSession($capabilities, $parameters['browserUrl']);
         return $session;
     }
 

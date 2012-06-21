@@ -20,8 +20,12 @@ class Tests_Selenium2TestCase_WebDriverBackedSeleniumTest extends PHPUnit_Extens
 
     public function testAPageIsOpenedWithWebDriver()
     {
-        $this->markTestIncomplete('Crashes the opened browser deterministically.');
+        //$this->markTestIncomplete('Crashes the opened browser deterministically.');
+        try {
         $this->open('html/test_open.html');
+        } catch (Exception $e) {
+            sleep(10);
+        }
         $this->assertEquals('This is a test of the open command.', $this->getBodyText());
     }
 }

@@ -164,10 +164,13 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
     public function prepareSession()
     {
         if (!$this->session) {
-            $this->session = self::sessionStrategy()->session(array('host'      => $this->host,
-                                                                   'port'       => $this->port,
-                                                                   'browser'    => $this->browser,
-                                                                   'browserUrl' => $this->browserUrl));
+            $this->session = self::sessionStrategy()->session(array(
+                'host'      => $this->host,
+                'port'       => $this->port,
+                'browserName' => $this->browserName,
+                'browserUrl' => $this->browserUrl,
+                'desiredCapabilities' => $this->desiredCapabilities
+            ));
         }
         return $this->session;
     }
@@ -283,13 +286,13 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
      * @param  string $browser
      * @throws InvalidArgumentException
      */
-    public function setBrowser($browser)
+    public function setBrowser($browserName)
     {
-        if (!is_string($browser)) {
+        if (!is_string($browserName)) {
             throw PHPUnit_Util_InvalidArgumentHelper::factory(1, 'string');
         }
 
-        $this->browser = $browser;
+        $this->browserName = $browserName;
     }
 
     /**
@@ -303,5 +306,13 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
         }
 
         $this->browserUrl = new PHPUnit_Extensions_Selenium2TestCase_URL($browserUrl);
+    }
+
+    /**
+     * @see http://code.google.com/p/selenium/wiki/JsonWireProtocol
+     */
+    public function setDesiredCapabilities(array $capabilities)
+    {
+        $this->desiredCapabilities = $capabilities;
     }
 }

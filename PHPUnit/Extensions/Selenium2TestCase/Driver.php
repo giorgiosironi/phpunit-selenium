@@ -65,14 +65,12 @@ class PHPUnit_Extensions_Selenium2TestCase_Driver
         $this->seleniumServerUrl = $seleniumServerUrl;
     }
 
-    public function startSession($browser, PHPUnit_Extensions_Selenium2TestCase_URL $browserUrl)
+    public function startSession(array $desiredCapabilities, PHPUnit_Extensions_Selenium2TestCase_URL $browserUrl)
     {
-        $this->browser = $browser;
+        $this->browser = $desiredCapabilities['browserName'];
         $sessionCreation = $this->seleniumServerUrl->descend("/wd/hub/session");
         $response = $this->curl('POST', $sessionCreation, array(
-            'desiredCapabilities' => array(
-                'browserName' => $browser
-            )
+            'desiredCapabilities' => $desiredCapabilities
         ));
         $sessionPrefix = $response->getURL();
         return new PHPUnit_Extensions_Selenium2TestCase_Session($this, $sessionPrefix, $browserUrl);
