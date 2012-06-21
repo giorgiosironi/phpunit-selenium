@@ -261,6 +261,14 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
         $this->browser = $browser;
     }
 
+		/**
+		 * @return string
+		 */
+		public function getBrowser()
+		{
+			return $this->browser;
+		}
+
     /**
      * @param  string $browserUrl
      * @throws InvalidArgumentException
