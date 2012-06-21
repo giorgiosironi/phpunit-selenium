@@ -55,11 +55,6 @@
  */
 class PHPUnit_Extensions_Selenium2TestCase_Driver
 {
-    /**
-     * @var string
-     */
-    private $browser;
-
     public function __construct(PHPUnit_Extensions_Selenium2TestCase_URL $seleniumServerUrl)
     {
         $this->seleniumServerUrl = $seleniumServerUrl;
@@ -67,7 +62,6 @@ class PHPUnit_Extensions_Selenium2TestCase_Driver
 
     public function startSession(array $desiredCapabilities, PHPUnit_Extensions_Selenium2TestCase_URL $browserUrl)
     {
-        $this->browser = $desiredCapabilities['browserName'];
         $sessionCreation = $this->seleniumServerUrl->descend("/wd/hub/session");
         $response = $this->curl('POST', $sessionCreation, array(
             'desiredCapabilities' => $desiredCapabilities
@@ -110,9 +104,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Driver
         $rawResponse = trim(curl_exec($curl));
         $info = curl_getinfo($curl);
         if ($info['http_code'] == 404) {
-            if ($this->isNotAnAndroidDriverErrorToWorkAround($info)) {
-                throw new BadMethodCallException("The command $url is not recognized by the server.");
-            }
+            throw new BadMethodCallException("The command $url is not recognized by the server.");
         }
         curl_close($curl);
         $content = json_decode($rawResponse, TRUE);
@@ -132,17 +124,5 @@ class PHPUnit_Extensions_Selenium2TestCase_Driver
         return $this->curl($command->httpMethod(),
                            $command->url(),
                            $command->jsonParameters());
-    }
-
-    /**
-     * TODO: how to test this automatically?
-     * @return boolean
-     */
-    private function isNotAnAndroidDriverErrorToWorkAround(array $info)
-    {
-        if ($this->browser == 'android'
-         && preg_match('/wd\/hub\/session\/[0-9]*/', $info['url'])) {
-            return FALSE;
-        }
     }
 }
