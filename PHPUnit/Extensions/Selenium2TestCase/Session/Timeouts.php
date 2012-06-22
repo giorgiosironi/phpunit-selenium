@@ -58,18 +58,37 @@
 class PHPUnit_Extensions_Selenium2TestCase_Session_Timeouts
     extends PHPUnit_Extensions_Selenium2TestCase_CommandsHolder
 {
+    private $maximumTimeout;
+
+    public function __construct($driver,
+                                PHPUnit_Extensions_Selenium2TestCase_URL $url,
+                                $maximumTimeout)
+    {
+        parent::__construct($driver, $url);
+        $this->maximumTimeout = $maximumTimeout;
+    }
+
     protected function initCommands()
     {
+        $self = $this;
         return array(
-            'implicitWait' => function ($parameter, $commandUrl) {
-                $jsonParameters = array('ms' => $parameter);
+            'implicitWait' => function ($milliseconds, $commandUrl) use ($self) {
+                $self->check($milliseconds);
+                $jsonParameters = array('ms' => $milliseconds);
                 return new PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost($jsonParameters, $commandUrl);
             },
-            'asyncScript' => function ($parameter, $commandUrl) {
-                $jsonParameters = array('ms' => $parameter);
+            'asyncScript' => function ($milliseconds, $commandUrl) use ($self) {
+                $self->check($milliseconds);
+                $jsonParameters = array('ms' => $milliseconds);
                 return new PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost($jsonParameters, $commandUrl);
             },
 
         );
+    }
+
+    public function check($timeout) {
+        if ($timeout > $this->maximumTimeout) {
+            throw new PHPUnit_Extensions_Selenium2TestCase_Exception('There is no use in setting this timeout unless you also call $this->setSeleniumServerRequestsTimeout($seconds) in setUp().');
+        }
     }
 }

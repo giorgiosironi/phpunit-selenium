@@ -79,15 +79,22 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
     private $baseUrl;
 
     /**
+     * @var PHPUnit_Extensions_Selenium2TestCase_Session_Timeouts
+     */
+    private $timeouts;
+
+    /**
      * @var boolean
      */
     private $stopped = FALSE;
 
     public function __construct($driver,
                                 PHPUnit_Extensions_Selenium2TestCase_URL $url,
-                                PHPUnit_Extensions_Selenium2TestCase_URL $baseUrl)
+                                PHPUnit_Extensions_Selenium2TestCase_URL $baseUrl,
+                                PHPUnit_Extensions_Selenium2TestCase_Session_Timeouts $timeouts)
     {
         $this->baseUrl = $baseUrl;
+        $this->timeouts = $timeouts;
         parent::__construct($driver, $url);
     }
 
@@ -274,8 +281,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
 
     public function timeouts()
     {
-        return new PHPUnit_Extensions_Selenium2TestCase_Session_Timeouts($this->driver,
-                                                                         $this->url->descend('timeouts'));
+        return $this->timeouts;
     }
 
     /**

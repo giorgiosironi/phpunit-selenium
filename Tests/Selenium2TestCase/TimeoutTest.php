@@ -13,8 +13,11 @@ class Tests_Selenium2TestCase_TimeoutTest extends Tests_Selenium2TestCase_BaseTe
         $this->assertStringEndsWith('html/test_open.html', $this->url());
     }
 
+    /**
+     * @expectedException PHPUnit_Extensions_Selenium2TestCase_Exception
+     */
     public function testAnImplicitWaitValueToRespectOnTheServerMustBeSmallerThanTheSeleniumServerCallsTimeout()
     {
-        $this->markTestIncomplete();
+        $this->timeouts()->implicitWait(120000);
     }
 }

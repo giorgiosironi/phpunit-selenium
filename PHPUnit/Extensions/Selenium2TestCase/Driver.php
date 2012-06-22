@@ -71,7 +71,18 @@ class PHPUnit_Extensions_Selenium2TestCase_Driver
             'desiredCapabilities' => $desiredCapabilities
         ));
         $sessionPrefix = $response->getURL();
-        return new PHPUnit_Extensions_Selenium2TestCase_Session($this, $sessionPrefix, $browserUrl);
+
+        $timeouts = new PHPUnit_Extensions_Selenium2TestCase_Session_Timeouts(
+            $this,
+            $sessionPrefix->descend('timeouts'),
+            $this->seleniumServerRequestsTimeout * 1000
+        );
+        return new PHPUnit_Extensions_Selenium2TestCase_Session(
+            $this,
+            $sessionPrefix,
+            $browserUrl, 
+            $timeouts
+        );
     }
 
     /**
