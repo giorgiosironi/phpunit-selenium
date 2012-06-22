@@ -55,9 +55,13 @@
  */
 class PHPUnit_Extensions_Selenium2TestCase_Driver
 {
-    public function __construct(PHPUnit_Extensions_Selenium2TestCase_URL $seleniumServerUrl)
+    private $seleniumServerUrl;
+    private $seleniumServerRequestsTimeout;
+
+    public function __construct(PHPUnit_Extensions_Selenium2TestCase_URL $seleniumServerUrl, $timeout = 60)
     {
         $this->seleniumServerUrl = $seleniumServerUrl;
+        $this->seleniumServerRequestsTimeout = $timeout;
     }
 
     public function startSession(array $desiredCapabilities, PHPUnit_Extensions_Selenium2TestCase_URL $browserUrl)
@@ -82,7 +86,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Driver
                          $params = NULL)
     {
         $curl = curl_init($url->getValue());
-        curl_setopt($curl, CURLOPT_TIMEOUT, 60);
+        curl_setopt($curl, CURLOPT_TIMEOUT, $this->seleniumServerRequestsTimeout);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($curl,
                     CURLOPT_HTTPHEADER,

@@ -113,6 +113,11 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
     private $desiredCapabilities = array();
 
     /**
+     * @var int
+     */
+    private $seleniumServerRequestsTimeout = 60;
+
+    /**
      * @var string
      */
     private $browser;
@@ -174,7 +179,8 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
                 'port'       => $this->port,
                 'browserName' => $this->browserName,
                 'browserUrl' => $this->browserUrl,
-                'desiredCapabilities' => $this->desiredCapabilities
+                'desiredCapabilities' => $this->desiredCapabilities,
+                'seleniumServerRequestsTimeout' => $this->seleniumServerRequestsTimeout
             ));
         }
         return $this->session;
@@ -322,5 +328,13 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
     public function setDesiredCapabilities(array $capabilities)
     {
         $this->desiredCapabilities = $capabilities;
+    }
+    
+    /**
+     * @param int $timeout  seconds
+     */
+    public function setSeleniumServerRequestsTimeout($timeout)
+    {
+        $this->seleniumServerRequestsTimeout = $timeout;
     }
 }
