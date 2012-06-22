@@ -98,34 +98,9 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
     private $session;
 
     /**
-     * @var string
-     */
-    private $host = 'localhost';
-
-    /**
-     * @var int
-     */
-    private $port = 4444;
-
-    /**
      * @var array
      */
-    private $desiredCapabilities = array();
-
-    /**
-     * @var int
-     */
-    private $seleniumServerRequestsTimeout = 60;
-
-    /**
-     * @var string
-     */
-    private $browser;
-
-    /**
-     * @var PHPUnit_Extensions_Selenium2TestCase_URL
-     */
-    private $browserUrl;
+    private $parameters;
 
     /**
      * @var PHPUnit_Extensions_Selenium2TestCase_SessionStrategy
@@ -171,17 +146,23 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
         return new PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Isolated;
     }
 
+    public function __construct($name = NULL, array $data = array(), $dataName = '')
+    {
+        parent::__construct($name, $data, $dataName);
+        $this->parameters = array(
+            'host' => 'localhost',
+            'port' => 4444,
+            'browser' => NULL,
+            'browserName' => NULL,
+            'desiredCapabilities' => array(),
+            'seleniumServerRequestsTimeout' => 60
+        );
+    }
+
     public function prepareSession()
     {
         if (!$this->session) {
-            $this->session = self::sessionStrategy()->session(array(
-                'host'      => $this->host,
-                'port'       => $this->port,
-                'browserName' => $this->browserName,
-                'browserUrl' => $this->browserUrl,
-                'desiredCapabilities' => $this->desiredCapabilities,
-                'seleniumServerRequestsTimeout' => $this->seleniumServerRequestsTimeout
-            ));
+            $this->session = self::sessionStrategy()->session($this->parameters);
         }
         return $this->session;
     }
@@ -280,7 +261,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
             throw PHPUnit_Util_InvalidArgumentHelper::factory(1, 'string');
         }
 
-        $this->host = $host;
+        $this->parameters['host'] = $host;
     }
 
     /**
@@ -293,7 +274,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
             throw PHPUnit_Util_InvalidArgumentHelper::factory(1, 'integer');
         }
 
-        $this->port = $port;
+        $this->parameters['port'] = $port;
     }
 
     /**
@@ -306,7 +287,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
             throw PHPUnit_Util_InvalidArgumentHelper::factory(1, 'string');
         }
 
-        $this->browserName = $browserName;
+        $this->parameters['browserName'] = $browserName;
     }
 
     /**
@@ -319,7 +300,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
             throw PHPUnit_Util_InvalidArgumentHelper::factory(1, 'string');
         }
 
-        $this->browserUrl = new PHPUnit_Extensions_Selenium2TestCase_URL($browserUrl);
+        $this->parameters['browserUrl'] = new PHPUnit_Extensions_Selenium2TestCase_URL($browserUrl);
     }
 
     /**
@@ -327,7 +308,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
      */
     public function setDesiredCapabilities(array $capabilities)
     {
-        $this->desiredCapabilities = $capabilities;
+        $this->parameters['desiredCapabilities'] = $capabilities;
     }
     
     /**
@@ -335,6 +316,6 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
      */
     public function setSeleniumServerRequestsTimeout($timeout)
     {
-        $this->seleniumServerRequestsTimeout = $timeout;
+        $this->parameters['seleniumServerRequestsTimeout'] = $timeout;
     }
 }
