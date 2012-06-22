@@ -254,6 +254,9 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
      */
     public function __call($command, $arguments)
     {
+        if ($this->session === NULL) {
+            throw new PHPUnit_Extensions_Selenium2TestCase_Exception("There is currently no active session to execute the '$command' command. You're probably trying to set some option in setUp() with an incorrect setter name.");
+        }
         $result = call_user_func_array(
           array($this->session, $command), $arguments
         );
