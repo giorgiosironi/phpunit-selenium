@@ -64,6 +64,7 @@ class Extensions_SeleniumTestCaseMultipleBrowsersTest extends Tests_SeleniumTest
     public function setUp()
     {
         $this->setBrowserUrl(PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL);
+        $this->assertEquals('*firefox', $this->drivers[0]->getBrowser());
     }
 
     public function testSessionIsLaunchedCorrectly()
@@ -87,5 +88,10 @@ class Extensions_SeleniumTestCaseMultipleBrowsersTest extends Tests_SeleniumTest
         return array(
             array('html/test_open.html')
         );
+    }
+
+    public function testTheBrowserNameIsAccessible()
+    {
+        $this->assertEquals('*firefox', $this->drivers[0]->getBrowser());
     }
 }
