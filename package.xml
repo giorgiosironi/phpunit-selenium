@@ -120,6 +120,9 @@
        <file baseinstalldir="/" name="Keys.php" role="php">
         <tasks:replace from="@package_version@" to="version" type="package-info" />
        </file>
+       <file baseinstalldir="/" name="MoveTo.php" role="php">
+        <tasks:replace from="@package_version@" to="version" type="package-info" />
+       </file>
        <file baseinstalldir="/" name="Url.php" role="php">
         <tasks:replace from="@package_version@" to="version" type="package-info" />
        </file>

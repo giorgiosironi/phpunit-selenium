@@ -814,16 +814,14 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->click();
     }
 
-    public function testMouseButtonsCanBeHeld()
+    public function testMouseButtonsCanBeHeldAndReleasedOverAnElement()
     {
-        $this->markTestIncomplete();
-        $this->moveTo(array(
-            'element' => 'id', // or Element object
-            'xoffset' => 0,
-            'yofsset' => 0
-        ));
-        $this->buttonDown();
-        $this->buttonUp();
+        $this->url('html/movements.html');
+        $this->moveto($this->byId('to_move'));
+        $this->buttondown();
+        $this->moveto($this->byId('target'));
+        $this->buttonup();
+        $this->markTestIncomplete('Should write something in the input, but while manually drag and drop does work, it doesn\'t with this commands.');
     }
 
     public function testMouseButtonsCanBeClickedMultipleTimes()

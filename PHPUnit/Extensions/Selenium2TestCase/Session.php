@@ -113,11 +113,15 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
             'acceptAlert' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_AcceptAlert',
             'alertText' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_AlertText',
             'back' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
+            'buttondown' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
+            'buttonup' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
             'dismissAlert' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_DismissAlert',
             'execute' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
             'executeAsync' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
             'forward' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
             'frame' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Frame',
+            'keys' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Keys',
+            'moveto' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_MoveTo',
             'refresh' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
             'screenshot' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor',
             'source' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_GenericAccessor',
@@ -128,7 +132,6 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
             'window' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Window',
             'windowHandle' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_GenericAccessor',
             'windowHandles' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_GenericAccessor',
-            'keys' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Keys'
         );
     }
 

@@ -1,0 +1,20 @@
+<html>
+    <body>
+        <div draggable="true" id="to_move">Move me!</div>
+        <div id="target">Here</div>
+        <input type="text" id="result" />
+    </body>
+    <script type="text/javascript">
+        document.getElementById('to_move').addEventListener('dragstart', function (event) {
+            event.dataTransfer.setData('Text', 'some data to make firefox happy');
+        });
+        var cancel = function (event) {
+            event.preventDefault();
+        };
+        document.getElementById('target').addEventListener('dragover', cancel);
+        document.getElementById('target').addEventListener('drop', function(event) {
+            event.preventDefault();
+            document.getElementById('result').value = 'drag completed';
+        });
+    </script>
+</html>
