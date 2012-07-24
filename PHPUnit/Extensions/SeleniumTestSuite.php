@@ -82,13 +82,23 @@ class PHPUnit_Extensions_SeleniumTestSuite extends PHPUnit_Framework_TestSuite
         $classGroups      = PHPUnit_Util_Test::getGroups($className);
         $staticProperties = $class->getStaticProperties();
 
+        //BC: renamed seleneseDirectory -> selenesePath
+        if (!isset($staticProperties['selenesePath']) && isset($staticProperties['seleneseDirectory'])) {
+            $staticProperties['selenesePath'] = $staticProperties['seleneseDirectory'];
+        }
+
         // Create tests from Selenese/HTML files.
-        if (isset($staticProperties['seleneseDirectory']) &&
-            is_dir($staticProperties['seleneseDirectory'])) {
-            $files = array_merge(
-              self::getSeleneseFiles($staticProperties['seleneseDirectory'], '.htm'),
-              self::getSeleneseFiles($staticProperties['seleneseDirectory'], '.html')
-            );
+        if (isset($staticProperties['selenesePath']) &&
+            (is_dir($staticProperties['selenesePath']) || is_file($staticProperties['selenesePath']))) {
+
+            if (is_dir($staticProperties['selenesePath'])) {
+                $files = array_merge(
+                  self::getSeleneseFiles($staticProperties['selenesePath'], '.htm'),
+                  self::getSeleneseFiles($staticProperties['selenesePath'], '.html')
+                );
+            } else {
+                $files[] = realpath($staticProperties['selenesePath']);
+            }
 
             // Create tests from Selenese/HTML files for multiple browsers.
             if (!empty($staticProperties['browsers'])) {
