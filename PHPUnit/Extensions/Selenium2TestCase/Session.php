@@ -219,6 +219,15 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
     }
 
     /**
+     * @param string $value     e.g. 'Link text'
+     * @return PHPUnit_Extensions_Selenium2TestCase_Element
+     */
+    public function byLinkText($value)
+    {
+        return $this->by('link text', $value);
+    }
+
+    /**
      * @param string $strategy     supported by JsonWireProtocol element/ command
      * @param string $value
      * @return PHPUnit_Extensions_Selenium2TestCase_Element
