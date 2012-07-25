@@ -65,5 +65,5 @@ interface PHPUnit_Extensions_Selenium2TestCase_SessionStrategy
 
     public function notSuccessfulTest();
 
-    public function endOfTest(PHPUnit_Extensions_Selenium2TestCase_Session $session);
+    public function endOfTest(PHPUnit_Extensions_Selenium2TestCase_Session $session = NULL);
 }

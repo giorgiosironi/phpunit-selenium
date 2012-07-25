@@ -59,6 +59,7 @@ class PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Shared
     private $original;
     private $session;
     private $mainWindow;
+    private $lastTestWasNotSuccessful = FALSE;
 
     public function __construct(PHPUnit_Extensions_Selenium2TestCase_SessionStrategy $originalStrategy)
     {
@@ -67,6 +68,13 @@ class PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Shared
 
     public function session(array $parameters)
     {
+        if ($this->lastTestWasNotSuccessful) {
+            if ($this->session !== NULL) {
+                $this->session->stop();
+                $this->session = NULL;
+            }
+            $this->lastTestWasNotSuccessful = FALSE;
+        }
         if ($this->session === NULL) {
             $this->session = $this->original->session($parameters);
             $this->mainWindow = $this->session->windowHandle();
@@ -78,13 +86,10 @@ class PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Shared
 
     public function notSuccessfulTest()
     {
-        if ($this->session !== NULL) {
-            $this->session->stop();
-            $this->session = NULL;
-        }
+        $this->lastTestWasNotSuccessful = TRUE;
     }
 
-    public function endOfTest(PHPUnit_Extensions_Selenium2TestCase_Session $session)
+    public function endOfTest(PHPUnit_Extensions_Selenium2TestCase_Session $session = NULL)
     {
     }
 }

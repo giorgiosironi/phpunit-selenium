@@ -72,8 +72,10 @@ class PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Isolated
     {
     }
 
-    public function endOfTest(PHPUnit_Extensions_Selenium2TestCase_Session $session)
+    public function endOfTest(PHPUnit_Extensions_Selenium2TestCase_Session $session = NULL)
     {
-        $session->stop();
+        if ($session !== NULL) {
+            $session->stop();
+        }
     }
 }

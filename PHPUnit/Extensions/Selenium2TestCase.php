@@ -175,6 +175,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
             $result = $this->createResult();
         }
 
+
         $this->collectCodeCoverageInformation = $result->getCollectCodeCoverageInformation();
 
         parent::run($result);
@@ -188,6 +189,9 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
                 $coverage->get(), $this
             );
         }
+
+        // do not call this before to give the time to the Listeners to run 
+        self::sessionStrategy()->endOfTest($this->session);
 
         return $result;
     }
@@ -217,7 +221,6 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
             $thrownException = $e;
         }
 
-        self::sessionStrategy()->endOfTest($this->session);
 
         if (NULL !== $thrownException) {
             throw $thrownException;
