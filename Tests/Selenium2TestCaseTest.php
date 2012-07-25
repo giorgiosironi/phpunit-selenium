@@ -231,10 +231,10 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
 
     public function testByLinkText()
     {
-	$this->url('html/test_click_page1.html');
-	$link = $this->byLinkText('Click here for next page');
-	$link->click();
-	$this->assertEquals('Click Page Target', $this->title());
+        $this->url('html/test_click_page1.html');
+        $link = $this->byLinkText('Click here for next page');
+        $link->click();
+        $this->assertEquals('Click Page Target', $this->title());
     }
 
     public function testClicksOnJavaScriptHref()
