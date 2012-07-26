@@ -43,7 +43,7 @@
  */
 
 /**
- * TestSuite class for a set of tests from a single Testcase Class 
+ * TestSuite class for a set of tests from a single Testcase Class
  * executed with a particular browser.
  *
  * @package    PHPUnit_Selenium
@@ -70,7 +70,11 @@ class PHPUnit_Extensions_SeleniumBrowserSuite extends PHPUnit_Framework_TestSuit
     public static function fromClassAndBrowser($className, array $browser)
     {
         $browserSuite = new self();
-        $browserSuite->setName($className . ': ' . $browser['name']);
+        if (isset($browser['browserName']))
+            $name = $browser['browserName'];
+        else
+            $name = $browser['name'];
+        $browserSuite->setName($className . ': ' . $name);
         return $browserSuite;
     }
 

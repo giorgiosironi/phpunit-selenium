@@ -159,6 +159,19 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
         );
     }
 
+    public function setupSpecificBrowser($params)
+    {
+        self::$sessionStrategy = new PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Isolated;
+        $params = array_merge($this->parameters, $params);
+        $this->setHost($params['host']);
+        $this->setPort($params['port']);
+        $this->setBrowser($params['browserName']);
+        $this->parameters['browser'] = $params['browser'];
+        $this->setDesiredCapabilities($params['desiredCapabilities']);
+        $this->setSeleniumServerRequestsTimeout(
+            $params['seleniumServerRequestsTimeout']);
+    }
+
     public function prepareSession()
     {
         if (!$this->session) {
@@ -227,6 +240,12 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
         }
 
         return $result;
+    }
+
+
+    public static function suite($className)
+    {
+        return PHPUnit_Extensions_SeleniumTestSuite::fromTestCaseClass($className);
     }
 
     public function onNotSuccessfulTest(Exception $e)

@@ -41,8 +41,10 @@
  * @link       http://www.phpunit.de/
  */
 
+require_once 'PHPUnit/Extensions/Selenium2TestCase.php';
+
 /**
- * Tests for PHPUnit_Extensions_SeleniumTestCase.
+ * Tests for PHPUnit_Extensions_Selenium2TestCase::suite().
  *
  * @package    PHPUnit_Selenium
  * @author     Jonathan Lipps <jlipps@gmail.com>
@@ -50,73 +52,45 @@
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
  */
-class Extensions_Selenium2TestCaseMultipleBrowsersTest extends PHPUnit_Extensions_Selenium2TestCase
+class Extensions_Selenium2SuiteBuildingTest extends PHPUnit_Framework_TestCase
+{
+    public function testSampleTestCaseBuildsAFullSuiteContainingAllItsTests()
+    {
+        $suite = Extensions_Selenium2TestCaseSample::suite('Extensions_Selenium2TestCaseSample');
+        $this->assertInstanceOf('PHPUnit_Framework_TestSuite', $suite);
+        $this->assertEquals(2, count($suite->tests()));
+    }
+
+    public function testAMultipleBrowsersTestCaseBuildsACopyOfEachTestForEachBrowser()
+    {
+        $suite = Extensions_Selenium2MultipleBrowsersTestCaseSample::suite('Extensions_Selenium2MultipleBrowsersTestCaseSample');
+        $this->assertInstanceOf('PHPUnit_Framework_TestSuite', $suite);
+        $this->assertEquals(2, count($suite->tests()));
+    }
+}
+
+class Extensions_Selenium2TestCaseSample extends PHPUnit_Extensions_Selenium2TestCase
+{
+    public function testFirst() {}
+    public function testSecond() {}
+}
+
+class Extensions_Selenium2MultipleBrowsersTestCaseSample extends PHPUnit_Extensions_Selenium2TestCase
 {
     public static $browsers = array(
         array(
-            'browserName'    => 'firefox',
-            'host'    => 'localhost',
-            'port'    => 4444
+            'browserName'   => 'firefox',
+            'host'          => 'localhost',
+            'port'          => 4444,
+            'seleniumServerRequestsTimeout'       => 30000,
         ),
         array(
-            'browserName'    => 'chrome',
+            'browserName'    => 'safari',
             'host'    => 'localhost',
-            'port'    => 4444
-        )
+            'port'    => 4444,
+            'seleniumServerRequestsTimeout' => 30000,
+        ),
     );
 
-    private $_browserWeSetUp = '';
-
-
-    public function setUp()
-    {
-        if (version_compare(phpversion(), '5.3.0', '<')) {
-            $this->markTestSkipped('Functionality available only under PHP 5.3.');
-        }
-        if (!defined('PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL')) {
-            $this->markTestSkipped("You must serve the selenium-1-tests folder from an HTTP server and configure the PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL constant accordingly.");
-        }
-        $this->setBrowserUrl(PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL);
-    }
-
-    public function setupSpecificBrowser($params)
-    {
-        $this->_browserWeSetUp = $params['browserName'];
-        parent::setupSpecificBrowser($params);
-    }
-
-    public function testOpen()
-    {
-        $this->url(PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL);
-        $this->assertEquals($this->_browserWeSetUp, $this->getBrowser());
-    }
-
-    public function testSessionIsLaunchedCorrectly()
-    {
-        $this->url('html/test_open.html');
-        $this->assertStringEndsWith('html/test_open.html', $this->url());
-    }
-
-    /**
-     * @dataProvider urls
-     */
-    public function testDataProvidersAreRecognized($url)
-    {
-        $this->url($url);
-        $this->assertStringEndsWith($url, $this->url());
-        $body = $this->byCssSelector('body');
-        $this->assertEquals('This is a test of the open command.', $body->text());
-    }
-
-    public static function urls()
-    {
-        return array(
-            array('html/test_open.html')
-        );
-    }
-
-    public function testTheBrowserNameIsAccessible()
-    {
-        $this->assertEquals('firefox', $this->getBrowser());
-    }
+    public function testSingle() {}
 }
