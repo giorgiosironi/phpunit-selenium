@@ -42,7 +42,7 @@
  */
 
 /**
- * Tests for PHPUnit_Extensions_SeleniumTestCase.
+ * Tests for PHPUnit_Extensions_Selenium2TestCase.
  *
  * @package    PHPUnit_Selenium
  * @author     Jonathan Lipps <jlipps@gmail.com>
@@ -59,7 +59,7 @@ class Extensions_Selenium2TestCaseMultipleBrowsersTest extends PHPUnit_Extension
             'port'        => 4444
         ),
         array(
-            'browserName' => 'chrome',
+            'browserName' => 'safari',
             'host'        => 'localhost',
             'port'        => 4444
         )
