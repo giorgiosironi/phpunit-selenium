@@ -79,16 +79,14 @@ class Extensions_Selenium2MultipleBrowsersTestCaseSample extends PHPUnit_Extensi
 {
     public static $browsers = array(
         array(
-            'browserName'   => 'firefox',
-            'host'          => 'localhost',
-            'port'          => 4444,
-            'seleniumServerRequestsTimeout'       => 30000,
+            'browserName' => 'firefox',
+            'host'        => 'localhost',
+            'port'        => 4444,
         ),
         array(
-            'browserName'    => 'safari',
-            'host'    => 'localhost',
-            'port'    => 4444,
-            'seleniumServerRequestsTimeout' => 30000,
+            'browserName' => 'safari',
+            'host'        => 'localhost',
+            'port'        => 4444,
         ),
     );
 

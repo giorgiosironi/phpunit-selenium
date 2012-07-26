@@ -54,14 +54,14 @@ class Extensions_Selenium2TestCaseMultipleBrowsersTest extends PHPUnit_Extension
 {
     public static $browsers = array(
         array(
-            'browserName'    => 'firefox',
-            'host'    => 'localhost',
-            'port'    => 4444
+            'browserName' => 'firefox',
+            'host'        => 'localhost',
+            'port'        => 4444
         ),
         array(
-            'browserName'    => 'chrome',
-            'host'    => 'localhost',
-            'port'    => 4444
+            'browserName' => 'chrome',
+            'host'        => 'localhost',
+            'port'        => 4444
         )
     );
 
@@ -117,6 +117,6 @@ class Extensions_Selenium2TestCaseMultipleBrowsersTest extends PHPUnit_Extension
 
     public function testTheBrowserNameIsAccessible()
     {
-        $this->assertEquals('firefox', $this->getBrowser());
+        $this->assertEquals($this->_browserWeSetUp, $this->getBrowser());
     }
 }
