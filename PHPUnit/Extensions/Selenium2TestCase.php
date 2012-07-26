@@ -190,7 +190,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
             );
         }
 
-        // do not call this before to give the time to the Listeners to run 
+        // do not call this before to give the time to the Listeners to run
         self::sessionStrategy()->endOfTest($this->session);
 
         return $result;
@@ -293,6 +293,11 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
         $this->parameters['browserName'] = $browserName;
     }
 
+    public function getBrowser()
+    {
+        return $this->parameters['browserName'];
+    }
+
     /**
      * @param  string $browserUrl
      * @throws InvalidArgumentException
@@ -313,7 +318,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
     {
         $this->parameters['desiredCapabilities'] = $capabilities;
     }
-    
+
     /**
      * @param int $timeout  seconds
      */
