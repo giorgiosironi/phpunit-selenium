@@ -60,10 +60,15 @@ class Extensions_Selenium2TestCaseMultipleBrowsersTest extends PHPUnit_Extension
             'sessionStrategy' => 'shared'
         ),
         array(
-            'browserName' => 'chrome',
+            'browserName' => 'firefox',
             'host'        => 'localhost',
             'port'        => 4444,
             'sessionStrategy' => 'isolated'
+        ),
+        array(
+            'browserName' => 'safari',
+            'host'        => 'localhost',
+            'port'        => 4444
         )
     );
 
@@ -77,6 +82,9 @@ class Extensions_Selenium2TestCaseMultipleBrowsersTest extends PHPUnit_Extension
         }
         if (!defined('PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL')) {
             $this->markTestSkipped("You must serve the selenium-1-tests folder from an HTTP server and configure the PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL constant accordingly.");
+        }
+        if ($this->getBrowser() == 'safari') {
+            $this->markTestSkipped("Skipping safari since it might not be present");
         }
         $this->setBrowserUrl(PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL);
     }
