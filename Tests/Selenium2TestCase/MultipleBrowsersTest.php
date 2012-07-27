@@ -59,9 +59,10 @@ class Extensions_Selenium2TestCaseMultipleBrowsersTest extends PHPUnit_Extension
             'port'        => 4444
         ),
         array(
-            'browserName' => 'safari',
+            'browserName' => 'chrome',
             'host'        => 'localhost',
-            'port'        => 4444
+            'port'        => 4444,
+            'sessionStrategy' => 'isolated'
         )
     );
 

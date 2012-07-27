@@ -108,6 +108,11 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
     private static $sessionStrategy;
 
     /**
+     * @var PHPUnit_Extensions_Selenium2TestCase_SessionStrategy
+     */
+    private $browserSessionStrategy;
+
+    /**
      * @var string
      */
     private $testId;
@@ -161,7 +166,17 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
 
     public function setupSpecificBrowser($params)
     {
-        self::$sessionStrategy = new PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Isolated;
+        if (isset($params['sessionStrategy'])) {
+            $strat = $params['sessionStrategy'];
+            if ($strat != "isolated" && $strat != "shared") {
+                throw new InvalidArgumentException("Session strategy must be either 'isolated' or 'shared'");
+            } elseif ($strat == "isolated") {
+                $this->browserSessionStrategy = new PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Isolated;
+            } else {
+                $this->browserSessionStrategy = new PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Shared;
+            }
+            unset($params['sessionStrategy']);
+        }
         $params = array_merge($this->parameters, $params);
         $this->setHost($params['host']);
         $this->setPort($params['port']);
@@ -172,10 +187,18 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
             $params['seleniumServerRequestsTimeout']);
     }
 
+    private function getStrategy()
+    {
+        if (!$this->browserSessionStrategy)
+            return self::sessionStrategy();
+        else
+            return $this->browserSessionStrategy;
+    }
+
     public function prepareSession()
     {
         if (!$this->session) {
-            $this->session = self::sessionStrategy()->session($this->parameters);
+            $this->session = $this->getStrategy()->session($this->parameters);
         }
         return $this->session;
     }
@@ -204,7 +227,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
         }
 
         // do not call this before to give the time to the Listeners to run
-        self::sessionStrategy()->endOfTest($this->session);
+        $this->getStrategy()->endOfTest($this->session);
 
         return $result;
     }
@@ -250,7 +273,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
 
     public function onNotSuccessfulTest(Exception $e)
     {
-        self::sessionStrategy()->notSuccessfulTest();
+        $this->getStrategy()->notSuccessfulTest();
         parent::onNotSuccessfulTest($e);
     }
 
