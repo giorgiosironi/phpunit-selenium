@@ -110,7 +110,17 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
     /**
      * @var PHPUnit_Extensions_Selenium2TestCase_SessionStrategy
      */
-    private $browserSessionStrategy;
+    private static $browserSessionStrategy;
+
+    /**
+     * @var PHPUnit_Extensions_Selenium2TestCase_SessionStrategy
+     */
+    private $localSessionStrategy;
+
+    /**
+     * @var array
+     */
+    private static $lastBrowserParams;
 
     /**
      * @var string
@@ -133,7 +143,6 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
         if (!$shareSession) {
             self::$sessionStrategy = self::defaultSessionStrategy();
         } else {
-            echo "Shared strategy\n";
             self::$sessionStrategy = new PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Shared(self::defaultSessionStrategy());
         }
     }
@@ -166,17 +175,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
 
     public function setupSpecificBrowser($params)
     {
-        if (isset($params['sessionStrategy'])) {
-            $strat = $params['sessionStrategy'];
-            if ($strat != "isolated" && $strat != "shared") {
-                throw new InvalidArgumentException("Session strategy must be either 'isolated' or 'shared'");
-            } elseif ($strat == "isolated") {
-                $this->browserSessionStrategy = new PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Isolated;
-            } else {
-                $this->browserSessionStrategy = new PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Shared;
-            }
-            unset($params['sessionStrategy']);
-        }
+        $this->setUpSessionStrategy($params);
         $params = array_merge($this->parameters, $params);
         $this->setHost($params['host']);
         $this->setPort($params['port']);
@@ -187,12 +186,38 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
             $params['seleniumServerRequestsTimeout']);
     }
 
+    private function setUpSessionStrategy($params)
+    {
+        // This logic enables us to have a session strategy reused for each
+        // item in self::$browsers. We don't want them both to share one
+        // and we don't want each test for a specific browser to have a
+        // new strategy
+        if ($params == self::$lastBrowserParams) {
+            // do nothing so we use the same session strategy for this
+            // browser
+        } elseif (isset($params['sessionStrategy'])) {
+            $strat = $params['sessionStrategy'];
+            if ($strat != "isolated" && $strat != "shared") {
+                throw new InvalidArgumentException("Session strategy must be either 'isolated' or 'shared'");
+            } elseif ($strat == "isolated") {
+                self::$browserSessionStrategy = new PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Isolated;
+            } else {
+                self::$browserSessionStrategy = new PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Shared(self::defaultSessionStrategy());
+            }
+        } else {
+            self::$browserSessionStrategy = self::defaultSessionStrategy();
+        }
+        self::$lastBrowserParams = $params;
+        $this->localSessionStrategy = self::$browserSessionStrategy;
+
+    }
+
     private function getStrategy()
     {
-        if (!$this->browserSessionStrategy)
-            return self::sessionStrategy();
+        if ($this->localSessionStrategy)
+            return $this->localSessionStrategy;
         else
-            return $this->browserSessionStrategy;
+            return self::sessionStrategy();
     }
 
     public function prepareSession()
