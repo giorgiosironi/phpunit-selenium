@@ -13,7 +13,7 @@ class Tests_Selenium2TestCase_Coverage_SingleFileTest extends PHPUnit_Framework_
     }
 
     public function testExecutingAFileWithThePrependedAndAppendedCoverageScriptsProducesACoverageData()
-    { 
+    {
         $this->clearCoverageFiles();
 
         exec('php ' . __DIR__ . '/singleFile.php');

@@ -2,7 +2,7 @@
 /**
  * PHPUnit
  *
- * Copyright (c) 2010-2011, Sebastian Bergmann <sb@sebastian-bergmann.de>.
+ * Copyright (c) 2010-2012, Sebastian Bergmann <sb@sebastian-bergmann.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,61 +36,59 @@
  *
  * @package    PHPUnit_Selenium
  * @author     Giorgio Sironi <giorgio.sironi@asp-poli.it>
- * @copyright  2010-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright  2010-2012 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
- * @since      File available since Release 1.2.6
  */
+
+require_once 'PHPUnit/Extensions/Selenium2TestCase.php';
 
 /**
- * TestSuite class for a set of tests from a single Testcase Class
- * executed with a particular browser.
+ * Tests for PHPUnit_Extensions_Selenium2TestCase::suite().
  *
  * @package    PHPUnit_Selenium
- * @author     Giorgio Sironi <giorgio.sironi@asp-poli.it>
- * @copyright  2010-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @author     Jonathan Lipps <jlipps@gmail.com>
+ * @copyright  2010-2012 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
- * @since      Class available since Release 1.2.6
  */
-class PHPUnit_Extensions_SeleniumBrowserSuite extends PHPUnit_Framework_TestSuite
+class Extensions_Selenium2SuiteBuildingTest extends PHPUnit_Framework_TestCase
 {
-    /**
-     * Overriding the default: Selenium suites are always built from a TestCase class.
-     * @var boolean
-     */
-    protected $testCase = TRUE;
-
-    public function addTestMethod(ReflectionClass $class, ReflectionMethod $method)
+    public function testSampleTestCaseBuildsAFullSuiteContainingAllItsTests()
     {
-        return parent::addTestMethod($class, $method);
+        $suite = Extensions_Selenium2TestCaseSample::suite('Extensions_Selenium2TestCaseSample');
+        $this->assertInstanceOf('PHPUnit_Framework_TestSuite', $suite);
+        $this->assertEquals(2, count($suite->tests()));
     }
 
-    public static function fromClassAndBrowser($className, array $browser)
+    public function testAMultipleBrowsersTestCaseBuildsACopyOfEachTestForEachBrowser()
     {
-        $browserSuite = new self();
-        if (isset($browser['browserName']))
-            $name = $browser['browserName'];
-        else
-            $name = $browser['name'];
-        $browserSuite->setName($className . ': ' . $name);
-        return $browserSuite;
+        $suite = Extensions_Selenium2MultipleBrowsersTestCaseSample::suite('Extensions_Selenium2MultipleBrowsersTestCaseSample');
+        $this->assertInstanceOf('PHPUnit_Framework_TestSuite', $suite);
+        $this->assertEquals(2, count($suite->tests()));
     }
+}
 
-    public function setupSpecificBrowser(array $browser)
-    {
-        $this->browserOnAllTests($this, $browser);
-    }
+class Extensions_Selenium2TestCaseSample extends PHPUnit_Extensions_Selenium2TestCase
+{
+    public function testFirst() {}
+    public function testSecond() {}
+}
 
-    private function browserOnAllTests(PHPUnit_Framework_TestSuite $suite, array $browser)
-    {
-        foreach ($suite->tests() as $test) {
-            if ($test instanceof PHPUnit_Framework_TestSuite) {
-                $this->browserOnAllTests($test, $browser);
-            } else {
-                $test->setupSpecificBrowser($browser);
-            }
-        }
-    }
+class Extensions_Selenium2MultipleBrowsersTestCaseSample extends PHPUnit_Extensions_Selenium2TestCase
+{
+    public static $browsers = array(
+        array(
+            'browserName' => 'firefox',
+            'host'        => 'localhost',
+            'port'        => 4444,
+        ),
+        array(
+            'browserName' => 'safari',
+            'host'        => 'localhost',
+            'port'        => 4444,
+        ),
+    );
+
+    public function testSingle() {}
 }
