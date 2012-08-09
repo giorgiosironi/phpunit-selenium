@@ -56,8 +56,8 @@
  * @method mixed alertText($value = NULL) Gets the alert dialog text, or sets the text for a prompt dialog
  * @method void back()
  * @method void dismissAlert() Press Cancel on an alert, or does not confirm a dialog
- * @method string execute($javaScriptCode) Injects arbitrary JavaScript in the page and returns the last
- * @method string executeAsync($javaScriptCode) Injects arbitrary JavaScript and wait for the callback (last element of arguments) to be called
+ * @method string execute(array $javaScriptCode) Injects arbitrary JavaScript in the page and returns the last. See unit tests for usage
+ * @method string executeAsync(array $javaScriptCode) Injects arbitrary JavaScript and wait for the callback (last element of arguments) to be called. See unit tests for usage
  * @method void forward()
  * @method void frame($elementId) Changes the focus to a frame in the page
  * @method void refresh()
