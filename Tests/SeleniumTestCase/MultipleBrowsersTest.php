@@ -50,7 +50,7 @@
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
  */
-class Extensions_SeleniumTestCaseMultipleBrowsersTest extends Tests_SeleniumTestCase_BaseTestCase
+class Extensions_SeleniumTestCaseMultipleBrowsersTest extends PHPUnit_Extensions_SeleniumTestCase
 {
     public static $browsers = array(
         array(
@@ -58,6 +58,14 @@ class Extensions_SeleniumTestCaseMultipleBrowsersTest extends Tests_SeleniumTest
             'browser' => '*firefox',
             'host'    => 'localhost',
             'port'    => 4444
+        ),
+        array(
+            'browser' => '*firefox',
+            'host'    => 'localhost',
+            'port'    => 4444
+        ),
+        array(
+            'browser' => '*firefox',
         )
     );
 
