@@ -1,0 +1,36 @@
+{
+    "name": "phpunit/phpunit-selenium",
+    "description": "Selenium Server integration for PHPUnit",
+    "type": "library",
+    "keywords": [
+        "selenium",
+        "testing"
+    ],
+    "homepage": "http://www.phpunit.de/",
+    "authors": [
+        {
+            "name": "Sebastian Bergmann",
+            "email": "sebastian@phpunit.de",
+            "homepage": "http://www.phpunit.de/"
+        }
+    ],
+    "license": "BSD-3-Clause",
+    "require": {
+        "php": ">=5.2.7",
+        "phpunit/phpunit": ">=3.6.0",
+        "ext-curl": "*",
+        "ext-dom": "*",
+        "ext-reflection": "*",
+        "ext-spl": "*"
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "minimum-stability": "dev",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.2.9-dev"
+        }
+    }
+
+}
