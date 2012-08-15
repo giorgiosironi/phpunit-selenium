@@ -27,7 +27,10 @@
         "bin-dir": "bin"
     },
     "autoload": {
-        "classmap": ["PHPUnit/"]
+        "psr-0": {
+            "PHPUnit_Extensions_Selenium": ""
+        },
+        "files": ["PHPUnit/Extensions/SeleniumCommon/Autoload.php"]
     },
     "minimum-stability": "dev",
     "extra": {
