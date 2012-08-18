@@ -35,39 +35,33 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @package    PHPUnit_Selenium
- * @author     Giorgio Sironi <giorgio.sironi@asp-poli.it>
+ * @author     Christian Soronellas <csoronellas@emagister.com>
  * @copyright  2010-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
- * @since      File available since Release 1.2.5
+ * @since      File available since Release 1.2.8
  */
 
 /**
- * Object representing a browser window.
+ * Maximize window.
  *
  * @package    PHPUnit_Selenium
- * @author     Giorgio Sironi <giorgio.sironi@asp-poli.it>
+ * @author     Christian Soronellas <csoronellas@emagister.com>
  * @copyright  2010-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
- * @since      Class available since Release 1.2.5
- * @method array size(array $size = null) Window size as array('width' => $x, 'height' => $y)
- * @method array position(array $position = null) Window position as array('x' => $x, 'y' => $y)
- * @method array maximize() Maximize window
+ * @since      Class available since Release 1.2.8
  */
-class PHPUnit_Extensions_Selenium2TestCase_Window extends PHPUnit_Extensions_Selenium2TestCase_CommandsHolder
+class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Maximize
+    extends PHPUnit_Extensions_Selenium2TestCase_Command
 {
     /**
-     * @return array    class names
+     * @return string
      */
-    protected function initCommands()
+    public function httpMethod()
     {
-        return array(
-            'size' => 'PHPUnit_Extensions_Selenium2TestCase_StateCommand',
-            'position' => 'PHPUnit_Extensions_Selenium2TestCase_StateCommand',
-            'maximize' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Maximize',
-        );
+        return 'POST';
     }
 
 }
