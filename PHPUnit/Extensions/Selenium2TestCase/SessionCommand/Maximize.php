@@ -35,7 +35,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @package    PHPUnit_Selenium
- * @author     Christian Soronellas <csoronellas@emagister.com>
+ * @author     Alexander Bayandin <a.bayandin@gmail.com>
  * @copyright  2010-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
@@ -46,7 +46,7 @@
  * Maximize window.
  *
  * @package    PHPUnit_Selenium
- * @author     Christian Soronellas <csoronellas@emagister.com>
+ * @author     Alexander Bayandin <a.bayandin@gmail.com>
  * @copyright  2010-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @version    Release: @package_version@
