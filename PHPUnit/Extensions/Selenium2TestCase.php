@@ -224,6 +224,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
     {
         if (!$this->session) {
             $this->session = $this->getStrategy()->session($this->parameters);
+            $this->url('');
         }
         return $this->session;
     }
@@ -263,7 +264,6 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
     protected function runTest()
     {
         $this->prepareSession();
-        $this->url('');
 
         $thrownException = NULL;
 
