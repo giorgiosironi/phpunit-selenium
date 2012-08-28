@@ -78,7 +78,6 @@ function phpunit_selenium_autoload($class = NULL) {
           'phpunit_extensions_selenium2testcase_sessioncommand_frame' => '/Extensions/Selenium2TestCase/SessionCommand/Frame.php',
           'phpunit_extensions_selenium2testcase_sessioncommand_genericaccessor' => '/Extensions/Selenium2TestCase/SessionCommand/GenericAccessor.php',
           'phpunit_extensions_selenium2testcase_sessioncommand_keys' => '/Extensions/Selenium2TestCase/SessionCommand/Keys.php',
-          'phpunit_extensions_selenium2testcase_sessioncommand_maximize' => '/Extensions/Selenium2TestCase/SessionCommand/Maximize.php',
           'phpunit_extensions_selenium2testcase_sessioncommand_moveto' => '/Extensions/Selenium2TestCase/SessionCommand/MoveTo.php',
           'phpunit_extensions_selenium2testcase_sessioncommand_url' => '/Extensions/Selenium2TestCase/SessionCommand/Url.php',
           'phpunit_extensions_selenium2testcase_sessioncommand_window' => '/Extensions/Selenium2TestCase/SessionCommand/Window.php',

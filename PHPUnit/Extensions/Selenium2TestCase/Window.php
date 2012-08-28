@@ -66,7 +66,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Window extends PHPUnit_Extensions_Sel
         return array(
             'size' => 'PHPUnit_Extensions_Selenium2TestCase_StateCommand',
             'position' => 'PHPUnit_Extensions_Selenium2TestCase_StateCommand',
-            'maximize' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Maximize',
+            'maximize' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
         );
     }
 
