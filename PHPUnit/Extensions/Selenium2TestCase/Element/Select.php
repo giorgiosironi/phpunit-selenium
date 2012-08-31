@@ -81,6 +81,50 @@ class PHPUnit_Extensions_Selenium2TestCase_Element_Select
     }
 
     /**
+     * @return string
+     */
+    public function selectedId()
+    {
+        return $this->selectedOption()->attribute('id');
+    }
+
+    /**
+     * @return array
+     */
+    public function selectedLabels()
+    {
+        $labels = array();
+        foreach ($this->selectedOptions() as $option) {
+            $labels[] = $option->text();
+        }
+        return $labels;
+    }
+
+    /**
+     * @return array
+     */
+    public function selectedValues()
+    {
+        $values = array();
+        foreach ($this->selectedOptions() as $option) {
+            $values[] = $option->value();
+        }
+        return $values;
+    }
+
+    /**
+     * @return array
+     */
+    public function selectedIds()
+    {
+        $id = array();
+        foreach ($this->selectedOptions() as $option) {
+            $values[] = $option->attribute('id');
+        }
+        return $id;
+    }
+
+    /**
      * @param string $label the text appearing in the option
      * @return void
      */
@@ -108,6 +152,44 @@ class PHPUnit_Extensions_Selenium2TestCase_Element_Select
     {
         $option = $this->element($localCriteria);
         $option->click();
+    }
+
+    /**
+     * @return array
+     */
+    public function selectOptionValues()
+    {
+        $options = array();
+        foreach ($this->options() as $option) {
+            $options[] = $option->value();
+        }
+        return $options;
+    }
+
+    /**
+     * @return array
+     */
+    public function selectOptionLabels()
+    {
+        $options = array();
+        foreach ($this->options() as $option) {
+            $options[] = $option->text();
+        }
+        return $options;
+    }
+
+    /***
+     * @return array
+     */
+    private function selectedOptions()
+    {
+        $options = array();
+        foreach ($this->options() as $option) {
+            if ($option->selected()) {
+                $options[] = $option;
+            }
+        }
+        return $options;
     }
 
     private function selectedOption()
