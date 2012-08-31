@@ -54,6 +54,7 @@
  * @since      Class available since Release 1.2.5
  * @method array size(array $size = null) Window size as array('width' => $x, 'height' => $y)
  * @method array position(array $position = null) Window position as array('x' => $x, 'y' => $y)
+ * @method array maximize() Maximize window
  */
 class PHPUnit_Extensions_Selenium2TestCase_Window extends PHPUnit_Extensions_Selenium2TestCase_CommandsHolder
 {
@@ -64,7 +65,8 @@ class PHPUnit_Extensions_Selenium2TestCase_Window extends PHPUnit_Extensions_Sel
     {
         return array(
             'size' => 'PHPUnit_Extensions_Selenium2TestCase_StateCommand',
-            'position' => 'PHPUnit_Extensions_Selenium2TestCase_StateCommand'
+            'position' => 'PHPUnit_Extensions_Selenium2TestCase_StateCommand',
+            'maximize' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
         );
     }
 
