@@ -151,7 +151,9 @@ class PHPUnit_Extensions_Selenium2TestCase_Element_Select
     public function selectOptionByCriteria(PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $localCriteria)
     {
         $option = $this->element($localCriteria);
-        $option->click();
+        if (!$option->selected()) {
+            $option->click();
+        }
     }
 
     /**
