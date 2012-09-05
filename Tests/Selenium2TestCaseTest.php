@@ -375,6 +375,18 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->assertEquals("option2", $select->selectedValue());
     }
 
+    /**
+     * Ticket 170
+     */
+    public function testSelectOptgroupDoNotGetInTheWay(){
+        $this->markTestSkipped("How to fix the xpath `option[.='Second']`? It doesn't work only with optgroup tags.");
+        $this->url('html/test_select.html');
+        $select = $this->select($this->byCssSelector('#selectWithOptgroup'));
+
+        $select->selectOptionByLabel("Second");
+        $this->assertEquals("2", $select->selectedValue());
+    }
+
     public function testCheckboxesCanBeSelectedAndDeselected()
     {
         $this->markTestIncomplete("Flaky: fails on clicking in some browsers.");
