@@ -503,7 +503,7 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->assertContains('{focus(theSubmit)} {click(theSubmit)} {submit}', $eventLog->value());
     }
 
-    public function testSelectEventsAreGenerated()
+    public function testSelectEventsAreGeneratedbutOnlyIfANewSelectionIsMade()
     {
         $this->url('html/test_form_events.html');
         $select = $this->select($this->byId('theSelect'));
@@ -519,10 +519,7 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $eventLog->clear();
         $select->selectOptionByLabel('First Option');
         $this->assertEquals('option1', $select->selectedValue());
-        $this->assertContains('{focus(theSelect)}', $eventLog->value());
-
-        $this->markTestIncomplete('Why the change event is launched?');
-        $this->assertNotContains('{change(theSelect)}', $eventLog->value());
+        $this->assertEquals('', $eventLog->value());
     }
     
     public function testRadioEventsAreGenerated()
