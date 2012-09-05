@@ -74,8 +74,11 @@ class PHPUnit_Extensions_Selenium2TestCase_ScreenshotListener implements PHPUnit
  
     private function storeAScreenshot(PHPUnit_Framework_Test $test)
     {
-        $file = $this->directory . '/' . get_class($test) . '__' . $test->getName() . '__ ' . date('Y-m-d\TH-i-s') . '.png';
-        file_put_contents($file,        $test->currentScreenshot());
+        if ($test instanceof PHPUnit_Extensions_Selenium2TestCase)
+        {
+            $file = $this->directory . '/' . get_class($test) . '__' . $test->getName() . '__ ' . date('Y-m-d\TH-i-s') . '.png';
+            file_put_contents($file,        $test->currentScreenshot());
+        }
     }
  
     public function addIncompleteTest(PHPUnit_Framework_Test $test, Exception $e, $time) {} 

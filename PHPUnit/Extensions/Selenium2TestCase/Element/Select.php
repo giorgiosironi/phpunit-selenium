@@ -130,7 +130,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Element_Select
      */
     public function selectOptionByLabel($label)
     {
-        $toSelect = $this->criteria('xpath')->value("//option[.='$label']");
+        $toSelect = $this->criteria('xpath')->value(".//option[.='$label']");
         $this->selectOptionByCriteria($toSelect);
     }
 
@@ -140,7 +140,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Element_Select
      */
     public function selectOptionByValue($value)
     {
-        $toSelect = $this->criteria('xpath')->value("//option[@value='$value']");
+        $toSelect = $this->criteria('xpath')->value(".//option[@value='$value']");
         $this->selectOptionByCriteria($toSelect);
     }
 
