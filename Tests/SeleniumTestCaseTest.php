@@ -722,6 +722,7 @@ class Extensions_SeleniumTestCaseTest extends Tests_SeleniumTestCase_BaseTestCas
     
 	/**
 	 * Issue #171
+	 * this test should fail, not error
 	 */
     public function testScreenshotOnFailedTestCase()
     {
@@ -731,7 +732,7 @@ class Extensions_SeleniumTestCaseTest extends Tests_SeleniumTestCase_BaseTestCas
 
     /**
      * Issue #171
-     * also
+     * also, this test should fail, not error
      */
     public function testScreenshotWithPathOnFailedTestCase()
     {
