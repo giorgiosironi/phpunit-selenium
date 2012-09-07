@@ -6,3 +6,4 @@ build/pdepend
 phpunit.xml
 Tests/Selenium2TestCase/Coverage/*.dummyTestId
 selenium-1-tests/html/screenshots/*
+!.gitignore
