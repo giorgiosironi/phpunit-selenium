@@ -719,5 +719,28 @@ class Extensions_SeleniumTestCaseTest extends Tests_SeleniumTestCase_BaseTestCas
         $this->waitForVisible('testBox');
         $this->assertTrue($this->isVisible('testBox'));
     }
+    
+	/**
+	 * Issue #171
+	 */
+    public function testScreenshotOnFailedTestCase()
+    {
+    	$this->captureScreenshotOnFailure=true;
+        $this->assertTrue(false);
+    }
+
+    /**
+     * Issue #171
+     * also
+     */
+    public function testScreenshotWithPathOnFailedTestCase()
+    {
+    	$this->captureScreenshotOnFailure=true;
+    	$this->screenshotPath = dirname(__FILE__)."/../selenium-1-tests/html/screenshots/";
+    	$this->screenshotUrl = $this->drivers[0]->getBrowserUrl().'html/screenshots';
+    	$this->open('html/test_open.html');
+    	$this->assertTrue(false);
+    }
+    
 }
 
