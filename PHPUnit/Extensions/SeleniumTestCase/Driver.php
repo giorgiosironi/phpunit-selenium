@@ -308,6 +308,13 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
 
         $this->browserUrl = $browserUrl;
     }
+    
+    /**
+     * @return string
+     */
+    public function getBrowserUrl(){
+    	return $this->browserUrl;
+    }
 
     /**
      * @param  string $host
