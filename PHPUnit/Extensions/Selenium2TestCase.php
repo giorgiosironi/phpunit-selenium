@@ -399,4 +399,12 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
     {
         $this->parameters['seleniumServerRequestsTimeout'] = $timeout;
     }
+
+    public function getSessionId()
+    {
+        if ($this->session)
+            return $this->session->id();
+
+        return FALSE;
+    }
 }
