@@ -180,7 +180,7 @@
  * @method unknown  assertVisible
  * @method unknown  assertWhetherThisFrameMatchFrameExpression
  * @method unknown  assertWhetherThisWindowMatchWindowExpression
- * @method unknown  assertXpathCount 
+ * @method unknown  assertXpathCount
  * @method unknown  attachFile()
  * @method unknown  break()
  * @method unknown  captureEntirePageScreenshot()
@@ -388,7 +388,7 @@
  * @method unknown  waitForAttributeFromAllWindows
  * @method unknown  waitForBodyText
  * @method unknown  waitForChecked
- * @method unknown  waitForCondition() 
+ * @method unknown  waitForCondition()
  * @method unknown  waitForConfirmation
  * @method unknown  waitForConfirmationNotPresent
  * @method unknown  waitForConfirmationPresent
@@ -463,8 +463,8 @@
  * @method unknown  waitForNotWhetherThisWindowMatchWindowExpression
  * @method unknown  waitForNotXpathCount
  * @method unknown  waitForOrdered
- * @method unknown  waitForPageToLoad() 
- * @method unknown  waitForPopUp() 
+ * @method unknown  waitForPageToLoad()
+ * @method unknown  waitForPopUp()
  * @method unknown  waitForPrompt
  * @method unknown  waitForPromptNotPresent
  * @method unknown  waitForPromptPresent

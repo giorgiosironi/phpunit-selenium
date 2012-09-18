@@ -274,7 +274,7 @@ class PHPUnit_Extensions_SeleniumTestCase_Driver
 
         $this->name = $name;
     }
-    
+
     /**
      * @return string
      */
