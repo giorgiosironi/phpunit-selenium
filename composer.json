@@ -3,40 +3,42 @@
     "description": "Selenium Server integration for PHPUnit",
     "type": "library",
     "keywords": [
-        "selenium",
-        "testing"
+        "xunit",
+        "testing",
+        "selenium"
     ],
     "homepage": "http://www.phpunit.de/",
+    "license": "BSD-3-Clause",
     "authors": [
         {
             "name": "Sebastian Bergmann",
-            "email": "sebastian@phpunit.de",
-            "homepage": "http://www.phpunit.de/"
+            "email": "sb@sebastian-bergmann.de",
+            "role": "lead"
         }
     ],
-    "license": "BSD-3-Clause",
+    "version": "1.2.8",
+    "time": "2012-08-08",
+    "support": {
+        "issues": "https://github.com/sebastianbergmann/phpunit-selenium/issues",
+        "irc": "irc://irc.freenode.net/phpunit"
+    },
     "require": {
         "php": ">=5.2.7",
-        "phpunit/phpunit": ">=3.6.0",
+        "phpunit/phpunit": ">=3.6.0@stable",
         "ext-curl": "*",
         "ext-dom": "*",
         "ext-reflection": "*",
         "ext-spl": "*"
     },
-    "config": {
-        "bin-dir": "bin"
+    "suggest": {
+        "claylo/selenium-server-standalone": ">=2.25.0@stable"
     },
     "autoload": {
-        "psr-0": {
-            "PHPUnit_Extensions_Selenium": ""
-        },
-        "files": ["PHPUnit/Extensions/SeleniumCommon/Autoload.php"]
+        "files": [
+            "PHPUnit/Extensions/SeleniumCommon/Autoload.php"
+        ]
     },
-    "minimum-stability": "dev",
-    "extra": {
-        "branch-alias": {
-            "dev-master": "1.2.x-dev"
-        }
-    }
-
+    "include-path": [
+        ""
+    ]
 }
