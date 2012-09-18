@@ -1,0 +1,23 @@
+{
+    "name": "phpunit/phpunit-selenium",
+    "keywords": [ "xunit", "testing", "selenium" ],
+    "license": "BSD-3-Clause",
+    "homepage": "http://www.phpunit.de/",
+    "dependency_map": {
+        "pear.phpunit.de/PHPUnit": "phpunit/phpunit",
+        "pear.claylo.com/selenium-server-standalone": "claylo/selenium-server-standalone"
+    },
+    "support": {
+        "issues": "https://github.com/sebastianbergmann/phpunit-selenium/issues",
+        "irc": "irc://irc.freenode.net/phpunit"
+    },
+    "autoload": {
+        "files": [ "PHPUnit/Extensions/SeleniumCommon/Autoload.php" ]
+    },
+    "include_path": [
+        ""
+    ],
+    "extra_suggestions": [
+        {"dep": "package", "channel": "pear.claylo.com", "name": "selenium-server-standalone", "min": "2.25.0"}
+    ]
+}
