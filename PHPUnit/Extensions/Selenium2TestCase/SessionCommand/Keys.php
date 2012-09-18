@@ -59,11 +59,12 @@ class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Keys
     public function __construct($jsonParameters,
                                 PHPUnit_Extensions_Selenium2TestCase_URL $url)
     {
-        if (is_string($jsonParameters)) {
+        if ($jsonParameters === NULL) {
+            parent::__construct(NULL, $url);
+        } else {
             $jsonParameters = $this->keysForText($jsonParameters);
+            parent::__construct($jsonParameters, $url);
         }
-
-        parent::__construct($jsonParameters, $url);
     }
 
     /**
@@ -83,8 +84,8 @@ class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Keys
      */
     public function keysForText($text)
     {
-        if (is_string($text)) {
-            return array('value' => preg_split('//u', $text, -1, PREG_SPLIT_NO_EMPTY));
+        if (is_scalar($text)) {
+            return array('value' => preg_split('//u', (string) $text, -1, PREG_SPLIT_NO_EMPTY));
         }
         if (is_array($text)) {
             return $text;

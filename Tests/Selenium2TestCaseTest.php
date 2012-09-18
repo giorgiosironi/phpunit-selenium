@@ -278,6 +278,16 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->assertRegExp('/Welcome, TestUser!/', $h2->text());
     }
 
+    /**
+     * #165
+     */
+    public function testNumericValuesCanBeTyped()
+    {
+        $this->url('html/test_type_page1.html');
+        $usernameInput = $this->byName('username');
+        $usernameInput->value(1.13);
+    }
+
     public function testFormsCanBeSubmitted()
     {
         $this->url('html/test_type_page1.html');
