@@ -12,7 +12,7 @@
         "irc": "irc://irc.freenode.net/phpunit"
     },
     "autoload": {
-        "files": [ "PHPUnit/Extensions/SeleniumCommon/Autoload.php" ]
+        "files": []
     },
     "include_path": [
         ""

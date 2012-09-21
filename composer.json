@@ -35,7 +35,6 @@
     },
     "autoload": {
         "files": [
-            "PHPUnit/Extensions/SeleniumCommon/Autoload.php"
         ]
     },
     "include-path": [
