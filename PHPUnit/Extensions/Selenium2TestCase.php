@@ -386,6 +386,12 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
         $this->parameters['desiredCapabilities'] = $capabilities;
     }
 
+
+    public function getDesiredCapabilities()
+    {
+        return $this->parameters['desiredCapabilities'];
+    }
+
     /**
      * @param int $timeout  seconds
      */
@@ -395,11 +401,23 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
     }
 
     /**
-     * Get test id
+     * Get test id (generated internally)
      * @return string
      */
     public function getTestId()
     {
         return $this->testId;
+    }
+
+    /**
+     * Get Selenium2 current session id
+     * @return string
+     */
+    public function getSessionId()
+    {
+        if ($this->session)
+            return $this->session->id();
+
+        return FALSE;
     }
 }
