@@ -105,17 +105,17 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
     /**
      * @var PHPUnit_Extensions_Selenium2TestCase_SessionStrategy
      */
-    private static $sessionStrategy;
+    protected static $sessionStrategy;
 
     /**
      * @var PHPUnit_Extensions_Selenium2TestCase_SessionStrategy
      */
-    private static $browserSessionStrategy;
+    protected static $browserSessionStrategy;
 
     /**
      * @var PHPUnit_Extensions_Selenium2TestCase_SessionStrategy
      */
-    private $localSessionStrategy;
+    protected $localSessionStrategy;
 
     /**
      * @var array
@@ -186,7 +186,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
             $params['seleniumServerRequestsTimeout']);
     }
 
-    private function setUpSessionStrategy($params)
+    protected function setUpSessionStrategy($params)
     {
         // This logic enables us to have a session strategy reused for each
         // item in self::$browsers. We don't want them both to share one
