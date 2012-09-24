@@ -334,6 +334,11 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
         $this->parameters['host'] = $host;
     }
 
+    public function getHost()
+    {
+        return $this->parameters['host'];
+    }
+
     /**
      * @param  integer $port
      * @throws InvalidArgumentException
@@ -345,6 +350,11 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
         }
 
         $this->parameters['port'] = $port;
+    }
+
+    public function getPort()
+    {
+        return $this->parameters['port'];
     }
 
     /**
@@ -378,6 +388,14 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
         $this->parameters['browserUrl'] = new PHPUnit_Extensions_Selenium2TestCase_URL($browserUrl);
     }
 
+    public function getBrowserUrl()
+    {
+        if (isset($this->parameters['browserUrl'])) {
+            return $this->parameters['browserUrl'];
+        }
+        return '';
+    }
+
     /**
      * @see http://code.google.com/p/selenium/wiki/JsonWireProtocol
      */
@@ -398,6 +416,11 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
     public function setSeleniumServerRequestsTimeout($timeout)
     {
         $this->parameters['seleniumServerRequestsTimeout'] = $timeout;
+    }
+
+    public function getSeleniumServerRequestsTimeout()
+    {
+        return $this->parameters['seleniumServerRequestsTimeout'];
     }
 
     /**
