@@ -132,6 +132,23 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
             'window' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Window',
             'windowHandle' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_GenericAccessor',
             'windowHandles' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_GenericAccessor',
+            'touchDown' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
+            'touchUp' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
+            'touchMove' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
+            'touchScroll' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
+            'flick' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost'
+        );
+    }
+
+
+    protected function initCommandsMap()
+    {
+        $this->commandsMap = array(
+            'touchDown' => 'touch/down',
+            'touchUp' => 'touch/up',
+            'touchMove' => 'touch/move',
+            'touchScroll' => 'touch/scroll',
+            'flick' => 'touch/flick'
         );
     }
 
