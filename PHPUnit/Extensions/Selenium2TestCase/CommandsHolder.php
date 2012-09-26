@@ -150,7 +150,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase_CommandsHolder
         }
     }
 
-    private function newCommand($commandName, $jsonParameters)
+    protected function newCommand($commandName, $jsonParameters)
     {
         if (isset($this->commands[$commandName])) {
             $factoryMethod = $this->commands[$commandName];
