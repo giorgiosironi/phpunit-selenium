@@ -44,7 +44,7 @@ class PHPUnit_Extensions_SeleniumCommon_RemoteCoverage
             $remotePath = $originalRemotePath;
             $separator  = $this->findDirectorySeparator($remotePath);
 
-            while (!($localpath = PHPUnit_Util_Filesystem::fileExistsInIncludePath($remotePath)) &&
+            while (!($localpath = stream_resolve_include_path($remotePath)) &&
                    strpos($remotePath, $separator) !== FALSE) {
                 $remotePath = substr($remotePath, strpos($remotePath, $separator) + 1);
             }

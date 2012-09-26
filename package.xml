@@ -19,7 +19,7 @@
  </lead>
  <date>2012-08-08</date>
  <version>
-  <release>1.2.8</release>
+  <release>1.2.9</release>
   <api>1.2.1</api>
  </version>
  <stability>
@@ -200,7 +200,7 @@
  <dependencies>
   <required>
    <php>
-    <min>5.2.7</min>
+    <min>5.3.3</min>
    </php>
    <pearinstaller>
     <min>1.9.4</min>
@@ -208,7 +208,7 @@
    <package>
     <name>PHPUnit</name>
     <channel>pear.phpunit.de</channel>
-    <min>3.6.0</min>
+    <min>3.7.0</min>
    </package>
    <extension>
     <name>curl</name>
