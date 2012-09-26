@@ -136,7 +136,9 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
             'touchUp' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
             'touchMove' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
             'touchScroll' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
-            'flick' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost'
+            'flick' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
+            'location' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Location',
+            'orientation' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Orientation'
         );
     }
 
@@ -351,5 +353,15 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
     {
         $url = $this->url->addCommand('localStorage');
         return new PHPUnit_Extensions_Selenium2TestCase_Session_Storage($this->driver, $url);
+    }
+
+    public function landscape()
+    {
+        $this->orientation('LANDSCAPE');
+    }
+
+    public function portrait()
+    {
+        $this->orientation('PORTRAIT');
     }
 }
