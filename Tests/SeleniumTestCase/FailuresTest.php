@@ -137,7 +137,8 @@ class Extensions_SeleniumTestCaseFailuresTest extends Tests_SeleniumTestCase_Bas
             $this->onNotSuccessfulTest($originalException);
         } catch (Exception $e) {
             $this->assertTrue(file_exists($this->screenshotPath));
-            $this->assertTrue((bool) strstr($e->getMessage(), 'Screenshot: http://.../'));
+            $message = $e->getMessage();
+            $this->assertTrue((bool) strstr($message, 'Screenshot: http://.../'), "Excpetion message does not contain screenshot path: `$message`");
             return;
         }
         $this->fail('An exception should have been raised by now.');
@@ -152,7 +153,7 @@ class Extensions_SeleniumTestCaseFailuresTest extends Tests_SeleniumTestCase_Bas
 
     private function getAnError()
     {
-        $error = new PHPUnit_Framework_Error('an error', 1, __FILE__, __LINE__, '');
+        $error = new PHPUnit_Framework_Error('an error', 1, __FILE__, __LINE__);
         $this->errorLine = __LINE__ - 1;
         return $error;
     }
