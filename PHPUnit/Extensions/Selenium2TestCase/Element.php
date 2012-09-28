@@ -98,23 +98,31 @@ class PHPUnit_Extensions_Selenium2TestCase_Element
             'submit' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
             'text' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor',
             'value' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Value',
-            'tap' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
-            'scroll' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
-            'doubletap' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
-            'longtap' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
-            'flick' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost'
+            'tap' => $this->touchCommandFactoryMethod('touch/click'),
+            'scroll' => $this->touchCommandFactoryMethod('touch/scroll'),
+            'doubletap' => $this->touchCommandFactoryMethod('touch/doubleclick'),
+            'longtap' => $this->touchCommandFactoryMethod('touch/longclick'),
+            'flick' => $this->touchCommandFactoryMethod('touch/flick')
         );
     }
 
-    protected function initCommandsMap()
+    private function touchCommandFactoryMethod($urlSegment)
     {
-        $this->commandsMap = array(
-            'tap' => 'touch/click',
-            'scroll' => 'touch/scroll',
-            'doubletap' => 'touch/doubleclick',
-            'longtap' => 'touch/longclick',
-            'flick' => 'touch/flick'
-        );
+        $url = $this->sessionUrl()->addCommand($urlSegment);
+        $self = $this;
+        return function ($jsonParameters, $commandUrl) use ($url, $self) {
+            if ((is_array($jsonParameters) &&
+                    !isset($jsonParameters['element'])) ||
+                    is_null($jsonParameters)) {
+                $jsonParameters['element'] = $self->getId();
+            }
+            return new PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost($jsonParameters, $url);
+        };
+    }
+
+    private function sessionUrl()
+    {
+        return $this->url->ascend()->ascend();
     }
 
     /**
@@ -154,28 +162,5 @@ class PHPUnit_Extensions_Selenium2TestCase_Element
     protected function criteria($using)
     {
         return new PHPUnit_Extensions_Selenium2TestCase_ElementCriteria($using);
-    }
-
-    protected function newCommand($commandName, $jsonParameters)
-    {
-        if (isset($this->commands[$commandName])) {
-            $factoryMethod = $this->commands[$commandName];
-            $realCommandName = $commandName;
-            if (isset($this->commandsMap[$commandName]))
-                $realCommandName = $this->commandsMap[$commandName];
-            if (strpos($realCommandName, 'touch') !== false) {
-                $url = $this->url->ascend()->ascend()->addCommand($realCommandName);
-                if ((is_array($jsonParameters) &&
-                        !isset($jsonParameters['element'])) ||
-                        is_null($jsonParameters)) {
-                    $jsonParameters['element'] = $this->getId();
-                }
-            } else {
-                $url = $this->url->addCommand($realCommandName);
-            }
-            $command = $factoryMethod($jsonParameters, $url);
-            return $command;
-        }
-        throw new BadMethodCallException("The command '$commandName' is not existent or not supported yet.");
     }
 }

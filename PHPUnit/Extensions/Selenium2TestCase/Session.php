@@ -132,37 +132,21 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
             'window' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Window',
             'windowHandle' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_GenericAccessor',
             'windowHandles' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_GenericAccessor',
-            'touchDown' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
-            'touchUp' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
-            'touchMove' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
-            'touchScroll' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
-            'flick' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
+            'touchDown' => $this->touchCommandFactoryMethod('touch/down'),
+            'touchUp' => $this->touchCommandFactoryMethod('touch/up'),
+            'touchMove' => $this->touchCommandFactoryMethod('touch/move'),
+            'touchScroll' => $this->touchCommandFactoryMethod('touch/scroll'),
+            'flick' => $this->touchCommandFactoryMethod('touch/flick'),
             'location' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Location',
             'orientation' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Orientation'
         );
     }
 
-
-    protected function initCommandsMap()
+    private function touchCommandFactoryMethod($urlSegment)
     {
-        $this->commandsMap = array(
-            'touchDown' => 'touch/down',
-            'touchUp' => 'touch/up',
-            'touchMove' => 'touch/move',
-            'touchScroll' => 'touch/scroll',
-            'flick' => 'touch/flick'
-        );
-    }
-
-    /**
-     * @params string $commandClass     a class name, descending from
-                                        PHPUnit_Extensions_Selenium2TestCase_Command
-     * @return callable
-     */
-    private function factoryMethod($commandClass)
-    {
-        return function($jsonParameters, $url) use ($commandClass) {
-            return new $commandClass($jsonParameters, $url);
+        $url = $this->url->addCommand($urlSegment);
+        return function ($jsonParameters, $commandUrl) use ($url) {
+            return new PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost($jsonParameters, $url);
         };
     }
 

@@ -71,19 +71,12 @@ abstract class PHPUnit_Extensions_Selenium2TestCase_CommandsHolder
      */
     protected $commands;
 
-    /**
-     * @var array   mapping of commands to possibly-complex URLs
-     *
-     */
-    protected $commandsMap;
-
     public function __construct($driver,
                                 PHPUnit_Extensions_Selenium2TestCase_URL $url)
     {
         $this->driver = $driver;
         $this->url = $url;
         $this->commands = array();
-        $this->initCommandsMap();
         foreach ($this->initCommands() as $commandName => $handler) {
             if (is_string($handler)) {
                 $this->commands[$commandName] = $this->factoryMethod($handler);
@@ -100,11 +93,6 @@ abstract class PHPUnit_Extensions_Selenium2TestCase_CommandsHolder
      *                  callables of the form function($parameter, $commandUrl)
      */
     protected abstract function initCommands();
-
-    protected function initCommandsMap()
-    {
-        $this->commandsMap = array();
-    }
 
     public function __call($commandName, $arguments)
     {
@@ -150,14 +138,17 @@ abstract class PHPUnit_Extensions_Selenium2TestCase_CommandsHolder
         }
     }
 
+    /**
+     * @param string $commandName  The called method name
+     *                              defined as a key in initCommands()
+     * @param array $jsonParameters
+     * @return PHPUnit_Extensions_Selenium2TestCase_Command
+     */
     protected function newCommand($commandName, $jsonParameters)
     {
         if (isset($this->commands[$commandName])) {
             $factoryMethod = $this->commands[$commandName];
-            $realCommandName = $commandName;
-            if (isset($this->commandsMap[$commandName]))
-                $realCommandName = $this->commandsMap[$commandName];
-            $url = $this->url->addCommand($realCommandName);
+            $url = $this->url->addCommand($commandName);
             $command = $factoryMethod($jsonParameters, $url);
             return $command;
         }
