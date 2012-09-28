@@ -118,6 +118,9 @@ class PHPUnit_Extensions_Selenium2TestCase_Driver
 
         $rawResponse = trim(curl_exec($curl));
         $info = curl_getinfo($curl);
+        if ($info['http_code'] == 0) {
+            throw new PHPUnit_Extensions_Selenium2TestCase_NoSeleniumException();
+        }
         if ($info['http_code'] == 404) {
             throw new BadMethodCallException("The command $url is not recognized by the server.");
         }

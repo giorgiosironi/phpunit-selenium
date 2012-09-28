@@ -82,6 +82,9 @@
       <file baseinstalldir="/" name="Exception.php" role="php">
        <tasks:replace from="@package_version@" to="version" type="package-info" />
       </file>
+      <file baseinstalldir="/" name="NoSeleniumException.php" role="php">
+       <tasks:replace from="@package_version@" to="version" type="package-info" />
+      </file>
       <file baseinstalldir="/" name="Response.php" role="php">
        <tasks:replace from="@package_version@" to="version" type="package-info" />
       </file>
