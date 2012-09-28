@@ -16,15 +16,15 @@
             "role": "lead"
         }
     ],
-    "version": "1.2.8",
-    "time": "2012-08-08",
+    "version": "1.2.9",
+    "time": "2012-09-28",
     "support": {
         "issues": "https://github.com/sebastianbergmann/phpunit-selenium/issues",
         "irc": "irc://irc.freenode.net/phpunit"
     },
     "require": {
-        "php": ">=5.2.7",
-        "phpunit/phpunit": ">=3.6.0@stable",
+        "php": ">=5.3.3",
+        "phpunit/phpunit": ">=3.7.0@stable",
         "ext-curl": "*",
         "ext-dom": "*",
         "ext-reflection": "*",
