@@ -38,14 +38,13 @@
  </target>
 
  <target name="phpab" description="Generate autoloader scripts">
-  <exec executable="phpab" checkreturn="true">
+  <exec executable="phpab">
    <arg value="--output" />
    <arg path="PHPUnit/Extensions/SeleniumCommon/Autoload.php" />
-   <arg value="--compat" />
    <arg value="--template" />
    <arg path="PHPUnit/Extensions/SeleniumCommon/Autoload.php.in" />
    <arg value="--indent" />
-   <arg value="          " />
+   <arg value="            " />
    <arg path="PHPUnit" />
   </exec>
  </target>
