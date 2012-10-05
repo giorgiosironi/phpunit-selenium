@@ -16,8 +16,6 @@
             "role": "lead"
         }
     ],
-    "version": "1.2.9",
-    "time": "2012-09-28",
     "support": {
         "issues": "https://github.com/sebastianbergmann/phpunit-selenium/issues",
         "irc": "irc://irc.freenode.net/phpunit"
@@ -30,11 +28,9 @@
         "ext-reflection": "*",
         "ext-spl": "*"
     },
-    "suggest": {
-        "claylo/selenium-server-standalone": ">=2.25.0@stable"
-    },
     "autoload": {
-        "files": [
+        "classmap": [
+            "PHPUnit/"
         ]
     },
     "include-path": [

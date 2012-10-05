@@ -12,12 +12,11 @@
         "irc": "irc://irc.freenode.net/phpunit"
     },
     "autoload": {
-        "files": []
+        "classmap": [ "PHPUnit/" ]
     },
     "include_path": [
         ""
     ],
-    "extra_suggestions": [
-        {"dep": "package", "channel": "pear.claylo.com", "name": "selenium-server-standalone", "min": "2.25.0"}
-    ]
+    "version": false,
+    "time": false
 }
