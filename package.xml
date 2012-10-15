@@ -225,12 +225,6 @@
    <extension>
     <name>dom</name>
    </extension>
-   <extension>
-    <name>reflection</name>
-   </extension>
-   <extension>
-    <name>spl</name>
-   </extension>
   </required>
  </dependencies>
  <phprelease/>
