@@ -64,7 +64,7 @@
  * @method bool selected() Checks the state of an option or other form element
  * @method array size() Retrieves the dimensions of the element: 'width' and 'height' of the returned array
  * @method void submit() Submits a form; can be called on its children
- * @method string value($newValue = NULL) Get or set value of form elements
+ * @method string value($newValue = NULL) Get or set value of form elements. If the element already has a value, the set one will be appended to it.
  * @method string text() Get content of ordinary elements
  */
 class PHPUnit_Extensions_Selenium2TestCase_Element

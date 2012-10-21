@@ -279,6 +279,18 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
     }
 
     /**
+     * #190
+     */
+    public function testTypingAddsCharactersToTheCurrentValueOfAnElement()
+    {
+        $this->url('html/test_type_page1.html');
+        $usernameInput = $this->byName('username');
+        $usernameInput->value('first');
+        $usernameInput->value('second');
+        $this->assertEquals('firstsecond', $usernameInput->value());
+    }
+
+    /**
      * #165
      */
     public function testNumericValuesCanBeTyped()
