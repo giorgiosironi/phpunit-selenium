@@ -3,7 +3,7 @@ PHPUnit_Selenium 1.2
 
 This is the list of changes for the PHPUnit_Selenium 1.2 release series.
 
-PHPUnit_Selenium 1.2.9
+PHPUnit_Selenium 1.2.10
 ----------------------
 
 * Fixing Composer autoload support.
