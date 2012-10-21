@@ -6,6 +6,11 @@ This is the list of changes for the PHPUnit_Selenium 1.2 release series.
 PHPUnit_Selenium 1.2.9
 ----------------------
 
+* Fixing Composer autoload support.
+
+PHPUnit_Selenium 1.2.9
+----------------------
+
 * Support for PHPUnit 3.7, requiring PHP 5.3.
 * New getter methods available for extendibility.
 * Window maximization command.
