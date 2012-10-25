@@ -95,6 +95,16 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->assertEquals('Other div', $elements[0]->text());
     }
 
+    public function testClearMultiselectSelectedOptions()
+    {
+        $this->url('html/test_multiselect.html');
+        $selectedOptions = $this->select($this->byId('theSelect'))->selectedLabels();
+        $this->assertEquals(array('Second Option'), $selectedOptions);
+        $this->select($this->byId('theSelect'))->clearSelectedOptions();
+        $selectedOptions = $this->select($this->byId('theSelect'))->selectedLabels();
+        $this->assertEquals(array(), $selectedOptions);
+    }
+
     public function testTheElementWithFocusCanBeInspected()
     {
         $this->markTestIncomplete('Which API to call session/1/element/active?');
