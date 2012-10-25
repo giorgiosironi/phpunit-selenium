@@ -189,6 +189,16 @@ class Extensions_SeleniumTestCaseTest extends Tests_SeleniumTestCase_BaseTestCas
         $this->assertEquals(2, count($this->getSelectedLabels('theSelect')));
     }
 
+    public function testClearMultiselectSelectedOptions()
+    {
+        $this->url('html/test_multiselect.html');
+        $selectedOptions = $this->select($this->byId('theSelect'))->selectedLabels();
+        $this->assertEquals(array('Second Option'), $selectedOptions);
+        $this->select($this->byId('theSelect'))->clearSelectedOptions();
+        $selectedOptions = $this->select($this->byId('theSelect'))->selectedLabels();
+        $this->assertEquals(array(), $selectedOptions);
+    }
+
     public function testSubmit()
     {
         $this->open('html/test_submit.html');
