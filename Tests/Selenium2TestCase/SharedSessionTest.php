@@ -2,7 +2,7 @@
 /**
  * PHPUnit
  *
- * Copyright (c) 2010-2011, Sebastian Bergmann <sb@sebastian-bergmann.de>.
+ * Copyright (c) 2010-2012, Sebastian Bergmann <sb@sebastian-bergmann.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,67 +36,59 @@
  *
  * @package    PHPUnit_Selenium
  * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright  2010-2012 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
- * @since      File available since Release 1.2.6
  */
 
 /**
- * Keeps a Session object shared between test runs to save time.
+ * Tests for PHPUnit_Extensions_Selenium2TestCase.
  *
  * @package    PHPUnit_Selenium
- * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright  2010-2012 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
- * @since      Class available since Release 1.2.6
  */
-class PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Shared
-    implements PHPUnit_Extensions_Selenium2TestCase_SessionStrategy
+class Extensions_SharedSessionTest extends PHPUnit_Extensions_Selenium2TestCase
 {
-    private $original;
-    private $session;
-    private $mainWindow;
-    private $lastTestWasNotSuccessful = FALSE;
+    public static $browsers = array(array('browser'         => 'Firefox',
+                                          'browserName'     => 'firefox',
+                                          'host'            => 'localhost',
+                                          'port'            => 4444,
+                                          'sessionStrategy' => 'shared'));
 
-    public function __construct(PHPUnit_Extensions_Selenium2TestCase_SessionStrategy $originalStrategy)
+    public function setUp()
     {
-        $this->original = $originalStrategy;
-    }
-
-    public function session(array $parameters)
-    {
-        if ($this->lastTestWasNotSuccessful) {
-            if ($this->session !== NULL) {
-                $this->session->stop();
-                $this->session = NULL;
-            }
-            $this->lastTestWasNotSuccessful = FALSE;
+        if (version_compare(phpversion(), '5.3.0', '<')) {
+            $this->markTestSkipped('Functionality available only under PHP 5.3.');
         }
-        if ($this->session === NULL) {
-            $this->session = $this->original->session($parameters);
-            $this->mainWindow = $this->session->windowHandle();
-        } else {
-            try {
-                sleep(1); //Sometimes there is not enough time the window to be closed
-                $this->session->window($this->mainWindow);
-            } catch (RuntimeException $e) {
-                $this->session->stop();
-                $this->session = $this->original->session($parameters);
-                $this->mainWindow = $this->session->windowHandle();
-            }
+        if (!defined('PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL')) {
+            $this->markTestSkipped("You must serve the selenium-1-tests folder from an HTTP server and configure the PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL constant accordingly.");
         }
-        return $this->session;
+        if ($this->getBrowser() == 'safari') {
+            $this->markTestSkipped("Skipping safari since it might not be present");
+        }
+        $this->setBrowserUrl(PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL);
     }
 
-    public function notSuccessfulTest()
+    public function testCloseBrowser()
     {
-        $this->lastTestWasNotSuccessful = TRUE;
+        $this->closeWindow();
     }
 
-    public function endOfTest(PHPUnit_Extensions_Selenium2TestCase_Session $session = NULL)
+    public function testVerifyBrowserOpenedAfterSuccessTest()
     {
+        $this->assertSame(PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL, $this->url());
+    }
+
+    public function testCloseBrowserAndFail()
+    {
+        $this->closeWindow();
+        $this->fail('Fail for verify next test');
+    }
+
+    public function testVerifyBrowserOpenedAfterFailedTest()
+    {
+        $this->assertSame(PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL, $this->url());
     }
 }
