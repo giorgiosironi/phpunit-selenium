@@ -172,7 +172,10 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
         if ($this->stopped) {
             return;
         }
-        $this->driver->curl('DELETE', $this->url);
+        try {
+            $this->driver->curl('DELETE', $this->url);
+        } catch (Exception $e) {
+        }
         $this->stopped = TRUE;
     }
 
