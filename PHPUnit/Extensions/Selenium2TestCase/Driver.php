@@ -117,6 +117,12 @@ class PHPUnit_Extensions_Selenium2TestCase_Driver
         }
 
         $rawResponse = trim(curl_exec($curl));
+        if (curl_errno($curl)) {
+            throw new RuntimeException(
+                'Error connection[' . curl_errno($curl) .'] to ' .
+                $url->getValue()  . ': ' . curl_error($curl)
+            );
+        }
         $info = curl_getinfo($curl);
         if ($info['http_code'] == 0) {
             throw new PHPUnit_Extensions_Selenium2TestCase_NoSeleniumException();
