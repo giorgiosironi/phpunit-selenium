@@ -66,7 +66,7 @@
  * @method void|string url($url = NULL)
  * @method void window($name) Changes the focus to another window
  * @method string windowHandle() Retrieves the current window handle
- * @method string windowHandles() Retrieves a list of all available window handles
+ * @method array windowHandles() Retrieves a list of all available window handles
  * @method string keys() Send a sequence of key strokes to the active element.
  */
 class PHPUnit_Extensions_Selenium2TestCase_Session
@@ -322,6 +322,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
     public function closeWindow()
     {
         $this->driver->curl('DELETE', $this->url->descend('window'));
+        sleep(1);
     }
 
     /**

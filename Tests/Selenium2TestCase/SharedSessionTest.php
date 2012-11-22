@@ -91,4 +91,27 @@ class Extensions_SharedSessionTest extends PHPUnit_Extensions_Selenium2TestCase
     {
         $this->assertSame(PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL, $this->url());
     }
+
+    public function testCloseBrowserAfterOpenOne()
+    {
+        $this->execute(array('script' => "window.open()", 'args' => array()));
+        $this->closeWindow();
+    }
+
+    public function testVerifyBrowserOpenedAfterSuccessTestWithTwoWindows()
+    {
+        $this->assertSame(PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL, $this->url());
+    }
+
+    public function testCloseBrowserAfterOpenOneAndFail()
+    {
+        $this->execute(array('script' => "window.open()", 'args' => array()));
+        $this->closeWindow();
+        $this->fail('Fail for verify next test');
+    }
+
+    public function testVerifyBrowserOpenedAfterFailedTestWithTwoWindows()
+    {
+        $this->assertSame(PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL, $this->url());
+    }
 }

@@ -77,15 +77,13 @@ class PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Shared
         }
         if ($this->session === NULL) {
             $this->session = $this->original->session($parameters);
-            $this->mainWindow = $this->session->windowHandle();
         } else {
             try {
-                sleep(1); //Sometimes there is not enough time the window to be closed
-                $this->session->window($this->mainWindow);
+                list($window) = $this->session->windowHandles();
+                $this->session->window($window);
             } catch (RuntimeException $e) {
                 $this->session->stop();
                 $this->session = $this->original->session($parameters);
-                $this->mainWindow = $this->session->windowHandle();
             }
         }
         return $this->session;
