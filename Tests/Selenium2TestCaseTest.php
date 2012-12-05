@@ -941,4 +941,16 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->assertEquals('Test open', $this->title());
         $this->assertStringEndsWith('html/test_open.html', strstr($this->url(), 'html/'));
     }
+
+    public function testNonexistentElement()
+    {
+        $this->url('html/test_open.html');
+        try {
+            $el = $this->byId("nonexistent");
+        } catch (PHPUnit_Extensions_Selenium2TestCase_WebDriverException $e) {
+            $this->assertEquals(PHPUnit_Extensions_Selenium2TestCase_WebDriverException::NoSuchElement, $e->getCode());
+            return;
+        }
+        $this->fail('The element shouldn\'t exist.');
+    }
 }
