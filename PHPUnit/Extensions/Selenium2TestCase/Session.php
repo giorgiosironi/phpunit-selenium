@@ -255,9 +255,18 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
     public function element(PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $criteria)
     {
         $value = $this->postCommand('element', $criteria);
+        return $this->elementFromResponseValue($value);
+    }
+
+    /**
+     * @param array $value A selenium WebElement
+     * @return PHPUnit_Extensions_Selenium2TestCase_Element
+     */
+    public function elementFromResponseValue(array $value)
+    { 
         return PHPUnit_Extensions_Selenium2TestCase_Element::fromResponseValue($value,
-                                                                               $this->url->descend('element'),
-                                                                               $this->driver);
+            $this->url->descend('element'),
+            $this->driver);
     }
 
     /**
@@ -268,7 +277,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
         $values = $this->postCommand('elements', $criteria);
         $elements = array();
         foreach ($values as $value) {
-            $elements[] = PHPUnit_Extensions_Selenium2TestCase_Element::fromResponseValue($value, $this->url->descend('element'), $this->driver);
+            $elements[] = $this->elementFromResponseValue($value);
         }
         return $elements;
     }
