@@ -67,6 +67,7 @@ spl_autoload_register(
             'phpunit_extensions_selenium2testcase_elementcriteria' => '/Extensions/Selenium2TestCase/ElementCriteria.php',
             'phpunit_extensions_selenium2testcase_exception' => '/Extensions/Selenium2TestCase/Exception.php',
             'phpunit_extensions_selenium2testcase_noseleniumexception' => '/Extensions/Selenium2TestCase/NoSeleniumException.php',
+            'phpunit_extensions_selenium2testcase_webdriverexception' => '/Extensions/Selenium2TestCase/WebDriverException.php',
             'phpunit_extensions_selenium2testcase_response' => '/Extensions/Selenium2TestCase/Response.php',
             'phpunit_extensions_selenium2testcase_screenshotlistener' => '/Extensions/Selenium2TestCase/ScreenshotListener.php',
             'phpunit_extensions_selenium2testcase_session' => '/Extensions/Selenium2TestCase/Session.php',
