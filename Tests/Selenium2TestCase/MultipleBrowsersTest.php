@@ -77,9 +77,6 @@ class Extensions_Selenium2TestCaseMultipleBrowsersTest extends PHPUnit_Extension
 
     public function setUp()
     {
-        if (version_compare(phpversion(), '5.3.0', '<')) {
-            $this->markTestSkipped('Functionality available only under PHP 5.3.');
-        }
         if (!defined('PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL')) {
             $this->markTestSkipped("You must serve the selenium-1-tests folder from an HTTP server and configure the PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL constant accordingly.");
         }
