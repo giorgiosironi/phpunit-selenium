@@ -42,7 +42,7 @@
  */
 
 /**
- * Tests for PHPUnit_Extensions_SeleniumTestCase.
+ * Tests for PHPUnit_Extensions_Selenium2TestCase.
  *
  * @package    PHPUnit_Selenium
  * @author     Giorgio Sironi <info@giorgiosironi.com>
