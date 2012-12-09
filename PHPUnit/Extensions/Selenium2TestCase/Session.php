@@ -172,8 +172,16 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
         if ($this->stopped) {
             return;
         }
-        $this->driver->curl('DELETE', $this->url);
+        try {
+            $this->driver->curl('DELETE', $this->url);
+        } catch (Exception $e) {
+            // sessions which aren't closed because of sharing can time out on the server. In no way trying to close them should make a test fail, as it already finished before arriving here.
+            "Closing sessions: " . $e->getMessage() . "\n";
+        }
         $this->stopped = TRUE;
+        if ($this->stopped) {
+            return;
+        }
     }
 
     /**
