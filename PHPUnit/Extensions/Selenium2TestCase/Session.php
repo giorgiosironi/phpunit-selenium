@@ -329,7 +329,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
      */
     public function currentWindow()
     {
-        $url = $this->url->descend('window')->descend($this->windowHandle());
+        $url = $this->url->descend('window')->descend(trim($this->windowHandle(), '{}'));
         return new PHPUnit_Extensions_Selenium2TestCase_Window($this->driver, $url);
     }
 
