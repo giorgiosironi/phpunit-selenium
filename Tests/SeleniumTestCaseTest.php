@@ -2,7 +2,7 @@
 /**
  * PHPUnit
  *
- * Copyright (c) 2010-2013, Sebastian Bergmann <sb@sebastian-bergmann.de>.
+ * Copyright (c) 2010-2013, Sebastian Bergmann <sebastian@phpunit.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -35,10 +35,10 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @package    PHPUnit_Selenium
- * @author     Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @author     Sebastian Bergmann <sebastian@phpunit.de>
  * @author     Shin Ohno <ganchiku@gmail.com>
  * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2013 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
  */
@@ -47,9 +47,9 @@
  * Tests for PHPUnit_Extensions_SeleniumTestCase.
  *
  * @package    PHPUnit_Selenium
- * @author     Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @author     Sebastian Bergmann <sebastian@phpunit.de>
  * @author     Shin Ohno <ganchiku@gmail.com>
- * @copyright  2010-2013 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
  */
