@@ -95,17 +95,6 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->assertEquals('Other div', $elements[0]->text());
     }
 
-    public function testSelectOptionsInMultiselect()
-    {
-        $this->url('html/test_multiselect.html');
-        $this->select($this->byId('theSelect'))->selectOptionByValue("option1");
-        $selectedOptions = $this->select($this->byId('theSelect'))->selectedLabels();
-        $this->assertEquals(array('First Option','Second Option'), $selectedOptions);
-        $this->select($this->byId('theSelect'))->selectOptionByLabel("Fourth Option");
-        $selectedOptions = $this->select($this->byId('theSelect'))->selectedLabels();
-        $this->assertEquals(array('First Option','Second Option','Fourth Option'), $selectedOptions);
-    }
-
     public function testClearMultiselectSelectedOptions()
     {
         $this->url('html/test_multiselect.html');
