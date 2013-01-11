@@ -114,8 +114,8 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
     public function testElementFromResponseValue()
     {
         $this->url('html/test_open.html');
-        $elementArray = $this->execute(array( 
-            'script' => 'return document.body;', 
+        $elementArray = $this->execute(array(
+            'script' => 'return document.body;',
             'args' => array(),
         ));
         $element = $this->elementFromResponseValue($elementArray);
@@ -343,7 +343,7 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $usernameInput->clear();
         $this->assertEquals('', $usernameInput->value());
     }
-    
+
     public function testTypingNonLatinText()
     {
         $this->url('html/test_type_page1.html');
@@ -369,7 +369,7 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
     {
         $this->url('html/test_select.html');
         $select = $this->select($this->byCssSelector('select'));
-        
+
         // basic
         $this->assertEquals('Second Option', $select->selectedLabel());
         $this->assertEquals('option2', $select->selectedValue());
@@ -554,7 +554,7 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->assertEquals('option1', $select->selectedValue());
         $this->assertEquals('', $eventLog->value());
     }
-    
+
     public function testRadioEventsAreGenerated()
     {
         $this->markTestIncomplete("Flaky: fails on focus in some browsers.");
@@ -618,10 +618,10 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->clickOnElement('theTextbox');
         $this->clickOnElement('theButton');
         $eventLog = $this->byId('eventlog');
-        $this->assertContains('{mouseover(theTextbox)}', $eventLog->value()); 
-        $this->assertContains('{mousedown(theButton)}', $eventLog->value()); 
-        $this->assertContains('{mouseover(theTextbox)}', $eventLog->value()); 
-        $this->assertContains('{mousedown(theButton)}', $eventLog->value()); 
+        $this->assertContains('{mouseover(theTextbox)}', $eventLog->value());
+        $this->assertContains('{mousedown(theButton)}', $eventLog->value());
+        $this->assertContains('{mouseover(theTextbox)}', $eventLog->value());
+        $this->assertContains('{mousedown(theButton)}', $eventLog->value());
     }
 
     public function testKeyEventsAreGenerated()
@@ -632,7 +632,7 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->assertContains('{focus(theTextbox)}'
                            . ' {keydown(theTextbox - 84)}'
                            . ' {keypress(theTextbox)}'
-                           . ' {keyup(theTextbox - 84)}', 
+                           . ' {keyup(theTextbox - 84)}',
                                $this->byId('eventlog')->value());
     }
 
@@ -853,7 +853,7 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
             $this->cookie()->get($name);
             $this->fail('The cookie shouldn\'t exist anymore.');
         } catch (PHPUnit_Extensions_Selenium2TestCase_Exception $e) {
-            $this->assertEquals("There is no '$name' cookie available on this page.", $e->getMessage()); 
+            $this->assertEquals("There is no '$name' cookie available on this page.", $e->getMessage());
         }
     }
 
@@ -963,5 +963,32 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
             return;
         }
         $this->fail('The element shouldn\'t exist.');
+    }
+
+    public function testSpecialKeys()
+    {
+        $this->url('html/test_special_keys.html');
+        $this->byId('input')->click();
+
+        $this->specialKey('F2');
+        $this->assertEquals('113', $this->alertText());
+        $this->acceptAlert();
+
+        $this->specialKey('alt');
+        $this->specialKey('enter');
+        $this->assertEquals('14,alt', $this->alertText());
+        $this->acceptAlert();
+
+        // note that modifier keys (alt, control, shift) are sticky
+        // so they are enabled until you explicitly disable it by another call
+        $this->specialKey('control');
+        $this->specialKey('shift');
+        $this->specialKey('home');
+        $this->assertEquals('36,alt,control,shift', $this->alertText());
+        $this->acceptAlert();
+
+        $this->specialKey('alt,shift,numpad7');
+        $this->assertEquals('103,control', $this->alertText());
+        $this->acceptAlert();
     }
 }
