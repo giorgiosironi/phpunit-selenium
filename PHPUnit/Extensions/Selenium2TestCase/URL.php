@@ -97,9 +97,16 @@ final class PHPUnit_Extensions_Selenium2TestCase_URL
      */
     public function descend($addition)
     {
-        $newValue = rtrim($this->value, '/')
-                  . '/'
-                  . ltrim($addition, '/');
+        if ($addition == '') {
+            // if we're adding nothing, respect the current url's choice of
+            // whether or not to include a trailing slash; prevents inadvertent
+            // adding of slashes to urls that can't handle it
+            $newValue = $this->value;
+        } else {
+            $newValue = rtrim($this->value, '/')
+                      . '/'
+                      . ltrim($addition, '/');
+        }
         return new self($newValue);
     }
 
