@@ -250,6 +250,18 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->assertEquals('Click Page 1', $this->title());
     }
 
+    public function testDoubleclick()
+    {
+        $this->url('html/test_doubleclick.html');
+        $link = $this->byId('link');
+
+        $this->moveto($link);
+        $this->doubleclick();
+
+        $this->assertEquals('doubleclicked', $this->alertText());
+        $this->acceptAlert();
+    }
+
     public function testByLinkText()
     {
         $this->url('html/test_click_page1.html');

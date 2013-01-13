@@ -56,6 +56,7 @@
  * @method mixed alertText($value = NULL) Gets the alert dialog text, or sets the text for a prompt dialog
  * @method void back()
  * @method void dismissAlert() Press Cancel on an alert, or does not confirm a dialog
+ * @method void doubleclick() Double-clicks at the current mouse coordinates (set by moveto).
  * @method string execute(array $javaScriptCode) Injects arbitrary JavaScript in the page and returns the last. See unit tests for usage
  * @method string executeAsync(array $javaScriptCode) Injects arbitrary JavaScript and wait for the callback (last element of arguments) to be called. See unit tests for usage
  * @method void forward()
@@ -116,6 +117,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
             'buttondown' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
             'buttonup' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
             'dismissAlert' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_DismissAlert',
+            'doubleclick' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
             'execute' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
             'executeAsync' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
             'forward' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
