@@ -456,12 +456,12 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
     }
 
     /**
-     * Sends special key
+     * Sends a special key
      * @param string $name
      * @throws PHPUnit_Extensions_Selenium2TestCase_Exception
      * @see PHPUnit_Extensions_Selenium2TestCase_KeysHolder
      */
-    public function specialKey($name)
+    public function keysSpecial($name)
     {
         $names = explode(',', $name);
 
