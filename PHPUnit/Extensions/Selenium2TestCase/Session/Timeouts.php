@@ -59,6 +59,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Session_Timeouts
     extends PHPUnit_Extensions_Selenium2TestCase_CommandsHolder
 {
     private $maximumTimeout;
+    private $lastImplicitWaitValue = 0;
 
     public function __construct($driver,
                                 PHPUnit_Extensions_Selenium2TestCase_URL $url,
@@ -74,6 +75,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Session_Timeouts
         return array(
             'implicitWait' => function ($milliseconds, $commandUrl) use ($self) {
                 $self->check($milliseconds);
+                $self->setLastImplicitWaitValue($milliseconds);
                 $jsonParameters = array('ms' => $milliseconds);
                 return new PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost($jsonParameters, $commandUrl);
             },
@@ -84,6 +86,16 @@ class PHPUnit_Extensions_Selenium2TestCase_Session_Timeouts
             },
 
         );
+    }
+
+    public function setLastImplicitWaitValue($implicitWait)
+    {
+        $this->lastImplicitWaitValue = $implicitWait;
+    }
+
+    public function getLastImplicitWaitValue()
+    {
+        return $this->lastImplicitWaitValue;
     }
 
     public function check($timeout) {
