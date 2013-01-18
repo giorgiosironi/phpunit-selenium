@@ -19,7 +19,9 @@ Copyright 2004 ThoughtWorks, Inc
 <script type="text/javascript">
 
 window.onload = function() {
-    var input = document.getElementById('input');
+    var input = document.getElementById('input'),
+        check = document.getElementById('check');
+
     input.addEventListener('keydown', function(e) {
         var result = e.which;
 
@@ -37,7 +39,7 @@ window.onload = function() {
 
         // only alert if the key isn't Alt, Control or Shift
         if ([16, 17, 18].indexOf(e.which) == -1) {
-            alert(result);
+            check.innerHTML = result;
         }
 
         return false;
@@ -48,6 +50,7 @@ window.onload = function() {
 </head>
 <body>
 <input id="input" />
+<div id="check" />
 </body>
 
 </html>

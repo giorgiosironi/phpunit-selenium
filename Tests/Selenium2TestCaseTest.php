@@ -971,24 +971,20 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->byId('input')->click();
 
         $this->keysSpecial('F2');
-        $this->assertEquals('113', $this->alertText());
-        $this->acceptAlert();
+        $this->assertEquals('113', $this->byId('check')->text());
 
         $this->keysSpecial('alt');
         $this->keysSpecial('enter');
-        $this->assertEquals('14,alt', $this->alertText());
-        $this->acceptAlert();
+        $this->assertEquals('14,alt', $this->byId('check')->text());
 
         // note that modifier keys (alt, control, shift) are sticky
         // so they are enabled until you explicitly disable it by another call
         $this->keysSpecial('control');
         $this->keysSpecial('shift');
         $this->keysSpecial('home');
-        $this->assertEquals('36,alt,control,shift', $this->alertText());
-        $this->acceptAlert();
+        $this->assertEquals('36,alt,control,shift', $this->byId('check')->text());
 
         $this->keysSpecial('alt,shift,numpad7');
-        $this->assertEquals('103,control', $this->alertText());
-        $this->acceptAlert();
+        $this->assertEquals('103,control', $this->byId('check')->text());
     }
 }
