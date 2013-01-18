@@ -448,4 +448,17 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
 
         return FALSE;
     }
+
+    /**
+     * Wait until callback isn't null or timeout occurs
+     *
+     * @param $callback
+     * @param null $timeout
+     * @return mixed
+     */
+    public function waitUntil($callback, $timeout = null)
+    {
+        $waitUntil = new PHPUnit_Extensions_Selenium2TestCase_WaitUntil($this);
+        return $waitUntil->run($callback, $timeout);
+    }
 }
