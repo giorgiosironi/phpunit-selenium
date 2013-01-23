@@ -241,6 +241,15 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
     }
 
     /**
+     * @param string $value     e.g. 'body'
+     * @return PHPUnit_Extensions_Selenium2TestCase_Element
+     */
+    public function byTag($value)
+    {
+        return $this->by('tag name', $value);
+    }
+
+    /**
      * @param string $strategy     supported by JsonWireProtocol element/ command
      * @param string $value
      * @return PHPUnit_Extensions_Selenium2TestCase_Element
@@ -273,7 +282,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
      * @return PHPUnit_Extensions_Selenium2TestCase_Element
      */
     public function elementFromResponseValue(array $value)
-    { 
+    {
         return PHPUnit_Extensions_Selenium2TestCase_Element::fromResponseValue($value,
             $this->url->descend('element'),
             $this->driver);
