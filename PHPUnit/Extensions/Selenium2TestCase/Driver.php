@@ -80,7 +80,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Driver
         return new PHPUnit_Extensions_Selenium2TestCase_Session(
             $this,
             $sessionPrefix,
-            $browserUrl, 
+            $browserUrl,
             $timeouts
         );
     }
@@ -110,6 +110,8 @@ class PHPUnit_Extensions_Selenium2TestCase_Driver
             curl_setopt($curl, CURLOPT_POST, TRUE);
             if ($params && is_array($params)) {
                 curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($params));
+            } else {
+                curl_setopt($curl, CURLOPT_POSTFIELDS, '');
             }
             curl_setopt($curl, CURLOPT_FOLLOWLOCATION, TRUE);
         } else if ($http_method == 'DELETE') {
