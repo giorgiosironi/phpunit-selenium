@@ -3,7 +3,13 @@ PHPUnit_Selenium 1.2
 
 This is the list of changes for the PHPUnit_Selenium 1.2 release series.
 
-PHPUnit_Selenium 1.2.10
+PHPUnit_Selenium 1.2.12
+----------------------
+
+* Added waitUntil(), byTag()
+* Added specialKeys() for non-alphanumeric keys
+
+PHPUnit_Selenium 1.2.11
 ----------------------
 
 * Fixing Composer autoload support.
