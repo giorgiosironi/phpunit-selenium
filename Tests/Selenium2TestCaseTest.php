@@ -912,7 +912,7 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
     public function testMouseButtonsCanBeClickedMultipleTimes()
     {
         $this->markTestIncomplete();
-        $this->moveto(array(
+        $this->moveTo(array(
             'element' => 'id', // or Element object
             'xoffset' => 0,
             'yofsset' => 0
