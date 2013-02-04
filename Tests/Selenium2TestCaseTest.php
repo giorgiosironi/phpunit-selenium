@@ -912,7 +912,7 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
     public function testMouseButtonsCanBeClickedMultipleTimes()
     {
         $this->markTestIncomplete();
-        $this->moveTo(array(
+        $this->moveto(array(
             'element' => 'id', // or Element object
             'xoffset' => 0,
             'yofsset' => 0
@@ -1009,5 +1009,30 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
 
         $this->keysSpecial('alt,shift,numpad7');
         $this->assertEquals('103,control', $this->byId('check')->text());
+    }
+    
+    
+    public function testMoveto(){
+        $this->url('html/test_moveto.html');
+        
+        $el=$this->byCssSelector('table tr');
+        $this->moveto($el);
+        
+        $el=$this->byCssSelector('td_8');
+        $this->moveto($el);
+        
+        $this->assertEquals('td_2td_5td_8', $this->byId('log')->value());
+    }
+    
+    public function testMovetoByOffset(){
+        $this->url('html/test_moveto.html');
+        
+        $el=$this->byCssSelector('td_1');
+        $this->moveto($el);
+        
+        $el=$this->byXPath('//tr[3]');
+        $this->moveto(array('element'=>$el,'xoffset'=>2,'yoffset'=>2));
+        
+        $this->assertEquals('td_1td_4td_7', $this->byId('log')->value());
     }
 }
