@@ -1055,7 +1055,9 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
     }
     
     private function resetLogOutput(){
+        //clears the log for the testMoveto* tests
         $this->execute(array('script'=>'document.getElementById("log").value="";','args'=>array()));
+        //and asserts that it's really empty
         $this->assertEquals('',$this->byId('log')->value(),"No clean test start possible, log already contaminated.");
     }
 }
