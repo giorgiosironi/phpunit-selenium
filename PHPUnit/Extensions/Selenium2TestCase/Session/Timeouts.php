@@ -2,7 +2,7 @@
 /**
  * PHPUnit
  *
- * Copyright (c) 2010-2012, Sebastian Bergmann <sb@sebastian-bergmann.de>.
+ * Copyright (c) 2010-2013, Sebastian Bergmann <sebastian@phpunit.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,7 +36,7 @@
  *
  * @package    PHPUnit_Selenium
  * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2012 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
  * @since      File available since Release 1.2.4
@@ -47,7 +47,7 @@
  *
  * @package    PHPUnit_Selenium
  * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2012 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
@@ -59,6 +59,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Session_Timeouts
     extends PHPUnit_Extensions_Selenium2TestCase_CommandsHolder
 {
     private $maximumTimeout;
+    private $lastImplicitWaitValue = 0;
 
     public function __construct($driver,
                                 PHPUnit_Extensions_Selenium2TestCase_URL $url,
@@ -74,6 +75,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Session_Timeouts
         return array(
             'implicitWait' => function ($milliseconds, $commandUrl) use ($self) {
                 $self->check($milliseconds);
+                $self->setLastImplicitWaitValue($milliseconds);
                 $jsonParameters = array('ms' => $milliseconds);
                 return new PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost($jsonParameters, $commandUrl);
             },
@@ -84,6 +86,16 @@ class PHPUnit_Extensions_Selenium2TestCase_Session_Timeouts
             },
 
         );
+    }
+
+    public function setLastImplicitWaitValue($implicitWait)
+    {
+        $this->lastImplicitWaitValue = $implicitWait;
+    }
+
+    public function getLastImplicitWaitValue()
+    {
+        return $this->lastImplicitWaitValue;
     }
 
     public function check($timeout) {

@@ -2,7 +2,7 @@
 /**
  * PHPUnit
  *
- * Copyright (c) 2002-2011, Sebastian Bergmann <sb@sebastian-bergmann.de>.
+ * Copyright (c) 2002-2013, Sebastian Bergmann <sebastian@phpunit.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -35,8 +35,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @package    PHPUnit_Selenium
- * @author     Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @copyright  2002-2010 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @author     Sebastian Bergmann <sebastian@phpunit.de>
+ * @copyright  2002-2010 Sebastian Bergmann <sebastian@phpunit.de>
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
  * @since      File available since Release 1.1.0
@@ -66,7 +66,9 @@ spl_autoload_register(
             'phpunit_extensions_selenium2testcase_elementcommand_value' => '/Extensions/Selenium2TestCase/ElementCommand/Value.php',
             'phpunit_extensions_selenium2testcase_elementcriteria' => '/Extensions/Selenium2TestCase/ElementCriteria.php',
             'phpunit_extensions_selenium2testcase_exception' => '/Extensions/Selenium2TestCase/Exception.php',
+            'phpunit_extensions_selenium2testcase_keysholder' => '/Extensions/Selenium2TestCase/KeysHolder.php',
             'phpunit_extensions_selenium2testcase_noseleniumexception' => '/Extensions/Selenium2TestCase/NoSeleniumException.php',
+            'phpunit_extensions_selenium2testcase_webdriverexception' => '/Extensions/Selenium2TestCase/WebDriverException.php',
             'phpunit_extensions_selenium2testcase_response' => '/Extensions/Selenium2TestCase/Response.php',
             'phpunit_extensions_selenium2testcase_screenshotlistener' => '/Extensions/Selenium2TestCase/ScreenshotListener.php',
             'phpunit_extensions_selenium2testcase_session' => '/Extensions/Selenium2TestCase/Session.php',
@@ -91,6 +93,7 @@ spl_autoload_register(
             'phpunit_extensions_selenium2testcase_sessionstrategy_shared' => '/Extensions/Selenium2TestCase/SessionStrategy/Shared.php',
             'phpunit_extensions_selenium2testcase_statecommand' => '/Extensions/Selenium2TestCase/StateCommand.php',
             'phpunit_extensions_selenium2testcase_url' => '/Extensions/Selenium2TestCase/URL.php',
+            'phpunit_extensions_selenium2testcase_waituntil' => '/Extensions/Selenium2TestCase/WaitUntil.php',
             'phpunit_extensions_selenium2testcase_window' => '/Extensions/Selenium2TestCase/Window.php',
             'phpunit_extensions_seleniumbrowsersuite' => '/Extensions/SeleniumBrowserSuite.php',
             'phpunit_extensions_seleniumcommon_remotecoverage' => '/Extensions/SeleniumCommon/RemoteCoverage.php',

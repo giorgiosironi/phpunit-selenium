@@ -2,7 +2,7 @@
 /**
  * PHPUnit
  *
- * Copyright (c) 2010-2011, Sebastian Bergmann <sb@sebastian-bergmann.de>.
+ * Copyright (c) 2010-2013, Sebastian Bergmann <sebastian@phpunit.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,7 +36,7 @@
  *
  * @package    PHPUnit_Selenium
  * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
  * @since      File available since Release 1.2.0
@@ -47,7 +47,7 @@
  *
  * @package    PHPUnit_Selenium
  * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
@@ -97,9 +97,16 @@ final class PHPUnit_Extensions_Selenium2TestCase_URL
      */
     public function descend($addition)
     {
-        $newValue = rtrim($this->value, '/')
-                  . '/'
-                  . ltrim($addition, '/');
+        if ($addition == '') {
+            // if we're adding nothing, respect the current url's choice of
+            // whether or not to include a trailing slash; prevents inadvertent
+            // adding of slashes to urls that can't handle it
+            $newValue = $this->value;
+        } else {
+            $newValue = rtrim($this->value, '/')
+                      . '/'
+                      . ltrim($addition, '/');
+        }
         return new self($newValue);
     }
 

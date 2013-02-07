@@ -2,7 +2,7 @@
 /**
  * PHPUnit
  *
- * Copyright (c) 2010-2011, Sebastian Bergmann <sb@sebastian-bergmann.de>.
+ * Copyright (c) 2010-2013, Sebastian Bergmann <sebastian@phpunit.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,7 +36,7 @@
  *
  * @package    PHPUnit_Selenium
  * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
  * @since      File available since Release 1.2.0
@@ -49,7 +49,7 @@
  *
  * @package    PHPUnit_Selenium
  * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
@@ -82,6 +82,7 @@
  * @method string windowHandle() Retrieves the current window handle
  * @method string windowHandles() Retrieves a list of all available window handles
  * @method string keys() Send a sequence of key strokes to the active element.
+ * @method void closeWindow() Close the current window.
  */
 abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_TestCase
 {
@@ -133,6 +134,11 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
     private $collectCodeCoverageInformation;
 
     /**
+     * @var PHPUnit_Extensions_Selenium2TestCase_KeysHolder
+     */
+    private $keysHolder;
+
+    /**
      * @param boolean
      */
     public static function shareSession($shareSession)
@@ -171,6 +177,8 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
             'desiredCapabilities' => array(),
             'seleniumServerRequestsTimeout' => 60
         );
+
+        $this->keysHolder = new PHPUnit_Extensions_Selenium2TestCase_KeysHolder();
     }
 
     public function setupSpecificBrowser($params)
@@ -446,5 +454,33 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
             return $this->session->id();
 
         return FALSE;
+    }
+
+    /**
+     * Wait until callback isn't null or timeout occurs
+     *
+     * @param $callback
+     * @param null $timeout
+     * @return mixed
+     */
+    public function waitUntil($callback, $timeout = null)
+    {
+        $waitUntil = new PHPUnit_Extensions_Selenium2TestCase_WaitUntil($this);
+        return $waitUntil->run($callback, $timeout);
+    }
+
+    /**
+     * Sends a special key
+     * @param string $name
+     * @throws PHPUnit_Extensions_Selenium2TestCase_Exception
+     * @see PHPUnit_Extensions_Selenium2TestCase_KeysHolder
+     */
+    public function keysSpecial($name)
+    {
+        $names = explode(',', $name);
+
+        foreach ($names as $key) {
+            $this->keys($this->keysHolder->specialKey(trim($key)));
+        }
     }
 }

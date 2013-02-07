@@ -20,4 +20,11 @@ class Tests_Selenium2TestCase_TimeoutTest extends Tests_Selenium2TestCase_BaseTe
     {
         $this->timeouts()->implicitWait(120000);
     }
+
+    public function testGetLastImplicitWaitValue()
+    {
+        $this->assertEquals(0, $this->timeouts()->getLastImplicitWaitValue());
+        $this->timeouts()->implicitWait(42);
+        $this->assertEquals(42, $this->timeouts()->getLastImplicitWaitValue());
+    }
 }

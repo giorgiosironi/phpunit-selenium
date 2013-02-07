@@ -2,7 +2,7 @@
 /**
  * PHPUnit
  *
- * Copyright (c) 2010-2013, Sebastian Bergmann <sebastian@phpunit.de>.
+ * Copyright (c) 2010-2011, Sebastian Bergmann <sb@sebastian-bergmann.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -35,49 +35,45 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @package    PHPUnit_Selenium
- * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
+ * @author     Ivan Kurnosov <zerkms@zerkms.com>
+ * @copyright  2010-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
- * @since      File available since Release 1.2.6
  */
 
 /**
- * Manage the local storage HTML 5 database.
+ * Tests for PHPUnit_Extensions_Selenium2TestCase_KeysHolderTest.
  *
  * @package    PHPUnit_Selenium
- * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
+ * @author     Ivan Kurnosov <zerkms@zerkms.com>
+ * @copyright  2010-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
- * @since      Class available since Release 1.2.6
  */
-class PHPUnit_Extensions_Selenium2TestCase_Session_Storage
+class PHPUnit_Extensions_Selenium2TestCase_KeysHolderTest extends Tests_Selenium2TestCase_BaseTestCase
 {
-    private $driver;
-    private $url;
+    /**
+     * @var PHPUnit_Extensions_Selenium2TestCase_KeysHolder
+     */
+    private $_keysHolder;
 
-    public function __construct(PHPUnit_Extensions_Selenium2TestCase_Driver $driver,
-                                PHPUnit_Extensions_Selenium2TestCase_URL $url)
+    public function setUp()
     {
-        $this->driver = $driver;
-        $this->url = $url;
+        $this->_keysHolder = new PHPUnit_Extensions_Selenium2TestCase_KeysHolder();
+        parent::setUp();
     }
 
-    public function __set($name, $value)
+    public function testGetSuccessfully()
     {
-        $this->driver->curl('POST', $this->url, array(
-            'key' => $name,
-            'value' => (string)$value
-        ));
+        $this->assertEquals("\xEE\x80\xB5", $this->_keysHolder->specialKey('f5'));
+        $this->assertEquals("\xEE\x80\x87", $this->_keysHolder->specialKey('Enter'));
     }
 
-    public function __get($name)
+    /**
+     * @expectedException PHPUnit_Extensions_Selenium2TestCase_Exception
+     */
+    public function testNotExistent()
     {
-        return $this->driver->curl(
-            'GET',
-            $this->url->descend('key')->descend($name)
-        )->getValue();
+        $this->_keysHolder->specialKey('foo');
     }
 }

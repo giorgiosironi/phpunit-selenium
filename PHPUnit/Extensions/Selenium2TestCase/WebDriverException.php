@@ -35,49 +35,50 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @package    PHPUnit_Selenium
- * @author     Giorgio Sironi <info@giorgiosironi.com>
+ * @author     Christian Becker <chris@beckr.org>
  * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
- * @since      File available since Release 1.2.6
+ * @since      
  */
 
 /**
- * Manage the local storage HTML 5 database.
+ * Indicates an exception as a result of a non-sucessful WebDriver response status code.
  *
  * @package    PHPUnit_Selenium
- * @author     Giorgio Sironi <info@giorgiosironi.com>
+ * @author     Christian Becker <chris@beckr.org>
  * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
- * @since      Class available since Release 1.2.6
+ * @since      
  */
-class PHPUnit_Extensions_Selenium2TestCase_Session_Storage
+class PHPUnit_Extensions_Selenium2TestCase_WebDriverException extends PHPUnit_Extensions_Selenium2TestCase_Exception
 {
-    private $driver;
-    private $url;
-
-    public function __construct(PHPUnit_Extensions_Selenium2TestCase_Driver $driver,
-                                PHPUnit_Extensions_Selenium2TestCase_URL $url)
-    {
-        $this->driver = $driver;
-        $this->url = $url;
-    }
-
-    public function __set($name, $value)
-    {
-        $this->driver->curl('POST', $this->url, array(
-            'key' => $name,
-            'value' => (string)$value
-        ));
-    }
-
-    public function __get($name)
-    {
-        return $this->driver->curl(
-            'GET',
-            $this->url->descend('key')->descend($name)
-        )->getValue();
-    }
+    /* @see http://code.google.com/p/selenium/wiki/JsonWireProtocol#Response_Status_Codes */
+    const Success = 0;
+    const NoSuchDriver = 6;
+    const NoSuchElement = 7;
+    const NoSuchFrame = 8;
+    const UnknownCommand = 9;
+    const StaleElementReference = 10;
+    const ElementNotVisible = 11;
+    const InvalidElementState = 12;
+    const UnknownError = 13;
+    const ElementIsNotSelectable = 15;
+    const JavaScriptError = 17;
+    const XPathLookupError = 19;
+    const Timeout = 21;
+    const NoSuchWindow = 23;
+    const InvalidCookieDomain = 24;
+    const UnableToSetCookie = 25;
+    const UnexpectedAlertOpen = 26;
+    const NoAlertOpenError = 27;
+    const ScriptTimeout = 28;
+    const InvalidElementCoordinates = 29;
+    const IMENotAvailable = 30;
+    const IMEEngineActivationFailed = 31;
+    const InvalidSelector = 32;
+    const SessionNotCreatedException = 33;
+    const MoveTargetOutOfBounds = 34;
 }

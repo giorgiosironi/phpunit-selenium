@@ -2,7 +2,7 @@
 /**
  * PHPUnit
  *
- * Copyright (c) 2010-2011, Sebastian Bergmann <sb@sebastian-bergmann.de>.
+ * Copyright (c) 2010-2013, Sebastian Bergmann <sebastian@phpunit.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,7 +36,7 @@
  *
  * @package    PHPUnit_Selenium
  * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
  * @since      File available since Release 1.2.0
@@ -47,7 +47,7 @@
  *
  * @package    PHPUnit_Selenium
  * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
@@ -56,6 +56,7 @@
  * @method mixed alertText($value = NULL) Gets the alert dialog text, or sets the text for a prompt dialog
  * @method void back()
  * @method void dismissAlert() Press Cancel on an alert, or does not confirm a dialog
+ * @method void doubleclick() Double-clicks at the current mouse coordinates (set by moveto).
  * @method string execute(array $javaScriptCode) Injects arbitrary JavaScript in the page and returns the last. See unit tests for usage
  * @method string executeAsync(array $javaScriptCode) Injects arbitrary JavaScript and wait for the callback (last element of arguments) to be called. See unit tests for usage
  * @method void forward()
@@ -116,6 +117,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
             'buttondown' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
             'buttonup' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
             'dismissAlert' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_DismissAlert',
+            'doubleclick' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
             'execute' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
             'executeAsync' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
             'forward' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
@@ -174,9 +176,14 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
         }
         try {
             $this->driver->curl('DELETE', $this->url);
-        } catch (RuntimeException $e) {
+        } catch (Exception $e) {
+            // sessions which aren't closed because of sharing can time out on the server. In no way trying to close them should make a test fail, as it already finished before arriving here.
+            "Closing sessions: " . $e->getMessage() . "\n";
         }
         $this->stopped = TRUE;
+        if ($this->stopped) {
+            return;
+        }
     }
 
     /**
@@ -234,6 +241,15 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
     }
 
     /**
+     * @param string $value     e.g. 'body'
+     * @return PHPUnit_Extensions_Selenium2TestCase_Element
+     */
+    public function byTag($value)
+    {
+        return $this->by('tag name', $value);
+    }
+
+    /**
      * @param string $strategy     supported by JsonWireProtocol element/ command
      * @param string $value
      * @return PHPUnit_Extensions_Selenium2TestCase_Element
@@ -258,9 +274,18 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
     public function element(PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $criteria)
     {
         $value = $this->postCommand('element', $criteria);
+        return $this->elementFromResponseValue($value);
+    }
+
+    /**
+     * @param array $value A selenium WebElement
+     * @return PHPUnit_Extensions_Selenium2TestCase_Element
+     */
+    public function elementFromResponseValue(array $value)
+    {
         return PHPUnit_Extensions_Selenium2TestCase_Element::fromResponseValue($value,
-                                                                               $this->url->descend('element'),
-                                                                               $this->driver);
+            $this->url->descend('element'),
+            $this->driver);
     }
 
     /**
@@ -271,7 +296,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
         $values = $this->postCommand('elements', $criteria);
         $elements = array();
         foreach ($values as $value) {
-            $elements[] = PHPUnit_Extensions_Selenium2TestCase_Element::fromResponseValue($value, $this->url->descend('element'), $this->driver);
+            $elements[] = $this->elementFromResponseValue($value);
         }
         return $elements;
     }
@@ -315,7 +340,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
      */
     public function currentWindow()
     {
-        $url = $this->url->descend('window')->descend($this->windowHandle());
+        $url = $this->url->descend('window')->descend(trim($this->windowHandle(), '{}'));
         return new PHPUnit_Extensions_Selenium2TestCase_Window($this->driver, $url);
     }
 

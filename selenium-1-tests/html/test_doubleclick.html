@@ -1,6 +1,5 @@
-<html>
 <!--
-Copyright 2006 ThoughtWorks, Inc
+Copyright 2004 ThoughtWorks, Inc
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -14,19 +13,22 @@ Copyright 2006 ThoughtWorks, Inc
  See the License for the specific language governing permissions and
  limitations under the License.
 -->
+<html>
 <head>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html">
+<title>Doubleclick Page</title>
+<script type="text/javascript">
+
+window.onload = function() {
+    var link = document.getElementById('link');
+    link.addEventListener('dblclick', function() {
+        alert('doubleclicked');
+    });
+};
+
+</script>
 </head>
 <body>
-<img style="width: 644px; height: 41px;" alt="banner" src="banner.gif"><br>
-<h3>Test for submit command</h3>
-<form id="searchForm" method="GET" action="javascript:alert('form submitted')"
-      onsubmit="javascript:alert('onsubmit called'); return document.forms[0].elements.okayToSubmit.checked;">
-search: <input name="search" type="text">
-<br />
-OK to submit? <input name="okayToSubmit" type="checkbox" />
-<br />
-<input type="submit" />
-</form>
+<div id="link">Doubleclick here</a>
 </body>
-<html>
+
+</html>

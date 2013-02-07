@@ -2,7 +2,7 @@
 /**
  * PHPUnit
  *
- * Copyright (c) 2010-2011, Sebastian Bergmann <sb@sebastian-bergmann.de>.
+ * Copyright (c) 2010-2013, Sebastian Bergmann <sebastian@phpunit.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,17 +36,17 @@
  *
  * @package    PHPUnit_Selenium
  * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
  */
 
 /**
- * Tests for PHPUnit_Extensions_SeleniumTestCase.
+ * Tests for PHPUnit_Extensions_Selenium2TestCase.
  *
  * @package    PHPUnit_Selenium
  * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
  */
@@ -95,10 +95,42 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->assertEquals('Other div', $elements[0]->text());
     }
 
+    public function testSelectOptionsInMultiselect()
+    {
+        $this->url('html/test_multiselect.html');
+        $this->select($this->byId('theSelect'))->selectOptionByValue("option1");
+        $selectedOptions = $this->select($this->byId('theSelect'))->selectedLabels();
+        $this->assertEquals(array('First Option','Second Option'), $selectedOptions);
+        $this->select($this->byId('theSelect'))->selectOptionByLabel("Fourth Option");
+        $selectedOptions = $this->select($this->byId('theSelect'))->selectedLabels();
+        $this->assertEquals(array('First Option','Second Option','Fourth Option'), $selectedOptions);
+    }
+
+    public function testClearMultiselectSelectedOptions()
+    {
+        $this->url('html/test_multiselect.html');
+        $selectedOptions = $this->select($this->byId('theSelect'))->selectedLabels();
+        $this->assertEquals(array('Second Option'), $selectedOptions);
+        $this->select($this->byId('theSelect'))->clearSelectedOptions();
+        $selectedOptions = $this->select($this->byId('theSelect'))->selectedLabels();
+        $this->assertEquals(array(), $selectedOptions);
+    }
+
     public function testTheElementWithFocusCanBeInspected()
     {
         $this->markTestIncomplete('Which API to call session/1/element/active?');
         $this->keys(array('value' => array())); // should send key strokes to the active element
+    }
+
+    public function testElementFromResponseValue()
+    {
+        $this->url('html/test_open.html');
+        $elementArray = $this->execute(array(
+            'script' => 'return document.body;',
+            'args' => array(),
+        ));
+        $element = $this->elementFromResponseValue($elementArray);
+        $this->assertEquals('This is a test of the open command.', $element->text());
     }
 
     public function testActivePageElementReceivesTheKeyStrokes()
@@ -229,6 +261,18 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->assertEquals('Click Page 1', $this->title());
     }
 
+    public function testDoubleclick()
+    {
+        $this->url('html/test_doubleclick.html');
+        $link = $this->byId('link');
+
+        $this->moveto($link);
+        $this->doubleclick();
+
+        $this->assertEquals('doubleclicked', $this->alertText());
+        $this->acceptAlert();
+    }
+
     public function testByLinkText()
     {
         $this->url('html/test_click_page1.html');
@@ -322,7 +366,7 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $usernameInput->clear();
         $this->assertEquals('', $usernameInput->value());
     }
-    
+
     public function testTypingNonLatinText()
     {
         $this->url('html/test_type_page1.html');
@@ -348,7 +392,7 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
     {
         $this->url('html/test_select.html');
         $select = $this->select($this->byCssSelector('select'));
-        
+
         // basic
         $this->assertEquals('Second Option', $select->selectedLabel());
         $this->assertEquals('option2', $select->selectedValue());
@@ -533,7 +577,7 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->assertEquals('option1', $select->selectedValue());
         $this->assertEquals('', $eventLog->value());
     }
-    
+
     public function testRadioEventsAreGenerated()
     {
         $this->markTestIncomplete("Flaky: fails on focus in some browsers.");
@@ -597,10 +641,10 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->clickOnElement('theTextbox');
         $this->clickOnElement('theButton');
         $eventLog = $this->byId('eventlog');
-        $this->assertContains('{mouseover(theTextbox)}', $eventLog->value()); 
-        $this->assertContains('{mousedown(theButton)}', $eventLog->value()); 
-        $this->assertContains('{mouseover(theTextbox)}', $eventLog->value()); 
-        $this->assertContains('{mousedown(theButton)}', $eventLog->value()); 
+        $this->assertContains('{mouseover(theTextbox)}', $eventLog->value());
+        $this->assertContains('{mousedown(theButton)}', $eventLog->value());
+        $this->assertContains('{mouseover(theTextbox)}', $eventLog->value());
+        $this->assertContains('{mousedown(theButton)}', $eventLog->value());
     }
 
     public function testKeyEventsAreGenerated()
@@ -611,7 +655,7 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->assertContains('{focus(theTextbox)}'
                            . ' {keydown(theTextbox - 84)}'
                            . ' {keypress(theTextbox)}'
-                           . ' {keyup(theTextbox - 84)}', 
+                           . ' {keyup(theTextbox - 84)}',
                                $this->byId('eventlog')->value());
     }
 
@@ -832,7 +876,7 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
             $this->cookie()->get($name);
             $this->fail('The cookie shouldn\'t exist anymore.');
         } catch (PHPUnit_Extensions_Selenium2TestCase_Exception $e) {
-            $this->assertEquals("There is no '$name' cookie available on this page.", $e->getMessage()); 
+            $this->assertEquals("There is no '$name' cookie available on this page.", $e->getMessage());
         }
     }
 
@@ -930,5 +974,40 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->url('html/test_open.html');
         $this->assertEquals('Test open', $this->title());
         $this->assertStringEndsWith('html/test_open.html', strstr($this->url(), 'html/'));
+    }
+
+    public function testNonexistentElement()
+    {
+        $this->url('html/test_open.html');
+        try {
+            $el = $this->byId("nonexistent");
+        } catch (PHPUnit_Extensions_Selenium2TestCase_WebDriverException $e) {
+            $this->assertEquals(PHPUnit_Extensions_Selenium2TestCase_WebDriverException::NoSuchElement, $e->getCode());
+            return;
+        }
+        $this->fail('The element shouldn\'t exist.');
+    }
+
+    public function testSpecialKeys()
+    {
+        $this->url('html/test_special_keys.html');
+        $this->byId('input')->click();
+
+        $this->keysSpecial('F2');
+        $this->assertEquals('113', $this->byId('check')->text());
+
+        $this->keysSpecial('alt');
+        $this->keysSpecial('enter');
+        $this->assertEquals('14,alt', $this->byId('check')->text());
+
+        // note that modifier keys (alt, control, shift) are sticky
+        // so they are enabled until you explicitly disable it by another call
+        $this->keysSpecial('control');
+        $this->keysSpecial('shift');
+        $this->keysSpecial('home');
+        $this->assertEquals('36,alt,control,shift', $this->byId('check')->text());
+
+        $this->keysSpecial('alt,shift,numpad7');
+        $this->assertEquals('103,control', $this->byId('check')->text());
     }
 }

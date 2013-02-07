@@ -5,9 +5,6 @@ class Tests_Selenium2TestCase_Coverage_SingleFileTest extends PHPUnit_Framework_
 
     public function setUp()
     {
-        if (version_compare(phpversion(), '5.3.0', '<')) {
-            $this->markTestSkipped('Functionality available only under PHP 5.3.');
-        }
         $this->coverageFilePattern = __DIR__ . '/*.' . $this->dummyTestId;
         $this->dummyClassSourceFile = __DIR__ . '/DummyClass.php';
     }
