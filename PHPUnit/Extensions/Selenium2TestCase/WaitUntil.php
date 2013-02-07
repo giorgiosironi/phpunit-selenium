@@ -69,7 +69,7 @@ class PHPUnit_Extensions_Selenium2TestCase_WaitUntil
      *
      * @var int
      */
-    private $_defaultTimeout = 0;
+    private $_defaultTimeout = 40000;
 
     /**
      * The sleep interval between iterations, ms

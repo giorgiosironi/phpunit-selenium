@@ -74,6 +74,7 @@ class Extensions_SharedSessionTest extends PHPUnit_Extensions_Selenium2TestCase
     public function testCloseBrowser()
     {
         $this->closeWindow();
+        $this->waitForWindowClosed();
     }
 
     public function testVerifyBrowserOpenedAfterSuccessTest()
@@ -84,6 +85,7 @@ class Extensions_SharedSessionTest extends PHPUnit_Extensions_Selenium2TestCase
     public function testCloseBrowserAndFail()
     {
         $this->closeWindow();
+        $this->waitForWindowClosed();
         $this->fail('Fail for verify next test');
     }
 
@@ -96,6 +98,7 @@ class Extensions_SharedSessionTest extends PHPUnit_Extensions_Selenium2TestCase
     {
         $this->execute(array('script' => "window.open()", 'args' => array()));
         $this->closeWindow();
+        $this->waitForWindowClosed();
     }
 
     public function testVerifyBrowserOpenedAfterSuccessTestWithTwoWindows()
@@ -107,6 +110,7 @@ class Extensions_SharedSessionTest extends PHPUnit_Extensions_Selenium2TestCase
     {
         $this->execute(array('script' => "window.open()", 'args' => array()));
         $this->closeWindow();
+        $this->waitForWindowClosed();
         $this->fail('Fail for verify next test');
     }
 
