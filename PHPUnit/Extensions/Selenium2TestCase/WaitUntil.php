@@ -120,6 +120,10 @@ class PHPUnit_Extensions_Selenium2TestCase_WaitUntil
                 $result = $callback($this->_testCase);
 
                 if (!is_null($result)) {
+                    if ($implicitWait) {
+                        $this->_testCase->timeouts()->implicitWait($implicitWait);
+                    }
+
                     return $result;
                 }
             } catch(Exception $e) {
