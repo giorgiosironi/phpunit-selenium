@@ -103,53 +103,63 @@ class Tests_Selenium2TestCase_MobileFeaturesTest extends PHPUnit_Extensions_Sele
 
     public function testMove()
     {
+        $this->url('/');
         $this->touchMove(array('x' => 100, 'y' => 100));
     }
 
     public function testGeneralScroll()
     {
+        $this->url('/');
         $this->touchScroll(array('xoffset' => 0, 'yoffset' => 100));
     }
 
     public function testTouchDownUp()
     {
+        $this->url('/');
         $this->touchDown(array('x' => 100, 'y' => 100));
         $this->touchUp(array('x' => 100, 'y' => 100));
     }
 
     public function testGeneralFlick()
     {
+        $this->url('/');
         $this->flick(array('ySpeed' => -20));
     }
 
     public function testTap()
     {
+        $this->url('/');
         $this->byId('i am a link')->tap();
         $this->assertContains("I am another page title", $this->title());
     }
 
     public function testElementScroll()
     {
+        $this->url('/');
         $this->byId('i_am_a_textbox')->scroll(array('yoffset' => 50, 'xoffset' => 0));
     }
 
     public function testElementFlick()
     {
+        $this->url('/');
         $this->byId('i_am_a_textbox')->flick(array('yoffset' => 50, 'speed' => 10, 'xoffset' => 0));
     }
 
     public function testDoubleTap()
     {
+        $this->url('/');
         $this->byId('i_am_an_id')->doubletap();
     }
 
     public function testLongTap()
     {
+        $this->url('/');
         $this->byId('i am a link')->longtap();
     }
 
     public function testLocation()
     {
+        $this->url('/');
         $this->location(array('latitude' => 35.5, 'longitude' => 17.6, 'altitude' => 50));
         $location = $this->location();
         $this->assertEquals($location['latitude'], 35.5);
@@ -157,6 +167,7 @@ class Tests_Selenium2TestCase_MobileFeaturesTest extends PHPUnit_Extensions_Sele
 
     public function testOrientation()
     {
+        $this->url('/');
         $this->landscape();
         $this->assertEquals($this->orientation(), 'LANDSCAPE');
         $this->portrait();
