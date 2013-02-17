@@ -234,7 +234,6 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
         try {
             if (!$this->session) {
                 $this->session = $this->getStrategy()->session($this->parameters);
-                $this->url('');
             }
         } catch (PHPUnit_Extensions_Selenium2TestCase_NoSeleniumException $e) {
             $this->markTestSkipped("The Selenium Server is not active on host {$this->parameters['host']} at port {$this->parameters['port']}.");
