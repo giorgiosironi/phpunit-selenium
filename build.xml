@@ -152,6 +152,8 @@
   <exec command="grep -r 'file.*\.php' package.xml | wc | awk '{print $1;}'" passthru="true"/>
   <echo msg="Files in PHPUnit/" />
   <exec command="find PHPUnit/ -name '*.php' | wc | awk '{print $1;}'" passthru="true" />
-
+  <echo msg="Do you need to update the version?" />
+  <exec command="grep -r VERSION PHPUnit/" passthru="true" />
  </target>
+
 </project>
