@@ -1010,7 +1010,46 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->keysSpecial('alt,shift,numpad7');
         $this->assertEquals('103,control', $this->byId('check')->text());
     }
-    
+
+    public function testSessionClick()
+    {
+        $this->url('html/test_mouse_buttons.html');
+        $input = $this->byId('input');
+
+        $this->moveto($input);
+
+        $this->click();
+        $this->assertEquals('0', $this->byId('check')->text());
+
+        $this->click(PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Click::LEFT);
+        $this->assertEquals('0', $this->byId('check')->text());
+
+        // I couldn't get it worked in selenium webdriver 2.28: even though the client (phpunit-selenium) sends
+        // the button: 1 in the request (checked with wireshark) - it still uses left mouse button (0)
+        /*
+        $this->click(PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Click::MIDDLE);
+        $this->assertEquals('1', $this->byId('check')->text());
+        */
+
+        $this->click(PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Click::RIGHT);
+        $this->assertEquals('2', $this->byId('check')->text());
+    }
+
+    /**
+     * @expectedException BadMethodCallException
+     */
+    public function testSessionClickNotScalar()
+    {
+        $this->click(array());
+    }
+
+    /**
+     * @expectedException BadMethodCallException
+     */
+    public function testSessionClickNotAValidValue()
+    {
+        $this->click(3);
+    }
     
     public function testMoveto(){
         $this->url('html/test_moveto.html');

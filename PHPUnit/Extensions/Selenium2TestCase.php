@@ -62,6 +62,7 @@
  * @method \PHPUnit_Extensions_Selenium2TestCase_Element byId($value)
  * @method \PHPUnit_Extensions_Selenium2TestCase_Element byName($value)
  * @method \PHPUnit_Extensions_Selenium2TestCase_Element byXPath($value)
+ * @method void click(int $button = 0) Click any mouse button (at the coordinates set by the last moveto command).
  * @method void clickOnElement($id)
  * @method string currentScreenshot() BLOB of the image file
  * @method void dismissAlert() Press Cancel on an alert, or does not confirm a dialog
@@ -233,7 +234,6 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
         try {
             if (!$this->session) {
                 $this->session = $this->getStrategy()->session($this->parameters);
-                $this->url('');
             }
         } catch (PHPUnit_Extensions_Selenium2TestCase_NoSeleniumException $e) {
             $this->markTestSkipped("The Selenium Server is not active on host {$this->parameters['host']} at port {$this->parameters['port']}.");

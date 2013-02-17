@@ -3,6 +3,12 @@ PHPUnit_Selenium 1.2
 
 This is the list of changes for the PHPUnit_Selenium 1.2 release series.
 
+PHPUnit_Selenium 1.3
+----------------------
+
+* BC break: setBrowserUrl() argument is not loaded at the start of a test
+* waitUntil() now works nicely with implicitWait()
+
 PHPUnit_Selenium 1.2.12
 ----------------------
 
