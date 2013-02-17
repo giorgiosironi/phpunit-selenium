@@ -90,7 +90,7 @@ class Tests_Selenium2TestCase_WaitUntilTest extends Tests_Selenium2TestCase_Base
         $this->waitUntil('not a callback');
     }
 
-    public function testImplicitWaitIsRestored()
+    public function testImplicitWaitIsRestoredAfterFailure()
     {
         $this->url('html/test_wait.html');
         $this->timeouts()->implicitWait(7000);
@@ -104,6 +104,21 @@ class Tests_Selenium2TestCase_WaitUntilTest extends Tests_Selenium2TestCase_Base
         } catch (PHPUnit_Extensions_Selenium2TestCase_WebDriverException $e) {}
 
         // in this case - element should be found, because of the implicitWait
+        $element = $this->byId('testBox');
+        $this->assertEquals('testBox', $element->attribute('id'));
+    }
+
+    public function testImplicitWaitIsRestoredAfterSuccess()
+    {
+        $this->url('html/test_wait.html');
+        $this->timeouts()->implicitWait(8000);
+
+        $this->waitUntil(function($testCase) {
+            $testCase->byId('parent');
+            return true;
+        });
+
+        // in this case - element should be found, because we set a 8000ms implicitWait before the waitUntil.
         $element = $this->byId('testBox');
         $this->assertEquals('testBox', $element->attribute('id'));
     }
