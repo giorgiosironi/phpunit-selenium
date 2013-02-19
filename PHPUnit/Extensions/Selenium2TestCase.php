@@ -87,7 +87,7 @@
  */
 abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_TestCase
 {
-    const VERSION = '1.2.10';
+    const VERSION = '@package_version@';
 
     /**
      * @var string  override to provide code coverage data from the server
