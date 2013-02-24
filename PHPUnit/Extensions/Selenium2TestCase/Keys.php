@@ -51,7 +51,7 @@
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
- * @since      Class available since Release 1.2.12
+ * @since      Class available since Release 1.3.0
  * @see        http://code.google.com/p/selenium/wiki/JsonWireProtocol#/session/:sessionId/element/:id/value
  */
 class PHPUnit_Extensions_Selenium2TestCase_Keys

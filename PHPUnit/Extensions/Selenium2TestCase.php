@@ -135,6 +135,11 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
     private $collectCodeCoverageInformation;
 
     /**
+     * @var PHPUnit_Extensions_Selenium2TestCase_KeysHolder
+     */
+    private $keysHolder;
+
+    /**
      * @param boolean
      */
     public static function shareSession($shareSession)
@@ -173,6 +178,8 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
             'desiredCapabilities' => array(),
             'seleniumServerRequestsTimeout' => 60
         );
+
+        $this->keysHolder = new PHPUnit_Extensions_Selenium2TestCase_KeysHolder();
     }
 
     public function setupSpecificBrowser($params)
@@ -460,5 +467,22 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
     {
         $waitUntil = new PHPUnit_Extensions_Selenium2TestCase_WaitUntil($this);
         return $waitUntil->run($callback, $timeout);
+    }
+
+    /**
+     * Sends a special key
+     * Deprecated due to issues with IE webdriver. Use keys() method instead
+     * @deprecated
+     * @param string $name
+     * @throws PHPUnit_Extensions_Selenium2TestCase_Exception
+     * @see PHPUnit_Extensions_Selenium2TestCase_KeysHolder
+     */
+    public function keysSpecial($name)
+    {
+        $names = explode(',', $name);
+
+        foreach ($names as $key) {
+            $this->keys($this->keysHolder->specialKey(trim($key)));
+        }
     }
 }
