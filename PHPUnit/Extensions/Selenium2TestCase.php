@@ -471,6 +471,8 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
 
     /**
      * Sends a special key
+     * Deprecated due to issues with IE webdriver. Use keys() method instead
+     * @deprecated
      * @param string $name
      * @throws PHPUnit_Extensions_Selenium2TestCase_Exception
      * @see PHPUnit_Extensions_Selenium2TestCase_KeysHolder
