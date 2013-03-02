@@ -41,6 +41,8 @@
  * @link       http://www.phpunit.de/
  */
 
+use PHPUnit_Extensions_Selenium2TestCase_Keys as Keys;
+
 /**
  * Tests for PHPUnit_Extensions_Selenium2TestCase.
  *
@@ -993,21 +995,20 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->url('html/test_special_keys.html');
         $this->byId('input')->click();
 
-        $this->keysSpecial('F2');
+        $this->keys(Keys::F2);
         $this->assertEquals('113', $this->byId('check')->text());
 
-        $this->keysSpecial('alt');
-        $this->keysSpecial('enter');
+        $this->keys(Keys::ALT . Keys::ENTER);
         $this->assertEquals('14,alt', $this->byId('check')->text());
 
         // note that modifier keys (alt, control, shift) are sticky
         // so they are enabled until you explicitly disable it by another call
-        $this->keysSpecial('control');
-        $this->keysSpecial('shift');
-        $this->keysSpecial('home');
+        // The above is valid for at least Chrome and Firefox, in IE they are
+        // sticky only within a single keys() method call
+        $this->keys(Keys::CONTROL . Keys::SHIFT . Keys::HOME);
         $this->assertEquals('36,alt,control,shift', $this->byId('check')->text());
 
-        $this->keysSpecial('alt,shift,numpad7');
+        $this->keys(Keys::ALT . Keys::SHIFT . Keys::NUMPAD7);
         $this->assertEquals('103,control', $this->byId('check')->text());
     }
 
