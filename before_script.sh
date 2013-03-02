@@ -1,7 +1,7 @@
 echo "Getting composer"
 curl -O http://getcomposer.org/composer.phar
 echo "Dependencies"
-composer.phar install --dev
+php composer.phar install --dev
 echo "Starting Python HTTP server"
 cd selenium-1-tests
 python -m SimpleHTTPServer 8080 > /dev/null 2>&1 &
