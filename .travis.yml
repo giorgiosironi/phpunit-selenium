@@ -3,4 +3,4 @@ php:
   - 5.3
   - 5.4
 before_script: ./before_script.sh
-script: "vendor/bin/phpunit --filter testOpen Tests/Selenium2TestCaseTest.php"
+script: "vendor/bin/phpunit --debug --filter testOpen Tests/Selenium2TestCaseTest.php"
