@@ -1,14 +1,7 @@
-echo "Submodules of phpunit-selenium"
-git submodule init
-git submodule update
 echo "Getting composer"
 curl -O http://getcomposer.org/composer.phar
-echo "PHPUnit 3.7 is used"
-cd vendor/phpunit
-git checkout 3.7
-git pull --ff-only origin 3.7
-../../composer.phar install --dev
-cd -
+echo "Dependencies"
+composer.phar install --dev
 echo "Starting Python HTTP server"
 cd selenium-1-tests
 python -m SimpleHTTPServer 8080 > /dev/null 2>&1 &
