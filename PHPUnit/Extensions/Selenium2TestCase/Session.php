@@ -61,6 +61,7 @@
  * @method string executeAsync(array $javaScriptCode) Injects arbitrary JavaScript and wait for the callback (last element of arguments) to be called. See unit tests for usage
  * @method void forward()
  * @method void frame($elementId) Changes the focus to a frame in the page
+ * @method void moveto(\PHPUnit_Extensions_Selenium2TestCase_Element $element) Move the mouse by an offset of the specificed element.
  * @method void refresh()
  * @method string source() Returns the HTML source of the page
  * @method string title()
