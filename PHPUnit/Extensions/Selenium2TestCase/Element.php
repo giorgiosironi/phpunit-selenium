@@ -60,7 +60,6 @@
  * @method bool enabled() Checks a form element's state
  * @method bool equals(PHPUnit_Extensions_Selenium2TestCase_Element $another) Checks if the two elements are the same on the page
  * @method array location() Retrieves the element's position in the page: keys 'x' and 'y' in the returned array
- * @method string name() Retrieves the tag name
  * @method bool selected() Checks the state of an option or other form element
  * @method array size() Retrieves the dimensions of the element: 'width' and 'height' of the returned array
  * @method void submit() Submits a form; can be called on its children
@@ -162,5 +161,14 @@ class PHPUnit_Extensions_Selenium2TestCase_Element
     protected function criteria($using)
     {
         return new PHPUnit_Extensions_Selenium2TestCase_ElementCriteria($using);
+    }
+
+    /**
+     * Retrieves the tag name
+     * @return string
+     */
+    public function name()
+    {
+        return strtolower(parent::name());
     }
 }
