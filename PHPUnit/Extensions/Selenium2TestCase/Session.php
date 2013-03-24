@@ -308,7 +308,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
      */
     public function select(PHPUnit_Extensions_Selenium2TestCase_Element $element)
     {
-        $tag = $element->name();
+        $tag = strtolower($element->name());
         if ($tag !== 'select') {
             throw new InvalidArgumentException("The element is not a `select` tag but a `$tag`.");
         }
