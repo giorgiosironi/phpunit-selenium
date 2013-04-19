@@ -105,15 +105,6 @@ abstract class PHPUnit_Extensions_Selenium2TestCase_Element_Accessor
     }
 
     /**
-     * @todo leave either criteria() or using()
-     * @return PHPUnit_Extensions_Selenium2TestCase_ElementCriteria
-     */
-    protected function criteria($using)
-    {
-        return new PHPUnit_Extensions_Selenium2TestCase_ElementCriteria($using);
-    }
-
-    /**
      * @return PHPUnit_Extensions_Selenium2TestCase_URL
      */
     protected abstract function getSessionUrl();
@@ -125,7 +116,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase_Element_Accessor
      */
     private function by($strategy, $value)
     {
-        return $this->element($this->criteria($strategy)->value($value));
+        return $this->element($this->using($strategy)->value($value));
     }
 
 }
