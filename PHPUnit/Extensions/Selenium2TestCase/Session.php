@@ -72,7 +72,7 @@
  * @method string keys() Send a sequence of key strokes to the active element.
  */
 class PHPUnit_Extensions_Selenium2TestCase_Session
-    extends PHPUnit_Extensions_Selenium2TestCase_CommandsHolder
+    extends PHPUnit_Extensions_Selenium2TestCase_Element_Accessor
 {
     /**
      * @var string  the base URL for this session,
@@ -186,121 +186,6 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
         if ($this->stopped) {
             return;
         }
-    }
-
-    /**
-     * @param string $value     e.g. 'container'
-     * @return PHPUnit_Extensions_Selenium2TestCase_Element
-     */
-    public function byClassName($value)
-    {
-        return $this->by('class name', $value);
-    }
-
-    /**
-     * @param string $value     e.g. 'div.container'
-     * @return PHPUnit_Extensions_Selenium2TestCase_Element
-     */
-    public function byCssSelector($value)
-    {
-        return $this->by('css selector', $value);
-    }
-
-    /**
-     * @param string $value     e.g. 'uniqueId'
-     * @return PHPUnit_Extensions_Selenium2TestCase_Element
-     */
-    public function byId($value)
-    {
-        return $this->by('id', $value);
-    }
-
-    /**
-     * @param string $value     e.g. 'email_address'
-     * @return PHPUnit_Extensions_Selenium2TestCase_Element
-     */
-    public function byName($value)
-    {
-        return $this->by('name', $value);
-    }
-
-    /**
-     * @param string $value     e.g. '/div[@attribute="value"]'
-     * @return PHPUnit_Extensions_Selenium2TestCase_Element
-     */
-    public function byXPath($value)
-    {
-        return $this->by('xpath', $value);
-    }
-
-    /**
-     * @param string $value     e.g. 'Link text'
-     * @return PHPUnit_Extensions_Selenium2TestCase_Element
-     */
-    public function byLinkText($value)
-    {
-        return $this->by('link text', $value);
-    }
-
-    /**
-     * @param string $value     e.g. 'body'
-     * @return PHPUnit_Extensions_Selenium2TestCase_Element
-     */
-    public function byTag($value)
-    {
-        return $this->by('tag name', $value);
-    }
-
-    /**
-     * @param string $strategy     supported by JsonWireProtocol element/ command
-     * @param string $value
-     * @return PHPUnit_Extensions_Selenium2TestCase_Element
-     */
-    protected function by($strategy, $value)
-    {
-        return $this->element($this->using($strategy)->value($value));
-    }
-
-    /**
-     * @param string $strategy
-     * @return PHPUnit_Extensions_Selenium2TestCase_ElementCriteria
-     */
-    public function using($strategy)
-    {
-        return new PHPUnit_Extensions_Selenium2TestCase_ElementCriteria($strategy);
-    }
-
-    /**
-     * @return PHPUnit_Extensions_Selenium2TestCase_Element
-     */
-    public function element(PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $criteria)
-    {
-        $value = $this->postCommand('element', $criteria);
-        return $this->elementFromResponseValue($value);
-    }
-
-    /**
-     * @param array $value A selenium WebElement
-     * @return PHPUnit_Extensions_Selenium2TestCase_Element
-     */
-    public function elementFromResponseValue(array $value)
-    {
-        return PHPUnit_Extensions_Selenium2TestCase_Element::fromResponseValue($value,
-            $this->url->descend('element'),
-            $this->driver);
-    }
-
-    /**
-     * @return array    instances of PHPUnit_Extensions_Selenium2TestCase_Element
-     */
-    public function elements(PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $criteria)
-    {
-        $values = $this->postCommand('elements', $criteria);
-        $elements = array();
-        foreach ($values as $value) {
-            $elements[] = $this->elementFromResponseValue($value);
-        }
-        return $elements;
     }
 
     /**
