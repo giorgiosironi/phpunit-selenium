@@ -82,24 +82,6 @@ abstract class PHPUnit_Extensions_Selenium2TestCase_Element_Accessor
     }
 
     /**
-     * @param string $value     e.g. 'email_address'
-     * @return PHPUnit_Extensions_Selenium2TestCase_Element
-     */
-    public function byName($value)
-    {
-        return $this->by('name', $value);
-    }
-
-    /**
-     * @param string $value     e.g. '/div[@attribute="value"]'
-     * @return PHPUnit_Extensions_Selenium2TestCase_Element
-     */
-    public function byXPath($value)
-    {
-        return $this->by('xpath', $value);
-    }
-
-    /**
      * @param string $value     e.g. 'Link text'
      * @return PHPUnit_Extensions_Selenium2TestCase_Element
      */
@@ -109,12 +91,30 @@ abstract class PHPUnit_Extensions_Selenium2TestCase_Element_Accessor
     }
 
     /**
+     * @param string $value     e.g. 'email_address'
+     * @return PHPUnit_Extensions_Selenium2TestCase_Element
+     */
+    public function byName($value)
+    {
+        return $this->by('name', $value);
+    }
+
+    /**
      * @param string $value     e.g. 'body'
      * @return PHPUnit_Extensions_Selenium2TestCase_Element
      */
     public function byTag($value)
     {
         return $this->by('tag name', $value);
+    }
+
+    /**
+     * @param string $value     e.g. '/div[@attribute="value"]'
+     * @return PHPUnit_Extensions_Selenium2TestCase_Element
+     */
+    public function byXPath($value)
+    {
+        return $this->by('xpath', $value);
     }
 
     /**
