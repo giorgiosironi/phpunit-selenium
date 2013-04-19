@@ -4,5 +4,8 @@ build/coverage
 build/logs
 build/pdepend
 phpunit.xml
+vendor/*
+composer.phar
+selenium-server-*.jar
 Tests/Selenium2TestCase/Coverage/*.dummyTestId
 *.php~

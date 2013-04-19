@@ -8,6 +8,7 @@ PHPUnit_Selenium 1.3
 
 * BC break: setBrowserUrl() argument is not loaded at the start of a test
 * waitUntil() now works nicely with implicitWait()
+* keysHolder() is deprecated, use keys() instead
 
 PHPUnit_Selenium 1.2.12
 ----------------------

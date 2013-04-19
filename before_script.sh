@@ -1,13 +1,16 @@
-git submodule init
-git submodule update
-cd vendor/phpunit
-git checkout 3.7
-cd -
+echo "Getting composer"
+curl -O http://getcomposer.org/composer.phar
+echo "Dependencies"
+php composer.phar install --dev
+echo "Starting Python HTTP server"
 cd selenium-1-tests
 python -m SimpleHTTPServer 8080 > /dev/null 2>&1 &
 cd ..
+echo "Starting xvfb"
 sh -e /etc/init.d/xvfb start
 export DISPLAY=:99.0
-wget http://selenium.googlecode.com/files/selenium-server-standalone-2.28.0.jar
-java -jar selenium-server-standalone-2.28.0.jar > /dev/null 2>&1 &
+echo "Starting Selenium"
+wget http://selenium.googlecode.com/files/selenium-server-standalone-2.30.0.jar
+java -jar selenium-server-standalone-2.30.0.jar > /dev/null 2>&1 &
 sleep 30
+echo "Finished setup"

@@ -1,5 +1,6 @@
 <?php
-require_once 'PHPUnit/Autoload.php';
+require_once __DIR__ . '/vendor/autoload.php';
+
 PHPUnit_Extensions_SeleniumTestCase::shareSession(true);
 require_once 'Tests/SeleniumTestCase/BaseTestCase.php';
 require_once 'Tests/Selenium2TestCase/BaseTestCase.php';

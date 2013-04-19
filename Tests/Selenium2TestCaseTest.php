@@ -893,7 +893,7 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
     public function testTheMouseCanBeMovedToAKnownPosition()
     {
         $this->markTestIncomplete();
-        $this->moveTo(array(
+        $this->moveto(array(
             'element' => 'id', // or Element object
             'xoffset' => 0,
             'yofsset' => 0
@@ -914,7 +914,7 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
     public function testMouseButtonsCanBeClickedMultipleTimes()
     {
         $this->markTestIncomplete();
-        $this->moveTo(array(
+        $this->moveto(array(
             'element' => 'id', // or Element object
             'xoffset' => 0,
             'yofsset' => 0
