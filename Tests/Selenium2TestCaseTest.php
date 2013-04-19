@@ -124,17 +124,6 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->keys(array('value' => array())); // should send key strokes to the active element
     }
 
-    public function testElementFromResponseValue()
-    {
-        $this->url('html/test_open.html');
-        $elementArray = $this->execute(array(
-            'script' => 'return document.body;',
-            'args' => array(),
-        ));
-        $element = $this->elementFromResponseValue($elementArray);
-        $this->assertEquals('This is a test of the open command.', $element->text());
-    }
-
     public function testActivePageElementReceivesTheKeyStrokes()
     {
         $this->timeouts()->implicitWait(10000);

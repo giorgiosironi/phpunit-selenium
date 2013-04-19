@@ -70,6 +70,22 @@ class PHPUnit_Extensions_Selenium2TestCase_Element
     extends PHPUnit_Extensions_Selenium2TestCase_Element_Accessor
 {
     /**
+     * @return \self
+     * @throws InvalidArgumentException
+     */
+    public static function fromResponseValue(
+            array $value,
+            PHPUnit_Extensions_Selenium2TestCase_URL $parentFolder,
+            PHPUnit_Extensions_Selenium2TestCase_Driver $driver)
+    {
+        if (!isset($value['ELEMENT'])) {
+            throw new InvalidArgumentException('Element not found.');
+        }
+        $url = $parentFolder->descend($value['ELEMENT']);
+        return new self($driver, $url);
+    }
+
+    /**
      * @return integer
      */
     public function getId()

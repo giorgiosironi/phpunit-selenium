@@ -6,14 +6,6 @@
 abstract class PHPUnit_Extensions_Selenium2TestCase_Element_Accessor
     extends PHPUnit_Extensions_Selenium2TestCase_CommandsHolder
 {
-    public static function fromResponseValue(array $value, PHPUnit_Extensions_Selenium2TestCase_URL $parentFolder, PHPUnit_Extensions_Selenium2TestCase_Driver $driver)
-    {
-        if (!isset($value['ELEMENT'])) {
-            throw new InvalidArgumentException('Element not found.');
-        }
-        $url = $parentFolder->descend($value['ELEMENT']);
-        return new PHPUnit_Extensions_Selenium2TestCase_Element($driver, $url);
-    }
 
     /**
      * @param string $value     e.g. 'container'
@@ -84,7 +76,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase_Element_Accessor
     public function element(PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $criteria)
     {
         $value = $this->postCommand('element', $criteria);
-        return self::fromResponseValue(
+        return PHPUnit_Extensions_Selenium2TestCase_Element::fromResponseValue(
                 $value, $this->getSessionUrl()->descend('element'), $this->driver);
     }
 
@@ -96,8 +88,9 @@ abstract class PHPUnit_Extensions_Selenium2TestCase_Element_Accessor
         $values = $this->postCommand('elements', $criteria);
         $elements = array();
         foreach ($values as $value) {
-            $elements[] = self::fromResponseValue(
-                            $value, $this->getSessionUrl()->descend('element'), $this->driver);
+            $elements[] =
+                PHPUnit_Extensions_Selenium2TestCase_Element::fromResponseValue(
+                    $value, $this->getSessionUrl()->descend('element'), $this->driver);
         }
         return $elements;
     }
