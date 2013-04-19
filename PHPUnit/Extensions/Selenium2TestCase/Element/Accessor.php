@@ -3,7 +3,7 @@
 /**
  * Provides access to /element and /elements commands
  */
-abstract class PHPUnit_Extensions_Selenium2TestCase_Element_Accessor 
+abstract class PHPUnit_Extensions_Selenium2TestCase_Element_Accessor
     extends PHPUnit_Extensions_Selenium2TestCase_CommandsHolder
 {
     public static function fromResponseValue(array $value, PHPUnit_Extensions_Selenium2TestCase_URL $parentFolder, PHPUnit_Extensions_Selenium2TestCase_Driver $driver)
@@ -77,7 +77,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase_Element_Accessor
     {
         return $this->by('tag name', $value);
     }
-    
+
     /**
      * @return PHPUnit_Extensions_Selenium2TestCase_Element
      */
@@ -97,12 +97,22 @@ abstract class PHPUnit_Extensions_Selenium2TestCase_Element_Accessor
         $elements = array();
         foreach ($values as $value) {
             $elements[] = self::fromResponseValue(
-                    $value, $this->getSessionUrl()->descend('element'), $this->driver);
+                            $value, $this->getSessionUrl()->descend('element'), $this->driver);
         }
         return $elements;
     }
 
     /**
+     * @param string $strategy
+     * @return PHPUnit_Extensions_Selenium2TestCase_ElementCriteria
+     */
+    public function using($strategy)
+    {
+        return new PHPUnit_Extensions_Selenium2TestCase_ElementCriteria($strategy);
+    }
+
+    /**
+     * @todo leave either criteria() or using()
      * @return PHPUnit_Extensions_Selenium2TestCase_ElementCriteria
      */
     protected function criteria($using)
