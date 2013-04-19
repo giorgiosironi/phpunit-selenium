@@ -107,12 +107,12 @@ class PHPUnit_Extensions_Selenium2TestCase_Element
 
     protected function getSessionUrl()
     {
-        return $this->sessionUrl();
+        return $this->url->ascend()->ascend();
     }
 
     private function touchCommandFactoryMethod($urlSegment)
     {
-        $url = $this->sessionUrl()->addCommand($urlSegment);
+        $url = $this->getSessionUrl()->addCommand($urlSegment);
         $self = $this;
         return function ($jsonParameters, $commandUrl) use ($url, $self) {
             if ((is_array($jsonParameters) &&
@@ -122,11 +122,6 @@ class PHPUnit_Extensions_Selenium2TestCase_Element
             }
             return new PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost($jsonParameters, $url);
         };
-    }
-
-    private function sessionUrl()
-    {
-        return $this->url->ascend()->ascend();
     }
 
     /**
