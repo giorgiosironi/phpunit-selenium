@@ -145,34 +145,16 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->assertEquals(2, count($rows));
     }
 
-    public function testShortenedApiForSelectionOfElement()
+    /**
+     * Test on Session and Element
+     *
+     * @dataProvider getObjectsWithAccessToElement
+     */
+    public function testShortenedApiForSelectionOfElement($factory)
     {
         $this->url('html/test_element_selection.html');
+        $parent = $factory($this);
 
-        $element = $this->byClassName('theDivClass');
-        $this->assertEquals('The right div', $element->text());
-
-        $element = $this->byCssSelector('div.theDivClass');
-        $this->assertEquals('The right div', $element->text());
-
-        $element = $this->byId('theDivId');
-        $this->assertEquals('The right div', $element->text());
-
-        $element = $this->byName('theDivName');
-        $this->assertEquals('The right div', $element->text());
-
-        $element = $this->byTag('div');
-        $this->assertEquals('Other div', $element->text());
-
-        $element = $this->byXPath('//div[@id]');
-        $this->assertEquals('The right div', $element->text());
-    }
-
-    public function testShortenedApiForSelectionOfChildElement()
-    {
-        $this->url('html/test_element_selection.html');
-
-        $parent = $this->byXPath('//body');
         $element = $parent->byClassName('theDivClass');
         $this->assertEquals('The right div', $element->text());
 
@@ -190,6 +172,13 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
 
         $element = $parent->byXPath('//div[@id]');
         $this->assertEquals('The right div', $element->text());
+    }
+
+    public function getObjectsWithAccessToElement() {
+        return array(
+            array(function($s) { return $s; }),
+            array(function($s) { return $s->byXPath('//body'); })
+        );
     }
 
     public function testElementsKnowTheirTagName()
