@@ -171,4 +171,14 @@ class PHPUnit_Extensions_Selenium2TestCase_Element
     {
         return strtolower(parent::name());
     }
+
+    /**
+     * Generates an array that is structured as the WebDriver Object of the JSONWireProtocoll
+     *
+     * @return array
+     */
+    public function toWebDriverObject()
+    {
+        return array('ELEMENT' => (string)$this->getId());
+    }
 }
