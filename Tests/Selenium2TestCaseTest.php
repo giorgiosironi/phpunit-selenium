@@ -768,10 +768,41 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->ime()->activate();
     }
 
-    public function testDifferentFramesFromTheMainOneCanGetFocus()
+    public function testDifferentFramesFromTheMainOneCanGetFocusById()
     {
         $this->url('html/test_frames.html');
         $this->frame('my_iframe_id');
+        $this->assertEquals('This is a test of the open command.', $this->byCssSelector('body')->text());
+
+        $this->frame(null);
+        $this->assertContains('This page contains frames.', $this->byCssSelector('body')->text());
+    }
+
+    public function testDifferentFramesFromTheMainOneCanGetFocusByFrameCount()
+    {
+        $this->url('html/test_frames.html');
+        $this->frame(0);
+        $this->assertEquals('This is a test of the open command.', $this->byCssSelector('body')->text());
+
+        $this->frame(null);
+        $this->assertContains('This page contains frames.', $this->byCssSelector('body')->text());
+    }
+
+    public function testDifferentFramesFromTheMainOneCanGetFocusByName()
+    {
+        $this->url('html/test_frames.html');
+        $this->frame('my_iframe_name');
+        $this->assertEquals('This is a test of the open command.', $this->byCssSelector('body')->text());
+
+        $this->frame(null);
+        $this->assertContains('This page contains frames.', $this->byCssSelector('body')->text());
+    }
+
+    public function testDifferentFramesFromTheMainOneCanGetFocusByElement()
+    {
+        $this->url('html/test_frames.html');
+        $frame = $this->byId('my_iframe_id');
+        $this->frame($frame);
         $this->assertEquals('This is a test of the open command.', $this->byCssSelector('body')->text());
 
         $this->frame(null);
