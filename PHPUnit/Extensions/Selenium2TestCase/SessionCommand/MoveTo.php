@@ -63,6 +63,8 @@ class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_MoveTo
             $jsonParameters = array(
                 'element' => $element->getId()
             );
+        } else if(is_array($element)){
+            $jsonParameters=$this->getJsonParameter($element);
         } else {
             throw new PHPUnit_Extensions_Selenium2TestCase_Exception('Only moving over an element is supported. Please pass a PHPUnit_Extensions_Selenium2TestCase_Element instance.');
         }
@@ -70,6 +72,30 @@ class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_MoveTo
         parent::__construct($jsonParameters, $url);
     }
 
+    private function getJsonParameter(array $element){
+        if(isset($element['element']) 
+            && isset($element['xoffset']) 
+            && isset($element['yoffset'])
+        ){
+            if(!$element['element'] instanceof PHPUnit_Extensions_Selenium2TestCase_Element){
+                throw new PHPUnit_Extensions_Selenium2TestCase_Exception('Array entry "element" is expected to be instance of PHPUnit_Extensions_Selenium2TestCase_Element.');
+            }
+            if(!is_numeric($element['xoffset']) 
+                ||  !is_numeric($element['xoffset'])
+            ){
+                throw new PHPUnit_Extensions_Selenium2TestCase_Exception('Array entry "xoffset" and "yoffset" is expected to be numeric.');
+            }
+            $jsonParameters = array(
+                    'element' => $element['element']->getId(),
+                    'xoffset' => $element['xoffset'],
+                    'yoffset' => $element['yoffset']
+            );
+            return $jsonParameters;
+        }else{
+            throw new PHPUnit_Extensions_Selenium2TestCase_Exception('Unsufficient array entries. The array is expected to have three arguments: element, xoffset and yoffset.');
+        }
+    }
+    
     /**
      * @return string
      */

@@ -1082,4 +1082,53 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
     {
         $this->click(3);
     }
+    
+    public function testMoveto(){
+        $this->url('html/test_moveto.html');
+        
+        
+        //starting point to move is column [C] so we move there
+        $el=$this->byCssSelector('table #th_c');
+        $this->moveto($el);
+        
+        //clear the input from past movements over this minefield
+        $this->resetLogOutput();
+        
+        //select the test starting point the second row containing sensors
+        $el=$this->byXPath('//tr[2]');
+        $this->moveto($el);
+        
+        //move to the target point cell [8]
+        $el=$this->byCssSelector('#td_8');
+        $this->moveto($el);
+        
+        $this->assertEquals('td_2td_5td_8', $this->byId('log')->value());
+    }
+    
+    public function testMovetoByOffset(){
+        $this->url('html/test_moveto.html');
+        
+        $el=$this->byCssSelector('table #th_l');
+        $this->moveto($el);
+        
+        //clear the input from past movements over this minefield
+        $this->resetLogOutput();
+        
+        //select the test starting point the [1] cell
+        $el=$this->byCssSelector('#td_1');
+        $this->moveto($el);
+        
+        //we travel down to the [7] field
+        $el=$this->byXPath('//tr[4]');
+        $this->moveto(array('element'=>$el,'xoffset'=>5,'yoffset'=>5));
+        
+        $this->assertEquals('td_1td_4td_7', $this->byId('log')->value());
+    }
+    
+    private function resetLogOutput(){
+        //clears the log for the testMoveto* tests
+        $this->execute(array('script'=>'document.getElementById("log").value="";','args'=>array()));
+        //and asserts that it's really empty
+        $this->assertEquals('',$this->byId('log')->value(),"No clean test start possible, log already contaminated.");
+    }
 }
