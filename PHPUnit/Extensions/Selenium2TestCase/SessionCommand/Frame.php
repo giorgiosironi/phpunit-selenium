@@ -58,8 +58,34 @@ class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Frame
 {
     public function __construct($id, $commandUrl)
     {
-        $jsonParameters = array('id' => $id);
+        $jsonParameters = array(
+            'id' => $this->extractId($id)
+        );
+
         parent::__construct($jsonParameters, $commandUrl);
+    }
+
+    /**
+     * @param $id
+     * @return array
+     */
+    private function extractId($id)
+    {
+        if ($this->isElement($id)) { //selenium-element
+            return $id->toWebDriverObject();
+        }
+
+        //html-id or null
+        return $id;
+    }
+
+    /**
+     * @param $id
+     * @return bool
+     */
+    private function isElement($id)
+    {
+        return $id instanceof PHPUnit_Extensions_Selenium2TestCase_Element;
     }
 
     public function httpMethod()
