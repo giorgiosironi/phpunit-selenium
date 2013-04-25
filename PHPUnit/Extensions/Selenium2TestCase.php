@@ -57,10 +57,12 @@
  * @method void acceptAlert() Press OK on an alert, or confirms a dialog
  * @method mixed alertText($value = NULL) Gets the alert dialog text, or sets the text for a prompt dialog
  * @method void back()
- * @method \PHPUnit_Extensions_Selenium2TestCase_Element byCssSelector($value)
  * @method \PHPUnit_Extensions_Selenium2TestCase_Element byClassName($vaue)
+ * @method \PHPUnit_Extensions_Selenium2TestCase_Element byCssSelector($value)
  * @method \PHPUnit_Extensions_Selenium2TestCase_Element byId($value)
+ * @method \PHPUnit_Extensions_Selenium2TestCase_Element byLinkText($value)
  * @method \PHPUnit_Extensions_Selenium2TestCase_Element byName($value)
+ * @method \PHPUnit_Extensions_Selenium2TestCase_Element byTag($value)
  * @method \PHPUnit_Extensions_Selenium2TestCase_Element byXPath($value)
  * @method void click(int $button = 0) Click any mouse button (at the coordinates set by the last moveto command).
  * @method void clickOnElement($id)
