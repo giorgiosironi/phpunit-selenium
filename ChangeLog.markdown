@@ -9,6 +9,12 @@ PHPUnit_Selenium 1.3
 * BC break: setBrowserUrl() argument is not loaded at the start of a test
 * waitUntil() now works nicely with implicitWait()
 * keysHolder() is deprecated, use keys() instead
+* More complete frame() supportk
+* Research of elements inside other element objects with by*() methods
+* Supporting Selenium 2.32.0
+* Element names are always lowercase for consistency
+* Pause support for runSelenese() HTML cases
+
 
 PHPUnit_Selenium 1.2.12
 ----------------------
