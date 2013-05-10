@@ -288,6 +288,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
         }
 
         try {
+            $this->setUpPage();
             $result = parent::runTest();
 
             if (!empty($this->verificationErrors)) {
@@ -327,7 +328,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
     public function __call($command, $arguments)
     {
         if ($this->session === NULL) {
-            throw new PHPUnit_Extensions_Selenium2TestCase_Exception("There is currently no active session to execute the '$command' command. You're probably trying to set some option in setUp() with an incorrect setter name.");
+            throw new PHPUnit_Extensions_Selenium2TestCase_Exception("There is currently no active session to execute the '$command' command. You're probably trying to set some option in setUp() with an incorrect setter name. You may consider using setUpPage() instead.");
         }
         $result = call_user_func_array(
           array($this->session, $command), $arguments
@@ -487,5 +488,14 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
         foreach ($names as $key) {
             $this->keys($this->keysHolder->specialKey(trim($key)));
         }
+    }
+
+    /**
+     * setUp method that is called after the session has been prepared.
+     * It is possible to use session-specific commands like url() here.
+     */
+    public function setUpPage()
+    {
+
     }
 }
