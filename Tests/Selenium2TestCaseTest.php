@@ -1087,4 +1087,16 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
     {
         $this->click(3);
     }
+
+    public function testGetSelectedOptionDataInMultiselect()
+    {
+        $this->url('html/test_multiselect.html');
+        $this->assertSame('Second Option', $this->select($this->byId('theSelect'))->selectedLabel());
+        $this->assertSame('option2', $this->select($this->byId('theSelect'))->selectedValue());
+        $this->assertSame('o2', $this->select($this->byId('theSelect'))->selectedId());
+        $this->select($this->byId('theSelect'))->clearSelectedOptions();
+        $this->assertSame('', $this->select($this->byId('theSelect'))->selectedLabel());
+        $this->assertSame('', $this->select($this->byId('theSelect'))->selectedValue());
+        $this->assertSame('', $this->select($this->byId('theSelect'))->selectedId());
+    }
 }
