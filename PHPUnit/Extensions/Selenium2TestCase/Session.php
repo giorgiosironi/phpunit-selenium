@@ -201,6 +201,15 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
     }
 
     /**
+     * @param array   WebElement JSON object
+     * @return PHPUnit_Extensions_Selenium2TestCase_Element
+     */
+    public function elementFromResponseValue($value)
+    {
+        return PHPUnit_Extensions_Selenium2TestCase_Element::fromResponseValue($value, $this->getSessionUrl()->descend('element'), $this->driver);
+    }
+
+    /**
      * @param string $id    id attribute, e.g. 'container'
      * @return void
      */
