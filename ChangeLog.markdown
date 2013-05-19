@@ -3,7 +3,12 @@ PHPUnit_Selenium 1.2
 
 This is the list of changes for the PHPUnit_Selenium 1.2 release series.
 
-PHPUnit_Selenium 1.3
+PHPUnit_Selenium 1.3.1
+----------------------
+
+* setupPage() method that can be defined to be executed after the session is opened but before tests start
+
+PHPUnit_Selenium 1.3.0
 ----------------------
 
 * BC break: setBrowserUrl() argument is not loaded at the start of a test
