@@ -44,6 +44,7 @@
 
 /**
  * Sends a file to a RC
+ * Returns the FQ path to the transfered file
  *
  * @package    PHPUnit_Selenium
  * @author     Kevin Ran  <heilong24@gmail.com>
@@ -92,8 +93,7 @@ class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_File
     }
 
     /**
-     * Creates a temporary file from the given file
-     * Adds it to a zip archive
+     * Creates a zip archive with the given file
      *
      * @param   string $file_path   FQ path to file
      * @return  string              Generated zip file
