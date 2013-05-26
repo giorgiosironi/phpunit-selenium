@@ -70,16 +70,16 @@ class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_File
 
         } // if !is_file
 
-        $zipfile_path = $this->zipArchiveFile( $file_path );
+        $zipfile_path = $this->zipArchiveFile( $argument );
         $contents     = @file_get_contents( $zipfile_path );
 
-        if( $file === false ) {
+        if( $contents === false ) {
 
           throw new Exception( "Unable to read generated zip file: {$zipfile_path}" );
 
         } // if !file
 
-        $file = base64_encode( $file );
+        $file = base64_encode( $contents );
 
         parent::__construct( array( 'file' => $file ), $url );
 
@@ -101,20 +101,16 @@ class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_File
     protected function zipArchiveFile( $file_path ) {
 
       // file MUST be readable
-      $file_data = @file_get_contents($file_path);
+      if( !is_readable( $file_path ) ) {
 
-      if( $file_data === false ) {
-
-        throw new Exception( "Unable to get contents of {$file_path}" );
+        throw new Exception( "Unable to read {$file_path}" );
 
       } // if !file_data
 
       $filename_hash  = sha1( time().$file_path );
-
-      // create zip archive file
-      $zip            = $this->_getZipArchiver();
       $tmp_dir        = $this->_getTmpDir();
       $zip_filename   = "{$tmp_dir}{$filename_hash}.zip";
+      $zip            = $this->_getZipArchiver();
 
       if( $zip->open( $zip_filename, ZIPARCHIVE::CREATE ) === false ) {
 
@@ -122,21 +118,8 @@ class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_File
 
       } // if !open
 
-      // generate a temporary file to use for the archive
-      $ext      = pathinfo( $file_path, PATHINFO_EXTENSION );
-      $tmp_file = "{$tmp_dir}{$filename_hash}.{$ext}";
-
-      if( @file_put_contents( $tmp_file, $file_data ) === false ) {
-
-        throw new Exception( "Unable to create temporary file for xfer: {$tmp_file}" );
-
-      } // if !file_put_contents
-
-      // add tmp file into zip archive
-      $zip->addFile( $tmp_file );
+      $zip->addFile( $file_path, basename( $file_path ) );
       $zip->close();
-
-      unlink( $tmp_file );
 
       return $zip_filename;
 
