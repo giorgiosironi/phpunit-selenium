@@ -71,7 +71,7 @@ class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_File
 
         } // if !is_file
 
-        $zipfile_path = $this->zipArchiveFile( $argument );
+        $zipfile_path = $this->_zipArchiveFile( $argument );
         $contents     = @file_get_contents( $zipfile_path );
 
         if( $contents === false ) {
@@ -98,7 +98,7 @@ class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_File
      * @param   string $file_path   FQ path to file
      * @return  string              Generated zip file
      */
-    protected function zipArchiveFile( $file_path ) {
+    protected function _zipArchiveFile( $file_path ) {
 
       // file MUST be readable
       if( !is_readable( $file_path ) ) {
@@ -123,7 +123,7 @@ class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_File
 
       return $zip_filename;
 
-    } // zipArchiveFile
+    } // _zipArchiveFile
 
     /**
      * Returns a runtime instance of a ZipArchive
