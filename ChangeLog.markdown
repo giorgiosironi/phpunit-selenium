@@ -7,6 +7,7 @@ PHPUnit_Selenium 1.3.1
 ----------------------
 
 * setupPage() method that can be defined to be executed after the session is opened but before tests start
+* Docblocks work now in Eclipse PDT
 
 PHPUnit_Selenium 1.3.0
 ----------------------
