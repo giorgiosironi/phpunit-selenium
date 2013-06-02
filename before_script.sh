@@ -1,7 +1,8 @@
 serverUrl='http://127.0.0.1:4444'
 serverVersion='2.32.0'
 serverFile=selenium-server-standalone-$serverVersion.jar
-
+fixturePort=8080
+phpVersion=`php -v`
 
 if [ ! -f composer.phar ]; then
     echo "Getting composer"
@@ -16,10 +17,17 @@ if [ ! -d vendor ] || [ ! -f vendor/autoload.php ]; then
 else
     php composer.phar update --dev
 fi
-echo "Starting Python HTTP server"
+
 cd selenium-1-tests
-python -m SimpleHTTPServer 8080 > /dev/null 2>&1 &
+if $(echo "$phpVersion" | grep --quiet 'PHP 5.4'); then
+    echo "Starting PHP 5.4 web server"
+    php -S localhost:$fixturePort &
+else
+    echo "Starting Python web server"
+    python -m SimpleHTTPServer $fixturePort > /dev/null 2>&1 &
+fi
 cd ..
+
 echo "Starting xvfb"
 echo "Starting Selenium"
 if [ ! -f $serverFile ]; then
