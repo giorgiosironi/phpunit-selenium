@@ -142,7 +142,8 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
             'touchScroll' => $this->touchCommandFactoryMethod('touch/scroll'),
             'flick' => $this->touchCommandFactoryMethod('touch/flick'),
             'location' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Location',
-            'orientation' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Orientation'
+            'orientation' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Orientation',
+            'file' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_File'
         );
     }
 
