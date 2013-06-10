@@ -10,7 +10,7 @@ class Tests_Selenium2TestCase_SessionCommand_FileTest extends Tests_Selenium2Tes
 
     $this->url( 'php/file_upload.php' );
 
-    $remote_file      = $this->file( 'html/banner.gif' );
+    $remote_file      = $this->file( 'selenium-1-tests/html/banner.gif' );
 
     $upload_criteria  = $this->using( 'id' )
                              ->value( 'upload_here' );
