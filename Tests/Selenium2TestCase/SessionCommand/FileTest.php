@@ -12,17 +12,17 @@ class Tests_Selenium2TestCase_SessionCommand_FileTest extends Tests_Selenium2Tes
 
     $remote_file      = $this->file( 'html/banner.gif' );
 
-    $upload_criteria  = $this->using( 'name' )
+    $upload_criteria  = $this->using( 'id' )
                              ->value( 'upload_here' );
 
-    $submit_criteria  = $this->using( 'name' )
+    $submit_criteria  = $this->using( 'id' )
                              ->value( 'submit' );
 
     $msg_criteria     = $this->using( 'id' )
                              ->value( 'uploaded' );
 
     $this->element( $upload_criteria )
-         ->value( array( 'value' => $remote_file ) );
+         ->value( $remote_file );
 
     $this->element( $submit_criteria )
          ->click();
