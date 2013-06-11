@@ -59,12 +59,26 @@ class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_MoveTo
     public function __construct($element,
                                 PHPUnit_Extensions_Selenium2TestCase_URL $url)
     {
-        if ($element instanceof PHPUnit_Extensions_Selenium2TestCase_Element) {
-            $jsonParameters = array(
-                'element' => $element->getId()
+        if (!is_array($element)) {
+            $element = array(
+                'element' => $element,
             );
-        } else {
-            throw new PHPUnit_Extensions_Selenium2TestCase_Exception('Only moving over an element is supported. Please pass a PHPUnit_Extensions_Selenium2TestCase_Element instance.');
+        }
+
+        $validKeys = array(
+            'element' => null,
+            'xoffset' => null,
+            'yoffset' => null,
+        );
+
+        $jsonParameters = array_intersect_key($element, $validKeys);
+
+        if (array_key_exists('element', $jsonParameters)) {
+            if ($jsonParameters['element'] instanceof PHPUnit_Extensions_Selenium2TestCase_Element) {
+                $jsonParameters['element'] = $jsonParameters['element']->getId();
+            } elseif (!is_null($jsonParameters['element'])) {
+                throw new PHPUnit_Extensions_Selenium2TestCase_Exception('Only moving over an element is supported. Please pass a PHPUnit_Extensions_Selenium2TestCase_Element instance.');
+            }
         }
 
         parent::__construct($jsonParameters, $url);

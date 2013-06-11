@@ -939,23 +939,29 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
 
     public function testTheMouseCanBeMovedToAKnownPosition()
     {
-        $this->markTestIncomplete();
+        $this->url('html/test_moveto.html');
         $this->moveto(array(
-            'element' => 'id', // or Element object
-            'xoffset' => 0,
-            'yofsset' => 0
+            'element' => $this->byId('moveto'),
+            'xoffset' => 10,
+            'yoffset' => 10,
         ));
-        $this->click();
-    }
-
-    public function testMouseButtonsCanBeHeldAndReleasedOverAnElement()
-    {
-        $this->url('html/movements.html');
-        $this->moveto($this->byId('to_move'));
         $this->buttondown();
-        $this->moveto($this->byId('target'));
+
+        $deltaX = 42;
+        $deltaY = 11;
+        $this->moveto(array(
+            'xoffset' => $deltaX,
+            'yoffset' => $deltaY,
+        ));
         $this->buttonup();
-        $this->markTestIncomplete('Should write something in the input, but while manually drag and drop does work, it doesn\'t with this commands.');
+
+        $down = explode(',', $this->byId('down')->text());
+        $up = explode(',', $this->byId('up')->text());
+
+        $this->assertCount(2, $down);
+        $this->assertCount(2, $up);
+        $this->assertEquals($deltaX, $up[0] - $down[0]);
+        $this->assertEquals($deltaY, $up[1] - $down[1]);
     }
 
     public function testMouseButtonsCanBeClickedMultipleTimes()
