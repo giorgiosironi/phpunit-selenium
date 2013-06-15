@@ -78,7 +78,7 @@ class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_File
 
         $file = base64_encode($contents);
 
-        parent::__construct(array('file' => $file , $url));
+        parent::__construct(array('file' => $file), $url);
 
         unlink($zipfile_path);
     }
