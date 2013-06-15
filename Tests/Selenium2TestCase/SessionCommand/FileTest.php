@@ -2,27 +2,21 @@
 
 class Tests_Selenium2TestCase_SessionCommand_FileTest extends Tests_Selenium2TestCase_BaseTestCase
 {
+    public function testUploadFile()
+    {
+        $this->url('php/file_upload.php');
 
-  /**
-   * @test
-   */
-  public function testUploadFile() {
+        $remote_file = $this->file('selenium-1-tests/html/banner.gif');
 
-    $this->url( 'php/file_upload.php' );
+        $this->byName('upload_here')
+            ->value($remote_file);
 
-    $remote_file = $this->file( 'selenium-1-tests/html/banner.gif' );
+        $this->byId('submit')
+            ->click();
 
-    $this->byName( 'upload_here' )
-         ->value( $remote_file );
+        $msg_displayed    = $this->byId('uploaded')
+            ->displayed();
 
-    $this->byId( 'submit' )
-         ->click();
-
-    $msg_displayed    = $this->byId( 'uploaded' )
-                             ->displayed();
-
-    $this->assertNotEmpty( $msg_displayed );
-
-  } // testUploadFile
-
-} // Tests_Selenium2TestCase_SessionCommand_FileTest
+        $this->assertNotEmpty($msg_displayed);
+    }
+}

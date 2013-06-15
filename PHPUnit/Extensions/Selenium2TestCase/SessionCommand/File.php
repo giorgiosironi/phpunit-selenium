@@ -39,7 +39,7 @@
  * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
- * @since      File available since Release 1.3.1
+ * @since      File available since Release 1.3.2
  */
 
 /**
@@ -52,7 +52,7 @@
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
- * @since      Class available since Release 1.3.1
+ * @since      Class available since Release 1.3.2
  */
 class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_File
     extends PHPUnit_Extensions_Selenium2TestCase_Command
@@ -65,26 +65,22 @@ class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_File
 
     public function __construct($argument, PHPUnit_Extensions_Selenium2TestCase_URL $url)
     {
-        if ( !is_file( $argument ) ) {
+        if (!is_file($argument)) {
+            throw new BadMethodCallException("No such file: {$argument}");
+        }
 
-          throw new BadMethodCallException( "No such file: {$argument}" );
+        $zipfile_path = $this->_zipArchiveFile($argument);
+        $contents     = file_get_contents($zipfile_path);
 
-        } // if !is_file
+        if ($contents === false) {
+            throw new Exception("Unable to read generated zip file: {$zipfile_path}");
+        }
 
-        $zipfile_path = $this->_zipArchiveFile( $argument );
-        $contents     = @file_get_contents( $zipfile_path );
+        $file = base64_encode($contents);
 
-        if( $contents === false ) {
+        parent::__construct(array('file' => $file , $url));
 
-          throw new Exception( "Unable to read generated zip file: {$zipfile_path}" );
-
-        } // if !file
-
-        $file = base64_encode( $contents );
-
-        parent::__construct( array( 'file' => $file ), $url );
-
-        unlink( $zipfile_path );
+        unlink($zipfile_path);
     }
 
     public function httpMethod()
@@ -100,48 +96,42 @@ class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_File
      */
     protected function _zipArchiveFile( $file_path ) {
 
-      // file MUST be readable
-      if( !is_readable( $file_path ) ) {
+        // file MUST be readable
+        if( !is_readable( $file_path ) ) {
 
-        throw new Exception( "Unable to read {$file_path}" );
+            throw new Exception( "Unable to read {$file_path}" );
 
-      } // if !file_data
+        } // if !file_data
 
-      $filename_hash  = sha1( time().$file_path );
-      $tmp_dir        = $this->_getTmpDir();
-      $zip_filename   = "{$tmp_dir}{$filename_hash}.zip";
-      $zip            = $this->_getZipArchiver();
+        $filename_hash  = sha1( time().$file_path );
+        $tmp_dir        = $this->_getTmpDir();
+        $zip_filename   = "{$tmp_dir}{$filename_hash}.zip";
+        $zip            = $this->_getZipArchiver();
 
-      if( $zip->open( $zip_filename, ZIPARCHIVE::CREATE ) === false ) {
+        if ($zip->open($zip_filename, ZIPARCHIVE::CREATE) === false) {
+            throw new Exception( "Unable to create zip archive: {$zip_filename}" );
+        }
 
-        throw new Exception( "Unable to create zip archive: {$zip_filename}" );
+        $zip->addFile($file_path, basename($file_path));
+        $zip->close();
 
-      } // if !open
-
-      $zip->addFile( $file_path, basename( $file_path ) );
-      $zip->close();
-
-      return $zip_filename;
-
-    } // _zipArchiveFile
+        return $zip_filename;
+    }
 
     /**
      * Returns a runtime instance of a ZipArchive
      *
      * @return ZipArchive
      */
-    protected function _getZipArchiver() {
+    protected function _getZipArchiver()
+    {
+        // create ZipArchive if necessary
+        if (!static::$_zipArchive) {
+            static::$_zipArchive = new ZipArchive();
+        }
 
-      // create ZipArchive if necessary
-      if ( !static::$_zipArchive ) {
-
-        static::$_zipArchive = new ZipArchive();
-
-      } // if !zipArchive
-
-      return static::$_zipArchive;
-
-    } // _getZipArchiver
+        return static::$_zipArchive;
+    }
 
     /**
      * Calls sys_get_temp_dir and ensures that it has a trailing slash
@@ -149,10 +139,8 @@ class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_File
      *
      * @return string
      */
-    protected function _getTmpDir() {
-
-      return rtrim( sys_get_temp_dir(), DIRECTORY_SEPARATOR ) . DIRECTORY_SEPARATOR;
-
-    } // _getTmpDir
-
+    protected function _getTmpDir()
+    {
+        return rtrim(sys_get_temp_dir(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+    }
 }
