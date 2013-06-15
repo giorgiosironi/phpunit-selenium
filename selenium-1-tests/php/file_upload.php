@@ -9,6 +9,6 @@ if ($_FILES) {
 }
 ?>
 <form action="" method="post" enctype="multipart/form-data">
-    <input type="file" name="upload_here" />
-    <input type="submit" name="submit" value="Upload" />
+    <input type="file" name="upload_here" id="upload_here" />
+    <input type="submit" id="submit" value="Upload" />
 </form>
