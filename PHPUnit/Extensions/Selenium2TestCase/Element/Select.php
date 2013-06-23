@@ -69,7 +69,11 @@ class PHPUnit_Extensions_Selenium2TestCase_Element_Select
      */
     public function selectedLabel()
     {
-        return $this->selectedOption()->text();
+        $selectedOption = $this->selectedOption();
+        if ($selectedOption === null) {
+            return '';
+        }
+        return $selectedOption->text();
     }
 
     /**
@@ -77,7 +81,11 @@ class PHPUnit_Extensions_Selenium2TestCase_Element_Select
      */
     public function selectedValue()
     {
-        return $this->selectedOption()->value();
+        $selectedOption = $this->selectedOption();
+        if ($selectedOption === null) {
+            return '';
+        }
+        return $selectedOption->value();
     }
 
     /**
@@ -85,7 +93,11 @@ class PHPUnit_Extensions_Selenium2TestCase_Element_Select
      */
     public function selectedId()
     {
-        return $this->selectedOption()->attribute('id');
+        $selectedOption = $this->selectedOption();
+        if ($selectedOption === null) {
+            return '';
+        }
+        return $selectedOption->attribute('id');
     }
 
     /**
@@ -208,6 +220,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Element_Select
                 return $option;
             }
         }
+        return null;
     }
 
     private function options()
