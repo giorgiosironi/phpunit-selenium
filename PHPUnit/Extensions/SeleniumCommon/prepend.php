@@ -59,3 +59,6 @@ if ( isset($_COOKIE['PHPUNIT_SELENIUM_TEST_ID']) &&
 
     xdebug_start_code_coverage(XDEBUG_CC_UNUSED | XDEBUG_CC_DEAD_CODE);
 }
+
+include ('ExitHandler.php');
+PHPUnit_Extensions_SeleniumCommon_ExitHandler::init();

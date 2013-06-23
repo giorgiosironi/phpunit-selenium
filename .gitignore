@@ -11,3 +11,5 @@ Tests/Selenium2TestCase/Coverage/*.dummyTestId
 firefox.tar.bz2
 firefox/
 *.php~
+/.project
+/.buildpath
