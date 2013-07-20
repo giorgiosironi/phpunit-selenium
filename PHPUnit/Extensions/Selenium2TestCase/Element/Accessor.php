@@ -91,6 +91,15 @@ abstract class PHPUnit_Extensions_Selenium2TestCase_Element_Accessor
     }
 
     /**
+     * @param string $value     e.g. 'Link te'
+     * @return PHPUnit_Extensions_Selenium2TestCase_Element
+     */
+    public function byPartialLinkText($value)
+    {
+        return $this->by('partial link text', $value);
+    }
+
+    /**
      * @param string $value     e.g. 'email_address'
      * @return PHPUnit_Extensions_Selenium2TestCase_Element
      */
