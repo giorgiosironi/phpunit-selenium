@@ -5,6 +5,9 @@ class Tests_Selenium2TestCase_Coverage_SingleFileTest extends PHPUnit_Framework_
 
     public function setUp()
     {
+        if (!extension_loaded('xdebug')) {
+            $this->markTestSkipped('Needs xdebug to run');
+        }
         $this->coverageFilePattern = __DIR__ . '/*.' . $this->dummyTestId;
         $this->dummyClassSourceFile = __DIR__ . '/DummyClass.php';
     }
