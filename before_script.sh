@@ -6,6 +6,7 @@ firefoxFile=firefox.tar.bz2
 fixturePort=8080
 phpVersion=`php -v`
 
+
 if [ ! -f composer.phar ]; then
     echo "Getting composer"
     curl -O http://getcomposer.org/composer.phar
@@ -23,10 +24,10 @@ fi
 cd selenium-1-tests
 if $(echo "$phpVersion" | grep --quiet 'PHP 5.4'); then
     echo "Starting PHP 5.4 web server"
-    php -S localhost:$fixturePort &
+    php -S localhost:$fixturePort > /tmp/server.log 2>&1 &
 else
     echo "Starting Python web server"
-    python -m SimpleHTTPServer $fixturePort > /dev/null 2>&1 &
+    python -m SimpleHTTPServer $fixturePort > /tmp/server.log 2>&1 &
 fi
 cd ..
 
@@ -39,7 +40,7 @@ echo "Starting Selenium"
 if [ ! -f $serverFile ]; then
     wget http://selenium.googlecode.com/files/selenium-server-standalone-$serverVersion.jar -O $serverFile
 fi
-xvfb-run java -Dwebdriver.firefox.bin=firefox/firefox-bin  -jar $serverFile > /dev/null 2>&1 &
+xvfb-run java -Dwebdriver.firefox.bin=firefox/firefox-bin  -jar $serverFile > /tmp/selenium.log 2>&1 &
 
 wget --retry-connrefused --tries=60 --waitretry=1 --output-file=/dev/null $serverUrl/wd/hub/status -O /dev/null
 if [ ! $? -eq 0 ]; then
