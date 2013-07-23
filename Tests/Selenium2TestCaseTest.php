@@ -939,6 +939,10 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
 
     public function testTheMouseCanBeMovedToAKnownPosition()
     {
+        // @TODO: remove markTestIncomplete() when the following bugs are fixed
+        // @see https://code.google.com/p/selenium/issues/detail?id=5939
+        // @see https://code.google.com/p/selenium/issues/detail?id=3578
+        $this->markTestIncomplete('This is broken in a firefox driver yet');
         $this->url('html/test_moveto.html');
         $this->moveto(array(
             'element' => $this->byId('moveto'),
@@ -962,6 +966,27 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->assertCount(2, $up);
         $this->assertEquals($deltaX, $up[0] - $down[0]);
         $this->assertEquals($deltaY, $up[1] - $down[1]);
+    }
+
+    public function testMoveToRequiresElementParamToBeValidElement()
+    {
+        $this->url('html/test_moveto.html');
+
+        try {
+            $this->moveto('moveto');
+            $this->fail('A single non-element parameter should cause an exception');
+        } catch (PHPUnit_Extensions_Selenium2TestCase_Exception $e) {
+            $this->assertStringStartsWith('Only moving over an element is supported', $e->getMessage());
+        }
+
+        try {
+            $this->moveto(array(
+                'element' => 'moveto'
+            ));
+            $this->fail('An "element" array parameter with non-element value should cause an exception');
+        } catch (PHPUnit_Extensions_Selenium2TestCase_Exception $e) {
+            $this->assertStringStartsWith('Only moving over an element is supported', $e->getMessage());
+        }
     }
 
     public function testMouseButtonsCanBeClickedMultipleTimes()
