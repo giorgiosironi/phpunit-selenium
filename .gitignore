@@ -13,3 +13,4 @@ firefox/
 *.php~
 /.project
 /.buildpath
+/.settings
