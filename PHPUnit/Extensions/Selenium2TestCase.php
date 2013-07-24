@@ -87,6 +87,7 @@
  * @method string windowHandles() Retrieves a list of all available window handles
  * @method string keys() Send a sequence of key strokes to the active element.
  * @method void closeWindow() Close the current window.
+ * @method void close() Close the current window and clear session data.
  */
 abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_TestCase
 {
