@@ -947,23 +947,54 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
 
     public function testTheMouseCanBeMovedToAKnownPosition()
     {
-        $this->markTestIncomplete();
+        // @TODO: remove markTestIncomplete() when the following bugs are fixed
+        // @see https://code.google.com/p/selenium/issues/detail?id=5939
+        // @see https://code.google.com/p/selenium/issues/detail?id=3578
+        $this->markTestIncomplete('This is broken in a firefox driver yet');
+        $this->url('html/test_moveto.html');
         $this->moveto(array(
-            'element' => 'id', // or Element object
-            'xoffset' => 0,
-            'yofsset' => 0
+            'element' => $this->byId('moveto'),
+            'xoffset' => 10,
+            'yoffset' => 10,
         ));
-        $this->click();
+        $this->buttondown();
+
+        $deltaX = 42;
+        $deltaY = 11;
+        $this->moveto(array(
+            'xoffset' => $deltaX,
+            'yoffset' => $deltaY,
+        ));
+        $this->buttonup();
+
+        $down = explode(',', $this->byId('down')->text());
+        $up = explode(',', $this->byId('up')->text());
+
+        $this->assertCount(2, $down);
+        $this->assertCount(2, $up);
+        $this->assertEquals($deltaX, $up[0] - $down[0]);
+        $this->assertEquals($deltaY, $up[1] - $down[1]);
     }
 
-    public function testMouseButtonsCanBeHeldAndReleasedOverAnElement()
+    public function testMoveToRequiresElementParamToBeValidElement()
     {
-        $this->url('html/movements.html');
-        $this->moveto($this->byId('to_move'));
-        $this->buttondown();
-        $this->moveto($this->byId('target'));
-        $this->buttonup();
-        $this->markTestIncomplete('Should write something in the input, but while manually drag and drop does work, it doesn\'t with this commands.');
+        $this->url('html/test_moveto.html');
+
+        try {
+            $this->moveto('moveto');
+            $this->fail('A single non-element parameter should cause an exception');
+        } catch (PHPUnit_Extensions_Selenium2TestCase_Exception $e) {
+            $this->assertStringStartsWith('Only moving over an element is supported', $e->getMessage());
+        }
+
+        try {
+            $this->moveto(array(
+                'element' => 'moveto'
+            ));
+            $this->fail('An "element" array parameter with non-element value should cause an exception');
+        } catch (PHPUnit_Extensions_Selenium2TestCase_Exception $e) {
+            $this->assertStringStartsWith('Only moving over an element is supported', $e->getMessage());
+        }
     }
 
     public function testMouseButtonsCanBeClickedMultipleTimes()
