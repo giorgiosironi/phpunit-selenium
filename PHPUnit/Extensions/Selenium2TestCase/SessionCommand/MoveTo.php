@@ -59,12 +59,32 @@ class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_MoveTo
     public function __construct($element,
                                 PHPUnit_Extensions_Selenium2TestCase_URL $url)
     {
-        if ($element instanceof PHPUnit_Extensions_Selenium2TestCase_Element) {
-            $jsonParameters = array(
-                'element' => $element->getId()
+        if (!is_array($element)) {
+            $element = array(
+                'element' => $element,
             );
-        } else {
-            throw new PHPUnit_Extensions_Selenium2TestCase_Exception('Only moving over an element is supported. Please pass a PHPUnit_Extensions_Selenium2TestCase_Element instance.');
+        }
+
+        $validKeys = array(
+            'element' => null,
+            'xoffset' => null,
+            'yoffset' => null,
+        );
+
+        $jsonParameters = array_intersect_key($element, $validKeys);
+
+        if (isset($jsonParameters['element'])) {
+            if (!($jsonParameters['element'] instanceof PHPUnit_Extensions_Selenium2TestCase_Element)) {
+                throw new PHPUnit_Extensions_Selenium2TestCase_Exception('Only moving over an element is supported. Please pass a PHPUnit_Extensions_Selenium2TestCase_Element instance.');
+            }
+
+            $jsonParameters['element'] = $jsonParameters['element']->getId();
+        }
+
+        if (isset($jsonParameters['xoffset']) || isset($jsonParameters['yoffset'])) {
+            // @see https://github.com/sebastianbergmann/phpunit-selenium/pull/250#issuecomment-21308153
+            // @see https://code.google.com/p/selenium/wiki/JsonWireProtocol#/session/:sessionId/moveto
+            error_log('Even though this method is a part of the WebDriver Wire protocol it might be not supported by your browser yet');
         }
 
         parent::__construct($jsonParameters, $url);
