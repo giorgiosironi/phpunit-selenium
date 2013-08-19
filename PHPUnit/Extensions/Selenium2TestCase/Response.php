@@ -83,6 +83,6 @@ class PHPUnit_Extensions_Selenium2TestCase_Response
      */
     public function getURL()
     {
-        return new PHPUnit_Extensions_Selenium2TestCase_URL($this->info['url']);
+        return new PHPUnit_Extensions_Selenium2TestCase_URL($this->info['url'] . '/' . $this->jsonResponse['sessionId']);
     }
 }
