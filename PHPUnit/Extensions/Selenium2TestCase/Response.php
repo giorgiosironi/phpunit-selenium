@@ -91,7 +91,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Response
         // @see https://code.google.com/p/selenium/issues/detail?id=6089
         // @see https://github.com/sebastianbergmann/phpunit-selenium/issues/265
         if (strpos($url, $sessionId) === false) {
-            $url = rtrim($url, '/') . '/' . $sessionId;
+            $url .= '/' . $sessionId;
         }
 
         return new PHPUnit_Extensions_Selenium2TestCase_URL($url);
