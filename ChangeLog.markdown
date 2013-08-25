@@ -3,6 +3,11 @@ PHPUnit_Selenium 1.2
 
 This is the list of changes for the PHPUnit_Selenium 1.2 release series.
 
+PHPUnit_Selenium 1.3.2
+----------------------
+
+* Compatibility with Selenium 2.34 and upper
+
 PHPUnit_Selenium 1.3.1
 ----------------------
 
