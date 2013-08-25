@@ -19,7 +19,7 @@
  </lead>
  <date>2013-06-01</date>
  <version>
-  <release>1.3.1</release>
+  <release>1.3.2</release>
   <api>1.3</api>
  </version>
  <stability>
@@ -82,10 +82,10 @@
       <file baseinstalldir="/" name="Exception.php" role="php">
        <tasks:replace from="@package_version@" to="version" type="package-info" />
       </file>
-      <file baseinstalldir="/" name="Keys.php" role="php">
+      <file baseinstalldir="/" name="KeysHolder.php" role="php">
        <tasks:replace from="@package_version@" to="version" type="package-info" />
       </file>
-      <file baseinstalldir="/" name="KeysHolder.php" role="php">
+      <file baseinstalldir="/" name="Keys.php" role="php">
        <tasks:replace from="@package_version@" to="version" type="package-info" />
       </file>
       <file baseinstalldir="/" name="NoSeleniumException.php" role="php">
@@ -124,6 +124,9 @@
         <tasks:replace from="@package_version@" to="version" type="package-info" />
        </file>
        <file baseinstalldir="/" name="DismissAlert.php" role="php">
+        <tasks:replace from="@package_version@" to="version" type="package-info" />
+       </file>
+       <file baseinstalldir="/" name="File.php" role="php">
         <tasks:replace from="@package_version@" to="version" type="package-info" />
        </file>
        <file baseinstalldir="/" name="Frame.php" role="php">
@@ -198,6 +201,9 @@
        <tasks:replace from="@package_version@" to="version" type="package-info" />
       </file>
       <file baseinstalldir="/" name="phpunit_coverage.php" role="php">
+       <tasks:replace from="@package_version@" to="version" type="package-info" />
+      </file>
+      <file baseinstalldir="/" name="ExitHandler.php" role="php">
        <tasks:replace from="@package_version@" to="version" type="package-info" />
       </file>
       <file baseinstalldir="/" name="prepend.php" role="php">

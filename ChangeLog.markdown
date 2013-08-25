@@ -7,6 +7,7 @@ PHPUnit_Selenium 1.3.2
 ----------------------
 
 * Compatibility with Selenium 2.34 and upper
+* Introduced experimental file() support
 
 PHPUnit_Selenium 1.3.1
 ----------------------
