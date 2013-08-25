@@ -1,7 +1,7 @@
 serverUrl='http://127.0.0.1:4444'
-serverVersion='2.32.0'
+serverVersion='2.35.0'
 serverFile=selenium-server-standalone-$serverVersion.jar
-firefoxUrl=http://ftp.mozilla.org/pub/mozilla.org/firefox/releases/21.0/linux-x86_64/en-US/firefox-21.0.tar.bz2
+firefoxUrl=http://ftp.mozilla.org/pub/mozilla.org/firefox/releases/23.0/linux-x86_64/en-US/firefox-23.0.tar.bz2
 firefoxFile=firefox.tar.bz2
 fixturePort=8080
 phpVersion=`php -v`
