@@ -564,7 +564,8 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
     {
         $this->url('html/test_form_events.html');
         $eventLog = $this->byId('eventlog');
-        $this->assertEquals('', $eventLog->value());
+        $eventLog->clear();
+
         $this->clickOnElement('theLink');
         $this->assertEquals('link clicked', $this->alertText());
         $this->acceptAlert();
@@ -575,7 +576,8 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
     {
         $this->url('html/test_form_events.html');
         $eventLog = $this->byId('eventlog');
-        $this->assertEquals('', $eventLog->value());
+        $eventLog->clear();
+
         $this->clickOnElement('theButton');
         $this->assertContains('{focus(theButton)}', $eventLog->value());
         $this->assertContains('{click(theButton)}', $eventLog->value());
@@ -590,8 +592,7 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->url('html/test_form_events.html');
         $select = $this->select($this->byId('theSelect'));
         $eventLog = $this->byId('eventlog');
-        $this->assertEquals('', $select->selectedValue());
-        $this->assertEquals('', $eventLog->value());
+        $eventLog->clear();
 
         $select->selectOptionByLabel('First Option');
         $this->assertEquals('option1', $select->selectedValue());
