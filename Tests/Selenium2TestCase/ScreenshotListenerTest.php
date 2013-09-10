@@ -18,7 +18,7 @@ class Tests_Selenium2TestCase_ScreenshotListenerTest extends Tests_Selenium2Test
     {
         $this->url('html/test_open.html');
 
-        $this->listener->addError($this, new Exception(), null);
+        $this->listener->addError($this, new Exception(), NULL);
 
         $this->assertThereIsAScreenshotNamed('Tests_Selenium2TestCase_ScreenshotListenerTest__testStoresAScreenshotInCaseOfError__*.png');
     }
@@ -28,7 +28,7 @@ class Tests_Selenium2TestCase_ScreenshotListenerTest extends Tests_Selenium2Test
         $this->url('html/test_open.html');
 
         $exception = $this->getMock('PHPUnit_Framework_AssertionFailedError');
-        $this->listener->addFailure($this, $exception, null);
+        $this->listener->addFailure($this, $exception, NULL);
 
         $this->assertThereIsAScreenshotNamed('Tests_Selenium2TestCase_ScreenshotListenerTest__testStoresAScreenshotInCaseOfFailure*.png');
     }
@@ -37,7 +37,7 @@ class Tests_Selenium2TestCase_ScreenshotListenerTest extends Tests_Selenium2Test
     {
         $test = new Tests_Selenium2TestCase_NotCapableOfTakingScreenshotsTest();
 
-        $this->listener->addError($test, new RuntimeException(), null);
+        $this->listener->addError($test, new RuntimeException(), NULL);
     }
 
     private function assertThereIsAScreenshotNamed($filename)

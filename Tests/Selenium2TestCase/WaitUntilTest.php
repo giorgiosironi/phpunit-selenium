@@ -60,7 +60,7 @@ class Tests_Selenium2TestCase_WaitUntilTest extends Tests_Selenium2TestCase_Base
             try {
                 $testCase->byXPath('//div[@id="parent"][contains(text(), "default text")]');
             } catch (PHPUnit_Extensions_Selenium2TestCase_WebDriverException $e) {
-                return true;
+                return TRUE;
             }
         }, 8000);
     }
@@ -76,7 +76,7 @@ class Tests_Selenium2TestCase_WaitUntilTest extends Tests_Selenium2TestCase_Base
             try {
                 $testCase->byXPath('//div[@id="parent"][contains(text(), "default text")]');
             } catch (PHPUnit_Extensions_Selenium2TestCase_WebDriverException $e) {
-                return true;
+                return TRUE;
             }
         }, 42);
     }
@@ -98,7 +98,7 @@ class Tests_Selenium2TestCase_WaitUntilTest extends Tests_Selenium2TestCase_Base
         try {
             $this->waitUntil(function($testCase) {
                 $testCase->byId('testBox');
-                return true;
+                return TRUE;
             });
             $this->fail('Should fail because of the element not exists there yet');
         } catch (PHPUnit_Extensions_Selenium2TestCase_WebDriverException $e) {}
@@ -115,7 +115,7 @@ class Tests_Selenium2TestCase_WaitUntilTest extends Tests_Selenium2TestCase_Base
 
         $this->waitUntil(function($testCase) {
             $testCase->byId('parent');
-            return true;
+            return TRUE;
         });
 
         // in this case - element should be found, because we set a 8000ms implicitWait before the waitUntil.

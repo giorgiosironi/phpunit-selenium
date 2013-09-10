@@ -48,7 +48,7 @@ class Tests_WelcomePage
         $this->header = $test->byCssSelector('h2');
         $this->test = $test;
     }
-    
+
     public function assertWelcomeIs($text)
     {
         $this->test->assertRegExp("/$text/", $this->header->text());

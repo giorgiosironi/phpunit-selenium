@@ -55,7 +55,7 @@
  */
 
 if (defined('SAUCE_USERNAME') && defined('SAUCE_ACCESS_KEY')) {
-    define('SAUCE_HOST', constant('SAUCE_USERNAME').':'.constant('SAUCE_ACCESS_KEY').'@ondemand.saucelabs.com');
+    define('SAUCE_HOST', constant('SAUCE_USERNAME') . ':' . constant('SAUCE_ACCESS_KEY') . '@ondemand.saucelabs.com');
 } else {
     define('SAUCE_HOST', '');
 }
@@ -95,7 +95,7 @@ class Tests_Selenium2TestCase_MobileFeaturesTest extends PHPUnit_Extensions_Sele
             $this->markTestSkipped('Mobile drivers don\'t yet reliably support location');
         } else {
             $caps = $this->getDesiredCapabilities();
-            $caps['name'] = get_called_class().'::'.$this->getName();
+            $caps['name'] = get_called_class() . '::' . $this->getName();
             $this->setDesiredCapabilities($caps);
             $this->setBrowserUrl('http://saucelabs.com/test/guinea-pig');
         }

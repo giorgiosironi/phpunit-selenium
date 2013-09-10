@@ -19,7 +19,7 @@ class Tests_Selenium2TestCase_WebDriverBackedSeleniumTest extends PHPUnit_Extens
     {
         $this->markTestIncomplete('Crashes the opened browser deterministically.');
         try {
-        $this->open('html/test_open.html');
+            $this->open('html/test_open.html');
         } catch (Exception $e) {
             sleep(10);
         }
