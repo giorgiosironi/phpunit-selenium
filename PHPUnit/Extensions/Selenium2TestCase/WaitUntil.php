@@ -93,7 +93,7 @@ class PHPUnit_Extensions_Selenium2TestCase_WaitUntil
      * @throws PHPUnit_Extensions_Selenium2TestCase_Exception
      * @throws PHPUnit_Extensions_Selenium2TestCase_WebDriverException
      */
-    public function run($callback, $timeout = null)
+    public function run($callback, $timeout = NULL)
     {
         if (!is_callable($callback)) {
             throw new PHPUnit_Extensions_Selenium2TestCase_Exception('The valid callback is expected');
@@ -111,11 +111,11 @@ class PHPUnit_Extensions_Selenium2TestCase_WaitUntil
 
         $timeout /= 1000;
 
-        $endTime = microtime(true) + $timeout;
+        $endTime = microtime(TRUE) + $timeout;
 
-        $lastException = null;
+        $lastException = NULL;
 
-        while (true) {
+        while (TRUE) {
             try {
                 $result = $callback($this->_testCase);
 
@@ -130,7 +130,7 @@ class PHPUnit_Extensions_Selenium2TestCase_WaitUntil
                 $lastException = $e;
             }
 
-            if (microtime(true) > $endTime) {
+            if (microtime(TRUE) > $endTime) {
                 if ($implicitWait) {
                     $this->_testCase->timeouts()->implicitWait($implicitWait);
                 }
