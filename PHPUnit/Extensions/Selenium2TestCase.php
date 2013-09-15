@@ -227,10 +227,11 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
 
     private function getStrategy()
     {
-        if ($this->localSessionStrategy)
+        if ($this->localSessionStrategy) {
             return $this->localSessionStrategy;
-        else
+        } else {
             return self::sessionStrategy();
+        }
     }
 
     public function prepareSession()
@@ -252,7 +253,6 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
         if ($result === NULL) {
             $result = $this->createResult();
         }
-
 
         $this->collectCodeCoverageInformation = $result->getCollectCodeCoverageInformation();
 
@@ -298,7 +298,6 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
         } catch (Exception $e) {
             $thrownException = $e;
         }
-
 
         if (NULL !== $thrownException) {
             throw $thrownException;
@@ -455,9 +454,9 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
      */
     public function getSessionId()
     {
-        if ($this->session)
+        if ($this->session) {
             return $this->session->id();
-
+        }
         return FALSE;
     }
 
@@ -468,7 +467,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
      * @param null $timeout
      * @return mixed
      */
-    public function waitUntil($callback, $timeout = null)
+    public function waitUntil($callback, $timeout = NULL)
     {
         $waitUntil = new PHPUnit_Extensions_Selenium2TestCase_WaitUntil($this);
         return $waitUntil->run($callback, $timeout);

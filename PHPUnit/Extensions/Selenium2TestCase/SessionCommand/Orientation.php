@@ -57,7 +57,8 @@ class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Orientation
     extends PHPUnit_Extensions_Selenium2TestCase_SessionCommand_GenericAttribute
 {
 
-    public function __construct($orientation, $commandUrl) {
+    public function __construct($orientation, $commandUrl)
+    {
         if ($orientation !== NULL) {
             $jsonParameters = array('orientation' => $orientation);
         } else {

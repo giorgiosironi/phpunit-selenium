@@ -94,7 +94,8 @@ class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_File
      * @param   string $file_path   FQ path to file
      * @return  string              Generated zip file
      */
-    protected function _zipArchiveFile( $file_path ) {
+    protected function _zipArchiveFile( $file_path )
+    {
 
         // file MUST be readable
         if( !is_readable( $file_path ) ) {
@@ -103,12 +104,12 @@ class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_File
 
         } // if !file_data
 
-        $filename_hash  = sha1( time().$file_path );
+        $filename_hash  = sha1( time() . $file_path );
         $tmp_dir        = $this->_getTmpDir();
         $zip_filename   = "{$tmp_dir}{$filename_hash}.zip";
         $zip            = $this->_getZipArchiver();
 
-        if ($zip->open($zip_filename, ZIPARCHIVE::CREATE) === false) {
+        if ($zip->open($zip_filename, ZIPARCHIVE::CREATE) === FALSE) {
             throw new Exception( "Unable to create zip archive: {$zip_filename}" );
         }
 

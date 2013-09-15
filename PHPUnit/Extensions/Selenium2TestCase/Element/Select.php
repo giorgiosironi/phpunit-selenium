@@ -70,7 +70,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Element_Select
     public function selectedLabel()
     {
         $selectedOption = $this->selectedOption();
-        if ($selectedOption === null) {
+        if ($selectedOption === NULL) {
             return '';
         }
         return $selectedOption->text();
@@ -82,7 +82,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Element_Select
     public function selectedValue()
     {
         $selectedOption = $this->selectedOption();
-        if ($selectedOption === null) {
+        if ($selectedOption === NULL) {
             return '';
         }
         return $selectedOption->value();
@@ -94,7 +94,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Element_Select
     public function selectedId()
     {
         $selectedOption = $this->selectedOption();
-        if ($selectedOption === null) {
+        if ($selectedOption === NULL) {
             return '';
         }
         return $selectedOption->attribute('id');
@@ -220,7 +220,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Element_Select
                 return $option;
             }
         }
-        return null;
+        return NULL;
     }
 
     private function options()

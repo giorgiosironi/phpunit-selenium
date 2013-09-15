@@ -90,7 +90,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Response
         // this change was performed in selenium v2.34
         // @see https://code.google.com/p/selenium/issues/detail?id=6089
         // @see https://github.com/sebastianbergmann/phpunit-selenium/issues/265
-        if (strpos($url, $sessionId) === false) {
+        if (strpos($url, $sessionId) === FALSE) {
             $url .= '/' . $sessionId;
         }
 

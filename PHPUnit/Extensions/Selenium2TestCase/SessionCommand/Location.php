@@ -57,7 +57,8 @@ class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Location
     extends PHPUnit_Extensions_Selenium2TestCase_SessionCommand_GenericAttribute
 {
 
-    public function __construct($location, $commandUrl) {
+    public function __construct($location, $commandUrl)
+    {
         if ($location !== NULL) {
             $jsonParameters = array('location' => $location);
         } else {

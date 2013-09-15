@@ -1196,12 +1196,13 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
             return '';
         }
     }
-    
+
     /**
      * Pause support for runSelenese() HTML cases
      * @param $milliseconds
      */
-    protected function pause($milliseconds){
-		sleep(round($milliseconds/1000));
-	}
+    protected function pause($milliseconds)
+    {
+		    sleep(round($milliseconds/1000));
+	  }
 }
