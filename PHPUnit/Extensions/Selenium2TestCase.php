@@ -87,6 +87,8 @@
  * @method string windowHandles() Retrieves a list of all available window handles
  * @method string keys() Send a sequence of key strokes to the active element.
  * @method string file($file_path) Upload a local file. Returns the fully qualified path to the transferred file.
+ * @method array log(string $type) Get the log for a given log type. Log buffer is reset after each request.
+ * @method array logTypes() Get available log types.
  * @method void closeWindow() Close the current window.
  * @method void close() Close the current window and clear session data.
  */
