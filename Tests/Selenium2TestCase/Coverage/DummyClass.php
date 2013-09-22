@@ -3,11 +3,11 @@ class DummyClass
 {
     public function coveredMethod()
     {
-        return null;
+        return NULL;
     }
 
     public function uncoveredMethod()
     {
-        return null;
+        return NULL;
     }
 }

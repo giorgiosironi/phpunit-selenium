@@ -185,7 +185,8 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->assertEquals('The right div', $element->text());
     }
 
-    public function getObjectsWithAccessToElement() {
+    public function getObjectsWithAccessToElement()
+    {
         return array(
             array(function($s) { return $s; }),
             array(function($s) { return $s->byXPath('//body'); })
@@ -445,7 +446,8 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
     /**
      * Ticket 119
      */
-    public function testSelectOptionSelectsDescendantElement(){
+    public function testSelectOptionSelectsDescendantElement()
+    {
         $this->url('html/test_select.html');
         $select = $this->select($this->byCssSelector('#secondSelect'));
         $this->assertEquals("option2", $select->selectedValue());
@@ -460,7 +462,8 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
     /**
      * Ticket 170
      */
-    public function testSelectOptgroupDoNotGetInTheWay(){
+    public function testSelectOptgroupDoNotGetInTheWay()
+    {
         $this->url('html/test_select.html');
         $select = $this->select($this->byCssSelector('#selectWithOptgroup'));
 
@@ -799,7 +802,7 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->frame('my_iframe_id');
         $this->assertEquals('This is a test of the open command.', $this->byCssSelector('body')->text());
 
-        $this->frame(null);
+        $this->frame(NULL);
         $this->assertContains('This page contains frames.', $this->byCssSelector('body')->text());
     }
 
@@ -809,7 +812,7 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->frame(0);
         $this->assertEquals('This is a test of the open command.', $this->byCssSelector('body')->text());
 
-        $this->frame(null);
+        $this->frame(NULL);
         $this->assertContains('This page contains frames.', $this->byCssSelector('body')->text());
     }
 
@@ -819,7 +822,7 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->frame('my_iframe_name');
         $this->assertEquals('This is a test of the open command.', $this->byCssSelector('body')->text());
 
-        $this->frame(null);
+        $this->frame(NULL);
         $this->assertContains('This page contains frames.', $this->byCssSelector('body')->text());
     }
 
@@ -830,7 +833,7 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->frame($frame);
         $this->assertEquals('This is a test of the open command.', $this->byCssSelector('body')->text());
 
-        $this->frame(null);
+        $this->frame(NULL);
         $this->assertContains('This page contains frames.', $this->byCssSelector('body')->text());
     }
 
@@ -861,7 +864,6 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $size = $popup->size();
         $this->assertEquals(100, $size['width']);
         $this->assertEquals(200, $size['height']);
-
 
         $this->markTestIncomplete("We should wait for the window to be moved. How? With aynshcrnous javascript specific for this test");
         //$popup->position(array('x' => 300, 'y' => 400));

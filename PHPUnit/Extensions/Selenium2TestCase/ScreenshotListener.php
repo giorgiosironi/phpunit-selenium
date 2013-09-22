@@ -71,7 +71,7 @@ class PHPUnit_Extensions_Selenium2TestCase_ScreenshotListener implements PHPUnit
     {
         $this->storeAScreenshot($test);
     }
- 
+
     private function storeAScreenshot(PHPUnit_Framework_Test $test)
     {
         if ($test instanceof PHPUnit_Extensions_Selenium2TestCase)
@@ -82,13 +82,13 @@ class PHPUnit_Extensions_Selenium2TestCase_ScreenshotListener implements PHPUnit
             } catch (Exception $e) {
                 $file = $this->directory . '/' . get_class($test) . '__' . $test->getName() . '__ ' . date('Y-m-d\TH-i-s') . '.txt';
                 file_put_contents($file, "Screenshot generation doesn't work." . "\n"
-                                         . $e->getMessage() . "\n" 
+                                         . $e->getMessage() . "\n"
                                          . $e->getTraceAsString());
             }
         }
     }
- 
-    public function addIncompleteTest(PHPUnit_Framework_Test $test, Exception $e, $time) {} 
+
+    public function addIncompleteTest(PHPUnit_Framework_Test $test, Exception $e, $time) {}
     public function addSkippedTest(PHPUnit_Framework_Test $test, Exception $e, $time) {}
     public function startTest(PHPUnit_Framework_Test $test) {}
     public function endTest(PHPUnit_Framework_Test $test, $time) {}

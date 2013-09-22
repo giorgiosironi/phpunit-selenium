@@ -44,7 +44,7 @@
 
 /**
  * Moves the mouse pointer.
- * 
+ *
  * @author     Giorgio Sironi <info@giorgiosironi.com>
  * @package    PHPUnit_Selenium
  * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
@@ -66,9 +66,9 @@ class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_MoveTo
         }
 
         $validKeys = array(
-            'element' => null,
-            'xoffset' => null,
-            'yoffset' => null,
+            'element' => NULL,
+            'xoffset' => NULL,
+            'yoffset' => NULL,
         );
 
         $jsonParameters = array_intersect_key($element, $validKeys);
