@@ -81,6 +81,13 @@ class PHPUnit_Extensions_SeleniumTestSuite extends PHPUnit_Framework_TestSuite
         $class            = new ReflectionClass($className);
         $classGroups      = PHPUnit_Util_Test::getGroups($className);
         $staticProperties = $class->getStaticProperties();
+        if (isset($staticProperties['browsers'])) {
+            $browsers = $staticProperties['browsers'];
+        } else if (is_callable("{$className}::browsers")) {
+            $browsers = $className::browsers();
+        } else {
+            $browsers = null;
+        }
 
         //BC: renamed seleneseDirectory -> selenesePath
         if (!isset($staticProperties['selenesePath']) && isset($staticProperties['seleneseDirectory'])) {
@@ -101,8 +108,8 @@ class PHPUnit_Extensions_SeleniumTestSuite extends PHPUnit_Framework_TestSuite
             }
 
             // Create tests from Selenese/HTML files for multiple browsers.
-            if (!empty($staticProperties['browsers'])) {
-                foreach ($staticProperties['browsers'] as $browser) {
+            if ($browsers) {
+                foreach ($browsers as $browser) {
                     $browserSuite = PHPUnit_Extensions_SeleniumBrowserSuite::fromClassAndBrowser($className, $browser);
 
                     foreach ($files as $file) {
@@ -126,8 +133,8 @@ class PHPUnit_Extensions_SeleniumTestSuite extends PHPUnit_Framework_TestSuite
         }
 
         // Create tests from test methods for multiple browsers.
-        if (!empty($staticProperties['browsers'])) {
-            foreach ($staticProperties['browsers'] as $browser) {
+        if ($browsers) {
+            foreach ($browsers as $browser) {
                 $browserSuite = PHPUnit_Extensions_SeleniumBrowserSuite::fromClassAndBrowser($className, $browser);
                 foreach ($class->getMethods() as $method) {
                     $browserSuite->addTestMethod($class, $method);
