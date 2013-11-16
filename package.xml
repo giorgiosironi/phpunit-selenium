@@ -144,6 +144,9 @@
        <file baseinstalldir="/" name="Location.php" role="php">
         <tasks:replace from="@package_version@" to="version" type="package-info" />
        </file>
+       <file baseinstalldir="/" name="Log.php" role="php">
+        <tasks:replace from="@package_version@" to="version" type="package-info" />
+       </file>
        <file baseinstalldir="/" name="MoveTo.php" role="php">
         <tasks:replace from="@package_version@" to="version" type="package-info" />
        </file>
@@ -200,10 +203,10 @@
       <file baseinstalldir="/" name="Autoload.php" role="php">
        <tasks:replace from="@package_version@" to="version" type="package-info" />
       </file>
-      <file baseinstalldir="/" name="phpunit_coverage.php" role="php">
+      <file baseinstalldir="/" name="ExitHandler.php" role="php">
        <tasks:replace from="@package_version@" to="version" type="package-info" />
       </file>
-      <file baseinstalldir="/" name="ExitHandler.php" role="php">
+      <file baseinstalldir="/" name="phpunit_coverage.php" role="php">
        <tasks:replace from="@package_version@" to="version" type="package-info" />
       </file>
       <file baseinstalldir="/" name="prepend.php" role="php">
