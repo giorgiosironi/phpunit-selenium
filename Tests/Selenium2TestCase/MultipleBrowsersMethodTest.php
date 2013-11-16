@@ -42,88 +42,60 @@
  */
 
 /**
- * Tests for PHPUnit_Extensions_Selenium2TestCase.
- *
  * @package    PHPUnit_Selenium
- * @author     Jonathan Lipps <jlipps@gmail.com>
+ * @author     Giorgio Sironi <info@giorgiosironi.com>
  * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
  */
-class Extensions_Selenium2TestCaseMultipleBrowsersTest extends PHPUnit_Extensions_Selenium2TestCase
+class Extensions_Selenium2TestCaseMultipleBrowsersMethodTest extends PHPUnit_Extensions_Selenium2TestCase
 {
-    public static $browsers = array(
-        array(
-            'browserName' => 'firefox',
-            'host'        => 'localhost',
-            'port'        => 4444,
-            'sessionStrategy' => 'shared'
-        ),
-        array(
-            'browserName' => 'firefox',
-            'host'        => 'localhost',
-            'port'        => 4444,
-            'sessionStrategy' => 'isolated'
-        ),
-        array(
-            'browserName' => 'safari',
-            'host'        => 'localhost',
-            'port'        => 4444
-        )
-    );
+    private $browserWeSetUp = '';
+    private static $testsRun = 0;
 
-    private $_browserWeSetUp = '';
-
+    public static function browsers()
+    {
+        return array(
+            array(
+                'browserName' => 'firefox',
+                'host'        => 'localhost',
+                'port'        => 4444,
+                'sessionStrategy' => 'shared'
+            ),
+            array(
+                'browserName' => 'firefox',
+                'host'        => 'localhost',
+                'port'        => 4444,
+                'sessionStrategy' => 'isolated'
+            ),
+        );
+    }
 
     public function setUp()
     {
         if (!defined('PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL')) {
             $this->markTestSkipped("You must serve the selenium-1-tests folder from an HTTP server and configure the PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL constant accordingly.");
         }
-        if ($this->getBrowser() == 'safari') {
-            $this->markTestSkipped("Skipping safari since it might not be present");
-        }
         $this->setBrowserUrl(PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL);
     }
 
-    public function setupSpecificBrowser($params)
+    public function tearDown()
     {
-        $this->_browserWeSetUp = $params['browserName'];
-        parent::setupSpecificBrowser($params);
+        self::$testsRun++;
     }
 
-    public function testOpen()
+    public static function tearDownAfterClass()
     {
-        $this->url(PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL);
-        $this->assertEquals($this->_browserWeSetUp, $this->getBrowser());
+        $expected = count(self::browsers());
+        $actual = self::$testsRun;
+        if ($expected != $actual) {
+            throw new Exception("There were $expected browsers to run but $actual were run.");
+        }
     }
 
     public function testSessionIsLaunchedCorrectly()
     {
         $this->url('html/test_open.html');
         $this->assertStringEndsWith('html/test_open.html', $this->url());
-    }
-
-    /**
-     * @dataProvider urls
-     */
-    public function testDataProvidersAreRecognized($url)
-    {
-        $this->url($url);
-        $this->assertStringEndsWith($url, $this->url());
-        $body = $this->byCssSelector('body');
-        $this->assertEquals('This is a test of the open command.', $body->text());
-    }
-
-    public static function urls()
-    {
-        return array(
-            array('html/test_open.html')
-        );
-    }
-
-    public function testTheBrowserNameIsAccessible()
-    {
-        $this->assertEquals($this->_browserWeSetUp, $this->getBrowser());
     }
 }
