@@ -156,4 +156,13 @@
   <exec command="grep -r VERSION PHPUnit/" passthru="true" />
  </target>
 
+ <target name="regenerate-dummy-coverage-data">
+     <exec passthru="true" command="
+         rm -f Tests/Selenium2TestCase/Coverage/singleFile.php.*.dummyTestId;
+         php Tests/Selenium2TestCase/Coverage/singleFile.php;
+         coverageFile=$(basename Tests/Selenium2TestCase/Coverage/singleFile.php.*.dummyTestId);
+         php Tests/Selenium2TestCase/Coverage/singleFileCoverage.php $coverageFile > selenium-1-tests/coverage/dummy.txt;
+         " />
+ </target>
+
 </project>
