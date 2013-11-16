@@ -18,6 +18,7 @@ class Tests_Selenium2TestCase_Coverage_RemoteCoverageTest extends PHPUnit_Framew
             12 => -2,
             14 => 1
         );
+        $this->assertTrue(isset($content[$dummyClassSourceFile]), "Coverage: " . var_export($content, true));
         $this->assertEquals($expectedCoverage, $content[$dummyClassSourceFile]);
     }
 }
