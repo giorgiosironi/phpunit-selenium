@@ -287,7 +287,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
         $thrownException = NULL;
 
         if ($this->collectCodeCoverageInformation) {
-            $this->session->cookie()->remove('PHPUNIT_SELENIUM_TEST_ID');
+            $this->url($this->coverageScriptUrl);   // phpunit_coverage.php won't do anything if the cookie isn't set, which is exactly what we want
             $this->session->cookie()->add('PHPUNIT_SELENIUM_TEST_ID', $this->testId)->set();
         }
 
@@ -300,6 +300,10 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
             }
         } catch (Exception $e) {
             $thrownException = $e;
+        }
+        
+        if ($this->collectCodeCoverageInformation) {
+            $this->session->cookie()->remove('PHPUNIT_SELENIUM_TEST_ID');
         }
 
         if (NULL !== $thrownException) {
