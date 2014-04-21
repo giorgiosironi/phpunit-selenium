@@ -260,6 +260,21 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
     }
 
     /**
+     * Gets active element
+     *
+     * @return PHPUnit_Extensions_Selenium2TestCase_Element
+     */
+    public function active()
+    {
+        $command = $this->url->addCommand('element')->addCommand('active');
+        $response = $this->driver->curl('POST', $command);
+        $value = $response->getValue();
+
+        return PHPUnit_Extensions_Selenium2TestCase_Element::fromResponseValue(
+            $value, $this->getSessionUrl()->descend('element'), $this->driver);
+    }
+
+    /**
      * @return PHPUnit_Extensions_Selenium2TestCase_Session_Cookie
      */
     public function cookie()
