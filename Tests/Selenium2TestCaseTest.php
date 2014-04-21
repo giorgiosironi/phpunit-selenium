@@ -131,8 +131,20 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
 
     public function testTheElementWithFocusCanBeInspected()
     {
-        $this->markTestIncomplete('Which API to call session/1/element/active?');
-        $this->keys(array('value' => array())); // should send key strokes to the active element
+        $this->url('html/test_select.html');
+
+        // Select input and check if active
+        $theInput = $this->byCssSelector('input[name="theInput"]');
+        $theInput->click();
+        $this->assertTrue($this->active()->equals($theInput), 'Input not recognized as active.');
+
+        // Select select-group and check if active
+        $selectGroup = $this->byCssSelector('#selectWithOptgroup');
+        $selectGroup->click();
+        $this->assertTrue($this->active()->equals($selectGroup), 'Select-group not recognized as active.');
+
+        // Make sure that input is not recognized as selected
+        $this->assertTrue($this->active()->equals($theInput), 'Input falsely recognized as active.');
     }
 
     public function testActivePageElementReceivesTheKeyStrokes()
