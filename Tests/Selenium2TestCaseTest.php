@@ -144,7 +144,7 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->assertTrue($this->active()->equals($selectGroup), 'Select-group not recognized as active.');
 
         // Make sure that input is not recognized as selected
-        $this->assertTrue($this->active()->equals($theInput), 'Input falsely recognized as active.');
+        $this->assertFalse($this->active()->equals($theInput), 'Input falsely recognized as active.');
     }
 
     public function testActivePageElementReceivesTheKeyStrokes()
