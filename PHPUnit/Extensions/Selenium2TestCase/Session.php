@@ -260,18 +260,15 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
     }
 
     /**
-     * Gets active element
+     * Get the element on the page that currently has focus.
      *
      * @return PHPUnit_Extensions_Selenium2TestCase_Element
      */
     public function active()
     {
-        $command = $this->url->addCommand('element')->addCommand('active');
-        $response = $this->driver->curl('POST', $command);
-        $value = $response->getValue();
-
-        return PHPUnit_Extensions_Selenium2TestCase_Element::fromResponseValue(
-            $value, $this->getSessionUrl()->descend('element'), $this->driver);
+        $command = new PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Active(null, $this->url);
+        $response = $this->driver->execute($command);
+        return $this->elementFromResponseValue($response->getValue());
     }
 
     /**
