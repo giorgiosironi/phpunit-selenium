@@ -88,6 +88,7 @@ class PHPUnit_Extensions_Selenium2TestCase_ScreenshotListener implements PHPUnit
         }
     }
 
+    public function addRiskyTest(PHPUnit_Framework_Test $test, Exception $e, $time) {}
     public function addIncompleteTest(PHPUnit_Framework_Test $test, Exception $e, $time) {}
     public function addSkippedTest(PHPUnit_Framework_Test $test, Exception $e, $time) {}
     public function startTest(PHPUnit_Framework_Test $test) {}
