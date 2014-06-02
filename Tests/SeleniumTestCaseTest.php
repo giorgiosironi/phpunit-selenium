@@ -576,7 +576,6 @@ class Extensions_SeleniumTestCaseTest extends Tests_SeleniumTestCase_BaseTestCas
         $this->open('html/test_focus_on_blur.html');
         $this->type('testInput', 'test');
         $this->fireEvent('testInput', 'blur');
-        $this->assertEquals('Bad value', $this->getAlert());
         $this->type('testInput', 'somethingelse');
     }
 
