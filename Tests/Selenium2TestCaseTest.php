@@ -844,6 +844,9 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
 
         $this->window('myPopupWindow');
         $this->byId('closePage')->click();
+
+        $this->window('');
+        $this->assertEquals('Select Window Base', $this->title());
     }
 
     public function testWindowsCanBeManipulatedAsAnObject()
@@ -859,12 +862,8 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->assertEquals(100, $size['width']);
         $this->assertEquals(200, $size['height']);
 
-        $this->markTestIncomplete("We should wait for the window to be moved. How? With aynshcrnous javascript specific for this test");
-        //$popup->position(array('x' => 300, 'y' => 400));
-        //$position = $popup->position();
-        //$this->assertEquals(300, $position['x']);
-        //$this->assertEquals(400, $position['y']);
-        // method on Window; interface Closeable, better name?
+        $this->window('');
+        $this->assertEquals('Select Window Base', $this->title());
     }
 
     public function testWindowsCanBeClosed()
@@ -875,6 +874,8 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->window('myPopupWindow');
         $this->closeWindow();
 
+        $this->window('');
+        $this->assertEquals('Select Window Base', $this->title());
         $this->assertEquals(1, count($this->windowHandles()));
     }
 

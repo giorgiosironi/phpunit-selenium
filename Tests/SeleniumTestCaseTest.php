@@ -100,23 +100,7 @@ class Extensions_SeleniumTestCaseTest extends Tests_SeleniumTestCase_BaseTestCas
     {
         $this->open('html/test_click_javascript_page.html');
         $this->click('link');
-        $this->assertTrue($this->isAlertPresent());
-        $this->assertEquals('link clicked', $this->getAlert());
-
-        $this->click('linkWithMultipleJavascriptStatements');
-        $this->assertEquals('alert1', $this->getAlert());
-        $this->assertEquals('alert2', $this->getAlert());
-        $this->assertEquals('alert3', $this->getAlert());
-
-        $this->click('linkWithJavascriptVoidHref');
-        $this->assertEquals('onclick', $this->getAlert());
-        $this->assertEquals('Click Page 1', $this->getTitle());
-
-        $this->click('linkWithOnclickReturnsFalse');
-        $this->assertEquals('Click Page 1', $this->getTitle());
-
-        $this->click('enclosedImage');
-        $this->assertEquals('enclosedImage clicked', $this->getAlert());
+        $this->assertEquals('link clicked', $this->getText('result'));
     }
 
     public function testType()
