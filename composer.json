@@ -27,7 +27,7 @@
     },
     "require": {
         "php": ">=5.3.3",
-        "phpunit/phpunit": "3.7.32",
+        "phpunit/phpunit": "3.7.*",
         "ext-curl": "*",
         "ext-dom": "*"
     },
