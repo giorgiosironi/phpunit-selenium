@@ -32,8 +32,11 @@ fi
 cd ..
 
 echo "Downloading Firefox"
-wget $firefoxUrl -O $firefoxFile
-tar xvjf $firefoxFile
+if [ ! -f $firefoxFile ]; then
+    wget $firefoxUrl -O $firefoxFile
+    tar xvjf $firefoxFile
+fi
+killall firefox
 
 echo "Starting xvfb"
 echo "Starting Selenium"
