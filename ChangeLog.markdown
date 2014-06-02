@@ -150,3 +150,4 @@ PHPUnit_Selenium 1.2.0
 * Introduced element manipulation in WebDriver API: text accessor, value mutator.
 * Introduced `by*()` quick selectors in WebDriver API.
 * Extracted a base command class for extending the supported session and element commands in WebDriver API.
+
