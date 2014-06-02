@@ -1,7 +1,7 @@
 serverUrl='http://127.0.0.1:4444'
-serverVersion='2.35.0'
-serverFile=selenium-server-standalone-$serverVersion.jar
-firefoxUrl=http://ftp.mozilla.org/pub/mozilla.org/firefox/releases/23.0/linux-x86_64/en-US/firefox-23.0.tar.bz2
+serverFile=selenium-server-standalone.jar
+serverUrl=http://selenium-release.storage.googleapis.com/2.42/selenium-server-standalone-2.42.1.jar
+firefoxUrl=http://ftp.mozilla.org/pub/mozilla.org/firefox/releases/29.0/linux-x86_64/en-US/firefox-29.0.tar.bz2
 firefoxFile=firefox.tar.bz2
 fixturePort=8080
 phpVersion=`php -v`
@@ -38,7 +38,7 @@ tar xvjf $firefoxFile
 echo "Starting xvfb"
 echo "Starting Selenium"
 if [ ! -f $serverFile ]; then
-    wget http://selenium.googlecode.com/files/selenium-server-standalone-$serverVersion.jar -O $serverFile
+    wget ${serverUrl} -O $serverFile
 fi
 xvfb-run java -Dwebdriver.firefox.bin=firefox/firefox-bin  -jar $serverFile > /tmp/selenium.log 2>&1 &
 
