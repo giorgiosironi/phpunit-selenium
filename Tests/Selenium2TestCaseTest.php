@@ -324,25 +324,7 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
     {
         $this->url('html/test_click_javascript_page.html');
         $this->clickOnElement('link');
-        $this->assertEquals('link clicked', $this->alertText());
-        $this->markTestIncomplete("Should guarantee alerts to be checked in the right order and be dismissed; should reset the session in case alerts are still displayed as they would block the next test.");
-
-        $this->clickOnElement('linkWithMultipleJavascriptStatements');
-        $this->assertEquals('alert1', $this->alertText());
-        $this->acceptAlert();
-        $this->assertEquals('alert2', $this->alertText());
-        $this->dismissAlert();
-        $this->assertEquals('alert3', $this->alertText());
-
-        $this->clickOnElement('linkWithJavascriptVoidHref');
-        $this->assertEquals('onclick', $this->alertText());
-        $this->assertEquals('Click Page 1', $this->title());
-
-        $this->clickOnElement('linkWithOnclickReturnsFalse');
-        $this->assertEquals('Click Page 1', $this->title());
-
-        $this->clickOnElement('enclosedImage');
-        $this->assertEquals('enclosedImage clicked', $this->alertText());
+        $this->assertEquals('link clicked', $this->byId('result')->text());
     }
 
     public function testTypingViaTheKeyboard()
