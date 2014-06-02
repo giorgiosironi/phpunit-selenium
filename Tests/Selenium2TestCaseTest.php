@@ -1100,7 +1100,7 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->assertEquals('113', $this->byId('check')->text());
 
         $this->keys(Keys::ALT . Keys::ENTER);
-        $this->assertEquals('14,alt', $this->byId('check')->text());
+        $this->assertEquals('13,alt', $this->byId('check')->text());
 
         // note that modifier keys (alt, control, shift) are sticky
         // so they are enabled until you explicitly disable it by another call

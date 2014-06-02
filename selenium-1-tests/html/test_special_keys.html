@@ -23,7 +23,7 @@ window.onload = function() {
         check = document.getElementById('check');
 
     input.addEventListener('keydown', function(e) {
-        var result = e.which;
+        result = e.keyCode;
 
         if (e.altKey) {
             result += ',alt';
