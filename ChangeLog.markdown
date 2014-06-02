@@ -1,7 +1,16 @@
-PHPUnit_Selenium 1.2
+PHPUnit_Selenium 1.4
 ====================
 
-This is the list of changes for the PHPUnit_Selenium 1.2 release series.
+This is the list of changes for the PHPUnit_Selenium 1.4 release series.
+
+PHPUnit_Selenium 1.4.0
+----------------------
+
+* PEAR is now not supported as an installation method, being deprecated from the PHPUnit parent project
+* phpunit_coverage.php does not realy on PEAR now but on finding an autoload.php file
+
+* Supporting browsers() static method with same behavior as $browsers static property
+* Added $this->log() and $this->logTypes()
 
 PHPUnit_Selenium 1.3.3
 ----------------------
