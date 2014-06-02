@@ -149,6 +149,17 @@ class PHPUnit_Extensions_Selenium2TestCase_Element
         return strtolower(parent::name());
     }
 
+    public function value(/* ... */)
+    {
+        $arguments = func_get_args();
+        // setter
+        if ($arguments) {
+            return $this->__call('value', $arguments);
+        }
+        // getter, for BC
+        return $this->attribute('value');
+    }
+
     /**
      * Generates an array that is structured as the WebDriver Object of the JSONWireProtocoll
      *
