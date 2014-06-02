@@ -85,7 +85,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Element_Select
         if ($selectedOption === NULL) {
             return '';
         }
-        return $selectedOption->value();
+        return $selectedOption->attribute('value');
     }
 
     /**
@@ -119,7 +119,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Element_Select
     {
         $values = array();
         foreach ($this->selectedOptions() as $option) {
-            $values[] = $option->value();
+            $values[] = $option->attribute('value');
         }
         return $values;
     }
@@ -175,7 +175,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Element_Select
     {
         $options = array();
         foreach ($this->options() as $option) {
-            $options[] = $option->value();
+            $options[] = $option->attribute('value');
         }
         return $options;
     }
@@ -193,7 +193,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Element_Select
     }
 
     /***
-     * @return array
+     * @return PHPUnit_Extensions_Selenium2TestCase_Element[]
      */
     private function selectedOptions()
     {
@@ -213,6 +213,9 @@ class PHPUnit_Extensions_Selenium2TestCase_Element_Select
         }
     }
 
+    /**
+     * @return null|PHPUnit_Extensions_Selenium2TestCase_Element
+     */
     private function selectedOption()
     {
         foreach ($this->options() as $option) {
@@ -223,6 +226,9 @@ class PHPUnit_Extensions_Selenium2TestCase_Element_Select
         return NULL;
     }
 
+    /**
+     * @return PHPUnit_Extensions_Selenium2TestCase_Element[]
+     */
     private function options()
     {
         $onlyTheOptions = $this->using('css selector')->value('option');
