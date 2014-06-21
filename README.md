@@ -7,6 +7,8 @@ A feature branch containing all the commits you want to propose works best.
 Running the test suite
 ---
 
+#### Manually
+
 To run the test suite for this package, you should serve selenium-1-tests via HTTP:
 ```
 selenium-1-tests/ $ python -m SimpleHTTPServer 8080
@@ -31,3 +33,15 @@ The tests can then be run with:
 $ vendor/bin/phpunit Tests
 ```
 You can copy phpunit.xml.dist to phpunit.xml and setup a custom configuration for browsers, but the test suite is based on Firefox on an Ubuntu machine.
+
+#### Via Vagrant
+
+Just run `vagrant up` and everything will be set up for you. The first start will take some time which depends on the speed of your connection (and less - speed of your computer). It will take about 160Mb to set up the VM environment and about 300Mb to download the `hashicorp/precise32` vagrant box (in case if you don't have it downloaded yet).
+
+After the command finishes its execution just run the following:
+
+    vagrant ssh # logging in into the just created virtual machine
+    cd /vagrant
+    vendor/bin/phpunit Tests/Selenium2TestCaseTest.php
+    
+and you must see the `phpunit` testing `phpunit-selenium` project.
