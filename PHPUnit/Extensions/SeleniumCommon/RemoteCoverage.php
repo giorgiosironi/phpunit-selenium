@@ -13,7 +13,7 @@ class PHPUnit_Extensions_SeleniumCommon_RemoteCoverage
             $url = sprintf(
               '%s?PHPUNIT_SELENIUM_TEST_ID=%s',
               $this->coverageScriptUrl,
-              $this->testId
+              urlencode($this->testId)
             );
 
             $buffer = @file_get_contents($url);
