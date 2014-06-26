@@ -552,6 +552,11 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
     protected $screenshotUrl = '';
 
     /**
+     * @var    string
+     */
+    protected $screenshotBgColor = '';
+
+    /**
      * @var    integer  the number of seconds to wait before declaring
      *                  the Selenium server not reachable
      */
@@ -1187,8 +1192,12 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
         if (!empty($this->screenshotPath) &&
             !empty($this->screenshotUrl)) {
             $filename = $this->getScreenshotPath() . $this->testId . '.png';
+            $kargs = '';
+            if ($this->screenshotBgColor!='') {
+                $kargs = 'background=' . $this->screenshotBgColor;
+            }
 
-            $this->drivers[0]->captureEntirePageScreenshot($filename);
+            $this->drivers[0]->captureEntirePageScreenshot($filename, $kargs);
 
             return 'Screenshot: ' . $this->screenshotUrl . '/' .
                    $this->testId . ".png\n";
