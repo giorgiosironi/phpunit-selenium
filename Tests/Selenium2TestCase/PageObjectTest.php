@@ -9,7 +9,6 @@ class Tests_PageObjectTest extends Tests_Selenium2TestCase_BaseTestCase
                             ->password('TestPassword')
                             ->submit();
         $welcomePage->assertWelcomeIs('Welcome, TestUser!');
-
     }
 }
 
