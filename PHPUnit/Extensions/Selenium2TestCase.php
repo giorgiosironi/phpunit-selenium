@@ -68,6 +68,7 @@
  * @method void clickOnElement() clickOnElement($id)
  * @method string currentScreenshot() BLOB of the image file
  * @method void dismissAlert() Press Cancel on an alert, or does not confirm a dialog
+ * @method void doubleclick() Double clicks (at the coordinates set by the last moveto command).
  * @method \PHPUnit_Extensions_Selenium2TestCase_Element element() element(\PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $criteria) Retrieves an element
  * @method array elements() elements(\PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $criteria) Retrieves an array of Element instances
  * @method string execute() execute($javaScriptCode) Injects arbitrary JavaScript in the page and returns the last
