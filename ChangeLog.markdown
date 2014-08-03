@@ -8,7 +8,7 @@ PHPUnit_Selenium 1.4.0
 
 * PEAR is now not supported as an installation method, being deprecated from the PHPUnit parent project
 * phpunit_coverage.php does not realy on PEAR now but on finding an autoload.php file
-
+* A Vagrant VM is provided for contributors to easily run the tests
 * Supporting browsers() static method with same behavior as $browsers static property
 * Added $this->log() and $this->logTypes()
 
