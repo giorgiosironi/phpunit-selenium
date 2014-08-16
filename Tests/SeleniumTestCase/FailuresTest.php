@@ -146,7 +146,12 @@ class Extensions_SeleniumTestCaseFailuresTest extends Tests_SeleniumTestCase_Bas
 
     private function getAFailure()
     {
-        $failure = new PHPUnit_Framework_ComparisonFailure(1, 2, '1', '2');
+        if (class_exists('PHPUnit_Framework_ComparisonFailure')) {
+            $failure = new PHPUnit_Framework_ComparisonFailure(1, 2, '1', '2');
+        } else {
+            $failure = new SebastianBergmann\Comparator\ComparisonFailure(1, 2, '1', '2');
+        }
+
         $this->failureLine = __LINE__ + 1;
         return new PHPUnit_Framework_ExpectationFailedException('1 is not 2', $failure);
     }
