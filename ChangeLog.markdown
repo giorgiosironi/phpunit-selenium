@@ -3,6 +3,11 @@ PHPUnit_Selenium 1.4
 
 This is the list of changes for the PHPUnit_Selenium 1.4 release series.
 
+PHPUnit_Selenium 1.4.1
+----------------------
+
+* PHPUnit 4.x is now supported
+
 PHPUnit_Selenium 1.4.0
 ----------------------
 
