@@ -1,5 +1,7 @@
 #!/bin/bash
 
+sudo apt-get update
+
 if [ ! -f "/usr/local/bin/composer" ]; then
     echo "Installing Composer"
     php -r "readfile('https://getcomposer.org/installer');" | sudo php -d apc.enable_cli=0 -- --install-dir=/usr/local/bin --filename=composer
