@@ -19,6 +19,11 @@
             "name": "Giorgio Sironi",
             "email": "info@giorgiosironi.com",
             "role": "developer"
+        },
+        {
+            "name": "Ivan Kurnosov",
+            "email": "zerkms@zerkms.com",
+            "role": "developer"
         }
     ],
     "support": {
