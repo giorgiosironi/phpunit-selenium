@@ -56,6 +56,7 @@ class Extensions_SeleniumSuiteBuildingTest extends PHPUnit_Framework_TestCase
 {
     public function testSampleTestCaseBuildsAFullSuiteContainingAllItsTests()
     {
+        require_once __DIR__ . '/fixtures/SuiteBuildingSuites.php';
         $suite = Extensions_SeleniumTestCaseSample::suite('Extensions_SeleniumTestCaseSample');
         $this->assertInstanceOf('PHPUnit_Framework_TestSuite', $suite);
         $this->assertEquals(2, count($suite->tests()));
@@ -63,36 +64,9 @@ class Extensions_SeleniumSuiteBuildingTest extends PHPUnit_Framework_TestCase
 
     public function testAMultipleBrowsersTestCaseBuildsACopyOfEachTestForEachBrowser()
     {
+        require_once __DIR__ . '/fixtures/SuiteBuildingSuites.php';
         $suite = Extensions_SeleniumMultipleBrowsersTestCaseSample::suite('Extensions_SeleniumMultipleBrowsersTestCaseSample');
         $this->assertInstanceOf('PHPUnit_Framework_TestSuite', $suite);
         $this->assertEquals(2, count($suite->tests()));
     }
-}
-
-class Extensions_SeleniumTestCaseSample extends PHPUnit_Extensions_SeleniumTestCase
-{
-    public function testFirst() {}
-    public function testSecond() {}
-}
-
-class Extensions_SeleniumMultipleBrowsersTestCaseSample extends PHPUnit_Extensions_SeleniumTestCase
-{
-    public static $browsers = array(
-        array(
-            'name'    => 'Firefox on Linux',
-            'browser' => '*firefox',
-            'host'    => 'localhost',
-            'port'    => 4444,
-            'timeout' => 30000,
-        ),
-        array(
-            'name'    => 'Safari on MacOS X',
-            'browser' => '*safari',
-            'host'    => 'localhost',
-            'port'    => 4444,
-            'timeout' => 30000,
-        ),
-    );
-
-    public function testSingle() {}
 }

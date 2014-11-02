@@ -27,7 +27,7 @@ class Tests_Selenium2TestCase_ScreenshotListenerTest extends Tests_Selenium2Test
     {
         $this->url('html/test_open.html');
 
-        $exception = $this->getMock('PHPUnit_Framework_AssertionFailedError');
+        $exception = new PHPUnit_Framework_AssertionFailedError();
         $this->listener->addFailure($this, $exception, NULL);
 
         $this->assertThereIsAScreenshotNamed('Tests_Selenium2TestCase_ScreenshotListenerTest__testStoresAScreenshotInCaseOfFailure*.png');

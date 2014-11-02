@@ -56,6 +56,7 @@ class Extensions_Selenium2SuiteBuildingTest extends PHPUnit_Framework_TestCase
 {
     public function testSampleTestCaseBuildsAFullSuiteContainingAllItsTests()
     {
+        require_once __DIR__ . '/fixtures/SuiteBuildingSuites.php';
         $suite = Extensions_Selenium2TestCaseSample::suite('Extensions_Selenium2TestCaseSample');
         $this->assertInstanceOf('PHPUnit_Framework_TestSuite', $suite);
         $this->assertEquals(2, count($suite->tests()));
@@ -63,32 +64,9 @@ class Extensions_Selenium2SuiteBuildingTest extends PHPUnit_Framework_TestCase
 
     public function testAMultipleBrowsersTestCaseBuildsACopyOfEachTestForEachBrowser()
     {
+        require_once __DIR__ . '/fixtures/SuiteBuildingSuites.php';
         $suite = Extensions_Selenium2MultipleBrowsersTestCaseSample::suite('Extensions_Selenium2MultipleBrowsersTestCaseSample');
         $this->assertInstanceOf('PHPUnit_Framework_TestSuite', $suite);
         $this->assertEquals(2, count($suite->tests()));
     }
-}
-
-class Extensions_Selenium2TestCaseSample extends PHPUnit_Extensions_Selenium2TestCase
-{
-    public function testFirst() {}
-    public function testSecond() {}
-}
-
-class Extensions_Selenium2MultipleBrowsersTestCaseSample extends PHPUnit_Extensions_Selenium2TestCase
-{
-    public static $browsers = array(
-        array(
-            'browserName' => 'firefox',
-            'host'        => 'localhost',
-            'port'        => 4444,
-        ),
-        array(
-            'browserName' => 'safari',
-            'host'        => 'localhost',
-            'port'        => 4444,
-        ),
-    );
-
-    public function testSingle() {}
 }
