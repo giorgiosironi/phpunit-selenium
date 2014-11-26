@@ -63,7 +63,7 @@ if ( isset($_COOKIE['PHPUNIT_SELENIUM_TEST_ID']) &&
     }
 
     file_put_contents(
-      $name = $file . '.' . md5(uniqid(rand(), TRUE)) . '.' . $_COOKIE['PHPUNIT_SELENIUM_TEST_ID'],
+      $name = $file . '.' . md5(uniqid(rand(), TRUE)) . '.' . md5($_COOKIE['PHPUNIT_SELENIUM_TEST_ID']),
       serialize($data)
     );
 }
