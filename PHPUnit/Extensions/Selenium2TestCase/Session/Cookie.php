@@ -68,7 +68,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Session_Cookie
     /**
      * @param string $name
      * @param string $value
-     * @return void
+     * @return PHPUnit_Extensions_Selenium2TestCase_Session_Cookie_Builder
      */
     public function add($name, $value)
     {
