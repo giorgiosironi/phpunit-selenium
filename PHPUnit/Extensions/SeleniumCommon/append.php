@@ -62,8 +62,8 @@ if ( isset($_COOKIE['PHPUNIT_SELENIUM_TEST_ID']) &&
         $file = $_SERVER['SCRIPT_FILENAME'];
     }
 
-    file_put_contents(
-      $name = $file . '.' . md5(uniqid(rand(), TRUE)) . '.' . $_COOKIE['PHPUNIT_SELENIUM_TEST_ID'],
-      serialize($data)
-    );
+    $sanitizedCookieName = str_replace(array('\\'), '_', $_COOKIE['PHPUNIT_SELENIUM_TEST_ID']);
+    $fullPath = $file . '.' . md5(uniqid(rand(), TRUE)) . '.' . $sanitizedCookieName;
+
+    file_put_contents($fullPath, serialize($data));
 }

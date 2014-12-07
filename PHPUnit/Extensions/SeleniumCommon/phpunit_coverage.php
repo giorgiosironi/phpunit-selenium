@@ -59,9 +59,10 @@ $GLOBALS['PHPUNIT_COVERAGE_DATA_DIRECTORY'] = getcwd();
 
 if (isset($_GET['PHPUNIT_SELENIUM_TEST_ID'])) {
     $facade = new File_Iterator_Facade;
+    $sanitizedCookieName = str_replace(array('\\'), '_', $_GET['PHPUNIT_SELENIUM_TEST_ID']);
     $files  = $facade->getFilesAsArray(
       $GLOBALS['PHPUNIT_COVERAGE_DATA_DIRECTORY'],
-      $_GET['PHPUNIT_SELENIUM_TEST_ID']
+      $sanitizedCookieName
     );
 
     $coverage = array();
