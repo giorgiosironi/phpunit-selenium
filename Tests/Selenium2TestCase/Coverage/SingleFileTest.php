@@ -1,7 +1,7 @@
 <?php
 class Tests_Selenium2TestCase_Coverage_SingleFileTest extends PHPUnit_Framework_TestCase
 {
-    private $dummyTestId = 'dummyTestId';
+    private $dummyTestId = 'ns_dummyTestId';
 
     public function setUp()
     {
