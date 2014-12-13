@@ -53,3 +53,4 @@ and you must see the `phpunit` testing `phpunit-selenium` project.
 
 ##### IMPORTANT NOTE about `Vagrant` usage
 After `vagrant` has initialized the VM it makes sense to change amount of memory (and number of CPUs) manually from 384Mb by default to something near 2Gb (and 2 CPUs accordingly). I did nto do that in `Vagrantfile` deliberately since not every configuration might afford allocating 2Gb and 2 CPUs. Otherwise VM will swap hardly and at least one test will crash due to Out Of Memory.
+
