@@ -483,6 +483,20 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
     }
 
     /**
+     * @param int $timeout
+     */
+    public function waitForWindowClosed($timeout = null)
+    {
+        $this->waitUntil(function ($testCase) {
+            try {
+                $testCase->currentWindow();
+            } catch (RuntimeException $e) {
+                return true;
+            }
+        }, $timeout);
+    }
+
+    /**
      * Sends a special key
      * Deprecated due to issues with IE webdriver. Use keys() method instead
      * @deprecated

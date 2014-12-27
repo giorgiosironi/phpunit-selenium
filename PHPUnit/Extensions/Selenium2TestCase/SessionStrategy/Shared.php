@@ -56,9 +56,17 @@
 class PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Shared
     implements PHPUnit_Extensions_Selenium2TestCase_SessionStrategy
 {
+    /**
+     * @var PHPUnit_Extensions_Selenium2TestCase_SessionStrategy
+     */
     private $original;
+    /**
+     * @var PHPUnit_Extensions_Selenium2TestCase_Session
+     */
     private $session;
-    private $mainWindow;
+    /**
+     * @var bool
+     */
     private $lastTestWasNotSuccessful = FALSE;
 
     public function __construct(PHPUnit_Extensions_Selenium2TestCase_SessionStrategy $originalStrategy)
@@ -77,9 +85,21 @@ class PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Shared
         }
         if ($this->session === NULL) {
             $this->session = $this->original->session($parameters);
-            $this->mainWindow = $this->session->windowHandle();
         } else {
-            $this->session->window($this->mainWindow);
+            try {
+                $this->session->window($this->session->windowHandle());
+            } catch (Exception $e) {
+                $errorMessage = $e->getMessage();
+                if (strpos($errorMessage, 'Session not found') === FALSE
+                    && strpos($errorMessage, 'It may have died') === FALSE
+                    && strpos($errorMessage, 'Window not found') === FALSE
+                ) {
+                    throw $e;
+                }
+                $this->session->stop();
+                $this->session = NULL;
+                return $this->session($parameters);
+            }
         }
         return $this->session;
     }
