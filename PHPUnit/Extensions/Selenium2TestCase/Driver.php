@@ -132,6 +132,9 @@ class PHPUnit_Extensions_Selenium2TestCase_Driver
         if ($info['http_code'] == 404) {
             throw new BadMethodCallException("The command $url is not recognized by the server.");
         }
+        if (($info['http_code'] > 399) && ($info['http_code'] < 500)) {
+            throw new BadMethodCallException("Something untoward happened: '$rawResponse'");
+        }
         curl_close($curl);
         $content = json_decode($rawResponse, TRUE);
         if ($info['http_code'] == 500) {
