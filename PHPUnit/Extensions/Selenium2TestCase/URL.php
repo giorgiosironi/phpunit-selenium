@@ -65,6 +65,9 @@ final class PHPUnit_Extensions_Selenium2TestCase_URL
      */
     public function __construct($value)
     {
+	if (substr($value, -1) == '/' ) {
+            $value = substr($value, 0, strlen($value)-1);
+        }
         $this->value = $value;
     }
 
