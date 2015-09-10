@@ -134,18 +134,34 @@ class PHPUnit_Extensions_Selenium2TestCase_Driver
         }
         curl_close($curl);
         $content = json_decode($rawResponse, TRUE);
-        if ($info['http_code'] == 500) {
-            $message = '';
-            if (isset($content['value']['message'])) {
-                $message .= $content['value']['message'];
-            } else {
-                $message .= "Internal server error while executing $http_method request at $url. Response: " . var_export($content, TRUE);
-            }
-            if (isset($content['value']['class'])) {
-                $message .= PHP_EOL . $content['value']['class'];
-            }
-            throw new PHPUnit_Extensions_Selenium2TestCase_WebDriverException($message, isset($content['status']) ? $content['status'] : 13);
+
+        if ($content === null && json_last_error() !== JSON_ERROR_NONE) {
+            throw new PHPUnit_Extensions_Selenium2TestCase_Exception(
+                sprintf(
+                    "JSON decoding of remote response failed.\n".
+                    "Error code: %d\n".
+                    "The response: '%s'\n",
+                    json_last_error(),
+                    $rawResponse
+                )
+            );
         }
+
+        $value = null;
+        if (is_array($content) && array_key_exists('value', $content)) {
+            $value = $content['value'];
+        }
+
+        $message = null;
+        if (is_array($value) && array_key_exists('message', $value)) {
+            $message = $value['message'];
+        }
+
+        $status = isset($content['status']) ? $content['status'] : 0;
+        if ($status !== PHPUnit_Extensions_Selenium2TestCase_WebDriverException::Success) {
+            throw new PHPUnit_Extensions_Selenium2TestCase_WebDriverException($message, $status);
+        }
+
         return new PHPUnit_Extensions_Selenium2TestCase_Response($content, $info);
     }
 
