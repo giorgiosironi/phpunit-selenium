@@ -191,6 +191,14 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
         $this->keysHolder = new PHPUnit_Extensions_Selenium2TestCase_KeysHolder();
     }
 
+    public function tearDown()
+    {
+        parent::tearDown();
+        if ($this->getName() === $this->getLastTest()) {
+            $this->stop();
+        }
+    }
+
     public function setupSpecificBrowser($params)
     {
         $this->setUpSessionStrategy($params);
@@ -303,7 +311,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
         } catch (Exception $e) {
             $thrownException = $e;
         }
-        
+
         if ($this->collectCodeCoverageInformation) {
             $this->session->cookie()->remove('PHPUNIT_SELENIUM_TEST_ID');
         }
@@ -506,5 +514,25 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
     public function setUpPage()
     {
 
+    }
+
+    /**
+     * Get current last test
+     * @return string
+     */
+    protected function getLastTest()
+    {
+        $tests = array_filter(get_class_methods($this), function($method){
+            $reClassName = "/test[A-Z][a-zA-Z]+/";
+            preg_match($reClassName, $method, $matchClassName);
+
+            $reAnnotation = "/@test/";
+            $rm = new \ReflectionMethod($this, $method);
+            $docComment = $rm->getDocComment();
+            preg_match($reAnnotation, $docComment, $matchAnnotation);
+
+            return(!empty($matchClassName) || !empty($matchAnnotation));
+        });
+        return end($tests);
     }
 }
