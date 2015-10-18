@@ -10,10 +10,8 @@ else
     sudo /usr/local/bin/composer self-update
 fi
 
-if [ ! -d vendor ] || [ ! -f vendor/autoload.php ]; then
-    echo "Installing dependencies"
-    composer install --dev
-fi
+echo "Installing dependencies"
+composer install
 
 echo "Installing supervisord"
 sudo apt-get install supervisor -y --no-install-recommends
