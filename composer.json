@@ -37,6 +37,9 @@
         "ext-curl": "*",
         "ext-dom": "*"
     },
+    "require-dev": {
+       "phing/phing": "2.*"
+    },
     "autoload": {
         "classmap": [
             "PHPUnit/"
