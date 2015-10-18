@@ -7,4 +7,4 @@ sed -i "1ideb mirror://mirrors.ubuntu.com/mirrors.txt precise-backports main res
 sed -i "1ideb mirror://mirrors.ubuntu.com/mirrors.txt precise-security main restricted universe multiverse" /etc/apt/sources.list
 
 # installing xvfb, java and php
-apt-get install xvfb openjdk-7-jre-headless php5-cli php5-curl php5-xdebug ncurses-term -y --no-install-recommends
+apt-get install xvfb openjdk-7-jre-headless php5-cli php5-curl php5-xdebug ncurses-term unzip -y --no-install-recommends
