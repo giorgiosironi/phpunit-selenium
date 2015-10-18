@@ -7,7 +7,7 @@
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
- * are met:
+ * are met:u
  *
  *   * Redistributions of source code must retain the above copyright
  *     notice, this list of conditions and the following disclaimer.
@@ -131,6 +131,9 @@ class PHPUnit_Extensions_Selenium2TestCase_Driver
         }
         if ($info['http_code'] == 404) {
             throw new BadMethodCallException("The command $url is not recognized by the server.");
+        }
+        if (($info['http_code'] >= 400) && ($info['http_code'] < 500)) {
+            throw new BadMethodCallException("Something unexpected happened: '$rawResponse'");
         }
         curl_close($curl);
         $content = json_decode($rawResponse, TRUE);
