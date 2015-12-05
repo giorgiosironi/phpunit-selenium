@@ -53,7 +53,9 @@
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.8
  */
-class PHPUnit_Extensions_Selenium2TestCase_ScreenshotListener implements PHPUnit_Framework_TestListener
+class PHPUnit_Extensions_Selenium2TestCase_ScreenshotListener 
+    extends PHPUnit_Framework_BaseTestListener
+    implements PHPUnit_Framework_TestListener
 {
     private $directory;
 
@@ -87,12 +89,4 @@ class PHPUnit_Extensions_Selenium2TestCase_ScreenshotListener implements PHPUnit
             }
         }
     }
-
-    public function addIncompleteTest(PHPUnit_Framework_Test $test, Exception $e, $time) {}
-    public function addSkippedTest(PHPUnit_Framework_Test $test, Exception $e, $time) {}
-    public function addRiskyTest(PHPUnit_Framework_Test $test, Exception $e, $time) {}
-    public function startTest(PHPUnit_Framework_Test $test) {}
-    public function endTest(PHPUnit_Framework_Test $test, $time) {}
-    public function startTestSuite(PHPUnit_Framework_TestSuite $suite) {}
-    public function endTestSuite(PHPUnit_Framework_TestSuite $suite) {}
 }
