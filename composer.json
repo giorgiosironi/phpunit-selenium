@@ -32,7 +32,7 @@
     },
     "require": {
         "php": ">=5.3.3",
-        "phpunit/phpunit": "~5.0",
+        "phpunit/phpunit": ">=4.8,<=6.0",
         "sebastian/comparator": "~1.0",
         "ext-curl": "*",
         "ext-dom": "*"
