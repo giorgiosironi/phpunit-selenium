@@ -12,6 +12,7 @@
     <const name="PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_BROWSER" value="*firefox"/>
     <const name="PHPUNIT_TESTSUITE_EXTENSION_SELENIUM2_BROWSER" value="firefox"/>
     <const name="PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL" value="http://127.0.0.1:8080/"/>
+    <const name="PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL_HTTPS" value="https://127.0.0.1:4443/"/>
     <const name="PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_PATH" value="/tmp"/>
   </php>
 

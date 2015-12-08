@@ -9,9 +9,10 @@ Running the test suite
 
 #### Manually
 
-To run the test suite for this package, you should serve selenium-1-tests via HTTP:
+To run the test suite for this package, you should serve selenium-1-tests via HTTP and HTTPS:
 ```
 selenium-1-tests/ $ python -m SimpleHTTPServer 8080
+selenium-1-tests/ $ python ../server.py
 ```
 and configure the constant that you will be asked for accordingly if you do not run the server on localhost:8080.
 You also need to run a Selenium Server:
