@@ -3,6 +3,13 @@ PHPUnit_Selenium 1.4
 
 This is the list of changes for the PHPUnit_Selenium 1.4 release series.
 
+PHPUnit_Selenium 2.0.0
+----------------------
+
+* Only Selenium2TestCase is supported in the 2.x releases
+* file() command
+* Windows compatibility of code coverage
+
 PHPUnit_Selenium 1.4.2
 ----------------------
 
