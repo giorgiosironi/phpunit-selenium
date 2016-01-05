@@ -4,6 +4,7 @@
     "type": "library",
     "keywords": [
         "xunit",
+        "phpunit",
         "testing",
         "selenium"
     ],
