@@ -6,6 +6,7 @@ build/pdepend
 phpunit.xml
 vendor/*
 composer.phar
+composer.lock
 selenium-server-*.jar
 Tests/Selenium2TestCase/Coverage/*.dummyTestId
 firefox.tar.bz2
