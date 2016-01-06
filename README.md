@@ -3,15 +3,7 @@ This package contains a Selenium2TestCase class that can be used to run end-to-e
 Installing
 ---
 
-Use [Composer](https://getcomposer.org) and add inside your composer.json file:
-
-```
-    "require": {
-        "phpunit/phpunit-selenium": "*",
-    }
-```
-
-then run `composer update`.
+Use [Composer](https://getcomposer.org) and run `composer require --dev phpunit/phpunit-selenium`.
 
 Requirements
 ---
