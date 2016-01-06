@@ -1,7 +1,7 @@
-PHPUnit_Selenium 1.4
-====================
+PHPUnit_Selenium
+================
 
-This is the list of changes for the PHPUnit_Selenium 1.4 release series.
+This is the list of changes made to PHPUnit_Selenium.
 
 PHPUnit_Selenium 2.0.0
 ----------------------
