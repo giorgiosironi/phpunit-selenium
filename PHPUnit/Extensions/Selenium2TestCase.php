@@ -86,7 +86,7 @@
  * @method void window() window($name) Changes the focus to another window
  * @method string windowHandle() Retrieves the current window handle
  * @method string windowHandles() Retrieves a list of all available window handles
- * @method string keys() Send a sequence of key strokes to the active element.
+ * @method string keys($string) Send a sequence of key strokes to the active element.
  * @method string file($file_path) Upload a local file. Returns the fully qualified path to the transferred file.
  * @method array log(string $type) Get the log for a given log type. Log buffer is reset after each request.
  * @method array logTypes() Get available log types.
