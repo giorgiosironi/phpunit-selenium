@@ -14,8 +14,6 @@ The current mainline of this package is 2.x. The old line 1.x is not maintained 
 
 Please direct pull requests to [giorgiosironi/phpunit-selenium](https://github.com/giorgiosironi/phpunit-selenium) for automated testing upon merging. Pull requests should be feature branches containing all the commits you want to propose.
 
-Please direct pull requests to [giorgiosironi/phpunit-selenium](https://github.com/giorgiosironi/phpunit-selenium) for automated testing upon merging.
-
 Running the test suite
 ---
 
