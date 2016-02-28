@@ -10,7 +10,13 @@ Requirements
 
 - PHPUnit 4.8, 5.x
 
-The current mainline of this package is 2.x. The old line 1.x is not maintained anymore, but will continue to be available for usage of `SeleniumTestCase`.
+The current mainline of this package is 3.x, which supports PHPUnit 5.x.
+
+The second supported line is 2.x, which supports PHPUnit >= 4.8 instead.
+
+Both these supported lines only work with the Selenium 2 API, using the `Selenium2TestCase` class.
+
+The old line 1.x is not maintained anymore, but will continue to be available for usage of `SeleniumTestCase`.
 
 Please direct pull requests to [giorgiosironi/phpunit-selenium](https://github.com/giorgiosironi/phpunit-selenium) for automated testing upon merging. Pull requests should be feature branches containing all the commits you want to propose.
 
