@@ -3,6 +3,11 @@ PHPUnit_Selenium
 
 This is the list of changes made to PHPUnit_Selenium.
 
+PHPUnit_Selenium 2.0.1
+----------------------
+
+* Supporting only PHPUnit 4.x
+
 PHPUnit_Selenium 2.0.0
 ----------------------
 
