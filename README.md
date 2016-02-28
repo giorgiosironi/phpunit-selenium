@@ -10,7 +10,7 @@ Requirements
 
 - PHPUnit 4.8, 5.x
 
-The current mainline of this package is 3.x, which supports PHPUnit 5.x.
+The current mainline of this package is 3.x, which supports PHPUnit 5.x. This version is only compatible with PHP 5.6 and PHP 7.
 
 The second supported line is 2.x, which supports PHPUnit >= 4.8 instead.
 

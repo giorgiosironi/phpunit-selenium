@@ -7,6 +7,7 @@ PHPUnit_Selenium 3.0.0
 ----------------------
 
 * Only supports PHPUnit 5
+* Officially supports PHP 7
 
 PHPUnit_Selenium 2.0.1
 ----------------------
