@@ -124,6 +124,20 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
     protected static $browserSessionStrategy;
 
     /**
+     * Default timeout for wait until, ms
+     *
+     * @var int
+     */
+    protected static $waitUntilDefaultTimeout = 0;
+
+    /**
+     * Default timeout for wait until, ms
+     *
+     * @var int
+     */
+    protected static $waitUntilDefaultSleepInterval = 500;
+
+    /**
      * @var PHPUnit_Extensions_Selenium2TestCase_SessionStrategy
      */
     protected $localSessionStrategy;
@@ -175,6 +189,33 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
     {
         return new PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Isolated;
     }
+
+    /**
+     * Manages the default timeout for WaitUntil
+     * @param int|null $timeout the new default timeout in ms or null to leave it unchanged
+     * @return int the default timeout
+     */
+    public static function waitUntilDefaultTimeout($timeout = null){
+        if(null !== $timeout){
+            $timeout = (int)$timeout;
+            self::$waitUntilDefaultTimeout = $timeout > 0 ? $timeout : 0;
+        }
+        return self::$waitUntilDefaultTimeout;
+    }
+
+    /**
+     * Manages the default sleep delay for WaitUntil
+     * @param null|int $sleepDelay the new default  sleep delay or null to leave it unchanged
+     * @return int
+     */
+    public static function waitUntilDefaultSleepInterval($sleepDelay = null){
+        if(null !== $sleepDelay){
+            $sleepDelay = (int)$sleepDelay;
+            self::$waitUntilDefaultSleepInterval = $sleepDelay > 0 ? $sleepDelay : 0;
+        }
+        return self::$waitUntilDefaultSleepInterval;
+    }
+
 
     public function __construct($name = NULL, array $data = array(), $dataName = '')
     {

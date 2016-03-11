@@ -1147,4 +1147,22 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->assertSame('', $this->select($this->byId('theSelect'))->selectedValue());
         $this->assertSame('', $this->select($this->byId('theSelect'))->selectedId());
     }
+
+    public function testWaitUntilDefaultTimeout(){
+        $currentTimeout = PHPUnit_Extensions_Selenium2TestCase::waitUntilDefaultTimeout();
+        $this->assertEquals(0, $currentTimeout);
+        $this->assertEquals(100, PHPUnit_Extensions_Selenium2TestCase::waitUntilDefaultTimeout(100));
+        $this->assertEquals(100, PHPUnit_Extensions_Selenium2TestCase::waitUntilDefaultTimeout());
+        // Reset to default
+        PHPUnit_Extensions_Selenium2TestCase::waitUntilDefaultTimeout($currentTimeout);
+    }
+
+    public function testWaitUntilDefaultSleepInterval(){
+        $currentInterval = PHPUnit_Extensions_Selenium2TestCase::waitUntilDefaultSleepInterval();
+        $this->assertEquals(500, $currentInterval);
+        $this->assertEquals(100, PHPUnit_Extensions_Selenium2TestCase::waitUntilDefaultSleepInterval(100));
+        $this->assertEquals(100, PHPUnit_Extensions_Selenium2TestCase::waitUntilDefaultSleepInterval());
+        // Reset to default
+        PHPUnit_Extensions_Selenium2TestCase::waitUntilDefaultSleepInterval($currentInterval);
+    }
 }
