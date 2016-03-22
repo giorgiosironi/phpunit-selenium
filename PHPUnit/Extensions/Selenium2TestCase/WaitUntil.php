@@ -94,14 +94,14 @@ class PHPUnit_Extensions_Selenium2TestCase_WaitUntil
         }
 
         if(is_null($sleepInterval)){
-            $sleepInterval = Extensions_Selenium2TestCaseTest::waitUntilDefaultSleepInterval();
+            $sleepInterval = Extensions_Selenium2TestCaseTest::defaultWaitUntilSleepInterval();
         }
 
         $sleepInterval *= 1000;
 
 
         if (is_null($timeout)) {
-            $timeout = Extensions_Selenium2TestCaseTest::waitUntilDefaultTimeout();
+            $timeout = Extensions_Selenium2TestCaseTest::defaultWaitUntilTimeout();
         }
 
         $timeout /= 1000;
