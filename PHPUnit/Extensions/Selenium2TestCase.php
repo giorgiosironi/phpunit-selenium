@@ -93,6 +93,7 @@
  * @method void closeWindow() Close the current window.
  * @method void close() Close the current window and clear session data.
  * @method \PHPUnit_Extensions_Selenium2TestCase_Element active() Get the element on the page that currently has focus.
+ * @method \PHPUnit_Extensions_Selenium2TestCase_Window currentWindow() get the current Window Object
  */
 abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_TestCase
 {
