@@ -54,6 +54,13 @@ use PHPUnit_Extensions_Selenium2TestCase_Keys as Keys;
  */
 class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestCase
 {
+    protected function tearDown()
+    {
+        PHPUnit_Extensions_Selenium2TestCase::setDefaultWaitUntilTimeout(0);
+        PHPUnit_Extensions_Selenium2TestCase::setDefaultWaitUntilSleepInterval(500);
+    }
+
+
     public function testOpen()
     {
         $this->url('html/test_open.html');
@@ -1146,5 +1153,17 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->assertSame('', $this->select($this->byId('theSelect'))->selectedLabel());
         $this->assertSame('', $this->select($this->byId('theSelect'))->selectedValue());
         $this->assertSame('', $this->select($this->byId('theSelect'))->selectedId());
+    }
+
+    public function testWaitUntilDefaultTimeout(){
+        $this->assertEquals(0, PHPUnit_Extensions_Selenium2TestCase::defaultWaitUntilTimeout());
+        PHPUnit_Extensions_Selenium2TestCase::setDefaultWaitUntilTimeout(100);
+        $this->assertEquals(100, PHPUnit_Extensions_Selenium2TestCase::defaultWaitUntilTimeout());
+    }
+
+    public function testWaitUntilDefaultSleepInterval(){
+        $this->assertEquals(500, PHPUnit_Extensions_Selenium2TestCase::defaultWaitUntilSleepInterval());
+        PHPUnit_Extensions_Selenium2TestCase::setDefaultWaitUntilSleepInterval(100);
+        $this->assertEquals(100, PHPUnit_Extensions_Selenium2TestCase::defaultWaitUntilSleepInterval());
     }
 }
