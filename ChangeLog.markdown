@@ -3,6 +3,11 @@ PHPUnit_Selenium
 
 This is the list of changes made to PHPUnit_Selenium.
 
+PHPUnit_Selenium 3.0.1
+----------------------
+
+* Configurability of waitUntil() timeout and sleep interval
+
 PHPUnit_Selenium 3.0.0
 ----------------------
 
