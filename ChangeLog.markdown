@@ -3,6 +3,11 @@ PHPUnit_Selenium
 
 This is the list of changes made to PHPUnit_Selenium.
 
+PHPUnit_Selenium 3.0.2
+----------------------
+
+* Bug fix of waitUntil()
+
 PHPUnit_Selenium 3.0.1
 ----------------------
 
