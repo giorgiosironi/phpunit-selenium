@@ -483,7 +483,7 @@ abstract class PHPUnit_Extensions_SeleniumTestCase extends PHPUnit_Framework_Tes
         // Create tests from test methods for single browser.
         else {
             foreach ($class->getMethods() as $method) {
-                if (PHPUnit_Framework_TestSuite::isPublicTestMethod($method)) {
+                if (PHPUnit_Framework_TestSuite::isTestMethod($method)) {
                     $name   = $method->getName();
                     $data   = PHPUnit_Util_Test::getProvidedData($className, $name);
                     $groups = PHPUnit_Util_Test::getGroups($className, $name);
