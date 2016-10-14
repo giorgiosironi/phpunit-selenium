@@ -59,6 +59,7 @@
  * @method bool displayed() Checks an element's visibility
  * @method bool enabled() Checks a form element's state
  * @method bool equals(PHPUnit_Extensions_Selenium2TestCase_Element $another) Checks if the two elements are the same on the page
+ * @method array rect() Retrieves the element's coordinates: keys 'x', 'y', 'width' and 'height' in the returned array
  * @method array location() Retrieves the element's position in the page: keys 'x' and 'y' in the returned array
  * @method bool selected() Checks the state of an option or other form element
  * @method array size() Retrieves the dimensions of the element: 'width' and 'height' of the returned array
@@ -107,6 +108,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Element
             'equals' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Equals',
             'location' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor',
             'name' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor',
+            'rect' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Rect',
             'selected' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor',
             'size' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor',
             'submit' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',

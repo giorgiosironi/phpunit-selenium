@@ -1155,6 +1155,13 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->assertSame('', $this->select($this->byId('theSelect'))->selectedId());
     }
 
+    public function testElementRectHeightAndWidth() {
+        $this->url('html/test_element_rect.html');
+        $coordinates = $this->byId('rect')->rect();
+        $this->assertEquals('50', $coordinates['width']);
+        $this->assertEquals('30', $coordinates['height']);
+    }
+
     public function testWaitUntilDefaultTimeout(){
         $this->assertEquals(0, PHPUnit_Extensions_Selenium2TestCase::defaultWaitUntilTimeout());
         PHPUnit_Extensions_Selenium2TestCase::setDefaultWaitUntilTimeout(100);
