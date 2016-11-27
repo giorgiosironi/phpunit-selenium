@@ -28,3 +28,9 @@ if [ ! -f "$SELENIUM_JAR" ]; then
     sudo mkdir -p $(dirname "$SELENIUM_JAR")
     sudo wget -nv -O "$SELENIUM_JAR" "$SELENIUM_DOWNLOAD_URL"
 fi
+
+if [ ! -f "/usr/local/bin/geckodriver" ]; then
+    echo "Downloading geckodriver"
+    sudo wget -nv -O "$GECKODRIVER_TAR" "$GECKODRIVER_DOWNLOAD_URL"
+    sudo tar -xvf "$GECKODRIVER_TAR" -C "/usr/local/bin/"
+fi
