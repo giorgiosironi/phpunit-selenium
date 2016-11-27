@@ -73,6 +73,22 @@ class PHPUnit_Extensions_Selenium2TestCase_Session_Timeouts
     {
         $self = $this;
         return array(
+            /*
+        	 * https://www.w3.org/TR/webdriver/#dfn-table-of-session-timeouts section 7.5 
+        	 */	
+        	'pageLoadTimeout' => function ($milliseconds, $commandUrl) use ($self) {
+        		$jsonParameters = array('type'=>'page load', 'ms' => $milliseconds);
+        		return new PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost($jsonParameters, $commandUrl->ascend());
+        	},
+        	'scriptTimeout' => function ($milliseconds, $commandUrl) use ($self) {
+	        	$jsonParameters = array('type'=>'script', 'ms' => $milliseconds);
+	        	return new PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost($jsonParameters, $commandUrl->ascend());
+	        },
+	        'implicitWaitTimeout' => function ($milliseconds, $commandUrl) use ($self) {
+	        	$jsonParameters = array('type'=>'implicit', 'ms' => $milliseconds);
+	        	return new PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost($jsonParameters, $commandUrl->ascend());
+	        },
+            
             'implicitWait' => function ($milliseconds, $commandUrl) use ($self) {
                 $self->check($milliseconds);
                 $self->setLastImplicitWaitValue($milliseconds);
