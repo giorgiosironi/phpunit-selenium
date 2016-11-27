@@ -54,6 +54,9 @@
  * @since      Class available since Release 1.2.4
  * @method implicitWait(int $ms) Sets timeout when searching for elements
  * @method asyncScript(int $ms) Sets timeout for asynchronous scripts executed by Session::executeAsync()
+ * @method pageLoadTimeout(int $ms) 
+ * @method scriptTimeout(int $ms)
+ * @method implicitWaitTimeout(int $ms)
  */
 class PHPUnit_Extensions_Selenium2TestCase_Session_Timeouts
     extends PHPUnit_Extensions_Selenium2TestCase_CommandsHolder
