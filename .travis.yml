@@ -6,6 +6,11 @@ php:
   - 5.6
   - hhvm
 
+addons:
+  apt:
+    packages:
+      - oracle-java8-installer
+
 matrix:
     allow_failures:
         - php: hhvm
