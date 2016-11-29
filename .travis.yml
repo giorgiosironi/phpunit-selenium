@@ -9,6 +9,10 @@ addons:
     packages:
       - oracle-java8-installer
 
+before_install:
+  - sudo apt-get install oracle-java8-set-default -y
+
+
 matrix:
     allow_failures:
         - php: hhvm
