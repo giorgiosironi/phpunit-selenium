@@ -21,6 +21,12 @@ sudo sed -i "s/^autostart=.*python-webserver$/autostart=true/" /etc/supervisor/c
 echo "Installing Firefox"
 sudo apt-get install firefox -y --no-install-recommends
 
+echo "Installing Java 8"
+sudo apt-add-repository ppa:openjdk-r/ppa -y
+sudo apt-get update
+sudo apt-get install openjdk-8-jre-headless -y --no-install-recommends
+sudo update-alternatives --set java /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
+
 if [ ! -f "$SELENIUM_JAR" ]; then
     echo "Downloading Selenium"
     sudo mkdir -p $(dirname "$SELENIUM_JAR")
