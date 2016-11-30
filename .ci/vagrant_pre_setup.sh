@@ -12,10 +12,7 @@ apt-get install software-properties-common -y
 apt-get install python-software-properties -y
 
 apt-add-repository ppa:ondrej/php -y
-apt-add-repository ppa:openjdk-r/ppa -y
-
-apt-get update
 
 # installing xvfb, java and php
-apt-get install xvfb openjdk-8-jre-headless php5.6-cli php5.6-curl php5.6-xml php-xdebug ncurses-term unzip xfonts-100dpi xfonts-75dpi xfonts-scalable xfonts-cyrillic vim -y --no-install-recommends
+apt-get install xvfb php5.6-cli php5.6-curl php5.6-xml php-xdebug ncurses-term unzip xfonts-100dpi xfonts-75dpi xfonts-scalable xfonts-cyrillic vim -y --no-install-recommends
 
