@@ -52,73 +52,74 @@
  */
 class Tests_Selenium2TestCase_LogTest extends Tests_Selenium2TestCase_BaseTestCase
 {
-	private static $expectedLogTypes = array(
-		'default' => array(
-			'browser'
-		),
-		'firefox' => array(
-			'browser',
-			'driver',
-			'client',
-			'server'
-		),
-		'chrome' => array(
-			'browser',
-			'client',
-			'server'
-		)
-	);
+    private static $expectedLogTypes = array(
+        'default' => array(
+            'browser'
+        ),
+        'firefox' => array(
+            'browser',
+            'driver',
+            'client',
+            'server'
+        ),
+        'chrome' => array(
+            'browser',
+            'client',
+            'server'
+        )
+    );
 
-	private static $jsInlineErrors = array(
-		'default' => '',
-		'chrome' => 'html/test_log.html 4 Uncaught TypeError: Cannot read property \'inlineError\' of null',
-		'firefox' => 'TypeError: null has no properties'
-	);
+    private static $jsInlineErrors = array(
+        'default' => '',
+        'chrome' => 'html/test_log.html 4 Uncaught TypeError: Cannot read property \'inlineError\' of null',
+        'firefox' => 'TypeError: null has no properties'
+    );
 
     public function testLogType()
     {
-	    if($this->getBrowser() == 'opera')
-		    $this->markTestSkipped('Opera is very unstable support this command');
+        $this->markTestSkipped('Unsupported command');
 
-	    $actual = $this->logTypes();
-	    $expected = $this->getDataArray(self::$expectedLogTypes, $this->getBrowser());
-	    $diff = array_diff($expected, $actual);
-	    $this->assertEmpty($diff, 'Some log types not presented by browser: '.var_export($diff, true));
+        $actual = $this->logTypes();
+        $expected = $this->getDataArray(self::$expectedLogTypes, $this->getBrowser());
+        $diff = array_diff($expected, $actual);
+        $this->assertEmpty($diff, 'Some log types not presented by browser: ' . var_export($diff, TRUE));
     }
 
-	public function testLog()
-	{
-		if(!array_key_exists($this->getBrowser(), self::$jsInlineErrors))
-			$this->markTestSkipped('Unsupported browser');
+    public function testLog()
+    {
+        $this->markTestSkipped('Unsupported command');
 
-		$this->url('html/test_log.html');
-		$actual = $this->log('browser');
-		$actual = $this->getLogsMessages($actual);
-		if($this->getBrowser() == 'chrome') {
-			$expected = $this->getBrowserUrl();
+        $this->url('html/test_log.html');
+        $actual = $this->log('browser');
+        $actual = $this->getLogsMessages($actual);
+        if($this->getBrowser() == 'chrome') {
+            $expected = $this->getBrowserUrl();
 
-		} else {
-			$expected = '';
-		}
-		$expected .= $this->getDataArray(self::$jsInlineErrors, $this->getBrowser());
-		$this->assertContains($expected, $actual);
-	}
+        } else {
+            $expected = '';
+        }
+        $expected .= $this->getDataArray(self::$jsInlineErrors, $this->getBrowser());
+        $this->assertContains($expected, $actual);
+    }
 
-	private function getDataArray(array $array, $key)
-	{
-		if(isset($array[$key]))
-			return $array[$key];
-		else
-			return $array['default'];
-	}
+    private function getDataArray(array $array, $key)
+    {
+        if(isset($array[$key])) {
+            return $array[$key];
+        }
+        else {
+            return $array['default'];
+        }
+    }
 
-	private function getLogsMessages($logs, $level = 'SEVERE')
-	{
-		$result = array();
-		foreach($logs as $log) {
-			if(isset($log['message']) && isset($log['level']) && $log['level'] == $level)
-				$result[] = $log['message'];
-		}
-		return $result;
-	}
+    private function getLogsMessages($logs, $level = 'SEVERE')
+    {
+        $result = array();
+        foreach($logs as $log) {
+            if(isset($log['message']) && isset($log['level']) && $log['level'] == $level) {
+                $result[] = $log['message'];
+            }
+        }
+        return $result;
+    }
 }
