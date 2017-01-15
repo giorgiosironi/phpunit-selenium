@@ -33,6 +33,4 @@ Just run the following Vagrant commands (a minimal version of `v1.7` is required
 
     cd /vagrant
     vendor/bin/phpunit Tests
- 
-and you must see the `phpunit` testing `phpunit-selenium` project.
 
