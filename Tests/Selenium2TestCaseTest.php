@@ -900,7 +900,7 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
 
     public function testWindowsCanBeManipulatedAsAnObject()
     {
-        $this->timeouts()->implicitWait(10000);
+        $this->timeouts()->implicitWait(1000);
         $this->url('html/test_select_window.html');
         $this->byId('popupPage')->click();
 
@@ -911,8 +911,8 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $size = $popup->size();
         $this->assertEquals(150, $size['width']);
         $this->assertEquals(200, $size['height']);
+        $this->closeWindow();
 
-        $this->byId('closePage')->click();
         $this->window('');
         $this->byId('popupPage');
         $this->assertEquals('Select Window Base', $this->title());
