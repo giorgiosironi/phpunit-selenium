@@ -11,7 +11,7 @@ class Tests_Selenium2TestCase_Coverage_CookieTest extends Tests_Selenium2TestCas
             $result = $this->createResult();
         }
         if (!$result->getCollectCodeCoverageInformation()) {
-            $result->setCodeCoverage(new PHP_CodeCoverage());
+            $result->setCodeCoverage(new \SebastianBergmann\CodeCoverage\CodeCoverage());
         }
 
         parent::run($result);

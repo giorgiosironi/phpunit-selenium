@@ -71,7 +71,7 @@ if (isset($_GET['PHPUNIT_SELENIUM_TEST_ID'])) {
         $data = unserialize(file_get_contents($file));
         unlink($file);
         unset($file);
-        $filter = new PHP_CodeCoverage_Filter();
+        $filter = new \SebastianBergmann\CodeCoverage\Filter();
 
         foreach ($data as $file => $lines) {
             if ($filter->isFile($file)) {
