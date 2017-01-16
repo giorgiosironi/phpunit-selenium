@@ -16,5 +16,5 @@ apt-add-repository ppa:ondrej/php -y
 apt-get update
 
 # installing xvfb, java and php
-apt-get install xvfb php5.6-cli php5.6-curl php5.6-xml php-xdebug ncurses-term unzip xfonts-100dpi xfonts-75dpi xfonts-scalable xfonts-cyrillic vim -y --no-install-recommends
+apt-get install xvfb php5.6-cli php5.6-curl php5.6-xml php5.6-mbstring php-xdebug ncurses-term unzip xfonts-100dpi xfonts-75dpi xfonts-scalable xfonts-cyrillic vim -y --no-install-recommends
 
