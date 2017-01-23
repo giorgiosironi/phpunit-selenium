@@ -557,4 +557,17 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
     {
 
     }
+
+    /**
+     * Check whether an alert box is present
+     */
+    public function alertIsPresent()
+    {
+        try {
+            $this->alertText();
+            return TRUE;
+        } catch (Exception $e) {
+            return NULL;
+        }
+    }
 }

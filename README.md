@@ -1,3 +1,5 @@
+PHPUnit-Selenium [![Build Status](https://travis-ci.org/giorgiosironi/phpunit-selenium.svg?branch=master)](https://travis-ci.org/giorgiosironi/phpunit-selenium)
+
 This package contains a Selenium2TestCase class that can be used to run end-to-end tests against Selenium 2.
 
 Installing

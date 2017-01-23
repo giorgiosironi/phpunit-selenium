@@ -35,61 +35,39 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @package    PHPUnit_Selenium
- * @author     Sebastian Bergmann <sebastian@phpunit.de>
+ * @author     Giorgio Sironi <info@giorgiosironi.com>
  * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
- * @since      File available since Release 1.0.0
+ * @since      File available since Release 1.2.4
  */
 
-$directory = realpath(__DIR__);
-while ($directory != '/') {
-    $autoloadCandidate = $directory . '/vendor/autoload.php';
-    if (file_exists($autoloadCandidate)) {
-        require_once $autoloadCandidate;
-        break;
-    }
-    $directory = realpath($directory . '/..');
-}
-
-// Set this to the directory that contains the code coverage files.
-// It defaults to getcwd(). If you have configured a different directory
-// in prepend.php, you need to configure the same directory here.
-$GLOBALS['PHPUNIT_COVERAGE_DATA_DIRECTORY'] = getcwd();
-
-if (isset($_GET['PHPUNIT_SELENIUM_TEST_ID'])) {
-    $facade = new File_Iterator_Facade;
-    $sanitizedCookieName = str_replace(array('\\'), '_', $_GET['PHPUNIT_SELENIUM_TEST_ID']);
-    $files  = $facade->getFilesAsArray(
-      $GLOBALS['PHPUNIT_COVERAGE_DATA_DIRECTORY'],
-      $sanitizedCookieName
-    );
-
-    $coverage = array();
-
-    foreach ($files as $file) {
-        $data = unserialize(file_get_contents($file));
-        unlink($file);
-        unset($file);
-        $filter = new \SebastianBergmann\CodeCoverage\Filter();
-
-        foreach ($data as $file => $lines) {
-            if ($filter->isFile($file)) {
-                if (!isset($coverage[$file])) {
-                    $coverage[$file] = array(
-                      'md5' => md5_file($file), 'coverage' => $lines
-                    );
-                } else {
-                    foreach ($lines as $line => $flag) {
-                        if (!isset($coverage[$file]['coverage'][$line]) ||
-                            $flag > $coverage[$file]['coverage'][$line]) {
-                            $coverage[$file]['coverage'][$line] = $flag;
-                        }
-                    }
-                }
-            }
-        }
+/**
+ * Retrieves the element's coordinates
+ *
+ * @package    PHPUnit_Selenium
+ * @author     Giorgio Sironi <info@giorgiosironi.com>
+ * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
+ * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
+ * @version    Release: @package_version@
+ * @link       http://www.phpunit.de/
+ * @since      Class available since Release 1.2.4
+ */
+class PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Rect
+    extends PHPUnit_Extensions_Selenium2TestCase_Command
+{
+    /**
+     * @param array $parameter
+     */
+    public function __construct($parameter,
+                                PHPUnit_Extensions_Selenium2TestCase_URL $attributeResourceBaseUrl)
+    {
+        $this->jsonParameters = array();
+        $this->url = $attributeResourceBaseUrl->descend($parameter);
     }
 
-    print serialize($coverage);
+    public function httpMethod()
+    {
+        return 'GET';
+    }
 }
