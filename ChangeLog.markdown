@@ -3,6 +3,12 @@ PHPUnit_Selenium
 
 This is the list of changes made to PHPUnit_Selenium.
 
+PHPUnit_Selenium 3.0.3
+----------------------
+
+* Added rect() command
+* Revamp of testing VM using Java 8, PHP 5.6
+
 PHPUnit_Selenium 3.0.2
 ----------------------
 
