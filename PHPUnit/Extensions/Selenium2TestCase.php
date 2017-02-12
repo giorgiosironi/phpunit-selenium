@@ -309,7 +309,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
             $result = $this->createResult();
         }
 
-        $this->collectCodeCoverageInformation = $result->getCollectCodeCoverageInformation();
+        $this->collectCodeCoverageInformation = $result->getCollectCodeCoverageInformation() && $this->coverageScriptUrl;
 
         parent::run($result);
 
