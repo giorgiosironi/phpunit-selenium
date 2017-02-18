@@ -1,4 +1,7 @@
 <?php
+
+use PHPUnit\Framework\AssertionFailedError;
+
 class Tests_Selenium2TestCase_ScreenshotListenerTest extends Tests_Selenium2TestCase_BaseTestCase
 {
     public function setUp()
@@ -27,7 +30,7 @@ class Tests_Selenium2TestCase_ScreenshotListenerTest extends Tests_Selenium2Test
     {
         $this->url('html/test_open.html');
 
-        $exception = new PHPUnit_Framework_AssertionFailedError();
+        $exception = new AssertionFailedError();
         $this->listener->addFailure($this, $exception, NULL);
 
         $this->assertThereIsAScreenshotNamed('Tests_Selenium2TestCase_ScreenshotListenerTest__testStoresAScreenshotInCaseOfFailure*.png');

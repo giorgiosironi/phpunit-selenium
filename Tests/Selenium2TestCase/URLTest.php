@@ -41,6 +41,8 @@
  * @link       http://www.phpunit.de/
  */
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * @package    PHPUnit_Selenium
  * @author     Giorgio Sironi <info@giorgiosironi.com>
@@ -48,7 +50,7 @@
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
  */
-class Extensions_Selenium2TestCase_URLTest extends PHPUnit_Framework_TestCase
+class Extensions_Selenium2TestCase_URLTest extends TestCase
 {
     public function testDescendsAnURLWithAnAdditionalFolder()
     {

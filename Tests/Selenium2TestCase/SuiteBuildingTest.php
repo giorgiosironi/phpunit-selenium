@@ -41,6 +41,9 @@
  * @link       http://www.phpunit.de/
  */
 
+use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestSuite;
+
 require_once 'PHPUnit/Extensions/Selenium2TestCase.php';
 
 /**
@@ -52,13 +55,14 @@ require_once 'PHPUnit/Extensions/Selenium2TestCase.php';
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
  */
-class Extensions_Selenium2SuiteBuildingTest extends PHPUnit_Framework_TestCase
+
+class Extensions_Selenium2SuiteBuildingTest extends TestCase
 {
     public function testSampleTestCaseBuildsAFullSuiteContainingAllItsTests()
     {
         require_once __DIR__ . '/fixtures/SuiteBuildingSuites.php';
         $suite = Extensions_Selenium2TestCaseSample::suite('Extensions_Selenium2TestCaseSample');
-        $this->assertInstanceOf('PHPUnit_Framework_TestSuite', $suite);
+        $this->assertInstanceOf(TestSuite::class, $suite);
         $this->assertEquals(2, count($suite->tests()));
     }
 
@@ -66,7 +70,7 @@ class Extensions_Selenium2SuiteBuildingTest extends PHPUnit_Framework_TestCase
     {
         require_once __DIR__ . '/fixtures/SuiteBuildingSuites.php';
         $suite = Extensions_Selenium2MultipleBrowsersTestCaseSample::suite('Extensions_Selenium2MultipleBrowsersTestCaseSample');
-        $this->assertInstanceOf('PHPUnit_Framework_TestSuite', $suite);
+        $this->assertInstanceOf(TestSuite::class, $suite);
         $this->assertEquals(2, count($suite->tests()));
     }
 }

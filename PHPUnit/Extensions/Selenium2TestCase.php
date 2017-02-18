@@ -42,6 +42,9 @@
  * @since      File available since Release 1.2.0
  */
 
+use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestResult;
+
 /**
  * TestCase class that uses Selenium 2
  * (WebDriver API and JsonWire protocol) to provide
@@ -95,7 +98,7 @@
  * @method \PHPUnit_Extensions_Selenium2TestCase_Element active() Get the element on the page that currently has focus.
  * @method \PHPUnit_Extensions_Selenium2TestCase_Window currentWindow() get the current Window Object
  */
-abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_TestCase
+abstract class PHPUnit_Extensions_Selenium2TestCase extends TestCase
 {
     const VERSION = '3.0.3';
 
@@ -301,7 +304,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
         return $this->session;
     }
 
-    public function run(PHPUnit_Framework_TestResult $result = NULL)
+    public function run(TestResult $result = NULL)
     {
         $this->testId = get_class($this) . '__' . $this->getName();
 
@@ -371,7 +374,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
         return PHPUnit_Extensions_SeleniumTestSuite::fromTestCaseClass($className);
     }
 
-    public function onNotSuccessfulTest($e)
+    public function onNotSuccessfulTest(Throwable $e)
     {
         $this->getStrategy()->notSuccessfulTest();
         parent::onNotSuccessfulTest($e);
