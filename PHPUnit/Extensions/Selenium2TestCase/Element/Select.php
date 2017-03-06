@@ -192,6 +192,13 @@ class PHPUnit_Extensions_Selenium2TestCase_Element_Select
         return $options;
     }
 
+    public function clearSelectedOptions()
+    {
+        foreach ($this->selectedOptions() as $option) {
+            $option->click();
+        }
+    }
+
     /***
      * @return array
      */
