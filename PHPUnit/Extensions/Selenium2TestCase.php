@@ -166,6 +166,11 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
     /**
      * @param boolean
      */
+    private static $keepSeesionOnFail = FALSE;
+
+    /**
+     * @param boolean
+     */
     public static function shareSession($shareSession)
     {
         if (!is_bool($shareSession)) {
@@ -174,8 +179,20 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
         if (!$shareSession) {
             self::$sessionStrategy = self::defaultSessionStrategy();
         } else {
-            self::$sessionStrategy = new PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Shared(self::defaultSessionStrategy());
+            self::$sessionStrategy = new PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Shared(
+              self::defaultSessionStrategy(), self::$keepSeesionOnFail
+              );
         }
+    }
+
+    public static function keepSeesionOnFail($keepSession)
+    {
+      if (!is_bool($keepSession)) {
+            throw new InvalidArgumentException("The keep session on fail support can only be switched on or off.");
+        }
+      if ($keepSession){
+            self::$keepSeesionOnFail = TRUE;
+      }
     }
 
     private static function sessionStrategy()
