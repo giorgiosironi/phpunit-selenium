@@ -60,15 +60,17 @@ class PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Shared
     private $session;
     private $mainWindow;
     private $lastTestWasNotSuccessful = FALSE;
+    private $keepSessionOnFailure;
 
-    public function __construct(PHPUnit_Extensions_Selenium2TestCase_SessionStrategy $originalStrategy)
+    public function __construct(PHPUnit_Extensions_Selenium2TestCase_SessionStrategy $originalStrategy, $keepSessionOnFailure)
     {
         $this->original = $originalStrategy;
+        $this->keepSessionOnFailure = $keepSessionOnFailure;
     }
 
     public function session(array $parameters)
     {
-        if ($this->lastTestWasNotSuccessful) {
+        if ($this->lastTestWasNotSuccessful && !$this->keepSessionOnFailure) {
             if ($this->session !== NULL) {
                 $this->session->stop();
                 $this->session = NULL;
