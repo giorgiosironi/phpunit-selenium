@@ -260,6 +260,9 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
 
     public function setupSpecificBrowser($params)
     {
+        if (isset($params['keepSession'])) {
+            $this->keepSessionOnFailure(TRUE);
+        }
         $this->setUpSessionStrategy($params);
         $params = array_merge($this->parameters, $params);
         $this->setHost($params['host']);
@@ -287,7 +290,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
             } elseif ($strat == "isolated") {
                 self::$browserSessionStrategy = new PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Isolated;
             } else {
-                self::$browserSessionStrategy = new PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Shared(self::defaultSessionStrategy());
+                self::$browserSessionStrategy = new PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Shared(self::defaultSessionStrategy(), self::$keepSessionOnFailure);
             }
         } else {
             self::$browserSessionStrategy = self::defaultSessionStrategy();
