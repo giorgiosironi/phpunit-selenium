@@ -41,6 +41,8 @@
  * @link       http://www.phpunit.de/
  * @since      File available since Release 1.2.2
  */
+use PHPUnit\Framework\TestSuite;
+use PHPUnit\Util\Test as TestUtil;
 
 /**
  * TestSuite class for Selenium 1 tests
@@ -53,7 +55,7 @@
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.0
  */
-class PHPUnit_Extensions_SeleniumTestSuite extends PHPUnit_Framework_TestSuite
+class PHPUnit_Extensions_SeleniumTestSuite extends TestSuite
 {
     /**
      * Overriding the default: Selenium suites are always built from a TestCase class.
@@ -79,7 +81,7 @@ class PHPUnit_Extensions_SeleniumTestSuite extends PHPUnit_Framework_TestSuite
         $suite->setName($className);
 
         $class            = new ReflectionClass($className);
-        $classGroups      = PHPUnit_Util_Test::getGroups($className);
+        $classGroups      = TestUtil::getGroups($className);
         $staticProperties = $class->getStaticProperties();
         if (isset($staticProperties['browsers'])) {
             $browsers = $staticProperties['browsers'];
@@ -154,11 +156,11 @@ class PHPUnit_Extensions_SeleniumTestSuite extends PHPUnit_Framework_TestSuite
         return $suite;
     }
 
-    private static function addGeneratedTestTo(PHPUnit_Framework_TestSuite $suite, PHPUnit_Framework_TestCase $test, $classGroups)
+    private static function addGeneratedTestTo(TestSuite $suite, \PHPUnit\Framework\TestCase $test, $classGroups)
     {
         list ($methodName, ) = explode(' ', $test->getName());
         $test->setDependencies(
-              PHPUnit_Util_Test::getDependencies(get_class($test), $methodName)
+            TestUtil::getDependencies(get_class($test), $methodName)
         );
         $suite->addTest($test, $classGroups);
     }
