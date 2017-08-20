@@ -41,6 +41,9 @@
  * @link       http://www.phpunit.de/
  * @since      File available since Release 1.2.8
  */
+use PHPUnit\Framework\AssertionFailedError;
+use PHPUnit\Framework\BaseTestListener;
+use PHPUnit\Framework\Test;
 
 /**
  * Base class for implementing commands with special semantics.
@@ -54,8 +57,7 @@
  * @since      Class available since Release 1.2.8
  */
 class PHPUnit_Extensions_Selenium2TestCase_ScreenshotListener 
-    extends PHPUnit_Framework_BaseTestListener
-    implements PHPUnit_Framework_TestListener
+    extends BaseTestListener
 {
     private $directory;
 
@@ -64,17 +66,17 @@ class PHPUnit_Extensions_Selenium2TestCase_ScreenshotListener
         $this->directory = $directory;
     }
 
-    public function addError(PHPUnit_Framework_Test $test, Exception $e, $time)
+    public function addError(Test $test, Exception $e, $time)
     {
         $this->storeAScreenshot($test);
     }
 
-    public function addFailure(PHPUnit_Framework_Test $test, PHPUnit_Framework_AssertionFailedError $e, $time)
+    public function addFailure(Test $test, AssertionFailedError $e, $time)
     {
         $this->storeAScreenshot($test);
     }
 
-    private function storeAScreenshot(PHPUnit_Framework_Test $test)
+    private function storeAScreenshot(Test $test)
     {
         if ($test instanceof PHPUnit_Extensions_Selenium2TestCase)
         {

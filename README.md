@@ -10,15 +10,15 @@ Use [Composer](https://getcomposer.org) and run `composer require --dev phpunit/
 Requirements
 ---
 
-- PHPUnit 4.8, 5.x
+This `4.x` mainline supports (only) PHPUnit 6.x. This version is only compatible with PHP 7.
 
-The current mainline of this package is 3.x, which supports PHPUnit 5.x. This version is only compatible with PHP 5.6 and PHP 7.
-
-The second supported line is 2.x, which supports PHPUnit >= 4.8 instead.
+There are two older, unsupported lines which will probably see no new releases:
+- `3.x`: supports PHPUnit 5.x. Only compatible with PHP 5.6 and PHP 7.
+- `2.x`: supports PHPUnit >= 4.8 instead.
 
 Both these supported lines only work with the Selenium 2 API, using the `Selenium2TestCase` class.
 
-The old line 1.x is not maintained anymore, but will continue to be available for usage of `SeleniumTestCase`.
+The old line `1.x` is not maintained anymore, but will continue to be available for usage of `SeleniumTestCase`.
 
 Please direct pull requests to [giorgiosironi/phpunit-selenium](https://github.com/giorgiosironi/phpunit-selenium) for automated testing upon merging. Pull requests should be feature branches containing all the commits you want to propose.
 

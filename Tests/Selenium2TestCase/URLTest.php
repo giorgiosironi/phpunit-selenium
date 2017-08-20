@@ -40,6 +40,7 @@
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
  */
+use PHPUnit\Framework\TestCase;
 
 /**
  * @package    PHPUnit_Selenium
@@ -48,45 +49,45 @@
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
  */
-class Extensions_Selenium2TestCase_URLTest extends PHPUnit_Framework_TestCase
+class Extensions_Selenium2TestCase_URLTest extends TestCase
 {
     public function testDescendsAnURLWithAnAdditionalFolder()
     {
         $this->assertURLEquals($this->url('/posts/1'),
-                            $this->url('/posts')->descend('1'));
+            $this->url('/posts')->descend('1'));
     }
 
     public function testAscendsAnURByEliminatingAnAdditionalFolder()
     {
         $this->assertURLEquals($this->url('/posts'),
-                            $this->url('/posts/1')->ascend());
+            $this->url('/posts/1')->ascend());
     }
 
     public function testTransformsCamelCaseIntoWhileAddingACommandToAnURL()
     {
         $this->assertURLEquals($this->url('/posts/alert_text'),
-                            $this->url('/posts')->addCommand('alertText'));
+            $this->url('/posts')->addCommand('alertText'));
     }
 
     public function testCompletesARelativeUrl()
     {
         $exampleFolder = 'example/';
         $this->assertURLEquals($this->url('http://localhost/example/'),
-                            $this->url('http://localhost')->jump($exampleFolder));
+            $this->url('http://localhost')->jump($exampleFolder));
     }
 
     public function testJumpsToAnAbsoluteUrl()
     {
         $exampleDotCom = 'http://www.example.com';
         $this->assertURLEquals($this->url($exampleDotCom),
-                            $this->url('http://localhost')->jump($exampleDotCom));
+            $this->url('http://localhost')->jump($exampleDotCom));
     }
 
     public function testJumpsToASecureAbsoluteUrl()
     {
         $exampleDotCom = 'https://www.example.com';
         $this->assertURLEquals($this->url($exampleDotCom),
-                            $this->url('http://localhost')->jump($exampleDotCom));
+            $this->url('http://localhost')->jump($exampleDotCom));
     }
 
     private function assertURLEquals($expected, $actual)
