@@ -41,6 +41,9 @@
  * @link       http://www.phpunit.de/
  * @since      File available since Release 1.2.0
  */
+use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestResult;
+use PHPUnit\Util\InvalidArgumentHelper;
 
 /**
  * TestCase class that uses Selenium 2
@@ -95,7 +98,7 @@
  * @method \PHPUnit_Extensions_Selenium2TestCase_Element active() Get the element on the page that currently has focus.
  * @method \PHPUnit_Extensions_Selenium2TestCase_Window currentWindow() get the current Window Object
  */
-abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_TestCase
+abstract class PHPUnit_Extensions_Selenium2TestCase extends TestCase
 {
     const VERSION = '3.0.3';
 
@@ -301,7 +304,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
         return $this->session;
     }
 
-    public function run(PHPUnit_Framework_TestResult $result = NULL)
+    public function run(TestResult $result = NULL)
     {
         $this->testId = get_class($this) . '__' . $this->getName();
 
@@ -371,7 +374,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
         return PHPUnit_Extensions_SeleniumTestSuite::fromTestCaseClass($className);
     }
 
-    public function onNotSuccessfulTest($e)
+    public function onNotSuccessfulTest(Throwable $e)
     {
         $this->getStrategy()->notSuccessfulTest();
         parent::onNotSuccessfulTest($e);
@@ -403,7 +406,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
     public function setHost($host)
     {
         if (!is_string($host)) {
-            throw PHPUnit_Util_InvalidArgumentHelper::factory(1, 'string');
+            throw InvalidArgumentHelper::factory(1, 'string');
         }
 
         $this->parameters['host'] = $host;
@@ -421,7 +424,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
     public function setPort($port)
     {
         if (!is_int($port)) {
-            throw PHPUnit_Util_InvalidArgumentHelper::factory(1, 'integer');
+            throw InvalidArgumentHelper::factory(1, 'integer');
         }
 
         $this->parameters['port'] = $port;
@@ -439,7 +442,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
     public function setBrowser($browserName)
     {
         if (!is_string($browserName)) {
-            throw PHPUnit_Util_InvalidArgumentHelper::factory(1, 'string');
+            throw InvalidArgumentHelper::factory(1, 'string');
         }
 
         $this->parameters['browserName'] = $browserName;
@@ -457,7 +460,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends PHPUnit_Framework_Te
     public function setBrowserUrl($browserUrl)
     {
         if (!is_string($browserUrl)) {
-            throw PHPUnit_Util_InvalidArgumentHelper::factory(1, 'string');
+            throw InvalidArgumentHelper::factory(1, 'string');
         }
 
         $this->parameters['browserUrl'] = new PHPUnit_Extensions_Selenium2TestCase_URL($browserUrl);

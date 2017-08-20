@@ -1,5 +1,7 @@
 <?php
-class Tests_Selenium2TestCase_Coverage_RemoteCoverageTest extends PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class Tests_Selenium2TestCase_Coverage_RemoteCoverageTest extends TestCase
 {
     public function testObtainsCodeCoverageInformationFromAPossiblyRemoteHttpServer()
     {
