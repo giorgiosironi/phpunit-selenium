@@ -26,6 +26,14 @@
             "role": "developer"
         },
         {
+            "name": "Patrik Štrba",
+            "role": "developer"
+        },
+        {
+            "name": "Petr Kotek",
+            "role": "developer"
+        },
+        {
             "name": "Sebastian Bergmann",
             "email": "sb@sebastian-bergmann.de",
             "role": "original developer"
