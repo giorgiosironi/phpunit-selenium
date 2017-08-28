@@ -169,6 +169,11 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends TestCase
     /**
      * @param boolean
      */
+    private static $keepSessionOnFailure = FALSE;
+
+    /**
+     * @param boolean
+     */
     public static function shareSession($shareSession)
     {
         if (!is_bool($shareSession)) {
@@ -177,8 +182,20 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends TestCase
         if (!$shareSession) {
             self::$sessionStrategy = self::defaultSessionStrategy();
         } else {
-            self::$sessionStrategy = new PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Shared(self::defaultSessionStrategy());
+            self::$sessionStrategy = new PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Shared(
+              self::defaultSessionStrategy(), self::$keepSessionOnFailure
+              );
         }
+    }
+
+    public static function keepSessionOnFailure($keepSession)
+    {
+      if (!is_bool($keepSession)) {
+            throw new InvalidArgumentException("The keep session on fail support can only be switched on or off.");
+        }
+      if ($keepSession){
+            self::$keepSessionOnFailure = TRUE;
+      }
     }
 
     private static function sessionStrategy()
@@ -246,6 +263,9 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends TestCase
 
     public function setupSpecificBrowser($params)
     {
+        if (isset($params['keepSession'])) {
+            $this->keepSessionOnFailure(TRUE);
+        }
         $this->setUpSessionStrategy($params);
         $params = array_merge($this->parameters, $params);
         $this->setHost($params['host']);
@@ -273,7 +293,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends TestCase
             } elseif ($strat == "isolated") {
                 self::$browserSessionStrategy = new PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Isolated;
             } else {
-                self::$browserSessionStrategy = new PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Shared(self::defaultSessionStrategy());
+                self::$browserSessionStrategy = new PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Shared(self::defaultSessionStrategy(), self::$keepSessionOnFailure);
             }
         } else {
             self::$browserSessionStrategy = self::defaultSessionStrategy();
