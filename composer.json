@@ -46,9 +46,7 @@
     "require": {
         "php": ">=7.0",
         "phpunit/phpunit": ">=6.0,<7.0",
-        "sebastian/comparator": "~1.0",
-        "ext-curl": "*",
-        "ext-dom": "*"
+        "ext-curl": "*"
     },
     "require-dev": {
        "phing/phing": "2.*"
