@@ -3,13 +3,19 @@ PHPUnit_Selenium
 
 This is the list of changes made to PHPUnit_Selenium.
 
+PHPUnit_Selenium 4.1.0
+----------------------
+
+* #409: Add keepSessionOnFailure()
+* #412, #413: Remove unnecessary dependencies
+
 PHPUnit_Selenium 4.0.0
 ----------------------
 
-* #403, #411: Support PHPUnit 6.
+* #403, #411: Support PHPUnit 6
 * #400: Only collect code coverage when a coverage url has been configured
-* Dropped support for PHP 5.x and HHVM.
-* Dropped support for PHPUnit 5.
+* Dropped support for PHP 5.x and HHVM
+* Dropped support for PHPUnit 5
 
 PHPUnit_Selenium 3.0.3
 ----------------------
