@@ -20,7 +20,7 @@ class Tests_Selenium2TestCase_Coverage_SingleFileTest extends TestCase
 
         exec('php ' . __DIR__ . '/singleFile.php');
         $coverageFiles = glob($this->coverageFilePattern);
-        $this->assertEquals(1, count($coverageFiles));
+        $this->assertCount(1, $coverageFiles);
 
         $content = unserialize(file_get_contents($coverageFiles[0]));
         $dummyClassCoverage = $content[$this->dummyClassSourceFile];
