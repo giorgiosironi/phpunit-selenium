@@ -45,7 +45,7 @@ class Tests_Selenium2TestCase_ScreenshotListenerTest extends Tests_Selenium2Test
     private function assertThereIsAScreenshotNamed($filename)
     {
         $images = glob("$this->directory/$filename");
-        $this->assertEquals(1, count($images), 'No screenshot were saved.');
+        $this->assertCount(1, $images, 'No screenshot were saved.');
     }
 }
 

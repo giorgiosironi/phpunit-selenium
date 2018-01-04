@@ -62,7 +62,7 @@ class Extensions_Selenium2SuiteBuildingTest extends TestCase
         require_once __DIR__ . '/fixtures/SuiteBuildingSuites.php';
         $suite = Extensions_Selenium2TestCaseSample::suite('Extensions_Selenium2TestCaseSample');
         $this->assertInstanceOf(TestSuite::class, $suite);
-        $this->assertEquals(2, count($suite->tests()));
+        $this->assertCount(2, $suite->tests());
     }
 
     public function testAMultipleBrowsersTestCaseBuildsACopyOfEachTestForEachBrowser()
@@ -70,6 +70,6 @@ class Extensions_Selenium2SuiteBuildingTest extends TestCase
         require_once __DIR__ . '/fixtures/SuiteBuildingSuites.php';
         $suite = Extensions_Selenium2MultipleBrowsersTestCaseSample::suite('Extensions_Selenium2MultipleBrowsersTestCaseSample');
         $this->assertInstanceOf(TestSuite::class, $suite);
-        $this->assertEquals(2, count($suite->tests()));
+        $this->assertCount(2, $suite->tests());
     }
 }

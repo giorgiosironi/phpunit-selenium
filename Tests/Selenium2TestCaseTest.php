@@ -100,7 +100,7 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
     {
         $this->url('html/test_element_selection.html');
         $elements = $this->elements($this->using('css selector')->value('div'));
-        $this->assertEquals(4, count($elements));
+        $this->assertCount(4, $elements);
         $this->assertEquals('Other div', $elements[0]->text());
     }
 
@@ -174,7 +174,7 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->assertEquals('Child span', $child->text());
 
         $rows = $this->byCssSelector('table')->elements($this->using('css selector')->value('tr'));
-        $this->assertEquals(2, count($rows));
+        $this->assertCount(2, $rows);
     }
 
     /**
@@ -778,8 +778,8 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
     {
         $this->url('html/test_open.html');
         $screenshot = $this->currentScreenshot();
-        $this->assertTrue(is_string($screenshot));
-        $this->assertTrue(strlen($screenshot) > 0);
+        $this->assertInternalType('string', $screenshot);
+        $this->assertGreaterThan(0, strlen($screenshot));
         $this->markTestIncomplete('By guaranteeing the size of the window, we could add a deterministic assertion for the image.');
     }
 
@@ -787,8 +787,8 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
     {
         $this->url('html/test_open.html');
         $window  = $this->windowHandle();
-        $this->assertTrue(is_string($window));
-        $this->assertTrue(strlen($window) > 0);
+        $this->assertInternalType('string', $window);
+        $this->assertGreaterThan(0, strlen($window));
         $allHandles  = $this->windowHandles();
         $this->assertEquals(array('0' => $window), $allHandles);
     }
@@ -928,7 +928,7 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
 
         $this->window('');
         $this->assertEquals('Select Window Base', $this->title());
-        $this->assertEquals(1, count($this->windowHandles()));
+        $this->assertCount(1, $this->windowHandles());
     }
 
     public function testCookiesCanBeSetAndRead()
