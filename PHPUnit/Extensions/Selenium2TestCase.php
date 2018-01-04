@@ -64,6 +64,7 @@ use PHPUnit\Util\InvalidArgumentHelper;
  * @method \PHPUnit_Extensions_Selenium2TestCase_Element byCssSelector() byCssSelector($value)
  * @method \PHPUnit_Extensions_Selenium2TestCase_Element byId() byId($value)
  * @method \PHPUnit_Extensions_Selenium2TestCase_Element byLinkText() byLinkText($value)
+ * @method \PHPUnit_Extensions_Selenium2TestCase_Element byPartialLinkText() byPartialLinkText($value)
  * @method \PHPUnit_Extensions_Selenium2TestCase_Element byName() byName($value)
  * @method \PHPUnit_Extensions_Selenium2TestCase_Element byTag() byTag($value)
  * @method \PHPUnit_Extensions_Selenium2TestCase_Element byXPath() byXPath($value)
