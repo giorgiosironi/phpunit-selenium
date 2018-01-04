@@ -3,6 +3,7 @@ dist: trusty
 php:
   - 7
   - 7.1
+  - 7.2
 
 matrix:
     allow_failures:
