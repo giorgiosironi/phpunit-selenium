@@ -76,10 +76,11 @@ final class PHPUnit_Extensions_Selenium2TestCase_URL
      */
     public static function fromHostAndPort($host, $port, $secure)
     {
-        if($secure) {
-            return new self("https://{$host}:{$port}");
+        $prefix = "http://";
+        if ($secure) {
+            $prefix = "https://";
         }
-        return new self("http://{$host}:{$port}");
+        return new self($prefix.$host.$port);
     }
 
     /**
