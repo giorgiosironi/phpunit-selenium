@@ -80,7 +80,7 @@ final class PHPUnit_Extensions_Selenium2TestCase_URL
         if ($secure) {
             $prefix = "https://";
         }
-        return new self($prefix.$host.$port);
+        return new self($prefix.$host.":".$port);
     }
 
     /**
