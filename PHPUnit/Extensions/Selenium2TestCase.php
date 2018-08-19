@@ -256,7 +256,8 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends TestCase
             'browser' => NULL,
             'browserName' => NULL,
             'desiredCapabilities' => array(),
-            'seleniumServerRequestsTimeout' => 60
+            'seleniumServerRequestsTimeout' => 60,
+            'secure' => FALSE
         );
 
         $this->keysHolder = new PHPUnit_Extensions_Selenium2TestCase_KeysHolder();
@@ -377,7 +378,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends TestCase
         } catch (Exception $e) {
             $thrownException = $e;
         }
-        
+
         if ($this->collectCodeCoverageInformation) {
             $this->session->cookie()->remove('PHPUNIT_SELENIUM_TEST_ID');
         }
@@ -454,6 +455,24 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends TestCase
     public function getPort()
     {
         return $this->parameters['port'];
+    }
+
+    /**
+     * @param boolean $secure
+     * @throws InvalidArgumentException
+     */
+    public function setSecure($secure)
+    {
+        if(!is_bool($secure)) {
+            throw InvalidArgumentHelper::factory(1, 'boolean');
+        }
+
+        $this->parameters['secure'] = $secure;
+    }
+
+    public function getSecure()
+    {
+        return $this->parameters['secure'];
     }
 
     /**

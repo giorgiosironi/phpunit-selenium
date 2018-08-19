@@ -58,7 +58,7 @@ class PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Isolated
 {
     public function session(array $parameters)
     {
-        $seleniumServerUrl = PHPUnit_Extensions_Selenium2TestCase_URL::fromHostAndPort($parameters['host'], $parameters['port']);
+        $seleniumServerUrl = PHPUnit_Extensions_Selenium2TestCase_URL::fromHostAndPort($parameters['host'], $parameters['port'], $parameters['secure']);
         $driver = new PHPUnit_Extensions_Selenium2TestCase_Driver($seleniumServerUrl, $parameters['seleniumServerRequestsTimeout']);
         $capabilities = array_merge($parameters['desiredCapabilities'],
                                     array(

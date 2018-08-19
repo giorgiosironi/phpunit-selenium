@@ -71,11 +71,16 @@ final class PHPUnit_Extensions_Selenium2TestCase_URL
     /**
      * @param string $host
      * @param int port
+     * @param bool secure
      * @return PHPUnit_Extensions_Selenium2TestCase_URL
      */
-    public static function fromHostAndPort($host, $port)
+    public static function fromHostAndPort($host, $port, $secure)
     {
-        return new self("http://{$host}:{$port}");
+        $prefix = "http://";
+        if ($secure) {
+            $prefix = "https://";
+        }
+        return new self($prefix.$host.":".$port);
     }
 
     /**
