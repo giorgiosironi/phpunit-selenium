@@ -604,11 +604,11 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
 
         // Not generated with firefox
         //$this->assertContains('{focus(theButton)}', $eventLog->value());
-        $this->assertContains('{click(theButton)}', $eventLog->value());
+        $this->assertStringContainsString('{click(theButton)}', $eventLog->value());
         $eventLog->clear();
 
         $this->clickOnElement('theSubmit');
-        $this->assertContains('{click(theSubmit)} {submit}', $eventLog->value());
+        $this->assertStringContainsString('{click(theSubmit)} {submit}', $eventLog->value());
     }
 
     public function testSelectEventsAreGeneratedbutOnlyIfANewSelectionIsMade()
@@ -620,8 +620,8 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
 
         $select->selectOptionByLabel('First Option');
         $this->assertEquals('option1', $select->selectedValue());
-        $this->assertContains('{focus(theSelect)}', $eventLog->value());
-        $this->assertContains('{change(theSelect)}', $eventLog->value());
+        $this->assertStringContainsString('{focus(theSelect)}', $eventLog->value());
+        $this->assertStringContainsString('{change(theSelect)}', $eventLog->value());
 
         $eventLog->clear();
         $select->selectOptionByLabel('First Option');
@@ -694,10 +694,10 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->clickOnElement('theTextbox');
         $this->clickOnElement('theButton');
         $eventLog = $this->byId('eventlog');
-        $this->assertContains('{mouseover(theTextbox)}', $eventLog->value());
-        $this->assertContains('{mousedown(theButton)}', $eventLog->value());
-        $this->assertContains('{mouseover(theTextbox)}', $eventLog->value());
-        $this->assertContains('{mousedown(theButton)}', $eventLog->value());
+        $this->assertStringContainsString('{mouseover(theTextbox)}', $eventLog->value());
+        $this->assertStringContainsString('{mousedown(theButton)}', $eventLog->value());
+        $this->assertStringContainsString('{mouseover(theTextbox)}', $eventLog->value());
+        $this->assertStringContainsString('{mousedown(theButton)}', $eventLog->value());
     }
 
     public function testKeyEventsAreGenerated()
@@ -705,7 +705,7 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->url('html/test_form_events.html');
         $this->byId('theTextbox')->value('t');
 
-        $this->assertContains('{keydown(theTextbox - 84)}'
+        $this->assertStringContainsString('{keydown(theTextbox - 84)}'
                            . ' {keypress(theTextbox)}'
                            . ' {keyup(theTextbox - 84)}',
                                $this->byId('eventlog')->value());
@@ -802,7 +802,7 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         // No guarantee that it will exactly match the contents of the file
         //$this->assertStringStartsWith('<!--', $source);
 
-        $this->assertContains('<body>', $source);
+        $this->assertStringContainsString('<body>', $source);
         $this->assertStringEndsWith('</html>', $source);
     }
 
@@ -845,7 +845,7 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->assertEquals('This is a test of the open command.', $this->byCssSelector('body')->text());
 
         $this->frame(NULL);
-        $this->assertContains('This page contains frames.', $this->byCssSelector('body')->text());
+        $this->assertStringContainsString('This page contains frames.', $this->byCssSelector('body')->text());
     }
 
     public function testDifferentFramesFromTheMainOneCanGetFocusByFrameCount()
@@ -855,7 +855,7 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->assertEquals('This is a test of the open command.', $this->byCssSelector('body')->text());
 
         $this->frame(NULL);
-        $this->assertContains('This page contains frames.', $this->byCssSelector('body')->text());
+        $this->assertStringContainsString('This page contains frames.', $this->byCssSelector('body')->text());
     }
 
     public function testDifferentFramesFromTheMainOneCanGetFocusByName()
@@ -865,7 +865,7 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->assertEquals('This is a test of the open command.', $this->byCssSelector('body')->text());
 
         $this->frame(NULL);
-        $this->assertContains('This page contains frames.', $this->byCssSelector('body')->text());
+        $this->assertStringContainsString('This page contains frames.', $this->byCssSelector('body')->text());
     }
 
     public function testDifferentFramesFromTheMainOneCanGetFocusByElement()
@@ -876,7 +876,7 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->assertEquals('This is a test of the open command.', $this->byCssSelector('body')->text());
 
         $this->frame(NULL);
-        $this->assertContains('This page contains frames.', $this->byCssSelector('body')->text());
+        $this->assertStringContainsString('This page contains frames.', $this->byCssSelector('body')->text());
     }
 
     public function testDifferentWindowsCanBeFocusedOnDuringATest()
