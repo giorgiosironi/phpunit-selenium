@@ -63,6 +63,8 @@ class Tests_Selenium2TestCase_WaitUntilTest extends Tests_Selenium2TestCase_Base
                 return TRUE;
             }
         }, 8000);
+
+        $this->addToAssertionCount(1);
     }
 
     /**

@@ -381,6 +381,7 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->url('html/test_type_page1.html');
         $usernameInput = $this->byName('username');
         $usernameInput->value(1.13);
+        $this->assertEquals('1.13', $usernameInput->value());
     }
 
     public function testFormsCanBeSubmitted()
@@ -1101,6 +1102,7 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
     public function test404PagesCanBeLoaded()
     {
         $this->url('inexistent.html');
+        $this->addToAssertionCount(1);
     }
 
     /**

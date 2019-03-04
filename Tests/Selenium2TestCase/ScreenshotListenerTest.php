@@ -40,6 +40,7 @@ class Tests_Selenium2TestCase_ScreenshotListenerTest extends Tests_Selenium2Test
         $test = new Tests_Selenium2TestCase_NotCapableOfTakingScreenshotsTest();
 
         $this->listener->addError($test, new RuntimeException(), NULL);
+        $this->addToAssertionCount(1);
     }
 
     private function assertThereIsAScreenshotNamed($filename)

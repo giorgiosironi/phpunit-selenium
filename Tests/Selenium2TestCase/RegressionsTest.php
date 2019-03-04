@@ -59,6 +59,7 @@ class Extensions_Selenium2TestCaseRegressionsTest extends Tests_Selenium2TestCas
     {
         $this->url("html/test_open.html");
         $title = $this->title();
+        $this->assertEquals('Test open', $title);
         return $title;
     }
 
