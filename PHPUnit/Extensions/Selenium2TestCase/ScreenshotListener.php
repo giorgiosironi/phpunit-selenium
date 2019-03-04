@@ -42,7 +42,6 @@
  * @since      File available since Release 1.2.8
  */
 use PHPUnit\Framework\AssertionFailedError;
-use PHPUnit\Framework\BaseTestListener;
 use PHPUnit\Framework\Test;
 
 /**
@@ -57,8 +56,10 @@ use PHPUnit\Framework\Test;
  * @since      Class available since Release 1.2.8
  */
 class PHPUnit_Extensions_Selenium2TestCase_ScreenshotListener 
-    extends BaseTestListener
+    implements \PHPUnit\Framework\TestListener
 {
+    use \PHPUnit\Framework\TestListenerDefaultImplementation;
+
     private $directory;
 
     public function __construct($directory)
@@ -66,12 +67,12 @@ class PHPUnit_Extensions_Selenium2TestCase_ScreenshotListener
         $this->directory = $directory;
     }
 
-    public function addError(Test $test, Exception $e, $time)
+    public function addError(Test $test, Throwable $e, float $time): void
     {
         $this->storeAScreenshot($test);
     }
 
-    public function addFailure(Test $test, AssertionFailedError $e, $time)
+    public function addFailure(Test $test, AssertionFailedError $e, float $time): void
     {
         $this->storeAScreenshot($test);
     }
