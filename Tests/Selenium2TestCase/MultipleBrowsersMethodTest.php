@@ -71,7 +71,7 @@ class Extensions_Selenium2TestCaseMultipleBrowsersMethodTest extends PHPUnit_Ext
         );
     }
 
-    public function setUp()
+    public function setUp(): void
     {
         if (!defined('PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL')) {
             $this->markTestSkipped("You must serve the selenium-1-tests folder from an HTTP server and configure the PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL constant accordingly.");
@@ -79,12 +79,12 @@ class Extensions_Selenium2TestCaseMultipleBrowsersMethodTest extends PHPUnit_Ext
         $this->setBrowserUrl(PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         self::$testsRun++;
     }
 
-    public static function tearDownAfterClass()
+    public static function tearDownAfterClass(): void
     {
         $expected = count(self::browsers());
         $actual = self::$testsRun;

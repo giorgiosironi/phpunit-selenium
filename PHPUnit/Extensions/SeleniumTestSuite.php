@@ -65,10 +65,12 @@ class PHPUnit_Extensions_SeleniumTestSuite extends TestSuite
 
     /**
      * Making the method public.
+     * @param ReflectionClass $class
+     * @param ReflectionMethod $method
      */
-    public function addTestMethod(ReflectionClass $class, ReflectionMethod $method)
+    public function addTestMethod(ReflectionClass $class, ReflectionMethod $method): void
     {
-        return parent::addTestMethod($class, $method);
+        parent::addTestMethod($class, $method);
     }
 
     /**

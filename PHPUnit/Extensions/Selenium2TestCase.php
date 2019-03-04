@@ -326,7 +326,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends TestCase
         return $this->session;
     }
 
-    public function run(TestResult $result = NULL)
+    public function run(TestResult $result = NULL): TestResult
     {
         $this->testId = get_class($this) . '__' . $this->getName();
 
@@ -356,6 +356,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends TestCase
 
     /**
      * @throws RuntimeException
+     * @throws Exception
      */
     protected function runTest()
     {
@@ -396,7 +397,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends TestCase
         return PHPUnit_Extensions_SeleniumTestSuite::fromTestCaseClass($className);
     }
 
-    public function onNotSuccessfulTest(Throwable $e)
+    public function onNotSuccessfulTest(Throwable $e): void
     {
         $this->getStrategy()->notSuccessfulTest();
         parent::onNotSuccessfulTest($e);

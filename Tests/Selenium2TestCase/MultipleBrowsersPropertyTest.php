@@ -75,7 +75,7 @@ class Extensions_Selenium2TestCaseMultipleBrowsersPropertyTest extends PHPUnit_E
     private $_browserWeSetUp = '';
 
 
-    public function setUp()
+    public function setUp(): void
     {
         if (!defined('PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL')) {
             $this->markTestSkipped("You must serve the selenium-1-tests folder from an HTTP server and configure the PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL constant accordingly.");

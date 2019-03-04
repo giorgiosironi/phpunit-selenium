@@ -3,7 +3,7 @@ use PHPUnit\Framework\AssertionFailedError;
 
 class Tests_Selenium2TestCase_ScreenshotListenerTest extends Tests_Selenium2TestCase_BaseTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->directory = sys_get_temp_dir();

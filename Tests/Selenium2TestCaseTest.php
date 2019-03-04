@@ -54,7 +54,7 @@ use PHPUnit_Extensions_Selenium2TestCase_Keys as Keys;
  */
 class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestCase
 {
-    protected function tearDown()
+    protected function tearDown(): void
     {
         PHPUnit_Extensions_Selenium2TestCase::setDefaultWaitUntilTimeout(0);
         PHPUnit_Extensions_Selenium2TestCase::setDefaultWaitUntilSleepInterval(500);

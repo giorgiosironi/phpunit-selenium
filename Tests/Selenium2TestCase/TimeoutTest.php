@@ -1,7 +1,7 @@
 <?php
 class Tests_Selenium2TestCase_TimeoutTest extends Tests_Selenium2TestCase_BaseTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->setSeleniumServerRequestsTimeout(60);

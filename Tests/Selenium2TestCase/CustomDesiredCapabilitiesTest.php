@@ -10,7 +10,7 @@
  */
 class Extensions_Selenium2TestCase_CustomDesiredCapabilitiesTest extends Tests_Selenium2TestCase_BaseTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->setDesiredCapabilities(array(

@@ -5,7 +5,7 @@ class Tests_Selenium2TestCase_Coverage_SingleFileTest extends TestCase
 {
     private $dummyTestId = 'ns_dummyTestId';
 
-    public function setUp()
+    public function setUp(): void
     {
         if (!extension_loaded('xdebug')) {
             $this->markTestSkipped('Needs xdebug to run');
