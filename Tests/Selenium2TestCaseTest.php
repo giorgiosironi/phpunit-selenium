@@ -1173,19 +1173,15 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->assertEquals('2', $this->byId('check')->text());
     }
 
-    /**
-     * @expectedException BadMethodCallException
-     */
     public function testSessionClickNotScalar()
     {
+        $this->expectException(BadMethodCallException::class);
         $this->click(array());
     }
 
-    /**
-     * @expectedException BadMethodCallException
-     */
     public function testSessionClickNotAValidValue()
     {
+        $this->expectException(BadMethodCallException::class);
         $this->click(3);
     }
 
