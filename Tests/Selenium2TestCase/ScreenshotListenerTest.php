@@ -3,6 +3,9 @@ use PHPUnit\Framework\AssertionFailedError;
 
 class Tests_Selenium2TestCase_ScreenshotListenerTest extends Tests_Selenium2TestCase_BaseTestCase
 {
+    /** @var PHPUnit_Extensions_Selenium2TestCase_ScreenshotListener */
+    private $listener;
+
     public function setUp(): void
     {
         parent::setUp();
@@ -20,7 +23,7 @@ class Tests_Selenium2TestCase_ScreenshotListenerTest extends Tests_Selenium2Test
     {
         $this->url('html/test_open.html');
 
-        $this->listener->addError($this, new Exception(), NULL);
+        $this->listener->addError($this, new Exception(), microtime(true));
 
         $this->assertThereIsAScreenshotNamed('Tests_Selenium2TestCase_ScreenshotListenerTest__testStoresAScreenshotInCaseOfError__*.png');
     }
@@ -30,7 +33,7 @@ class Tests_Selenium2TestCase_ScreenshotListenerTest extends Tests_Selenium2Test
         $this->url('html/test_open.html');
 
         $exception = new AssertionFailedError();
-        $this->listener->addFailure($this, $exception, NULL);
+        $this->listener->addFailure($this, $exception, microtime(true));
 
         $this->assertThereIsAScreenshotNamed('Tests_Selenium2TestCase_ScreenshotListenerTest__testStoresAScreenshotInCaseOfFailure*.png');
     }
@@ -39,7 +42,7 @@ class Tests_Selenium2TestCase_ScreenshotListenerTest extends Tests_Selenium2Test
     {
         $test = new Tests_Selenium2TestCase_NotCapableOfTakingScreenshotsTest();
 
-        $this->listener->addError($test, new RuntimeException(), NULL);
+        $this->listener->addError($test, new RuntimeException(), microtime(true));
         $this->addToAssertionCount(1);
     }
 
