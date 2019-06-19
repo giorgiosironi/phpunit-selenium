@@ -968,8 +968,8 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->url('/');
         $cookies = $this->cookie();
         $cookies->add('name', 'value')
-                ->path('/html')
-                ->domain('127.0.0.1')
+                ->path(rtrim(parse_url(PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL,  PHP_URL_PATH), '/').'/html')
+                ->domain(parse_url(PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL,  PHP_URL_HOST))
                 ->expiry(time()+60*60*24)
                 ->secure(FALSE)
                 ->set();
