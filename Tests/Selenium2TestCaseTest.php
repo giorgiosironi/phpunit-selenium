@@ -156,7 +156,9 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
 
     public function testActivePageElementReceivesTheKeyStrokes()
     {
-        $this->markTestIncomplete('Firefox (geckodriver) does not support this command yet');
+        if ($this->getBrowser() === 'firefox') {
+            $this->markTestIncomplete('Firefox (geckodriver) does not support this command yet');
+        }
 
         $this->timeouts()->implicitWait(10000);
 
@@ -603,7 +605,9 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->clickOnElement('theButton');
 
         // Not generated with firefox
-        //$this->assertContains('{focus(theButton)}', $eventLog->value());
+        if ($this->getBrowser() !== 'firefox') {
+            $this->assertStringContainsString('{focus(theButton)}', $eventLog->value());
+        }
         $this->assertStringContainsString('{click(theButton)}', $eventLog->value());
         $eventLog->clear();
 
@@ -676,7 +680,9 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
 
     public function testTextEventsAreGenerated()
     {
-        $this->markTestIncomplete('focus event not generated with firefox (geckodriver)');
+        if ($this->getBrowser() === 'firefox') {
+            $this->markTestIncomplete('focus event not generated with firefox (geckodriver)');
+        }
 
         $this->url('html/test_form_events.html');
         $textBox = $this->byId('theTextbox');
@@ -998,10 +1004,13 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
 
     public function testTheMouseCanBeMovedToAKnownPosition()
     {
-        // @TODO: remove markTestIncomplete() when the following bugs are fixed
-        // @see https://code.google.com/p/selenium/issues/detail?id=5939
-        // @see https://code.google.com/p/selenium/issues/detail?id=3578
-        $this->markTestIncomplete('This is broken in a firefox driver yet');
+        if ($this->getBrowser() === 'firefox') {
+            // @TODO: remove markTestIncomplete() when the following bugs are fixed
+            // @see https://code.google.com/p/selenium/issues/detail?id=5939
+            // @see https://code.google.com/p/selenium/issues/detail?id=3578
+            $this->markTestIncomplete('This is broken in a firefox driver yet');
+        }
+
         $this->url('html/test_moveto.html');
         $this->moveto(array(
             'element' => $this->byId('moveto'),
