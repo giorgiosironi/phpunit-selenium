@@ -908,9 +908,9 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->window('myPopupWindow');
         $popup = $this->currentWindow();
         $this->assertTrue($popup instanceof PHPUnit_Extensions_Selenium2TestCase_Window);
-        $popup->size(array('width' => 150, 'height' => 200));
+        $popup->size(array('width' => 500, 'height' => 200));
         $size = $popup->size();
-        $this->assertEquals(150, $size['width']);
+        $this->assertEquals(500, $size['width']);
         $this->assertEquals(200, $size['height']);
         $this->closeWindow();
 
