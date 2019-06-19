@@ -80,7 +80,7 @@ class Extensions_Selenium2TestCaseFailuresTest extends Tests_Selenium2TestCase_B
             $div->text();
             $this->fail('The element shouldn\'t be accessible.');
         } catch (RuntimeException $e) {
-            $this->assertContains('http://seleniumhq.org/exceptions/stale_element_reference.html', $e->getMessage());
+            $this->assertContains('stale', $e->getMessage());
         }
     }
 
