@@ -705,9 +705,9 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->url('html/test_form_events.html');
         $this->byId('theTextbox')->value('t');
 
-        $this->assertStringContainsString('{keydown(theTextbox - 84)}'
-                           . ' {keypress(theTextbox)}'
-                           . ' {keyup(theTextbox - 84)}',
+        $this->assertStringContainsString('{keydown(theTextbox - t)}'
+                           . ' {keypress(theTextbox - t)}'
+                           . ' {keyup(theTextbox - t)}',
                                $this->byId('eventlog')->value());
     }
 
