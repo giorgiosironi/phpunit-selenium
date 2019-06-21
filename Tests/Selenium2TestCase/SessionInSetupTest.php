@@ -1,12 +1,10 @@
 <?php
-class Tests_Selenium2TestCase_SessionInSetupTest extends PHPUnit_Extensions_Selenium2TestCase
+class Tests_Selenium2TestCase_SessionInSetupTest extends Tests_Selenium2TestCase_BaseTestCase
 {
     public function setUp(): void
     {
-        $this->setHost(PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_HOST);
-        $this->setPort((int)PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_PORT);
-        $this->setBrowser(PHPUNIT_TESTSUITE_EXTENSION_SELENIUM2_BROWSER);
-        $this->setBrowserUrl(PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL);
+        parent::setUp();
+
         $this->prepareSession();
         $this->url('html/test_open.html');
     }

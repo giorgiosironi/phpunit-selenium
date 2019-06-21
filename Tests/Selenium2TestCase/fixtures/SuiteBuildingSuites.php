@@ -13,11 +13,17 @@ class Extensions_Selenium2MultipleBrowsersTestCaseSample extends PHPUnit_Extensi
             'browserName' => PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_BROWSER,
             'host'        => PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_HOST,
             'port'        => 4444,
+            'desiredCapabilities' => array(
+                'tunnel-identifier' => TUNNEL_IDENTIFIER
+            )
         ),
         array(
             'browserName' => 'safari',
             'host'        => PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_HOST,
             'port'        => 4444,
+            'desiredCapabilities' => array(
+                'tunnel-identifier' => TUNNEL_IDENTIFIER
+            )
         ),
     );
 

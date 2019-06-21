@@ -4,9 +4,13 @@ php:
   - 7
   - 7.1
 
+addons:
+  sauce_connect: true
+
 matrix:
     allow_failures:
         - php: hhvm
 
 before_script: ./.ci/before_script.sh
-script: "vendor/bin/phpunit Tests"
+script: "vendor/bin/phpunit --verbose Tests"
+after_script: ./.ci/after_script.sh

@@ -1,8 +1,6 @@
 #!/bin/bash
 
-SELENIUM_HUB_URL='http://127.0.0.1:4444'
-SELENIUM_JAR=/usr/share/selenium/selenium-server-standalone.jar
-SELENIUM_DOWNLOAD_URL=https://selenium-release.storage.googleapis.com/3.4/selenium-server-standalone-3.4.0.jar
-GECKODRIVER_DOWNLOAD_URL=https://github.com/mozilla/geckodriver/releases/download/v0.17.0/geckodriver-v0.17.0-linux64.tar.gz
-GECKODRIVER_TAR=/tmp/geckodriver.tar.gz
-PHP_VERSION=$(php -v)
+TESTS_URL='http://127.0.0.1:8080'
+PHP_PATH=$(which php)
+PHP_VERSION=$(${PHP_PATH} -v)
+ESCAPED_PHP_PATH=$(echo "$PHP_PATH" | sed 's/\//\\\//g')
