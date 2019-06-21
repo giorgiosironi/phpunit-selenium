@@ -10,7 +10,7 @@ class Extensions_Selenium2MultipleBrowsersTestCaseSample extends PHPUnit_Extensi
 {
     public static $browsers = array(
         array(
-            'browserName' => PHPUNIT_TESTSUITE_EXTENSION_SELENIUM2_BROWSER,
+            'browserName' => PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_BROWSER,
             'host'        => PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_HOST,
             'port'        => 4444,
         ),

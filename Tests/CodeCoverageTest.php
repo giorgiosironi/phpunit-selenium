@@ -6,7 +6,7 @@ class CodeCoverageTest extends PHPUnit_Extensions_Selenium2TestCase
     public function setUp(): void
     {
         $this->markTestIncomplete('Would require PHP 5.4 for running .php files on the server');
-        $this->setBrowser(PHPUNIT_TESTSUITE_EXTENSION_SELENIUM2_BROWSER);
+        $this->setBrowser(PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_BROWSER);
         $this->setBrowserUrl('http://localhost/');
     }
 
