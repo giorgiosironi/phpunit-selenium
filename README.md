@@ -27,14 +27,16 @@ Please direct pull requests to [giorgiosironi/phpunit-selenium](https://github.c
 Running the test suite
 ---
 
-#### Via Vagrant
+#### Using Docker
 
-Just run the following Vagrant commands (a minimal version of `v1.7` is required) and everything will be set up for you. The first start will take some time which depends on the speed of your connection (and less - speed of your computer):
+1. Simply run the following commands to setup a Selenium server and a simple webserver for the test pages:
+    ```
+    docker-compose up --build
+    ```
 
-    vagrant up
-    vagrant provision
-    vagrant ssh
+2. Then copy `phpunit.xml.dist` to `phpunit.xml` and uncomment `PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_HOST`.
 
-    cd /vagrant
+3. Now run the tests:
+    ```
     vendor/bin/phpunit Tests
-
+    ```
