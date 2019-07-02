@@ -1,7 +1,7 @@
 <?php
 class Tests_Selenium2TestCase_TimeoutTest extends Tests_Selenium2TestCase_BaseTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->setSeleniumServerRequestsTimeout(60);
@@ -13,11 +13,9 @@ class Tests_Selenium2TestCase_TimeoutTest extends Tests_Selenium2TestCase_BaseTe
         $this->assertStringEndsWith('html/test_open.html', $this->url());
     }
 
-    /**
-     * @expectedException PHPUnit_Extensions_Selenium2TestCase_Exception
-     */
     public function testAnImplicitWaitValueToRespectOnTheServerMustBeSmallerThanTheSeleniumServerCallsTimeout()
     {
+        $this->expectException(PHPUnit_Extensions_Selenium2TestCase_Exception::class);
         $this->timeouts()->implicitWait(120000);
     }
 

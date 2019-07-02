@@ -3,6 +3,11 @@ PHPUnit_Selenium
 
 This is the list of changes made to PHPUnit_Selenium.
 
+PHPUnit_Selenium 7.0.0
+----------------------
+
+* #422: Add support for PHPUnit 7
+
 PHPUnit_Selenium 4.1.0
 ----------------------
 

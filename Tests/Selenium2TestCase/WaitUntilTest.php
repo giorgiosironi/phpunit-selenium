@@ -63,13 +63,13 @@ class Tests_Selenium2TestCase_WaitUntilTest extends Tests_Selenium2TestCase_Base
                 return TRUE;
             }
         }, 8000);
+
+        $this->addToAssertionCount(1);
     }
 
-    /**
-     * @expectedException PHPUnit_Extensions_Selenium2TestCase_WebDriverException
-     */
     public function testWaitUnsuccessfully()
     {
+        $this->expectException(PHPUnit_Extensions_Selenium2TestCase_WebDriverException::class);
         $this->url('html/test_wait.html');
 
         $this->waitUntil(function($testCase) {
@@ -81,12 +81,10 @@ class Tests_Selenium2TestCase_WaitUntilTest extends Tests_Selenium2TestCase_Base
         }, 42);
     }
 
-    /**
-     * @expectedException PHPUnit_Extensions_Selenium2TestCase_Exception
-     * @expectedExceptionMessage The valid callback is expected
-     */
     public function testInvalidCallback()
     {
+        $this->expectException(PHPUnit_Extensions_Selenium2TestCase_Exception::class);
+        $this->expectExceptionMessage('The valid callback is expected');
         $this->waitUntil('not a callback');
     }
 

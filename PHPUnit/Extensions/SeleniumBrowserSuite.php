@@ -63,9 +63,9 @@ class PHPUnit_Extensions_SeleniumBrowserSuite extends TestSuite
      */
     protected $testCase = TRUE;
 
-    public function addTestMethod(ReflectionClass $class, ReflectionMethod $method)
+    public function addTestMethod(ReflectionClass $class, ReflectionMethod $method): void
     {
-        return parent::addTestMethod($class, $method);
+        parent::addTestMethod($class, $method);
     }
 
     public static function fromClassAndBrowser($className, array $browser)

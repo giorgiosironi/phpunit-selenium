@@ -1,7 +1,7 @@
 <?php
 class Tests_Selenium2TestCase_BaseTestCase extends PHPUnit_Extensions_Selenium2TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         $this->setHost(PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_HOST);
         $this->setPort((int)PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_PORT);

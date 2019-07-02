@@ -85,7 +85,7 @@ class Tests_Selenium2TestCase_MobileFeaturesTest extends PHPUnit_Extensions_Sele
         )
     );
 
-    public function setUp()
+    public function setUp(): void
     {
         if (!defined('SAUCE_ACCESS_KEY') || !defined('SAUCE_USERNAME')) {
             $this->markTestSkipped("SAUCE_USERNAME and SAUCE_ACCESS_KEY must be set to run tests on Sauce");

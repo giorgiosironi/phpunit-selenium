@@ -52,27 +52,21 @@
  */
 class Extensions_Selenium2TestCaseFailuresTest extends Tests_Selenium2TestCase_BaseTestCase
 {
-    /**
-     * @expectedException BadMethodCallException
-     */
     public function testInexistentCommandCausesTheTestToFail()
     {
+        $this->expectException(BadMethodCallException::class);
         $this->inexistentSessionCommand();
     }
 
-    /**
-     * @expectedException DomainException
-     */
     public function testExceptionsAreReThrownOnNotSuccessfulTests()
     {
+        $this->expectException(DomainException::class);
         $this->onNotSuccessfulTest(new DomainException);
     }
 
-    /**
-     * @expectedException RuntimeException
-     */
     public function testInexistentElementCausesTheTestToFail()
     {
+        $this->expectException(RuntimeException::class);
         $this->url('html/test_open.html');
         $this->byId('notExistent');
     }
@@ -90,11 +84,9 @@ class Extensions_Selenium2TestCaseFailuresTest extends Tests_Selenium2TestCase_B
         }
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     */
     public function testSelectObjectsCanOnlyBeCreatedOverSelectTags()
     {
+        $this->expectException(InvalidArgumentException::class);
         $this->url('html/test_element_selection.html');
         $div = $this->byId('theDivId');
         $select = $this->select($div);

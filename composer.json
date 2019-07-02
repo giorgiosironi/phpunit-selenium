@@ -44,9 +44,9 @@
         "irc": "irc://irc.freenode.net/phpunit"
     },
     "require": {
-        "php": ">=7.0",
-        "phpunit/phpunit": ">=6.0,<7.0",
-        "ext-curl": "*"
+        "php": ">=7.1",
+        "ext-curl": "*",
+        "phpunit/phpunit": ">=7.0,<8.0"
     },
     "require-dev": {
        "phing/phing": "2.*"

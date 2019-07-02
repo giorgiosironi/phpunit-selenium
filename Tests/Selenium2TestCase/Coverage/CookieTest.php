@@ -4,9 +4,9 @@ use PHPUnit\Framework\TestResult;
 class Tests_Selenium2TestCase_Coverage_CookieTest extends Tests_Selenium2TestCase_BaseTestCase
 {
     // this is a dummy URL (returns down coverage data in HTML), but Firefox still sets domain cookie, which is what's needed
-    protected $coverageScriptUrl = 'http://127.0.0.1:8080/coverage/dummy.html';
+    protected $coverageScriptUrl = PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL .'/coverage/dummy.html';
 
-    public function run(TestResult $result = NULL)
+    public function run(TestResult $result = NULL): TestResult
     {
         // make sure code coverage collection is enabled
         if ($result === NULL) {
@@ -19,6 +19,7 @@ class Tests_Selenium2TestCase_Coverage_CookieTest extends Tests_Selenium2TestCas
         parent::run($result);
 
         $result->getCodeCoverage()->clear();
+        return $result;
     }
 
     protected function getTestIdCookie()
@@ -29,7 +30,9 @@ class Tests_Selenium2TestCase_Coverage_CookieTest extends Tests_Selenium2TestCas
     public function testTestIdCookieIsSet()
     {
         $this->url('/');
-        return $this->getTestIdCookie();
+        $testIdCookie = $this->getTestIdCookie();
+        $this->assertNotEmpty($testIdCookie);
+        return $testIdCookie;
     }
 
     /**
