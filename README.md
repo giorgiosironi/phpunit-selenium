@@ -10,9 +10,11 @@ Use [Composer](https://getcomposer.org) and run `composer require --dev phpunit/
 Requirements
 ---
 
-This `4.x` mainline supports (only) PHPUnit 6.x. This version is only compatible with PHP 7.
+Version `7.x` supports PHPUnit 7.x and is compatible with PHP 7.1+
 
-There are two older, unsupported lines which will probably see no new releases:
+Older unsupported lines which will probably see no new releases:
+
+- `4.x` mainline supports (only) PHPUnit 6.x. This version is only compatible with PHP 7
 - `3.x`: supports PHPUnit 5.x. Only compatible with PHP 5.6 and PHP 7.
 - `2.x`: supports PHPUnit >= 4.8 instead.
 
