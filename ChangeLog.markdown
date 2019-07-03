@@ -3,6 +3,11 @@ PHPUnit_Selenium
 
 This is the list of changes made to PHPUnit_Selenium.
 
+PHPUnit_Selenium 7.0.1
+----------------------
+
+* #435 Change version number
+
 PHPUnit_Selenium 7.0.0
 ----------------------
 

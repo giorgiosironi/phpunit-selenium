@@ -101,7 +101,7 @@ use PHPUnit\Util\InvalidArgumentHelper;
  */
 abstract class PHPUnit_Extensions_Selenium2TestCase extends TestCase
 {
-    const VERSION = '7.0.0';
+    const VERSION = '7.0.1';
 
     /**
      * @var string  override to provide code coverage data from the server
