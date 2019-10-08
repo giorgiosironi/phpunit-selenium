@@ -8,7 +8,7 @@
         "testing",
         "selenium"
     ],
-    "homepage": "http://www.phpunit.de/",
+    "homepage": "https://github.com/giorgiosironi/phpunit-selenium",
     "license": "BSD-3-Clause",
     "authors": [
         {
@@ -40,8 +40,7 @@
         }
     ],
     "support": {
-        "issues": "https://github.com/sebastianbergmann/phpunit-selenium/issues",
-        "irc": "irc://irc.freenode.net/phpunit"
+        "issues": "https://github.com/giorgiosironi/phpunit-selenium/issues",
     },
     "require": {
         "php": ">=7.1",
