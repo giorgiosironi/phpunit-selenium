@@ -33,8 +33,11 @@ function recordEvent(e) {
     }
     else {
     	eventMessage = '{' + e.type + '(' + this.id;
-    	if (e.keyCode) {
-	      eventMessage += ' - ' + e.keyCode;
+    	if (e.key) {
+	      eventMessage += ' - ' + e.key;
+            }
+    	else if (e.keyCode) {
+          eventMessage += ' - ' + e.keyCode;
             }
     	if (e.altKey) {
 	      eventMessage += ' altKeyDown';

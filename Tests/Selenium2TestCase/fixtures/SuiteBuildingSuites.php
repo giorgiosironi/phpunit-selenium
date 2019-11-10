@@ -10,14 +10,20 @@ class Extensions_Selenium2MultipleBrowsersTestCaseSample extends PHPUnit_Extensi
 {
     public static $browsers = array(
         array(
-            'browserName' => 'firefox',
-            'host'        => 'localhost',
+            'browserName' => PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_BROWSER,
+            'host'        => PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_HOST,
             'port'        => 4444,
+            'desiredCapabilities' => array(
+                'tunnel-identifier' => TUNNEL_IDENTIFIER
+            )
         ),
         array(
             'browserName' => 'safari',
-            'host'        => 'localhost',
+            'host'        => PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_HOST,
             'port'        => 4444,
+            'desiredCapabilities' => array(
+                'tunnel-identifier' => TUNNEL_IDENTIFIER
+            )
         ),
     );
 

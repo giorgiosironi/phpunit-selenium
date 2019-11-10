@@ -57,17 +57,21 @@ class Extensions_Selenium2TestCaseMultipleBrowsersMethodTest extends PHPUnit_Ext
     {
         return array(
             array(
-                'browserName' => 'firefox',
-                'host'        => 'localhost',
+                'browserName' => PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_BROWSER,
+                'host'        => PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_HOST,
                 'port'        => 4444,
-                'sessionStrategy' => 'shared'
+                'desiredCapabilities' => array(
+                    'tunnel-identifier' => TUNNEL_IDENTIFIER
+                )
             ),
             array(
                 'browserName' => 'firefox',
-                'host'        => 'localhost',
+                'host'        => PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_HOST,
                 'port'        => 4444,
-                'sessionStrategy' => 'isolated'
-            ),
+                'desiredCapabilities' => array(
+                    'tunnel-identifier' => TUNNEL_IDENTIFIER
+                )
+            )
         );
     }
 

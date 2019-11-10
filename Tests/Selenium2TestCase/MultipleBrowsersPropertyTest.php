@@ -54,21 +54,28 @@ class Extensions_Selenium2TestCaseMultipleBrowsersPropertyTest extends PHPUnit_E
 {
     public static $browsers = array(
         array(
-            'browserName' => 'firefox',
-            'host'        => 'localhost',
+            'browserName' => PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_BROWSER,
+            'host'        => PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_HOST,
             'port'        => 4444,
-            'sessionStrategy' => 'shared'
+            'desiredCapabilities' => array(
+                'tunnel-identifier' => TUNNEL_IDENTIFIER
+            )
         ),
         array(
             'browserName' => 'firefox',
-            'host'        => 'localhost',
+            'host'        => PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_HOST,
             'port'        => 4444,
-            'sessionStrategy' => 'isolated'
+            'desiredCapabilities' => array(
+                'tunnel-identifier' => TUNNEL_IDENTIFIER
+            )
         ),
         array(
             'browserName' => 'safari',
-            'host'        => 'localhost',
-            'port'        => 4444
+            'host'        => PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_HOST,
+            'port'        => 4444,
+            'desiredCapabilities' => array(
+                'tunnel-identifier' => TUNNEL_IDENTIFIER
+            )
         )
     );
 

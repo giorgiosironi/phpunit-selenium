@@ -66,7 +66,6 @@ class Tests_Selenium2TestCase_MobileFeaturesTest extends PHPUnit_Extensions_Sele
         array(
             'host' => SAUCE_HOST,
             'port' => 80,
-            'sessionStrategy' => 'isolated',
             'browserName' => 'Android',
             'desiredCapabilities' => array(
                 'version' => '4',
@@ -76,7 +75,6 @@ class Tests_Selenium2TestCase_MobileFeaturesTest extends PHPUnit_Extensions_Sele
         array(
             'host' => SAUCE_HOST,
             'port' => 80,
-            'sessionStrategy' => 'isolated',
             'browserName' => 'iPhone',
             'desiredCapabilities' => array(
                 'version' => '5',

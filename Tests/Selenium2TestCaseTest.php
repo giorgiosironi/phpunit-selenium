@@ -156,7 +156,9 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
 
     public function testActivePageElementReceivesTheKeyStrokes()
     {
-        $this->markTestIncomplete('Firefox (geckodriver) does not support this command yet');
+        if ($this->getBrowser() === 'firefox') {
+            $this->markTestIncomplete('Firefox (geckodriver) does not support this command yet');
+        }
 
         $this->timeouts()->implicitWait(10000);
 
@@ -267,7 +269,7 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
     {
         $this->url('html/test_geometry.html');
         $element = $this->byId('colored');
-        $this->assertRegExp('/rgb[a]?\(0,\s*0,\s*255[,\s*1]?\)/', $element->css('background-color'));
+        $this->assertRegExp('/rgba?\(0,\s*0,\s*255(,\s*1)?\)/', $element->css('background-color'));
     }
 
     public function testClick()
@@ -603,7 +605,9 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->clickOnElement('theButton');
 
         // Not generated with firefox
-        //$this->assertContains('{focus(theButton)}', $eventLog->value());
+        if ($this->getBrowser() !== 'firefox') {
+            $this->assertStringContainsString('{focus(theButton)}', $eventLog->value());
+        }
         $this->assertStringContainsString('{click(theButton)}', $eventLog->value());
         $eventLog->clear();
 
@@ -676,7 +680,9 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
 
     public function testTextEventsAreGenerated()
     {
-        $this->markTestIncomplete('focus event not generated with firefox (geckodriver)');
+        if ($this->getBrowser() === 'firefox') {
+            $this->markTestIncomplete('focus event not generated with firefox (geckodriver)');
+        }
 
         $this->url('html/test_form_events.html');
         $textBox = $this->byId('theTextbox');
@@ -705,9 +711,9 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->url('html/test_form_events.html');
         $this->byId('theTextbox')->value('t');
 
-        $this->assertStringContainsString('{keydown(theTextbox - 84)}'
-                           . ' {keypress(theTextbox)}'
-                           . ' {keyup(theTextbox - 84)}',
+        $this->assertStringContainsString('{keydown(theTextbox - t)}'
+                           . ' {keypress(theTextbox - t)}'
+                           . ' {keyup(theTextbox - t)}',
                                $this->byId('eventlog')->value());
     }
 
@@ -908,9 +914,9 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->window('myPopupWindow');
         $popup = $this->currentWindow();
         $this->assertTrue($popup instanceof PHPUnit_Extensions_Selenium2TestCase_Window);
-        $popup->size(array('width' => 150, 'height' => 200));
+        $popup->size(array('width' => 500, 'height' => 200));
         $size = $popup->size();
-        $this->assertEquals(150, $size['width']);
+        $this->assertEquals(500, $size['width']);
         $this->assertEquals(200, $size['height']);
         $this->closeWindow();
 
@@ -968,8 +974,8 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->url('/');
         $cookies = $this->cookie();
         $cookies->add('name', 'value')
-                ->path('/html')
-                ->domain('127.0.0.1')
+                ->path(rtrim(parse_url(PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL,  PHP_URL_PATH), '/').'/html')
+                ->domain(parse_url(PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL,  PHP_URL_HOST))
                 ->expiry(time()+60*60*24)
                 ->secure(FALSE)
                 ->set();
@@ -998,10 +1004,13 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
 
     public function testTheMouseCanBeMovedToAKnownPosition()
     {
-        // @TODO: remove markTestIncomplete() when the following bugs are fixed
-        // @see https://code.google.com/p/selenium/issues/detail?id=5939
-        // @see https://code.google.com/p/selenium/issues/detail?id=3578
-        $this->markTestIncomplete('This is broken in a firefox driver yet');
+        if ($this->getBrowser() === 'firefox') {
+            // @TODO: remove markTestIncomplete() when the following bugs are fixed
+            // @see https://code.google.com/p/selenium/issues/detail?id=5939
+            // @see https://code.google.com/p/selenium/issues/detail?id=3578
+            $this->markTestIncomplete('This is broken in a firefox driver yet');
+        }
+
         $this->url('html/test_moveto.html');
         $this->moveto(array(
             'element' => $this->byId('moveto'),
