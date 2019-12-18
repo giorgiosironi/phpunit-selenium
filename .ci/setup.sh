@@ -1,11 +1,11 @@
 #!/bin/bash
 
-if [ ! -f "/usr/local/bin/composer" ]; then
+if [ ! -x "$(command -v composer)" ]; then
     echo "Installing Composer"
     php -r "readfile('https://getcomposer.org/installer');" | sudo php -d apc.enable_cli=0 -- --install-dir=/usr/local/bin --filename=composer
 else
     echo "Updating Composer"
-    sudo /usr/local/bin/composer self-update
+    sudo composer self-update
 fi
 
 echo "Installing dependencies"
