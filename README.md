@@ -10,7 +10,8 @@ Use [Composer](https://getcomposer.org) and run `composer require --dev phpunit/
 Requirements
 ---
 
-Version `7.x` supports PHPUnit 7.x and is compatible with PHP 7.1+
+- Version `8.x` supports PHPUnit 8.x and is compatible with PHP 7.2+
+- Version `7.x` supports PHPUnit 7.x and is compatible with PHP 7.1+
 
 Older unsupported lines which will probably see no new releases:
 
