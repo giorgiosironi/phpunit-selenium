@@ -40,7 +40,7 @@
         }
     ],
     "support": {
-        "issues": "https://github.com/giorgiosironi/phpunit-selenium/issues",
+        "issues": "https://github.com/giorgiosironi/phpunit-selenium/issues"
     },
     "require": {
         "php": ">=7.1",
