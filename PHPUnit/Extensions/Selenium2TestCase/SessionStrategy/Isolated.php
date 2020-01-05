@@ -44,6 +44,7 @@
 
 use PHPUnit\Extensions\Selenium2TestCase\Driver;
 use PHPUnit\Extensions\Selenium2TestCase\Session;
+use PHPUnit\Extensions\Selenium2TestCase\SessionStrategy;
 
 /**
  * Produces a new Session object shared for each test.
@@ -56,8 +57,7 @@ use PHPUnit\Extensions\Selenium2TestCase\Session;
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.6
  */
-class PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Isolated
-    implements PHPUnit_Extensions_Selenium2TestCase_SessionStrategy
+class PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Isolated implements SessionStrategy
 {
     public function session(array $parameters)
     {

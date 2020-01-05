@@ -51,10 +51,10 @@ use PHPUnit\Extensions\Selenium2TestCase\ElementCriteria;
 use PHPUnit\Extensions\Selenium2TestCase\KeysHolder;
 use PHPUnit\Extensions\Selenium2TestCase\NoSeleniumException;
 use PHPUnit\Extensions\Selenium2TestCase\Session;
+use PHPUnit\Extensions\Selenium2TestCase\SessionStrategy;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\TestResult;
 use PHPUnit\Util\InvalidArgumentHelper;
-use PHPUnit_Extensions_Selenium2TestCase_SessionStrategy;
 use PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Isolated;
 use PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Shared;
 use PHPUnit_Extensions_Selenium2TestCase_URL;
@@ -137,12 +137,12 @@ abstract class Selenium2TestCase extends TestCase
     private $parameters;
 
     /**
-     * @var PHPUnit_Extensions_Selenium2TestCase_SessionStrategy
+     * @var SessionStrategy
      */
     protected static $sessionStrategy;
 
     /**
-     * @var PHPUnit_Extensions_Selenium2TestCase_SessionStrategy
+     * @var SessionStrategy
      */
     protected static $browserSessionStrategy;
 
@@ -161,7 +161,7 @@ abstract class Selenium2TestCase extends TestCase
     private static $defaultWaitUntilSleepInterval = 500;
 
     /**
-     * @var PHPUnit_Extensions_Selenium2TestCase_SessionStrategy
+     * @var SessionStrategy
      */
     protected $localSessionStrategy;
 

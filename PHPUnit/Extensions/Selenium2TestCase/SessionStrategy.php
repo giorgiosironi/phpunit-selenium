@@ -42,7 +42,7 @@
  * @since      File available since Release 1.2.6
  */
 
-use PHPUnit\Extensions\Selenium2TestCase\Session;
+namespace PHPUnit\Extensions\Selenium2TestCase;
 
 /**
  * Specifies how to create Session objects for running tests.
@@ -55,7 +55,7 @@ use PHPUnit\Extensions\Selenium2TestCase\Session;
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.6
  */
-interface PHPUnit_Extensions_Selenium2TestCase_SessionStrategy
+interface SessionStrategy
 {
     /**
      * @param array $parameters 'host' => Selenium Server machine
