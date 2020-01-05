@@ -60,7 +60,6 @@ use PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Shared;
 use PHPUnit_Extensions_Selenium2TestCase_URL;
 use PHPUnit_Extensions_Selenium2TestCase_WaitUntil;
 use PHPUnit_Extensions_SeleniumCommon_RemoteCoverage;
-use PHPUnit_Extensions_SeleniumTestSuite;
 use RuntimeException;
 use Throwable;
 
@@ -413,7 +412,7 @@ abstract class Selenium2TestCase extends TestCase
 
     public static function suite($className)
     {
-        return PHPUnit_Extensions_SeleniumTestSuite::fromTestCaseClass($className);
+        return SeleniumTestSuite::fromTestCaseClass($className);
     }
 
     public function onNotSuccessfulTest(Throwable $e): void

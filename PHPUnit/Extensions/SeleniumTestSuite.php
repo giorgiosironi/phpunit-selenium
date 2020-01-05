@@ -42,9 +42,13 @@
  * @since      File available since Release 1.2.2
  */
 
-use PHPUnit\Extensions\SeleniumBrowserSuite;
+namespace PHPUnit\Extensions;
+
+use File_Iterator_Facade;
 use PHPUnit\Framework\TestSuite;
 use PHPUnit\Util\Test as TestUtil;
+use ReflectionClass;
+use ReflectionMethod;
 
 /**
  * TestSuite class for Selenium 1 tests
@@ -57,7 +61,7 @@ use PHPUnit\Util\Test as TestUtil;
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.0
  */
-class PHPUnit_Extensions_SeleniumTestSuite extends TestSuite
+class SeleniumTestSuite extends TestSuite
 {
     /**
      * Overriding the default: Selenium suites are always built from a TestCase class.
@@ -77,7 +81,7 @@ class PHPUnit_Extensions_SeleniumTestSuite extends TestSuite
 
     /**
      * @param string $className     extending PHPUnit_Extensions_SeleniumTestCase
-     * @return PHPUnit_Extensions_SeleniumTestSuite
+     * @return SeleniumTestSuite
      */
     public static function fromTestCaseClass($className)
     {
