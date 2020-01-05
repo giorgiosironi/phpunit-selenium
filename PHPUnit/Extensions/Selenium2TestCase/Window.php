@@ -43,6 +43,7 @@
  */
 
 use PHPUnit\Extensions\Selenium2TestCase\CommandsHolder;
+use PHPUnit\Extensions\Selenium2TestCase\StateCommand;
 
 /**
  * Object representing a browser window.
@@ -66,8 +67,8 @@ class PHPUnit_Extensions_Selenium2TestCase_Window extends CommandsHolder
     protected function initCommands()
     {
         return array(
-            'size' => 'PHPUnit_Extensions_Selenium2TestCase_StateCommand',
-            'position' => 'PHPUnit_Extensions_Selenium2TestCase_StateCommand',
+            'size' => StateCommand::class,
+            'position' => StateCommand::class,
             'maximize' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
         );
     }
