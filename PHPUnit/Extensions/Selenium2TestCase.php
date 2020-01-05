@@ -54,6 +54,7 @@ use PHPUnit\Extensions\Selenium2TestCase\Session;
 use PHPUnit\Extensions\Selenium2TestCase\SessionStrategy;
 use PHPUnit\Extensions\Selenium2TestCase\URL;
 use PHPUnit\Extensions\Selenium2TestCase\WaitUntil;
+use PHPUnit\Extensions\Selenium2TestCase\Window;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\TestResult;
 use PHPUnit\Util\InvalidArgumentHelper;
@@ -115,7 +116,7 @@ use Throwable;
  * @method void closeWindow() Close the current window.
  * @method void stop() Close the current window and clear session data.
  * @method Element active() Get the element on the page that currently has focus.
- * @method \PHPUnit_Extensions_Selenium2TestCase_Window currentWindow() get the current Window Object
+ * @method Window currentWindow() get the current Window Object
  */
 abstract class Selenium2TestCase extends TestCase
 {

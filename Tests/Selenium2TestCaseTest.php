@@ -44,6 +44,7 @@
 use PHPUnit\Extensions\Selenium2TestCase;
 use PHPUnit\Extensions\Selenium2TestCase\Keys;
 use PHPUnit\Extensions\Selenium2TestCase\WebDriverException;
+use PHPUnit\Extensions\Selenium2TestCase\Window;
 
 /**
  * Tests for Selenium2TestCase.
@@ -909,7 +910,7 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
 
         $this->window('myPopupWindow');
         $popup = $this->currentWindow();
-        $this->assertTrue($popup instanceof PHPUnit_Extensions_Selenium2TestCase_Window);
+        $this->assertTrue($popup instanceof Window);
         $popup->size(array('width' => 150, 'height' => 200));
         $size = $popup->size();
         $this->assertEquals(150, $size['width']);

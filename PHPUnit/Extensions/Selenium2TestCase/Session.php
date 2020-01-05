@@ -54,7 +54,6 @@ use PHPUnit_Extensions_Selenium2TestCase_Session_Timeouts;
 use PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Active;
 use PHPUnit_Extensions_Selenium2TestCase_SessionCommand_GenericAttribute;
 use PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Url;
-use PHPUnit_Extensions_Selenium2TestCase_Window;
 
 /**
  * Browser session for Selenium 2: main point of entry for functionality.
@@ -259,12 +258,12 @@ class Session extends PHPUnit_Extensions_Selenium2TestCase_Element_Accessor
     }
 
     /**
-     * @return PHPUnit_Extensions_Selenium2TestCase_Window
+     * @return Window
      */
     public function currentWindow()
     {
         $url = $this->url->descend('window')->descend(trim($this->windowHandle(), '{}'));
-        return new PHPUnit_Extensions_Selenium2TestCase_Window($this->driver, $url);
+        return new Window($this->driver, $url);
     }
 
     public function closeWindow()
