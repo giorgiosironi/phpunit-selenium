@@ -53,6 +53,7 @@ use PHPUnit\Extensions\Selenium2TestCase\ElementCommand\Equals;
 use PHPUnit\Extensions\Selenium2TestCase\ElementCommand\GenericAccessor;
 use PHPUnit\Extensions\Selenium2TestCase\ElementCommand\GenericPost;
 use PHPUnit\Extensions\Selenium2TestCase\ElementCommand\Rect;
+use PHPUnit\Extensions\Selenium2TestCase\ElementCommand\Value;
 
 /**
  * Object representing a DOM element.
@@ -121,7 +122,7 @@ class Element extends Accessor
             'size' => GenericAccessor::class,
             'submit' => GenericPost::class,
             'text' => GenericAccessor::class,
-            'value' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Value',
+            'value' => Value::class,
             'tap' => $this->touchCommandFactoryMethod('touch/click'),
             'scroll' => $this->touchCommandFactoryMethod('touch/scroll'),
             'doubletap' => $this->touchCommandFactoryMethod('touch/doubleclick'),
