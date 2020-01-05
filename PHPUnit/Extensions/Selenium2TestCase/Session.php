@@ -48,7 +48,7 @@ use InvalidArgumentException;
 use PHPUnit\Extensions\Selenium2TestCase\Element\Accessor;
 use PHPUnit\Extensions\Selenium2TestCase\Element\Select;
 use PHPUnit\Extensions\Selenium2TestCase\ElementCommand\GenericAccessor;
-use PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost;
+use PHPUnit\Extensions\Selenium2TestCase\ElementCommand\GenericPost;
 use PHPUnit_Extensions_Selenium2TestCase_Session_Cookie;
 use PHPUnit_Extensions_Selenium2TestCase_Session_Storage;
 use PHPUnit_Extensions_Selenium2TestCase_Session_Timeouts;
@@ -130,19 +130,19 @@ class Session extends Accessor
         return array(
             'acceptAlert' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_AcceptAlert',
             'alertText' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_AlertText',
-            'back' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
+            'back' => GenericPost::class,
             'click' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Click',
-            'buttondown' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
-            'buttonup' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
+            'buttondown' => GenericPost::class,
+            'buttonup' => GenericPost::class,
             'dismissAlert' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_DismissAlert',
-            'doubleclick' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
-            'execute' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
-            'executeAsync' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
-            'forward' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
+            'doubleclick' => GenericPost::class,
+            'execute' => GenericPost::class,
+            'executeAsync' => GenericPost::class,
+            'forward' => GenericPost::class,
             'frame' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Frame',
             'keys' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Keys',
             'moveto' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_MoveTo',
-            'refresh' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
+            'refresh' => GenericPost::class,
             'screenshot' => GenericAccessor::class,
             'source' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_GenericAccessor',
             'title' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_GenericAccessor',
@@ -177,7 +177,7 @@ class Session extends Accessor
     {
         $url = $this->url->addCommand($urlSegment);
         return function ($jsonParameters, $commandUrl) use ($url) {
-            return new PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost($jsonParameters, $url);
+            return new GenericPost($jsonParameters, $url);
         };
     }
 

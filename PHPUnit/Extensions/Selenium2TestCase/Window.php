@@ -44,6 +44,8 @@
 
 namespace PHPUnit\Extensions\Selenium2TestCase;
 
+use PHPUnit\Extensions\Selenium2TestCase\ElementCommand\GenericPost;
+
 /**
  * Object representing a browser window.
  *
@@ -68,7 +70,7 @@ class Window extends CommandsHolder
         return array(
             'size' => StateCommand::class,
             'position' => StateCommand::class,
-            'maximize' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
+            'maximize' => GenericPost::class,
         );
     }
 

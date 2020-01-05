@@ -43,6 +43,7 @@
  */
 
 use PHPUnit\Extensions\Selenium2TestCase\CommandsHolder;
+use PHPUnit\Extensions\Selenium2TestCase\ElementCommand\GenericPost;
 use PHPUnit\Extensions\Selenium2TestCase\URL;
 
 /**
@@ -77,12 +78,12 @@ class PHPUnit_Extensions_Selenium2TestCase_Session_Timeouts extends CommandsHold
                 $self->check($milliseconds);
                 $self->setLastImplicitWaitValue($milliseconds);
                 $jsonParameters = array('ms' => $milliseconds);
-                return new PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost($jsonParameters, $commandUrl);
+                return new GenericPost($jsonParameters, $commandUrl);
             },
             'asyncScript' => function ($milliseconds, $commandUrl) use ($self) {
                 $self->check($milliseconds);
                 $jsonParameters = array('ms' => $milliseconds);
-                return new PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost($jsonParameters, $commandUrl);
+                return new GenericPost($jsonParameters, $commandUrl);
             },
 
         );

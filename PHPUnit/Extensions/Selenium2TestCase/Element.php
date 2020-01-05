@@ -51,7 +51,7 @@ use PHPUnit\Extensions\Selenium2TestCase\ElementCommand\Click;
 use PHPUnit\Extensions\Selenium2TestCase\ElementCommand\Css;
 use PHPUnit\Extensions\Selenium2TestCase\ElementCommand\Equals;
 use PHPUnit\Extensions\Selenium2TestCase\ElementCommand\GenericAccessor;
-use PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost;
+use PHPUnit\Extensions\Selenium2TestCase\ElementCommand\GenericPost;
 
 /**
  * Object representing a DOM element.
@@ -107,7 +107,7 @@ class Element extends Accessor
     {
         return array(
             'attribute' => Attribute::class,
-            'clear' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
+            'clear' => GenericPost::class,
             'click' => Click::class,
             'css' => Css::class,
             'displayed' => GenericAccessor::class,
@@ -118,7 +118,7 @@ class Element extends Accessor
             'rect' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Rect',
             'selected' => GenericAccessor::class,
             'size' => GenericAccessor::class,
-            'submit' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
+            'submit' => GenericPost::class,
             'text' => GenericAccessor::class,
             'value' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Value',
             'tap' => $this->touchCommandFactoryMethod('touch/click'),
@@ -144,7 +144,7 @@ class Element extends Accessor
                     is_null($jsonParameters)) {
                 $jsonParameters['element'] = $self->getId();
             }
-            return new PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost($jsonParameters, $url);
+            return new GenericPost($jsonParameters, $url);
         };
     }
 
