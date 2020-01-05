@@ -50,7 +50,7 @@ use PHPUnit\Extensions\Selenium2TestCase\Element\Select;
 use PHPUnit\Extensions\Selenium2TestCase\ElementCommand\GenericAccessor;
 use PHPUnit\Extensions\Selenium2TestCase\ElementCommand\GenericPost;
 use PHPUnit\Extensions\Selenium2TestCase\Session\Cookie;
-use PHPUnit_Extensions_Selenium2TestCase_Session_Storage;
+use PHPUnit\Extensions\Selenium2TestCase\Session\Storage;
 use PHPUnit_Extensions_Selenium2TestCase_Session_Timeouts;
 use PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Active;
 use PHPUnit_Extensions_Selenium2TestCase_SessionCommand_GenericAttribute;
@@ -294,12 +294,12 @@ class Session extends Accessor
     }
 
     /**
-     * @return PHPUnit_Extensions_Selenium2TestCase_Session_Storage
+     * @return Storage
      */
     public function localStorage()
     {
         $url = $this->url->addCommand('localStorage');
-        return new PHPUnit_Extensions_Selenium2TestCase_Session_Storage($this->driver, $url);
+        return new Storage($this->driver, $url);
     }
 
     public function landscape()

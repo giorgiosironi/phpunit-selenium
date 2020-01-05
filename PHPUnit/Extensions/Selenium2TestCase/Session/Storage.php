@@ -42,6 +42,8 @@
  * @since      File available since Release 1.2.6
  */
 
+namespace PHPUnit\Extensions\Selenium2TestCase\Session;
+
 use PHPUnit\Extensions\Selenium2TestCase\Driver;
 use PHPUnit\Extensions\Selenium2TestCase\URL;
 
@@ -56,7 +58,7 @@ use PHPUnit\Extensions\Selenium2TestCase\URL;
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.6
  */
-class PHPUnit_Extensions_Selenium2TestCase_Session_Storage
+class Storage
 {
     private $driver;
     private $url;
