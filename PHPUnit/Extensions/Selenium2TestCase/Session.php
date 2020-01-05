@@ -59,6 +59,7 @@ use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\Click;
 use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\DismissAlert;
 use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\File;
 use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\Frame;
+use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\GenericAccessor as SessionGenericAccessor;
 use PHPUnit_Extensions_Selenium2TestCase_SessionCommand_GenericAttribute;
 use PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Url;
 
@@ -150,16 +151,16 @@ class Session extends Accessor
             'moveto' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_MoveTo',
             'refresh' => GenericPost::class,
             'screenshot' => GenericAccessor::class,
-            'source' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_GenericAccessor',
-            'title' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_GenericAccessor',
+            'source' => SessionGenericAccessor::class,
+            'title' => SessionGenericAccessor::class,
             'log' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Log',
             'logTypes' => $this->attributeCommandFactoryMethod('log/types'),
             'url' => function ($jsonParameters, $commandUrl) use ($baseUrl) {
                 return new PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Url($jsonParameters, $commandUrl, $baseUrl);
             },
             'window' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Window',
-            'windowHandle' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_GenericAccessor',
-            'windowHandles' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_GenericAccessor',
+            'windowHandle' => SessionGenericAccessor::class,
+            'windowHandles' => SessionGenericAccessor::class,
             'touchDown' => $this->touchCommandFactoryMethod('touch/down'),
             'touchUp' => $this->touchCommandFactoryMethod('touch/up'),
             'touchMove' => $this->touchCommandFactoryMethod('touch/move'),
