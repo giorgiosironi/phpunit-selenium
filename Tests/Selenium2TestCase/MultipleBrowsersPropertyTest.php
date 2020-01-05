@@ -41,8 +41,10 @@
  * @link       http://www.phpunit.de/
  */
 
+use PHPUnit\Extensions\Selenium2TestCase;
+
 /**
- * Tests for PHPUnit_Extensions_Selenium2TestCase.
+ * Tests for Selenium2TestCase.
  *
  * @package    PHPUnit_Selenium
  * @author     Jonathan Lipps <jlipps@gmail.com>
@@ -50,7 +52,7 @@
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
  */
-class Extensions_Selenium2TestCaseMultipleBrowsersPropertyTest extends PHPUnit_Extensions_Selenium2TestCase
+class Extensions_Selenium2TestCaseMultipleBrowsersPropertyTest extends Selenium2TestCase
 {
     public static $browsers = array(
         array(

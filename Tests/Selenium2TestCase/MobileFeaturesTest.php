@@ -42,6 +42,8 @@
  * @since      File available since Release 1.2.0
  */
 
+use PHPUnit\Extensions\Selenium2TestCase;
+
 /**
  * Gets or posts an attribute from/to the session (title, alert text, etc.)
  *
@@ -60,7 +62,7 @@ if (defined('SAUCE_USERNAME') && defined('SAUCE_ACCESS_KEY')) {
     define('SAUCE_HOST', '');
 }
 
-class Tests_Selenium2TestCase_MobileFeaturesTest extends PHPUnit_Extensions_Selenium2TestCase
+class Tests_Selenium2TestCase_MobileFeaturesTest extends Selenium2TestCase
 {
     public static $browsers = array(
         array(

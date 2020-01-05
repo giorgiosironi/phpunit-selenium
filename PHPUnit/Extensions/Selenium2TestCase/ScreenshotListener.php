@@ -41,6 +41,8 @@
  * @link       http://www.phpunit.de/
  * @since      File available since Release 1.2.8
  */
+
+use PHPUnit\Extensions\Selenium2TestCase;
 use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\Test;
 
@@ -79,7 +81,7 @@ class PHPUnit_Extensions_Selenium2TestCase_ScreenshotListener
 
     private function storeAScreenshot(Test $test)
     {
-        if ($test instanceof PHPUnit_Extensions_Selenium2TestCase)
+        if ($test instanceof Selenium2TestCase)
         {
             try {
                 $file = $this->directory . '/' . get_class($test) . '__' . $test->getName() . '__' . date('Y-m-d\TH-i-s') . '.png';

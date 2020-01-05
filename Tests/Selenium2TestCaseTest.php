@@ -41,10 +41,11 @@
  * @link       http://www.phpunit.de/
  */
 
+use PHPUnit\Extensions\Selenium2TestCase;
 use PHPUnit_Extensions_Selenium2TestCase_Keys as Keys;
 
 /**
- * Tests for PHPUnit_Extensions_Selenium2TestCase.
+ * Tests for Selenium2TestCase.
  *
  * @package    PHPUnit_Selenium
  * @author     Giorgio Sironi <info@giorgiosironi.com>
@@ -56,8 +57,8 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
 {
     protected function tearDown(): void
     {
-        PHPUnit_Extensions_Selenium2TestCase::setDefaultWaitUntilTimeout(0);
-        PHPUnit_Extensions_Selenium2TestCase::setDefaultWaitUntilSleepInterval(500);
+        Selenium2TestCase::setDefaultWaitUntilTimeout(0);
+        Selenium2TestCase::setDefaultWaitUntilSleepInterval(500);
     }
 
 
@@ -69,7 +70,7 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
 
     public function testVersionCanBeReadFromTheTestCaseClass()
     {
-        $this->assertEquals(1, version_compare(PHPUnit_Extensions_Selenium2TestCase::VERSION, "1.2.0"));
+        $this->assertEquals(1, version_compare(Selenium2TestCase::VERSION, "1.2.0"));
     }
 
     public function testCamelCaseUrlsAreSupported()
@@ -1206,14 +1207,14 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
     }
 
     public function testWaitUntilDefaultTimeout(){
-        $this->assertEquals(0, PHPUnit_Extensions_Selenium2TestCase::defaultWaitUntilTimeout());
-        PHPUnit_Extensions_Selenium2TestCase::setDefaultWaitUntilTimeout(100);
-        $this->assertEquals(100, PHPUnit_Extensions_Selenium2TestCase::defaultWaitUntilTimeout());
+        $this->assertEquals(0, Selenium2TestCase::defaultWaitUntilTimeout());
+        Selenium2TestCase::setDefaultWaitUntilTimeout(100);
+        $this->assertEquals(100, Selenium2TestCase::defaultWaitUntilTimeout());
     }
 
     public function testWaitUntilDefaultSleepInterval(){
-        $this->assertEquals(500, PHPUnit_Extensions_Selenium2TestCase::defaultWaitUntilSleepInterval());
-        PHPUnit_Extensions_Selenium2TestCase::setDefaultWaitUntilSleepInterval(100);
-        $this->assertEquals(100, PHPUnit_Extensions_Selenium2TestCase::defaultWaitUntilSleepInterval());
+        $this->assertEquals(500, Selenium2TestCase::defaultWaitUntilSleepInterval());
+        Selenium2TestCase::setDefaultWaitUntilSleepInterval(100);
+        $this->assertEquals(100, Selenium2TestCase::defaultWaitUntilSleepInterval());
     }
 }

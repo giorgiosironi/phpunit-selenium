@@ -42,6 +42,8 @@
  * @since      File available since Release 1.2.12
  */
 
+use PHPUnit\Extensions\Selenium2TestCase;
+
 /**
  * The WaitUntil implementation, inspired by Java and .NET clients
  *
@@ -60,15 +62,15 @@ class PHPUnit_Extensions_Selenium2TestCase_WaitUntil
     /**
      * PHPUnit Test Case instance
      *
-     * @var PHPUnit_Extensions_Selenium2TestCase
+     * @var Selenium2TestCase
      */
     private $_testCase;
 
 
     /**
-     * @param PHPUnit_Extensions_Selenium2TestCase $testCase
+     * @param Selenium2TestCase $testCase
      */
-    public function __construct(PHPUnit_Extensions_Selenium2TestCase $testCase)
+    public function __construct(Selenium2TestCase $testCase)
     {
         $this->_testCase = $testCase;
     }
@@ -94,14 +96,14 @@ class PHPUnit_Extensions_Selenium2TestCase_WaitUntil
         }
 
         if(is_null($sleepInterval)){
-            $sleepInterval = PHPUnit_Extensions_Selenium2TestCase::defaultWaitUntilSleepInterval();
+            $sleepInterval = Selenium2TestCase::defaultWaitUntilSleepInterval();
         }
 
         $sleepInterval *= 1000;
 
 
         if (is_null($timeout)) {
-            $timeout = PHPUnit_Extensions_Selenium2TestCase::defaultWaitUntilTimeout();
+            $timeout = Selenium2TestCase::defaultWaitUntilTimeout();
         }
 
         $timeout /= 1000;

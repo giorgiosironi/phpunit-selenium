@@ -41,9 +41,28 @@
  * @link       http://www.phpunit.de/
  * @since      File available since Release 1.2.0
  */
+
+namespace PHPUnit\Extensions;
+
+use Exception;
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\TestResult;
 use PHPUnit\Util\InvalidArgumentHelper;
+use PHPUnit_Extensions_Selenium2TestCase_ElementCriteria;
+use PHPUnit_Extensions_Selenium2TestCase_Exception;
+use PHPUnit_Extensions_Selenium2TestCase_KeysHolder;
+use PHPUnit_Extensions_Selenium2TestCase_NoSeleniumException;
+use PHPUnit_Extensions_Selenium2TestCase_Session;
+use PHPUnit_Extensions_Selenium2TestCase_SessionStrategy;
+use PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Isolated;
+use PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Shared;
+use PHPUnit_Extensions_Selenium2TestCase_URL;
+use PHPUnit_Extensions_Selenium2TestCase_WaitUntil;
+use PHPUnit_Extensions_SeleniumCommon_RemoteCoverage;
+use PHPUnit_Extensions_SeleniumTestSuite;
+use RuntimeException;
+use Throwable;
 
 /**
  * TestCase class that uses Selenium 2
@@ -99,7 +118,7 @@ use PHPUnit\Util\InvalidArgumentHelper;
  * @method \PHPUnit_Extensions_Selenium2TestCase_Element active() Get the element on the page that currently has focus.
  * @method \PHPUnit_Extensions_Selenium2TestCase_Window currentWindow() get the current Window Object
  */
-abstract class PHPUnit_Extensions_Selenium2TestCase extends TestCase
+abstract class Selenium2TestCase extends TestCase
 {
     const VERSION = '7.0.1';
 
