@@ -42,8 +42,11 @@
  * @since      File available since Release 1.2.6
  */
 
+namespace PHPUnit\Extensions\Selenium2TestCase\Session;
+
 use PHPUnit\Extensions\Selenium2TestCase\Driver;
 use PHPUnit\Extensions\Selenium2TestCase\URL;
+use PHPUnit_Extensions_Selenium2TestCase_Session_Cookie_Builder;
 
 /**
  * Adds and remove cookies.
@@ -56,7 +59,7 @@ use PHPUnit\Extensions\Selenium2TestCase\URL;
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.6
  */
-class PHPUnit_Extensions_Selenium2TestCase_Session_Cookie
+class Cookie
 {
     private $driver;
     private $url;

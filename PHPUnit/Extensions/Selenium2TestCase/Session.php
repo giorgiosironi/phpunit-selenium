@@ -49,7 +49,7 @@ use PHPUnit\Extensions\Selenium2TestCase\Element\Accessor;
 use PHPUnit\Extensions\Selenium2TestCase\Element\Select;
 use PHPUnit\Extensions\Selenium2TestCase\ElementCommand\GenericAccessor;
 use PHPUnit\Extensions\Selenium2TestCase\ElementCommand\GenericPost;
-use PHPUnit_Extensions_Selenium2TestCase_Session_Cookie;
+use PHPUnit\Extensions\Selenium2TestCase\Session\Cookie;
 use PHPUnit_Extensions_Selenium2TestCase_Session_Storage;
 use PHPUnit_Extensions_Selenium2TestCase_Session_Timeouts;
 use PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Active;
@@ -285,12 +285,12 @@ class Session extends Accessor
     }
 
     /**
-     * @return PHPUnit_Extensions_Selenium2TestCase_Session_Cookie
+     * @return Cookie
      */
     public function cookie()
     {
         $url = $this->url->descend('cookie');
-        return new PHPUnit_Extensions_Selenium2TestCase_Session_Cookie($this->driver, $url);
+        return new Cookie($this->driver, $url);
     }
 
     /**
