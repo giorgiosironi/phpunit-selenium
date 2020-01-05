@@ -55,13 +55,13 @@ use PHPUnit\Extensions\Selenium2TestCase\Session;
 use PHPUnit\Extensions\Selenium2TestCase\Session\Timeouts;
 use PHPUnit\Extensions\Selenium2TestCase\SessionStrategy;
 use PHPUnit\Extensions\Selenium2TestCase\SessionStrategy\Isolated;
+use PHPUnit\Extensions\Selenium2TestCase\SessionStrategy\Shared;
 use PHPUnit\Extensions\Selenium2TestCase\URL;
 use PHPUnit\Extensions\Selenium2TestCase\WaitUntil;
 use PHPUnit\Extensions\Selenium2TestCase\Window;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\TestResult;
 use PHPUnit\Util\InvalidArgumentHelper;
-use PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Shared;
 use PHPUnit_Extensions_SeleniumCommon_RemoteCoverage;
 use RuntimeException;
 use Throwable;
@@ -204,7 +204,7 @@ abstract class Selenium2TestCase extends TestCase
         if (!$shareSession) {
             self::$sessionStrategy = self::defaultSessionStrategy();
         } else {
-            self::$sessionStrategy = new PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Shared(
+            self::$sessionStrategy = new Shared(
               self::defaultSessionStrategy(), self::$keepSessionOnFailure
               );
         }
@@ -316,7 +316,7 @@ abstract class Selenium2TestCase extends TestCase
             } elseif ($strat == "isolated") {
                 self::$browserSessionStrategy = new Isolated;
             } else {
-                self::$browserSessionStrategy = new PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Shared(self::defaultSessionStrategy(), self::$keepSessionOnFailure);
+                self::$browserSessionStrategy = new Shared(self::defaultSessionStrategy(), self::$keepSessionOnFailure);
             }
         } else {
             self::$browserSessionStrategy = self::defaultSessionStrategy();
