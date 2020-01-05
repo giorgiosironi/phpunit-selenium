@@ -42,6 +42,9 @@
  * @since      File available since Release 1.2.0
  */
 
+namespace PHPUnit\Extensions\Selenium2TestCase\SessionCommand;
+
+use InvalidArgumentException;
 use PHPUnit\Extensions\Selenium2TestCase\Command;
 use PHPUnit\Extensions\Selenium2TestCase\URL;
 
@@ -56,7 +59,7 @@ use PHPUnit\Extensions\Selenium2TestCase\URL;
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.0
  */
-class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Keys extends Command
+class Keys extends Command
 {
     public function __construct($jsonParameters, URL $url)
     {

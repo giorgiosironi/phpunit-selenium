@@ -61,6 +61,7 @@ use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\File;
 use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\Frame;
 use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\GenericAccessor as SessionGenericAccessor;
 use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\GenericAttribute;
+use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\Keys as SessionKeys;
 use PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Url;
 
 /**
@@ -147,7 +148,7 @@ class Session extends Accessor
             'executeAsync' => GenericPost::class,
             'forward' => GenericPost::class,
             'frame' => Frame::class,
-            'keys' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Keys',
+            'keys' => SessionKeys::class,
             'moveto' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_MoveTo',
             'refresh' => GenericPost::class,
             'screenshot' => GenericAccessor::class,
