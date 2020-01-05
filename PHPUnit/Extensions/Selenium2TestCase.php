@@ -59,10 +59,10 @@ use PHPUnit\Extensions\Selenium2TestCase\SessionStrategy\Shared;
 use PHPUnit\Extensions\Selenium2TestCase\URL;
 use PHPUnit\Extensions\Selenium2TestCase\WaitUntil;
 use PHPUnit\Extensions\Selenium2TestCase\Window;
+use PHPUnit\Extensions\SeleniumCommon\RemoteCoverage;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\TestResult;
 use PHPUnit\Util\InvalidArgumentHelper;
-use PHPUnit_Extensions_SeleniumCommon_RemoteCoverage;
 use RuntimeException;
 use Throwable;
 
@@ -360,7 +360,7 @@ abstract class Selenium2TestCase extends TestCase
         parent::run($result);
 
         if ($this->collectCodeCoverageInformation) {
-            $coverage = new PHPUnit_Extensions_SeleniumCommon_RemoteCoverage(
+            $coverage = new RemoteCoverage(
                 $this->coverageScriptUrl,
                 $this->testId
             );
