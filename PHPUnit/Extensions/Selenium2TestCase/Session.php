@@ -52,6 +52,7 @@ use PHPUnit\Extensions\Selenium2TestCase\ElementCommand\GenericPost;
 use PHPUnit\Extensions\Selenium2TestCase\Session\Cookie;
 use PHPUnit\Extensions\Selenium2TestCase\Session\Storage;
 use PHPUnit\Extensions\Selenium2TestCase\Session\Timeouts;
+use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\AcceptAlert;
 use PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Active;
 use PHPUnit_Extensions_Selenium2TestCase_SessionCommand_GenericAttribute;
 use PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Url;
@@ -128,7 +129,7 @@ class Session extends Accessor
     {
         $baseUrl = $this->baseUrl;
         return array(
-            'acceptAlert' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_AcceptAlert',
+            'acceptAlert' => AcceptAlert::class,
             'alertText' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_AlertText',
             'back' => GenericPost::class,
             'click' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Click',
