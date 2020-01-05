@@ -45,7 +45,6 @@
 namespace PHPUnit\Extensions\Selenium2TestCase;
 
 use BadMethodCallException;
-use PHPUnit_Extensions_Selenium2TestCase_Response;
 use PHPUnit_Extensions_Selenium2TestCase_Session;
 use PHPUnit_Extensions_Selenium2TestCase_Session_Timeouts;
 use PHPUnit_Extensions_Selenium2TestCase_URL;
@@ -174,7 +173,7 @@ class Driver
             throw new PHPUnit_Extensions_Selenium2TestCase_WebDriverException($message, $status);
         }
 
-        return new PHPUnit_Extensions_Selenium2TestCase_Response($content, $info);
+        return new Response($content, $info);
     }
 
     public function execute(Command $command)
