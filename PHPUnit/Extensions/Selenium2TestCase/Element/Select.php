@@ -43,6 +43,7 @@
  */
 
 use PHPUnit\Extensions\Selenium2TestCase\Element;
+use PHPUnit\Extensions\Selenium2TestCase\ElementCriteria;
 
 /**
  * Object representing a <select> element.
@@ -158,10 +159,10 @@ class PHPUnit_Extensions_Selenium2TestCase_Element_Select extends Element
     }
 
     /**
-     * @param PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $localCriteria  condiotions for selecting an option
+     * @param ElementCriteria $localCriteria  condiotions for selecting an option
      * @return void
      */
-    public function selectOptionByCriteria(PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $localCriteria)
+    public function selectOptionByCriteria(ElementCriteria $localCriteria)
     {
         $option = $this->element($localCriteria);
         if (!$option->selected()) {

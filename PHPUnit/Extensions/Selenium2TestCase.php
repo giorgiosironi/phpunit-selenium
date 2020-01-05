@@ -47,10 +47,10 @@ namespace PHPUnit\Extensions;
 use Exception;
 use InvalidArgumentException;
 use PHPUnit\Extensions\Selenium2TestCase\Element;
+use PHPUnit\Extensions\Selenium2TestCase\ElementCriteria;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\TestResult;
 use PHPUnit\Util\InvalidArgumentHelper;
-use PHPUnit_Extensions_Selenium2TestCase_ElementCriteria;
 use PHPUnit_Extensions_Selenium2TestCase_Exception;
 use PHPUnit_Extensions_Selenium2TestCase_KeysHolder;
 use PHPUnit_Extensions_Selenium2TestCase_NoSeleniumException;
@@ -92,8 +92,8 @@ use Throwable;
  * @method string currentScreenshot() BLOB of the image file
  * @method void dismissAlert() Press Cancel on an alert, or does not confirm a dialog
  * @method void doubleclick() Double clicks (at the coordinates set by the last moveto command).
- * @method Element element() element(\PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $criteria) Retrieves an element
- * @method array elements() elements(\PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $criteria) Retrieves an array of Element instances
+ * @method Element element() element(ElementCriteria $criteria) Retrieves an element
+ * @method array elements() elements(ElementCriteria $criteria) Retrieves an array of Element instances
  * @method string execute() execute($javaScriptCode) Injects arbitrary JavaScript in the page and returns the last
  * @method string executeAsync() executeAsync($javaScriptCode) Injects arbitrary JavaScript and wait for the callback (last element of arguments) to be called
  * @method void forward()
@@ -105,7 +105,7 @@ use Throwable;
  * @method \PHPUnit_Extensions_Selenium2TestCase_Session_Timeouts timeouts()
  * @method string title()
  * @method void|string url() url($url = NULL)
- * @method PHPUnit_Extensions_Selenium2TestCase_ElementCriteria using() using($strategy) Factory Method for Criteria objects
+ * @method ElementCriteria using() using($strategy) Factory Method for Criteria objects
  * @method void window() window($name) Changes the focus to another window
  * @method string windowHandle() Retrieves the current window handle
  * @method string windowHandles() Retrieves a list of all available window handles

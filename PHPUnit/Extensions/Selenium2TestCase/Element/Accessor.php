@@ -42,6 +42,7 @@
 
 use PHPUnit\Extensions\Selenium2TestCase\CommandsHolder;
 use PHPUnit\Extensions\Selenium2TestCase\Element;
+use PHPUnit\Extensions\Selenium2TestCase\ElementCriteria;
 
 
 /**
@@ -131,7 +132,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase_Element_Accessor extends Com
     /**
      * @return Element
      */
-    public function element(PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $criteria)
+    public function element(ElementCriteria $criteria)
     {
         $value = $this->postCommand('element', $criteria);
         return Element::fromResponseValue($value, $this->getSessionUrl()->descend('element'), $this->driver);
@@ -140,7 +141,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase_Element_Accessor extends Com
     /**
      * @return Element[]
      */
-    public function elements(PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $criteria)
+    public function elements(ElementCriteria $criteria)
     {
         $values = $this->postCommand('elements', $criteria);
         $elements = array();
@@ -152,11 +153,11 @@ abstract class PHPUnit_Extensions_Selenium2TestCase_Element_Accessor extends Com
 
     /**
      * @param string $strategy
-     * @return PHPUnit_Extensions_Selenium2TestCase_ElementCriteria
+     * @return ElementCriteria
      */
     public function using($strategy)
     {
-        return new PHPUnit_Extensions_Selenium2TestCase_ElementCriteria($strategy);
+        return new ElementCriteria($strategy);
     }
 
     /**

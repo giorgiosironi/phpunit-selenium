@@ -47,7 +47,6 @@ namespace PHPUnit\Extensions\Selenium2TestCase;
 use BadMethodCallException;
 use Exception;
 use InvalidArgumentException;
-use PHPUnit_Extensions_Selenium2TestCase_ElementCriteria;
 use PHPUnit_Extensions_Selenium2TestCase_URL;
 
 /**
@@ -108,7 +107,7 @@ abstract class CommandsHolder
         return $response->getValue();
     }
 
-    protected function postCommand($name, PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $criteria)
+    protected function postCommand($name, ElementCriteria $criteria)
     {
         $response = $this->driver->curl('POST',
                                         $this->url->addCommand($name),
