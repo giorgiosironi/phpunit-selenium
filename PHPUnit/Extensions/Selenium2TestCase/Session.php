@@ -53,7 +53,7 @@ use PHPUnit\Extensions\Selenium2TestCase\Session\Cookie;
 use PHPUnit\Extensions\Selenium2TestCase\Session\Storage;
 use PHPUnit\Extensions\Selenium2TestCase\Session\Timeouts;
 use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\AcceptAlert;
-use PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Active;
+use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\Active;
 use PHPUnit_Extensions_Selenium2TestCase_SessionCommand_GenericAttribute;
 use PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Url;
 
@@ -280,7 +280,7 @@ class Session extends Accessor
      */
     public function active()
     {
-        $command = new PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Active(null, $this->url);
+        $command = new Active(null, $this->url);
         $response = $this->driver->execute($command);
         return $this->elementFromResponseValue($response->getValue());
     }
