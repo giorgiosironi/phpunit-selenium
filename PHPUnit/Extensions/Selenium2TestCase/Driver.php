@@ -42,7 +42,16 @@
  * @since      File available since Release 1.2.0
  */
 
-use PHPUnit\Extensions\Selenium2TestCase\Command;
+namespace PHPUnit\Extensions\Selenium2TestCase;
+
+use BadMethodCallException;
+use PHPUnit_Extensions_Selenium2TestCase_Exception;
+use PHPUnit_Extensions_Selenium2TestCase_NoSeleniumException;
+use PHPUnit_Extensions_Selenium2TestCase_Response;
+use PHPUnit_Extensions_Selenium2TestCase_Session;
+use PHPUnit_Extensions_Selenium2TestCase_Session_Timeouts;
+use PHPUnit_Extensions_Selenium2TestCase_URL;
+use PHPUnit_Extensions_Selenium2TestCase_WebDriverException;
 
 /**
  * Driver for creating browser session with Selenium 2 (WebDriver API).
@@ -55,7 +64,7 @@ use PHPUnit\Extensions\Selenium2TestCase\Command;
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.0
  */
-class PHPUnit_Extensions_Selenium2TestCase_Driver
+class Driver
 {
     private $seleniumServerUrl;
     private $seleniumServerRequestsTimeout;

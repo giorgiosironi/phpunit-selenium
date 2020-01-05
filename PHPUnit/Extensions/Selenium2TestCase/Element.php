@@ -42,6 +42,8 @@
  * @since      File available since Release 1.2.0
  */
 
+use PHPUnit\Extensions\Selenium2TestCase\Driver;
+
 /**
  * Object representing a DOM element.
  *
@@ -76,7 +78,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Element
     public static function fromResponseValue(
             array $value,
             PHPUnit_Extensions_Selenium2TestCase_URL $parentFolder,
-            PHPUnit_Extensions_Selenium2TestCase_Driver $driver)
+            Driver $driver)
     {
         if (!isset($value['ELEMENT'])) {
             throw new InvalidArgumentException('Element not found.');

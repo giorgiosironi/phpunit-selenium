@@ -42,6 +42,8 @@
  * @since      File available since Release 1.2.6
  */
 
+use PHPUnit\Extensions\Selenium2TestCase\Driver;
+
 /**
  * Produces a new Session object shared for each test.
  *
@@ -59,7 +61,7 @@ class PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Isolated
     public function session(array $parameters)
     {
         $seleniumServerUrl = PHPUnit_Extensions_Selenium2TestCase_URL::fromHostAndPort($parameters['host'], $parameters['port'], $parameters['secure']);
-        $driver = new PHPUnit_Extensions_Selenium2TestCase_Driver($seleniumServerUrl, $parameters['seleniumServerRequestsTimeout']);
+        $driver = new Driver($seleniumServerUrl, $parameters['seleniumServerRequestsTimeout']);
         $capabilities = array_merge($parameters['desiredCapabilities'],
                                     array(
                                         'browserName' => $parameters['browserName']

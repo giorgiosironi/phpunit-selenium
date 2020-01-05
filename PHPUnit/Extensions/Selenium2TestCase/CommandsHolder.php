@@ -47,7 +47,6 @@ namespace PHPUnit\Extensions\Selenium2TestCase;
 use BadMethodCallException;
 use Exception;
 use InvalidArgumentException;
-use PHPUnit_Extensions_Selenium2TestCase_Driver;
 use PHPUnit_Extensions_Selenium2TestCase_ElementCriteria;
 use PHPUnit_Extensions_Selenium2TestCase_URL;
 
@@ -65,7 +64,7 @@ use PHPUnit_Extensions_Selenium2TestCase_URL;
 abstract class CommandsHolder
 {
     /**
-     * @var PHPUnit_Extensions_Selenium2TestCase_Driver
+     * @var Driver
      */
     protected $driver;
 
