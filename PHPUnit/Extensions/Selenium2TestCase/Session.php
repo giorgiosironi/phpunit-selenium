@@ -60,7 +60,7 @@ use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\DismissAlert;
 use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\File;
 use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\Frame;
 use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\GenericAccessor as SessionGenericAccessor;
-use PHPUnit_Extensions_Selenium2TestCase_SessionCommand_GenericAttribute;
+use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\GenericAttribute;
 use PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Url;
 
 /**
@@ -176,7 +176,7 @@ class Session extends Accessor
     {
         $url = $this->url->addCommand($urlSegment);
         return function ($jsonParameters, $commandUrl) use ($url) {
-            return new PHPUnit_Extensions_Selenium2TestCase_SessionCommand_GenericAttribute($jsonParameters, $url);
+            return new GenericAttribute($jsonParameters, $url);
         };
     }
 
