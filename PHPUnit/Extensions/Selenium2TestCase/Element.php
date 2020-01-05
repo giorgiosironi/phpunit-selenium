@@ -52,6 +52,7 @@ use PHPUnit\Extensions\Selenium2TestCase\ElementCommand\Css;
 use PHPUnit\Extensions\Selenium2TestCase\ElementCommand\Equals;
 use PHPUnit\Extensions\Selenium2TestCase\ElementCommand\GenericAccessor;
 use PHPUnit\Extensions\Selenium2TestCase\ElementCommand\GenericPost;
+use PHPUnit\Extensions\Selenium2TestCase\ElementCommand\Rect;
 
 /**
  * Object representing a DOM element.
@@ -115,7 +116,7 @@ class Element extends Accessor
             'equals' => Equals::class,
             'location' => GenericAccessor::class,
             'name' => GenericAccessor::class,
-            'rect' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Rect',
+            'rect' => Rect::class,
             'selected' => GenericAccessor::class,
             'size' => GenericAccessor::class,
             'submit' => GenericPost::class,
