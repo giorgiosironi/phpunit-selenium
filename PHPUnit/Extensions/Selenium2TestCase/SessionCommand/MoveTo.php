@@ -44,6 +44,7 @@
 
 use PHPUnit\Extensions\Selenium2TestCase\Command;
 use PHPUnit\Extensions\Selenium2TestCase\Element;
+use PHPUnit\Extensions\Selenium2TestCase\URL;
 
 /**
  * Moves the mouse pointer.
@@ -58,8 +59,7 @@ use PHPUnit\Extensions\Selenium2TestCase\Element;
  */
 class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_MoveTo extends Command
 {
-    public function __construct($element,
-                                PHPUnit_Extensions_Selenium2TestCase_URL $url)
+    public function __construct($element, URL $url)
     {
         if (!is_array($element)) {
             $element = array(

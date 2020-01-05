@@ -43,6 +43,7 @@
  */
 
 use PHPUnit\Extensions\Selenium2TestCase\CommandsHolder;
+use PHPUnit\Extensions\Selenium2TestCase\URL;
 
 /**
  * Manages timeouts for the current browser session.
@@ -62,9 +63,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Session_Timeouts extends CommandsHold
     private $maximumTimeout;
     private $lastImplicitWaitValue = 0;
 
-    public function __construct($driver,
-                                PHPUnit_Extensions_Selenium2TestCase_URL $url,
-                                $maximumTimeout)
+    public function __construct($driver, URL $url, $maximumTimeout)
     {
         parent::__construct($driver, $url);
         $this->maximumTimeout = $maximumTimeout;

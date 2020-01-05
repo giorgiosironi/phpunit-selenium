@@ -43,6 +43,7 @@
  */
 
 use PHPUnit\Extensions\Selenium2TestCase\Command;
+use PHPUnit\Extensions\Selenium2TestCase\URL;
 
 /**
  * Retrieves the value of a CSS property.
@@ -60,8 +61,7 @@ class PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Css extends Command
     /**
      * @param array $propertyName
      */
-    public function __construct($propertyName,
-                                PHPUnit_Extensions_Selenium2TestCase_URL $cssResourceBaseUrl)
+    public function __construct($propertyName, URL $cssResourceBaseUrl)
     {
         $this->jsonParameters = array();
         $this->url = $cssResourceBaseUrl->descend($propertyName);

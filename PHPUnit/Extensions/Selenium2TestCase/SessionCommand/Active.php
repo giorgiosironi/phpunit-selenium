@@ -43,6 +43,7 @@
  */
 
 use PHPUnit\Extensions\Selenium2TestCase\Command;
+use PHPUnit\Extensions\Selenium2TestCase\URL;
 
 /**
  * Gets the active element from the session
@@ -58,7 +59,7 @@ use PHPUnit\Extensions\Selenium2TestCase\Command;
 class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Active extends Command
 {
 
-    public function __construct($jsonParameters, PHPUnit_Extensions_Selenium2TestCase_URL $url)
+    public function __construct($jsonParameters, URL $url)
     {
         $url = $url->addCommand('element')->addCommand('active');
         parent::__construct($jsonParameters, $url);

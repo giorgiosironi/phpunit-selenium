@@ -52,12 +52,12 @@ use PHPUnit\Extensions\Selenium2TestCase\KeysHolder;
 use PHPUnit\Extensions\Selenium2TestCase\NoSeleniumException;
 use PHPUnit\Extensions\Selenium2TestCase\Session;
 use PHPUnit\Extensions\Selenium2TestCase\SessionStrategy;
+use PHPUnit\Extensions\Selenium2TestCase\URL;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\TestResult;
 use PHPUnit\Util\InvalidArgumentHelper;
 use PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Isolated;
 use PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Shared;
-use PHPUnit_Extensions_Selenium2TestCase_URL;
 use PHPUnit_Extensions_Selenium2TestCase_WaitUntil;
 use PHPUnit_Extensions_SeleniumCommon_RemoteCoverage;
 use RuntimeException;
@@ -522,7 +522,7 @@ abstract class Selenium2TestCase extends TestCase
             throw InvalidArgumentHelper::factory(1, 'string');
         }
 
-        $this->parameters['browserUrl'] = new PHPUnit_Extensions_Selenium2TestCase_URL($browserUrl);
+        $this->parameters['browserUrl'] = new URL($browserUrl);
     }
 
     public function getBrowserUrl()

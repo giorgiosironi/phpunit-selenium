@@ -47,7 +47,6 @@ namespace PHPUnit\Extensions\Selenium2TestCase;
 use BadMethodCallException;
 use Exception;
 use InvalidArgumentException;
-use PHPUnit_Extensions_Selenium2TestCase_URL;
 
 /**
  * Object representing elements, or everything that may have subcommands.
@@ -78,7 +77,7 @@ abstract class CommandsHolder
      */
     protected $commands;
 
-    public function __construct($driver, PHPUnit_Extensions_Selenium2TestCase_URL $url)
+    public function __construct($driver, URL $url)
     {
         $this->driver = $driver;
         $this->url = $url;

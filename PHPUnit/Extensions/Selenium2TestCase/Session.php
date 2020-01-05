@@ -54,7 +54,6 @@ use PHPUnit_Extensions_Selenium2TestCase_Session_Timeouts;
 use PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Active;
 use PHPUnit_Extensions_Selenium2TestCase_SessionCommand_GenericAttribute;
 use PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Url;
-use PHPUnit_Extensions_Selenium2TestCase_URL;
 use PHPUnit_Extensions_Selenium2TestCase_Window;
 
 /**
@@ -108,8 +107,8 @@ class Session extends PHPUnit_Extensions_Selenium2TestCase_Element_Accessor
     private $stopped = FALSE;
 
     public function __construct($driver,
-                                PHPUnit_Extensions_Selenium2TestCase_URL $url,
-                                PHPUnit_Extensions_Selenium2TestCase_URL $baseUrl,
+                                URL $url,
+                                URL $baseUrl,
                                 PHPUnit_Extensions_Selenium2TestCase_Session_Timeouts $timeouts)
     {
         $this->baseUrl = $baseUrl;
@@ -188,7 +187,7 @@ class Session extends PHPUnit_Extensions_Selenium2TestCase_Element_Accessor
     }
 
     /**
-     * @return PHPUnit_Extensions_Selenium2TestCase_URL
+     * @return URL
      */
     public function getSessionUrl()
     {

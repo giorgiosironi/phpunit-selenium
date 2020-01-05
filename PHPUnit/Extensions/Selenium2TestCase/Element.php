@@ -47,7 +47,6 @@ namespace PHPUnit\Extensions\Selenium2TestCase;
 use InvalidArgumentException;
 use PHPUnit_Extensions_Selenium2TestCase_Element_Accessor;
 use PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost;
-use PHPUnit_Extensions_Selenium2TestCase_URL;
 
 /**
  * Object representing a DOM element.
@@ -79,10 +78,7 @@ class Element extends PHPUnit_Extensions_Selenium2TestCase_Element_Accessor
      * @return \self
      * @throws InvalidArgumentException
      */
-    public static function fromResponseValue(
-            array $value,
-            PHPUnit_Extensions_Selenium2TestCase_URL $parentFolder,
-            Driver $driver)
+    public static function fromResponseValue(array $value, URL $parentFolder, Driver $driver)
     {
         if (!isset($value['ELEMENT'])) {
             throw new InvalidArgumentException('Element not found.');

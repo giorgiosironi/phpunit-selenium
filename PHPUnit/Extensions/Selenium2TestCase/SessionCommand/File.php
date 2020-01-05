@@ -43,6 +43,7 @@
  */
 
 use PHPUnit\Extensions\Selenium2TestCase\Command;
+use PHPUnit\Extensions\Selenium2TestCase\URL;
 
 /**
  * Sends a file to a RC
@@ -64,7 +65,7 @@ class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_File extends Command
      */
     private static $_zipArchive;
 
-    public function __construct($argument, PHPUnit_Extensions_Selenium2TestCase_URL $url)
+    public function __construct($argument, URL $url)
     {
         if (!is_file($argument)) {
             throw new BadMethodCallException("No such file: {$argument}");

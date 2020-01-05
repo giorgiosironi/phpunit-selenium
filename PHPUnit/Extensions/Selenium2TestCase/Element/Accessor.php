@@ -43,6 +43,7 @@
 use PHPUnit\Extensions\Selenium2TestCase\CommandsHolder;
 use PHPUnit\Extensions\Selenium2TestCase\Element;
 use PHPUnit\Extensions\Selenium2TestCase\ElementCriteria;
+use PHPUnit\Extensions\Selenium2TestCase\URL;
 
 
 /**
@@ -161,7 +162,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase_Element_Accessor extends Com
     }
 
     /**
-     * @return PHPUnit_Extensions_Selenium2TestCase_URL
+     * @return URL
      */
     protected abstract function getSessionUrl();
 

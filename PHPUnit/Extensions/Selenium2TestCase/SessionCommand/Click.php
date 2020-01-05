@@ -43,6 +43,7 @@
  */
 
 use PHPUnit\Extensions\Selenium2TestCase\Command;
+use PHPUnit\Extensions\Selenium2TestCase\URL;
 
 /**
  * Sends session click command for emulating LEFT, MIDDLE or RIGHT mouse buttons
@@ -61,7 +62,7 @@ class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Click extends Command
     const MIDDLE = 1;
     const RIGHT = 2;
 
-    public function __construct($argument, PHPUnit_Extensions_Selenium2TestCase_URL $url)
+    public function __construct($argument, URL $url)
     {
         if (is_null($argument)) {
             $jsonParameters = NULL;

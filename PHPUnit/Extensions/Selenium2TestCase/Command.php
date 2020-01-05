@@ -45,7 +45,6 @@
 namespace PHPUnit\Extensions\Selenium2TestCase;
 
 use InvalidArgumentException;
-use PHPUnit_Extensions_Selenium2TestCase_URL;
 
 /**
  * Base class for implementing commands with special semantics.
@@ -66,7 +65,7 @@ abstract class Command
     /**
      * @param array $jsonParameters     null in case of no parameters
      */
-    public function __construct($jsonParameters, PHPUnit_Extensions_Selenium2TestCase_URL $url)
+    public function __construct($jsonParameters, URL $url)
     {
         if (!is_array($jsonParameters) && $jsonParameters !== NULL) {
             throw new InvalidArgumentException("The JSON parameters must be an array, or a NULL value in case they are not required.");

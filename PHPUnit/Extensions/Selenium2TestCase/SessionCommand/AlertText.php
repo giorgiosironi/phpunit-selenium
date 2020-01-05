@@ -43,6 +43,7 @@
  */
 
 use PHPUnit\Extensions\Selenium2TestCase\Command;
+use PHPUnit\Extensions\Selenium2TestCase\URL;
 
 /**
  * Obtains the text of an alert, or types into a prompt.
@@ -57,7 +58,7 @@ use PHPUnit\Extensions\Selenium2TestCase\Command;
  */
 class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_AlertText extends Command
 {
-    public function __construct($argument, PHPUnit_Extensions_Selenium2TestCase_URL $url)
+    public function __construct($argument, URL $url)
     {
         if (is_string($argument)) {
             $jsonParameters =array('text' => $argument);

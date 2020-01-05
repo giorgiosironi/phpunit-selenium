@@ -45,6 +45,7 @@
 use PHPUnit\Extensions\Selenium2TestCase\Driver;
 use PHPUnit\Extensions\Selenium2TestCase\Session;
 use PHPUnit\Extensions\Selenium2TestCase\SessionStrategy;
+use PHPUnit\Extensions\Selenium2TestCase\URL;
 
 /**
  * Produces a new Session object shared for each test.
@@ -61,7 +62,7 @@ class PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Isolated implements S
 {
     public function session(array $parameters)
     {
-        $seleniumServerUrl = PHPUnit_Extensions_Selenium2TestCase_URL::fromHostAndPort($parameters['host'], $parameters['port'], $parameters['secure']);
+        $seleniumServerUrl = URL::fromHostAndPort($parameters['host'], $parameters['port'], $parameters['secure']);
         $driver = new Driver($seleniumServerUrl, $parameters['seleniumServerRequestsTimeout']);
         $capabilities = array_merge($parameters['desiredCapabilities'],
                                     array(

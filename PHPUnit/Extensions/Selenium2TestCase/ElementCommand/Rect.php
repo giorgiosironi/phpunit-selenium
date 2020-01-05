@@ -43,6 +43,7 @@
  */
 
 use PHPUnit\Extensions\Selenium2TestCase\Command;
+use PHPUnit\Extensions\Selenium2TestCase\URL;
 
 /**
  * Retrieves the element's coordinates
@@ -60,8 +61,7 @@ class PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Rect extends Command
     /**
      * @param array $parameter
      */
-    public function __construct($parameter,
-                                PHPUnit_Extensions_Selenium2TestCase_URL $attributeResourceBaseUrl)
+    public function __construct($parameter, URL $attributeResourceBaseUrl)
     {
         $this->jsonParameters = array();
         $this->url = $attributeResourceBaseUrl->descend($parameter);

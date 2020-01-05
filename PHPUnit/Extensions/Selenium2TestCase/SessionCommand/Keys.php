@@ -43,6 +43,7 @@
  */
 
 use PHPUnit\Extensions\Selenium2TestCase\Command;
+use PHPUnit\Extensions\Selenium2TestCase\URL;
 
 /**
  * Gets or sets the current URL of the window.
@@ -57,8 +58,7 @@ use PHPUnit\Extensions\Selenium2TestCase\Command;
  */
 class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Keys extends Command
 {
-    public function __construct($jsonParameters,
-                                PHPUnit_Extensions_Selenium2TestCase_URL $url)
+    public function __construct($jsonParameters, URL $url)
     {
         if ($jsonParameters === NULL) {
             parent::__construct(NULL, $url);

@@ -43,6 +43,7 @@
  */
 
 use PHPUnit\Extensions\Selenium2TestCase\Command;
+use PHPUnit\Extensions\Selenium2TestCase\URL;
 
 /**
  * Gets or sets the current URL of the window.
@@ -57,7 +58,7 @@ use PHPUnit\Extensions\Selenium2TestCase\Command;
  */
 class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Url extends Command
 {
-    public function __construct($url, $commandUrl, PHPUnit_Extensions_Selenium2TestCase_URL $baseUrl)
+    public function __construct($url, $commandUrl, URL $baseUrl)
     {
         if ($url !== NULL) {
             $absoluteLocation = $baseUrl->jump($url)->getValue();

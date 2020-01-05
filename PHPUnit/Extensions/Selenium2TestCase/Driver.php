@@ -46,7 +46,6 @@ namespace PHPUnit\Extensions\Selenium2TestCase;
 
 use BadMethodCallException;
 use PHPUnit_Extensions_Selenium2TestCase_Session_Timeouts;
-use PHPUnit_Extensions_Selenium2TestCase_URL;
 use PHPUnit_Extensions_Selenium2TestCase_WebDriverException;
 
 /**
@@ -65,13 +64,13 @@ class Driver
     private $seleniumServerUrl;
     private $seleniumServerRequestsTimeout;
 
-    public function __construct(PHPUnit_Extensions_Selenium2TestCase_URL $seleniumServerUrl, $timeout = 60)
+    public function __construct(URL $seleniumServerUrl, $timeout = 60)
     {
         $this->seleniumServerUrl = $seleniumServerUrl;
         $this->seleniumServerRequestsTimeout = $timeout;
     }
 
-    public function startSession(array $desiredCapabilities, PHPUnit_Extensions_Selenium2TestCase_URL $browserUrl)
+    public function startSession(array $desiredCapabilities, URL $browserUrl)
     {
         $sessionCreation = $this->seleniumServerUrl->descend("/wd/hub/session");
         $response = $this->curl('POST', $sessionCreation, array(
@@ -99,9 +98,7 @@ class Driver
      * @param string $url
      * @param array $params       JSON parameters for POST requests
      */
-    public function curl($http_method,
-                         PHPUnit_Extensions_Selenium2TestCase_URL $url,
-                         $params = NULL)
+    public function curl($http_method, URL $url, $params = NULL)
     {
         $curl = curl_init($url->getValue());
         curl_setopt($curl, CURLOPT_TIMEOUT, $this->seleniumServerRequestsTimeout);

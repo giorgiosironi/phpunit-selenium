@@ -44,6 +44,7 @@
 
 use PHPUnit\Extensions\Selenium2TestCase\Command;
 use PHPUnit\Extensions\Selenium2TestCase\Element;
+use PHPUnit\Extensions\Selenium2TestCase\URL;
 
 /**
  * Checks equality (same element on the page) with another DOM element.
@@ -61,8 +62,7 @@ class PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Equals extends Command
     /**
      * @param array $parameter
      */
-    public function __construct($parameter,
-                                PHPUnit_Extensions_Selenium2TestCase_URL $equalsResourceBaseUrl)
+    public function __construct($parameter, URL $equalsResourceBaseUrl)
     {
         $this->jsonParameters = array();
         if (!($parameter instanceof Element)) {

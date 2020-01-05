@@ -44,8 +44,6 @@
 
 namespace PHPUnit\Extensions\Selenium2TestCase;
 
-use PHPUnit_Extensions_Selenium2TestCase_URL;
-
 /**
  * Object representing an HTTP response from the Selenium Server.
  *
@@ -83,7 +81,7 @@ class Response
     }
 
     /**
-     * @return PHPUnit_Extensions_Selenium2TestCase_URL
+     * @return URL
      */
     public function getURL()
     {
@@ -98,6 +96,6 @@ class Response
             $url .= '/' . $sessionId;
         }
 
-        return new PHPUnit_Extensions_Selenium2TestCase_URL($url);
+        return new URL($url);
     }
 }
