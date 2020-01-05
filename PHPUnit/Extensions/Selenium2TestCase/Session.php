@@ -42,7 +42,20 @@
  * @since      File available since Release 1.2.0
  */
 
-use PHPUnit\Extensions\Selenium2TestCase\Element;
+namespace PHPUnit\Extensions\Selenium2TestCase;
+
+use InvalidArgumentException;
+use PHPUnit_Extensions_Selenium2TestCase_Element_Accessor;
+use PHPUnit_Extensions_Selenium2TestCase_Element_Select;
+use PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost;
+use PHPUnit_Extensions_Selenium2TestCase_Session_Cookie;
+use PHPUnit_Extensions_Selenium2TestCase_Session_Storage;
+use PHPUnit_Extensions_Selenium2TestCase_Session_Timeouts;
+use PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Active;
+use PHPUnit_Extensions_Selenium2TestCase_SessionCommand_GenericAttribute;
+use PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Url;
+use PHPUnit_Extensions_Selenium2TestCase_URL;
+use PHPUnit_Extensions_Selenium2TestCase_Window;
 
 /**
  * Browser session for Selenium 2: main point of entry for functionality.
@@ -76,8 +89,7 @@ use PHPUnit\Extensions\Selenium2TestCase\Element;
  * @method array log(string $type) Get the log for a given log type. Log buffer is reset after each request.
  * @method array logTypes() Get available log types.
  */
-class PHPUnit_Extensions_Selenium2TestCase_Session
-    extends PHPUnit_Extensions_Selenium2TestCase_Element_Accessor
+class Session extends PHPUnit_Extensions_Selenium2TestCase_Element_Accessor
 {
     /**
      * @var string  the base URL for this session,

@@ -42,6 +42,8 @@
  * @since      File available since Release 1.2.6
  */
 
+use PHPUnit\Extensions\Selenium2TestCase\Session;
+
 /**
  * Keeps a Session object shared between test runs to save time.
  *
@@ -91,7 +93,7 @@ class PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Shared
         $this->lastTestWasNotSuccessful = TRUE;
     }
 
-    public function endOfTest(PHPUnit_Extensions_Selenium2TestCase_Session $session = NULL)
+    public function endOfTest(Session $session = NULL)
     {
     }
 }

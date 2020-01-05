@@ -43,6 +43,7 @@
  */
 
 use PHPUnit\Extensions\Selenium2TestCase\Driver;
+use PHPUnit\Extensions\Selenium2TestCase\Session;
 
 /**
  * Produces a new Session object shared for each test.
@@ -74,7 +75,7 @@ class PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Isolated
     {
     }
 
-    public function endOfTest(PHPUnit_Extensions_Selenium2TestCase_Session $session = NULL)
+    public function endOfTest(Session $session = NULL)
     {
         if ($session !== NULL) {
             $session->stop();

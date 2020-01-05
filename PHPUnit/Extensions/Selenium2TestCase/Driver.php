@@ -45,7 +45,6 @@
 namespace PHPUnit\Extensions\Selenium2TestCase;
 
 use BadMethodCallException;
-use PHPUnit_Extensions_Selenium2TestCase_Session;
 use PHPUnit_Extensions_Selenium2TestCase_Session_Timeouts;
 use PHPUnit_Extensions_Selenium2TestCase_URL;
 use PHPUnit_Extensions_Selenium2TestCase_WebDriverException;
@@ -85,7 +84,7 @@ class Driver
             $sessionPrefix->descend('timeouts'),
             $this->seleniumServerRequestsTimeout * 1000
         );
-        return new PHPUnit_Extensions_Selenium2TestCase_Session(
+        return new Session(
             $this,
             $sessionPrefix,
             $browserUrl,
