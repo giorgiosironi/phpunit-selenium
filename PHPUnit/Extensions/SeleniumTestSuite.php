@@ -41,6 +41,8 @@
  * @link       http://www.phpunit.de/
  * @since      File available since Release 1.2.2
  */
+
+use PHPUnit\Extensions\SeleniumBrowserSuite;
 use PHPUnit\Framework\TestSuite;
 use PHPUnit\Util\Test as TestUtil;
 
@@ -114,7 +116,7 @@ class PHPUnit_Extensions_SeleniumTestSuite extends TestSuite
             // Create tests from Selenese/HTML files for multiple browsers.
             if ($browsers) {
                 foreach ($browsers as $browser) {
-                    $browserSuite = PHPUnit_Extensions_SeleniumBrowserSuite::fromClassAndBrowser($className, $browser);
+                    $browserSuite = SeleniumBrowserSuite::fromClassAndBrowser($className, $browser);
 
                     foreach ($files as $file) {
                         self::addGeneratedTestTo($browserSuite,
@@ -139,7 +141,7 @@ class PHPUnit_Extensions_SeleniumTestSuite extends TestSuite
         // Create tests from test methods for multiple browsers.
         if ($browsers) {
             foreach ($browsers as $browser) {
-                $browserSuite = PHPUnit_Extensions_SeleniumBrowserSuite::fromClassAndBrowser($className, $browser);
+                $browserSuite = SeleniumBrowserSuite::fromClassAndBrowser($className, $browser);
                 foreach ($class->getMethods() as $method) {
                     $browserSuite->addTestMethod($class, $method);
                 }
@@ -160,7 +162,7 @@ class PHPUnit_Extensions_SeleniumTestSuite extends TestSuite
 
     private static function addGeneratedTestTo(TestSuite $suite, \PHPUnit\Framework\TestCase $test, $classGroups)
     {
-        list ($methodName, ) = explode(' ', $test->getName());
+        [$methodName, ] = explode(' ', $test->getName());
         $test->setDependencies(
             TestUtil::getDependencies(get_class($test), $methodName)
         );
