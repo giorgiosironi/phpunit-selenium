@@ -58,6 +58,7 @@ use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\AlertText;
 use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\Click;
 use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\DismissAlert;
 use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\File;
+use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\Frame;
 use PHPUnit_Extensions_Selenium2TestCase_SessionCommand_GenericAttribute;
 use PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Url;
 
@@ -144,7 +145,7 @@ class Session extends Accessor
             'execute' => GenericPost::class,
             'executeAsync' => GenericPost::class,
             'forward' => GenericPost::class,
-            'frame' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Frame',
+            'frame' => Frame::class,
             'keys' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Keys',
             'moveto' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_MoveTo',
             'refresh' => GenericPost::class,
