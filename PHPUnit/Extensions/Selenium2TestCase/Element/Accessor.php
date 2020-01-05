@@ -40,6 +40,8 @@
  * @link       http://www.phpunit.de/
  */
 
+use PHPUnit\Extensions\Selenium2TestCase\CommandsHolder;
+
 
 /**
  * Provides access to /element and /elements commands
@@ -50,8 +52,7 @@
  * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
  */
-abstract class PHPUnit_Extensions_Selenium2TestCase_Element_Accessor
-    extends PHPUnit_Extensions_Selenium2TestCase_CommandsHolder
+abstract class PHPUnit_Extensions_Selenium2TestCase_Element_Accessor extends CommandsHolder
 {
 
     /**

@@ -42,6 +42,8 @@
  * @since      File available since Release 1.2.4
  */
 
+use PHPUnit\Extensions\Selenium2TestCase\CommandsHolder;
+
 /**
  * Manages timeouts for the current browser session.
  *
@@ -55,8 +57,7 @@
  * @method implicitWait(int $ms) Sets timeout when searching for elements
  * @method asyncScript(int $ms) Sets timeout for asynchronous scripts executed by Session::executeAsync()
  */
-class PHPUnit_Extensions_Selenium2TestCase_Session_Timeouts
-    extends PHPUnit_Extensions_Selenium2TestCase_CommandsHolder
+class PHPUnit_Extensions_Selenium2TestCase_Session_Timeouts extends CommandsHolder
 {
     private $maximumTimeout;
     private $lastImplicitWaitValue = 0;

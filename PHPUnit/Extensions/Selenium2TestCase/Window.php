@@ -42,6 +42,8 @@
  * @since      File available since Release 1.2.5
  */
 
+use PHPUnit\Extensions\Selenium2TestCase\CommandsHolder;
+
 /**
  * Object representing a browser window.
  *
@@ -56,7 +58,7 @@
  * @method array position(array $position = null) Window position as array('x' => $x, 'y' => $y)
  * @method array maximize() Maximize window
  */
-class PHPUnit_Extensions_Selenium2TestCase_Window extends PHPUnit_Extensions_Selenium2TestCase_CommandsHolder
+class PHPUnit_Extensions_Selenium2TestCase_Window extends CommandsHolder
 {
     /**
      * @return array    class names

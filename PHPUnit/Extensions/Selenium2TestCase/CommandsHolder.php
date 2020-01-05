@@ -42,7 +42,14 @@
  * @since      File available since Release 1.2.4
  */
 
-use PHPUnit\Extensions\Selenium2TestCase\Command;
+namespace PHPUnit\Extensions\Selenium2TestCase;
+
+use BadMethodCallException;
+use Exception;
+use InvalidArgumentException;
+use PHPUnit_Extensions_Selenium2TestCase_Driver;
+use PHPUnit_Extensions_Selenium2TestCase_ElementCriteria;
+use PHPUnit_Extensions_Selenium2TestCase_URL;
 
 /**
  * Object representing elements, or everything that may have subcommands.
@@ -55,7 +62,7 @@ use PHPUnit\Extensions\Selenium2TestCase\Command;
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.4
  */
-abstract class PHPUnit_Extensions_Selenium2TestCase_CommandsHolder
+abstract class CommandsHolder
 {
     /**
      * @var PHPUnit_Extensions_Selenium2TestCase_Driver
@@ -73,8 +80,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase_CommandsHolder
      */
     protected $commands;
 
-    public function __construct($driver,
-                                PHPUnit_Extensions_Selenium2TestCase_URL $url)
+    public function __construct($driver, PHPUnit_Extensions_Selenium2TestCase_URL $url)
     {
         $this->driver = $driver;
         $this->url = $url;
