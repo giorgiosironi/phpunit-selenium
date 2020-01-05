@@ -1,11 +1,12 @@
 <?php
 
 use PHPUnit\Extensions\Selenium2TestCase;
+use PHPUnit\Extensions\Selenium2TestCase\ScreenshotListener;
 use PHPUnit\Framework\AssertionFailedError;
 
 class Tests_Selenium2TestCase_ScreenshotListenerTest extends Tests_Selenium2TestCase_BaseTestCase
 {
-    /** @var PHPUnit_Extensions_Selenium2TestCase_ScreenshotListener */
+    /** @var ScreenshotListener */
     private $listener;
 
     public function setUp(): void
@@ -16,7 +17,7 @@ class Tests_Selenium2TestCase_ScreenshotListenerTest extends Tests_Selenium2Test
         foreach ($existing as $file) {
             unlink($file);
         }
-        $this->listener = new PHPUnit_Extensions_Selenium2TestCase_ScreenshotListener(
+        $this->listener = new ScreenshotListener(
             $this->directory
         );
     }
