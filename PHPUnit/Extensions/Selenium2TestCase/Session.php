@@ -66,7 +66,6 @@ use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\Location;
 use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\Log;
 use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\MoveTo;
 use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\Orientation;
-use PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Url;
 
 /**
  * Browser session for Selenium 2: main point of entry for functionality.
@@ -161,7 +160,7 @@ class Session extends Accessor
             'log' => Log::class,
             'logTypes' => $this->attributeCommandFactoryMethod('log/types'),
             'url' => function ($jsonParameters, $commandUrl) use ($baseUrl) {
-                return new PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Url($jsonParameters, $commandUrl, $baseUrl);
+                return new \PHPUnit\Extensions\Selenium2TestCase\SessionCommand\Url($jsonParameters, $commandUrl, $baseUrl);
             },
             'window' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Window',
             'windowHandle' => SessionGenericAccessor::class,
