@@ -42,6 +42,10 @@
  * @since      File available since Release 1.2.6
  */
 
+namespace PHPUnit\Extensions\Selenium2TestCase;
+
+use RuntimeException;
+
 /**
  * Indicates an exception during the execution of Selenium 2 commands.
  *
@@ -53,6 +57,6 @@
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.6
  */
-class PHPUnit_Extensions_Selenium2TestCase_Exception extends RuntimeException
+class Exception extends RuntimeException
 {
 }

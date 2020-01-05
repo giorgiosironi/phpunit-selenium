@@ -53,7 +53,7 @@
  * @link       http://www.phpunit.de/
  * @since      
  */
-class PHPUnit_Extensions_Selenium2TestCase_WebDriverException extends PHPUnit_Extensions_Selenium2TestCase_Exception
+class PHPUnit_Extensions_Selenium2TestCase_WebDriverException extends \PHPUnit\Extensions\Selenium2TestCase\Exception
 {
     /* @see http://code.google.com/p/selenium/wiki/JsonWireProtocol#Response_Status_Codes */
     const Success = 0;

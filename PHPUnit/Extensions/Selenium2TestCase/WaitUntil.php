@@ -80,13 +80,13 @@ class PHPUnit_Extensions_Selenium2TestCase_WaitUntil
      * @param null|int $timeout
      * @param null|int $sleepInterval the delay between 2 iterations of the callback
      * @return mixed
-     * @throws PHPUnit_Extensions_Selenium2TestCase_Exception
+     * @throws \PHPUnit\Extensions\Selenium2TestCase\Exception
      * @throws PHPUnit_Extensions_Selenium2TestCase_WebDriverException
      */
     public function run($callback, $timeout = NULL, $sleepInterval = NULL)
     {
         if (!is_callable($callback)) {
-            throw new PHPUnit_Extensions_Selenium2TestCase_Exception('The valid callback is expected');
+            throw new \PHPUnit\Extensions\Selenium2TestCase\Exception('The valid callback is expected');
         }
 
         // if there was an implicit timeout specified - remember it and temporarily turn it off

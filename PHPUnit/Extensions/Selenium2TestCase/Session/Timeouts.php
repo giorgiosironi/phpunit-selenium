@@ -102,7 +102,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Session_Timeouts extends CommandsHold
     public function check($timeout)
     {
         if ($timeout > $this->maximumTimeout) {
-            throw new PHPUnit_Extensions_Selenium2TestCase_Exception('There is no use in setting this timeout unless you also call $this->setSeleniumServerRequestsTimeout($seconds) in setUp().');
+            throw new \PHPUnit\Extensions\Selenium2TestCase\Exception('There is no use in setting this timeout unless you also call $this->setSeleniumServerRequestsTimeout($seconds) in setUp().');
         }
     }
 }

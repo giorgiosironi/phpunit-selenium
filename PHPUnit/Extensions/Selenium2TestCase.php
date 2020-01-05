@@ -51,7 +51,6 @@ use PHPUnit\Extensions\Selenium2TestCase\ElementCriteria;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\TestResult;
 use PHPUnit\Util\InvalidArgumentHelper;
-use PHPUnit_Extensions_Selenium2TestCase_Exception;
 use PHPUnit_Extensions_Selenium2TestCase_KeysHolder;
 use PHPUnit_Extensions_Selenium2TestCase_NoSeleniumException;
 use PHPUnit_Extensions_Selenium2TestCase_Session;
@@ -432,7 +431,7 @@ abstract class Selenium2TestCase extends TestCase
     public function __call($command, $arguments)
     {
         if ($this->session === NULL) {
-            throw new PHPUnit_Extensions_Selenium2TestCase_Exception("There is currently no active session to execute the '$command' command. You're probably trying to set some option in setUp() with an incorrect setter name. You may consider using setUpPage() instead.");
+            throw new \PHPUnit\Extensions\Selenium2TestCase\Exception("There is currently no active session to execute the '$command' command. You're probably trying to set some option in setUp() with an incorrect setter name. You may consider using setUpPage() instead.");
         }
         $result = call_user_func_array(
           array($this->session, $command), $arguments
@@ -600,7 +599,7 @@ abstract class Selenium2TestCase extends TestCase
      * Deprecated due to issues with IE webdriver. Use keys() method instead
      * @deprecated
      * @param string $name
-     * @throws PHPUnit_Extensions_Selenium2TestCase_Exception
+     * @throws \PHPUnit\Extensions\Selenium2TestCase\Exception
      * @see PHPUnit_Extensions_Selenium2TestCase_KeysHolder
      */
     public function keysSpecial($name)

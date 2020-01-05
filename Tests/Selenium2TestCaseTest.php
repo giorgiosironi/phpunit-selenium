@@ -984,7 +984,7 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         try {
             $this->cookie()->get($name);
             $this->fail('The cookie shouldn\'t exist anymore.');
-        } catch (PHPUnit_Extensions_Selenium2TestCase_Exception $e) {
+        } catch (\PHPUnit\Extensions\Selenium2TestCase\Exception $e) {
             $this->assertEquals("There is no '$name' cookie available on this page.", $e->getMessage());
         }
     }
@@ -1035,7 +1035,7 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         try {
             $this->moveto('moveto');
             $this->fail('A single non-element parameter should cause an exception');
-        } catch (PHPUnit_Extensions_Selenium2TestCase_Exception $e) {
+        } catch (\PHPUnit\Extensions\Selenium2TestCase\Exception $e) {
             $this->assertStringStartsWith('Only moving over an element is supported', $e->getMessage());
         }
 
@@ -1044,7 +1044,7 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
                 'element' => 'moveto'
             ));
             $this->fail('An "element" array parameter with non-element value should cause an exception');
-        } catch (PHPUnit_Extensions_Selenium2TestCase_Exception $e) {
+        } catch (\PHPUnit\Extensions\Selenium2TestCase\Exception $e) {
             $this->assertStringStartsWith('Only moving over an element is supported', $e->getMessage());
         }
     }

@@ -89,7 +89,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Session_Cookie
                 return $cookie['value'];
             }
         }
-        throw new PHPUnit_Extensions_Selenium2TestCase_Exception("There is no '$name' cookie available on this page.");
+        throw new \PHPUnit\Extensions\Selenium2TestCase\Exception("There is no '$name' cookie available on this page.");
     }
 
     /**

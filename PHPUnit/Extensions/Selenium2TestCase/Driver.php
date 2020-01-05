@@ -45,7 +45,6 @@
 namespace PHPUnit\Extensions\Selenium2TestCase;
 
 use BadMethodCallException;
-use PHPUnit_Extensions_Selenium2TestCase_Exception;
 use PHPUnit_Extensions_Selenium2TestCase_NoSeleniumException;
 use PHPUnit_Extensions_Selenium2TestCase_Response;
 use PHPUnit_Extensions_Selenium2TestCase_Session;
@@ -150,7 +149,7 @@ class Driver
         $content = json_decode($rawResponse, TRUE);
 
         if ($content === null && json_last_error() !== JSON_ERROR_NONE) {
-            throw new PHPUnit_Extensions_Selenium2TestCase_Exception(
+            throw new \PHPUnit\Extensions\Selenium2TestCase\Exception(
                 sprintf(
                     "JSON decoding of remote response failed.\n".
                     "Error code: %d\n".

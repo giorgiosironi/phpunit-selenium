@@ -77,7 +77,7 @@ class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_MoveTo extends Command
 
         if (isset($jsonParameters['element'])) {
             if (!($jsonParameters['element'] instanceof Element)) {
-                throw new PHPUnit_Extensions_Selenium2TestCase_Exception(sprintf('Only moving over an element is supported. Please pass a \'%s\' instance.', Element::class));
+                throw new \PHPUnit\Extensions\Selenium2TestCase\Exception(sprintf('Only moving over an element is supported. Please pass a \'%s\' instance.', Element::class));
             }
 
             $jsonParameters['element'] = $jsonParameters['element']->getId();

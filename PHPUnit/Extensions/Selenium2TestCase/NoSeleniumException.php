@@ -51,7 +51,6 @@
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.8
  */
-class PHPUnit_Extensions_Selenium2TestCase_NoSeleniumException
-    extends PHPUnit_Extensions_Selenium2TestCase_Exception
+class PHPUnit_Extensions_Selenium2TestCase_NoSeleniumException extends \PHPUnit\Extensions\Selenium2TestCase\Exception
 {
 }

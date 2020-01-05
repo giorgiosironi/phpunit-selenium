@@ -119,7 +119,7 @@ class PHPUnit_Extensions_Selenium2TestCase_KeysHolder
         $normalizedName = strtolower($name);
 
         if (!isset($this->_keys[$normalizedName])) {
-            throw new PHPUnit_Extensions_Selenium2TestCase_Exception("There is no special key '$name' defined");
+            throw new \PHPUnit\Extensions\Selenium2TestCase\Exception("There is no special key '$name' defined");
         }
 
         return $this->_keys[$normalizedName];
