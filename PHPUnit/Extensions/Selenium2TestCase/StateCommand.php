@@ -42,6 +42,8 @@
  * @since      File available since Release 1.2.5
  */
 
+use PHPUnit\Extensions\Selenium2TestCase\Command;
+
 /**
  * Gets or sets an attribute of an object.
  *
@@ -53,8 +55,7 @@
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.5
  */
-class PHPUnit_Extensions_Selenium2TestCase_StateCommand
-    extends PHPUnit_Extensions_Selenium2TestCase_Command
+class PHPUnit_Extensions_Selenium2TestCase_StateCommand extends Command
 {
     public function httpMethod()
     {

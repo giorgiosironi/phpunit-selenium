@@ -42,6 +42,8 @@
  * @since      File available since Release
  */
 
+use PHPUnit\Extensions\Selenium2TestCase\Command;
+
 /**
  * Gets the active element from the session
  *
@@ -53,8 +55,7 @@
  * @link       http://www.phpunit.de/
  * @since      Class available since Release
  */
-class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Active
-    extends PHPUnit_Extensions_Selenium2TestCase_Command
+class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Active extends Command
 {
 
     public function __construct($jsonParameters, PHPUnit_Extensions_Selenium2TestCase_URL $url)

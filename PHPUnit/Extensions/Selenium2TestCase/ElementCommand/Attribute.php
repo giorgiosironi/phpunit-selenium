@@ -42,6 +42,8 @@
  * @since      File available since Release 1.2.4
  */
 
+use PHPUnit\Extensions\Selenium2TestCase\Command;
+
 /**
  * Retrieves an attribute of a DOM element.
  *
@@ -53,8 +55,7 @@
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.4
  */
-class PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Attribute
-    extends PHPUnit_Extensions_Selenium2TestCase_Command
+class PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Attribute extends Command
 {
     /**
      * @param array $parameter

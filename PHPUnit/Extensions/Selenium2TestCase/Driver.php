@@ -42,6 +42,8 @@
  * @since      File available since Release 1.2.0
  */
 
+use PHPUnit\Extensions\Selenium2TestCase\Command;
+
 /**
  * Driver for creating browser session with Selenium 2 (WebDriver API).
  *
@@ -168,7 +170,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Driver
         return new PHPUnit_Extensions_Selenium2TestCase_Response($content, $info);
     }
 
-    public function execute(PHPUnit_Extensions_Selenium2TestCase_Command $command)
+    public function execute(Command $command)
     {
         return $this->curl($command->httpMethod(),
                            $command->url(),

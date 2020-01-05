@@ -42,6 +42,8 @@
  * @since      File available since Release 1.2.0
  */
 
+use PHPUnit\Extensions\Selenium2TestCase\Command;
+
 /**
  * Clicks ok on an alert popup.
  *
@@ -53,8 +55,7 @@
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.0
  */
-class PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Click
-    extends PHPUnit_Extensions_Selenium2TestCase_Command
+class PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Click extends Command
 {
     public function httpMethod()
     {

@@ -42,6 +42,8 @@
  * @since      File available since Release 1.2.4
  */
 
+use PHPUnit\Extensions\Selenium2TestCase\Command;
+
 /**
  * Object representing elements, or everything that may have subcommands.
  *
@@ -110,8 +112,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase_CommandsHolder
     }
 
     /**
-     * @params string $commandClass     a class name, descending from
-                                        PHPUnit_Extensions_Selenium2TestCase_Command
+     * @params string $commandClass     a class name, descending from Command
      * @return callable
      */
     private function factoryMethod($commandClass)
@@ -142,7 +143,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase_CommandsHolder
      * @param string $commandName  The called method name
      *                              defined as a key in initCommands()
      * @param array $jsonParameters
-     * @return PHPUnit_Extensions_Selenium2TestCase_Command
+     * @return Command
      */
     protected function newCommand($commandName, $jsonParameters)
     {

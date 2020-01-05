@@ -42,6 +42,8 @@
  * @since      File available since Release 1.2.0
  */
 
+use PHPUnit\Extensions\Selenium2TestCase\Command;
+
 /**
  * Gets or sets the current URL of the window.
  *
@@ -53,8 +55,7 @@
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.0
  */
-class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Keys
-    extends PHPUnit_Extensions_Selenium2TestCase_Command
+class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Keys extends Command
 {
     public function __construct($jsonParameters,
                                 PHPUnit_Extensions_Selenium2TestCase_URL $url)

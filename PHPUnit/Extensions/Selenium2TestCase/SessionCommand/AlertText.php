@@ -42,6 +42,8 @@
  * @since      File available since Release 1.2.4
  */
 
+use PHPUnit\Extensions\Selenium2TestCase\Command;
+
 /**
  * Obtains the text of an alert, or types into a prompt.
  *
@@ -53,8 +55,7 @@
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.4
  */
-class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_AlertText
-    extends PHPUnit_Extensions_Selenium2TestCase_Command
+class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_AlertText extends Command
 {
     public function __construct($argument, PHPUnit_Extensions_Selenium2TestCase_URL $url)
     {

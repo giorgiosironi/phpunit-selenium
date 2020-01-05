@@ -42,6 +42,8 @@
  * @since      File available since Release 1.3.2
  */
 
+use PHPUnit\Extensions\Selenium2TestCase\Command;
+
 /**
  * Sends a file to a RC
  * Returns the FQ path to the transfered file
@@ -54,8 +56,7 @@
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.3.2
  */
-class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_File
-    extends PHPUnit_Extensions_Selenium2TestCase_Command
+class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_File extends Command
 {
 
     /**

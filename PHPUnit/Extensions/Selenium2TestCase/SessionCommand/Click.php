@@ -42,6 +42,8 @@
  * @since      File available since Release 1.2.13
  */
 
+use PHPUnit\Extensions\Selenium2TestCase\Command;
+
 /**
  * Sends session click command for emulating LEFT, MIDDLE or RIGHT mouse buttons
  *
@@ -53,8 +55,7 @@
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.13
  */
-class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Click
-    extends PHPUnit_Extensions_Selenium2TestCase_Command
+class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Click extends Command
 {
     const LEFT = 0;
     const MIDDLE = 1;

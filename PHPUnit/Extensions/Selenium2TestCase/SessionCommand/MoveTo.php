@@ -42,6 +42,8 @@
  * @since      File available since Release 1.2.8
  */
 
+use PHPUnit\Extensions\Selenium2TestCase\Command;
+
 /**
  * Moves the mouse pointer.
  *
@@ -53,8 +55,7 @@
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.8
  */
-class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_MoveTo
-    extends PHPUnit_Extensions_Selenium2TestCase_Command
+class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_MoveTo extends Command
 {
     public function __construct($element,
                                 PHPUnit_Extensions_Selenium2TestCase_URL $url)

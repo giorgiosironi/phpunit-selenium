@@ -42,6 +42,8 @@
  * @since      File available since Release 1.2.4
  */
 
+use PHPUnit\Extensions\Selenium2TestCase\Command;
+
 /**
  * Class for implementing commands that just accomplishes an action (via POST).
  *
@@ -53,8 +55,7 @@
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.4
  */
-class PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost
-    extends PHPUnit_Extensions_Selenium2TestCase_Command
+class PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost extends Command
 {
     public function httpMethod()
     {
