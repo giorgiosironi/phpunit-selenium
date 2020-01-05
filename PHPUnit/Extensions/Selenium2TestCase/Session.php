@@ -51,7 +51,7 @@ use PHPUnit\Extensions\Selenium2TestCase\ElementCommand\GenericAccessor;
 use PHPUnit\Extensions\Selenium2TestCase\ElementCommand\GenericPost;
 use PHPUnit\Extensions\Selenium2TestCase\Session\Cookie;
 use PHPUnit\Extensions\Selenium2TestCase\Session\Storage;
-use PHPUnit_Extensions_Selenium2TestCase_Session_Timeouts;
+use PHPUnit\Extensions\Selenium2TestCase\Session\Timeouts;
 use PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Active;
 use PHPUnit_Extensions_Selenium2TestCase_SessionCommand_GenericAttribute;
 use PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Url;
@@ -97,7 +97,7 @@ class Session extends Accessor
     private $baseUrl;
 
     /**
-     * @var PHPUnit_Extensions_Selenium2TestCase_Session_Timeouts
+     * @var Timeouts
      */
     private $timeouts;
 
@@ -109,7 +109,7 @@ class Session extends Accessor
     public function __construct($driver,
                                 URL $url,
                                 URL $baseUrl,
-                                PHPUnit_Extensions_Selenium2TestCase_Session_Timeouts $timeouts)
+                                Timeouts $timeouts)
     {
         $this->baseUrl = $baseUrl;
         $this->timeouts = $timeouts;

@@ -42,6 +42,8 @@
  * @since      File available since Release 1.2.4
  */
 
+namespace PHPUnit\Extensions\Selenium2TestCase\Session;
+
 use PHPUnit\Extensions\Selenium2TestCase\CommandsHolder;
 use PHPUnit\Extensions\Selenium2TestCase\ElementCommand\GenericPost;
 use PHPUnit\Extensions\Selenium2TestCase\URL;
@@ -59,7 +61,7 @@ use PHPUnit\Extensions\Selenium2TestCase\URL;
  * @method implicitWait(int $ms) Sets timeout when searching for elements
  * @method asyncScript(int $ms) Sets timeout for asynchronous scripts executed by Session::executeAsync()
  */
-class PHPUnit_Extensions_Selenium2TestCase_Session_Timeouts extends CommandsHolder
+class Timeouts extends CommandsHolder
 {
     private $maximumTimeout;
     private $lastImplicitWaitValue = 0;

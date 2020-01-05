@@ -52,6 +52,7 @@ use PHPUnit\Extensions\Selenium2TestCase\ElementCriteria;
 use PHPUnit\Extensions\Selenium2TestCase\KeysHolder;
 use PHPUnit\Extensions\Selenium2TestCase\NoSeleniumException;
 use PHPUnit\Extensions\Selenium2TestCase\Session;
+use PHPUnit\Extensions\Selenium2TestCase\Session\Timeouts;
 use PHPUnit\Extensions\Selenium2TestCase\SessionStrategy;
 use PHPUnit\Extensions\Selenium2TestCase\URL;
 use PHPUnit\Extensions\Selenium2TestCase\WaitUntil;
@@ -103,7 +104,7 @@ use Throwable;
  * @method void refresh()
  * @method Select select() select($element)
  * @method string source() Returns the HTML source of the page
- * @method \PHPUnit_Extensions_Selenium2TestCase_Session_Timeouts timeouts()
+ * @method Timeouts timeouts()
  * @method string title()
  * @method void|string url() url($url = NULL)
  * @method ElementCriteria using() using($strategy) Factory Method for Criteria objects
