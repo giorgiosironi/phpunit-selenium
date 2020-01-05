@@ -48,6 +48,7 @@ use InvalidArgumentException;
 use PHPUnit\Extensions\Selenium2TestCase\Element\Accessor;
 use PHPUnit\Extensions\Selenium2TestCase\ElementCommand\Attribute;
 use PHPUnit\Extensions\Selenium2TestCase\ElementCommand\Click;
+use PHPUnit\Extensions\Selenium2TestCase\ElementCommand\Css;
 use PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost;
 
 /**
@@ -106,7 +107,7 @@ class Element extends Accessor
             'attribute' => Attribute::class,
             'clear' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
             'click' => Click::class,
-            'css' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Css',
+            'css' => Css::class,
             'displayed' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor',
             'enabled' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor',
             'equals' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Equals',
