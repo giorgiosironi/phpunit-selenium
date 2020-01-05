@@ -42,6 +42,9 @@
  * @since      File available since Release 1.2.4
  */
 
+namespace PHPUnit\Extensions\Selenium2TestCase\SessionCommand;
+
+use BadMethodCallException;
 use PHPUnit\Extensions\Selenium2TestCase\Command;
 use PHPUnit\Extensions\Selenium2TestCase\URL;
 
@@ -56,7 +59,7 @@ use PHPUnit\Extensions\Selenium2TestCase\URL;
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.4
  */
-class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_AlertText extends Command
+class AlertText extends Command
 {
     public function __construct($argument, URL $url)
     {
