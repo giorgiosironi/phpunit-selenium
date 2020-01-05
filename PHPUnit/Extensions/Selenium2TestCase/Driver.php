@@ -46,7 +46,6 @@ namespace PHPUnit\Extensions\Selenium2TestCase;
 
 use BadMethodCallException;
 use PHPUnit_Extensions_Selenium2TestCase_Session_Timeouts;
-use PHPUnit_Extensions_Selenium2TestCase_WebDriverException;
 
 /**
  * Driver for creating browser session with Selenium 2 (WebDriver API).
@@ -165,8 +164,8 @@ class Driver
         }
 
         $status = isset($content['status']) ? $content['status'] : 0;
-        if ($status !== PHPUnit_Extensions_Selenium2TestCase_WebDriverException::Success) {
-            throw new PHPUnit_Extensions_Selenium2TestCase_WebDriverException($message, $status);
+        if ($status !== WebDriverException::Success) {
+            throw new WebDriverException($message, $status);
         }
 
         return new Response($content, $info);

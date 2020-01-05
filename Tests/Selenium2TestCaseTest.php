@@ -43,6 +43,7 @@
 
 use PHPUnit\Extensions\Selenium2TestCase;
 use PHPUnit\Extensions\Selenium2TestCase\Keys;
+use PHPUnit\Extensions\Selenium2TestCase\WebDriverException;
 
 /**
  * Tests for Selenium2TestCase.
@@ -1122,8 +1123,8 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->url('html/test_open.html');
         try {
             $el = $this->byId("nonexistent");
-        } catch (PHPUnit_Extensions_Selenium2TestCase_WebDriverException $e) {
-            $this->assertEquals(PHPUnit_Extensions_Selenium2TestCase_WebDriverException::NoSuchElement, $e->getCode());
+        } catch (WebDriverException $e) {
+            $this->assertEquals(WebDriverException::NoSuchElement, $e->getCode());
             return;
         }
         $this->fail('The element shouldn\'t exist.');

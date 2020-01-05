@@ -45,7 +45,6 @@
 namespace PHPUnit\Extensions\Selenium2TestCase;
 
 use PHPUnit\Extensions\Selenium2TestCase;
-use PHPUnit_Extensions_Selenium2TestCase_WebDriverException;
 
 /**
  * The WaitUntil implementation, inspired by Java and .NET clients
@@ -84,7 +83,7 @@ class WaitUntil
      * @param null|int $sleepInterval the delay between 2 iterations of the callback
      * @return mixed
      * @throws \PHPUnit\Extensions\Selenium2TestCase\Exception
-     * @throws PHPUnit_Extensions_Selenium2TestCase_WebDriverException
+     * @throws WebDriverException
      */
     public function run($callback, $timeout = NULL, $sleepInterval = NULL)
     {
@@ -136,8 +135,7 @@ class WaitUntil
                 }
 
                 $message = "Timed out after {$timeout} second" . ($timeout != 1 ? 's' : '');
-                throw new PHPUnit_Extensions_Selenium2TestCase_WebDriverException($message,
-                    PHPUnit_Extensions_Selenium2TestCase_WebDriverException::Timeout, $lastException);
+                throw new WebDriverException($message, WebDriverException::Timeout, $lastException);
             }
 
             usleep($sleepInterval);
