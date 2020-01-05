@@ -50,6 +50,7 @@ use PHPUnit\Extensions\Selenium2TestCase\ElementCommand\Attribute;
 use PHPUnit\Extensions\Selenium2TestCase\ElementCommand\Click;
 use PHPUnit\Extensions\Selenium2TestCase\ElementCommand\Css;
 use PHPUnit\Extensions\Selenium2TestCase\ElementCommand\Equals;
+use PHPUnit\Extensions\Selenium2TestCase\ElementCommand\GenericAccessor;
 use PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost;
 
 /**
@@ -109,16 +110,16 @@ class Element extends Accessor
             'clear' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
             'click' => Click::class,
             'css' => Css::class,
-            'displayed' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor',
-            'enabled' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor',
+            'displayed' => GenericAccessor::class,
+            'enabled' => GenericAccessor::class,
             'equals' => Equals::class,
-            'location' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor',
-            'name' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor',
+            'location' => GenericAccessor::class,
+            'name' => GenericAccessor::class,
             'rect' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Rect',
-            'selected' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor',
-            'size' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor',
+            'selected' => GenericAccessor::class,
+            'size' => GenericAccessor::class,
             'submit' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
-            'text' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor',
+            'text' => GenericAccessor::class,
             'value' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Value',
             'tap' => $this->touchCommandFactoryMethod('touch/click'),
             'scroll' => $this->touchCommandFactoryMethod('touch/scroll'),

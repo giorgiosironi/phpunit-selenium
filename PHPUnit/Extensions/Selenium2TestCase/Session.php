@@ -47,6 +47,7 @@ namespace PHPUnit\Extensions\Selenium2TestCase;
 use InvalidArgumentException;
 use PHPUnit\Extensions\Selenium2TestCase\Element\Accessor;
 use PHPUnit\Extensions\Selenium2TestCase\Element\Select;
+use PHPUnit\Extensions\Selenium2TestCase\ElementCommand\GenericAccessor;
 use PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost;
 use PHPUnit_Extensions_Selenium2TestCase_Session_Cookie;
 use PHPUnit_Extensions_Selenium2TestCase_Session_Storage;
@@ -142,7 +143,7 @@ class Session extends Accessor
             'keys' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Keys',
             'moveto' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_MoveTo',
             'refresh' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
-            'screenshot' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor',
+            'screenshot' => GenericAccessor::class,
             'source' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_GenericAccessor',
             'title' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_GenericAccessor',
             'log' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Log',

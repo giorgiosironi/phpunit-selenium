@@ -42,6 +42,8 @@
  * @since      File available since Release 1.2.0
  */
 
+namespace PHPUnit\Extensions\Selenium2TestCase\ElementCommand;
+
 use PHPUnit\Extensions\Selenium2TestCase\Command;
 
 /**
@@ -56,7 +58,7 @@ use PHPUnit\Extensions\Selenium2TestCase\Command;
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.0
  */
-class PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor extends Command
+class GenericAccessor extends Command
 {
     public function httpMethod()
     {
