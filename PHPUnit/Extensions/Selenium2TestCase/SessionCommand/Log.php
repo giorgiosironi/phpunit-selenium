@@ -42,6 +42,8 @@
  * @since      File available since Release 1.3.2
  */
 
+namespace PHPUnit\Extensions\Selenium2TestCase\SessionCommand;
+
 use PHPUnit\Extensions\Selenium2TestCase\Command;
 
 /**
@@ -55,7 +57,7 @@ use PHPUnit\Extensions\Selenium2TestCase\Command;
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.3.2
  */
-class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Log extends Command
+class Log extends Command
 {
     public function __construct($type, $commandUrl)
     {

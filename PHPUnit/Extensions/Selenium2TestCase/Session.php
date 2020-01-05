@@ -63,6 +63,7 @@ use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\GenericAccessor as Sessi
 use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\GenericAttribute;
 use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\Keys as SessionKeys;
 use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\Location;
+use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\Log;
 use PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Url;
 
 /**
@@ -155,7 +156,7 @@ class Session extends Accessor
             'screenshot' => GenericAccessor::class,
             'source' => SessionGenericAccessor::class,
             'title' => SessionGenericAccessor::class,
-            'log' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Log',
+            'log' => Log::class,
             'logTypes' => $this->attributeCommandFactoryMethod('log/types'),
             'url' => function ($jsonParameters, $commandUrl) use ($baseUrl) {
                 return new PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Url($jsonParameters, $commandUrl, $baseUrl);
