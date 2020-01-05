@@ -42,6 +42,8 @@
  * @since      File available since Release 1.2.4
  */
 
+namespace PHPUnit\Extensions\Selenium2TestCase\SessionCommand;
+
 use PHPUnit\Extensions\Selenium2TestCase\Command;
 
 /**
@@ -55,7 +57,7 @@ use PHPUnit\Extensions\Selenium2TestCase\Command;
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.4
  */
-class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Window extends Command
+class Window extends Command
 {
     public function __construct($name, $commandUrl)
     {

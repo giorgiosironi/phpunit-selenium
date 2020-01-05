@@ -66,6 +66,7 @@ use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\Location;
 use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\Log;
 use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\MoveTo;
 use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\Orientation;
+use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\Window as SessionWindow;
 
 /**
  * Browser session for Selenium 2: main point of entry for functionality.
@@ -162,7 +163,7 @@ class Session extends Accessor
             'url' => function ($jsonParameters, $commandUrl) use ($baseUrl) {
                 return new \PHPUnit\Extensions\Selenium2TestCase\SessionCommand\Url($jsonParameters, $commandUrl, $baseUrl);
             },
-            'window' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Window',
+            'window' => SessionWindow::class,
             'windowHandle' => SessionGenericAccessor::class,
             'windowHandles' => SessionGenericAccessor::class,
             'touchDown' => $this->touchCommandFactoryMethod('touch/down'),
