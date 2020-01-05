@@ -49,6 +49,7 @@ use PHPUnit\Extensions\Selenium2TestCase\Element\Accessor;
 use PHPUnit\Extensions\Selenium2TestCase\ElementCommand\Attribute;
 use PHPUnit\Extensions\Selenium2TestCase\ElementCommand\Click;
 use PHPUnit\Extensions\Selenium2TestCase\ElementCommand\Css;
+use PHPUnit\Extensions\Selenium2TestCase\ElementCommand\Equals;
 use PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost;
 
 /**
@@ -110,7 +111,7 @@ class Element extends Accessor
             'css' => Css::class,
             'displayed' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor',
             'enabled' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor',
-            'equals' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Equals',
+            'equals' => Equals::class,
             'location' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor',
             'name' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor',
             'rect' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Rect',
