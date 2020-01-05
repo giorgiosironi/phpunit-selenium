@@ -47,6 +47,7 @@ namespace PHPUnit\Extensions;
 use Exception;
 use InvalidArgumentException;
 use PHPUnit\Extensions\Selenium2TestCase\Element;
+use PHPUnit\Extensions\Selenium2TestCase\Element\Select;
 use PHPUnit\Extensions\Selenium2TestCase\ElementCriteria;
 use PHPUnit\Extensions\Selenium2TestCase\KeysHolder;
 use PHPUnit\Extensions\Selenium2TestCase\NoSeleniumException;
@@ -100,7 +101,7 @@ use Throwable;
  * @method void frame() frame(mixed $element) Changes the focus to a frame in the page (by frameCount of type int, htmlId of type string, htmlName of type string or element of type Element)
  * @method void moveto() moveto(Element $element) Move the mouse by an offset of the specificed element.
  * @method void refresh()
- * @method \PHPUnit_Extensions_Selenium2TestCase_Element_Select select() select($element)
+ * @method Select select() select($element)
  * @method string source() Returns the HTML source of the page
  * @method \PHPUnit_Extensions_Selenium2TestCase_Session_Timeouts timeouts()
  * @method string title()

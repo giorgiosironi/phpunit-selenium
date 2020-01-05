@@ -46,7 +46,7 @@ namespace PHPUnit\Extensions\Selenium2TestCase;
 
 use InvalidArgumentException;
 use PHPUnit\Extensions\Selenium2TestCase\Element\Accessor;
-use PHPUnit_Extensions_Selenium2TestCase_Element_Select;
+use PHPUnit\Extensions\Selenium2TestCase\Element\Select;
 use PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost;
 use PHPUnit_Extensions_Selenium2TestCase_Session_Cookie;
 use PHPUnit_Extensions_Selenium2TestCase_Session_Storage;
@@ -215,7 +215,7 @@ class Session extends Accessor
     }
 
     /**
-     * @return PHPUnit_Extensions_Selenium2TestCase_Element_Select
+     * @return Select
      */
     public function select(Element $element)
     {
@@ -223,7 +223,7 @@ class Session extends Accessor
         if ($tag !== 'select') {
             throw new InvalidArgumentException("The element is not a `select` tag but a `$tag`.");
         }
-        return PHPUnit_Extensions_Selenium2TestCase_Element_Select::fromElement($element);
+        return Select::fromElement($element);
     }
 
     /**

@@ -42,6 +42,8 @@
  * @since      File available since Release 1.2.2
  */
 
+namespace PHPUnit\Extensions\Selenium2TestCase\Element;
+
 use PHPUnit\Extensions\Selenium2TestCase\Element;
 use PHPUnit\Extensions\Selenium2TestCase\ElementCriteria;
 
@@ -56,10 +58,10 @@ use PHPUnit\Extensions\Selenium2TestCase\ElementCriteria;
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.2
  */
-class PHPUnit_Extensions_Selenium2TestCase_Element_Select extends Element
+class Select extends Element
 {
     /**
-     * @return PHPUnit_Extensions_Selenium2TestCase_Element_Select
+     * @return Select
      */
     public static function fromElement(Element $element)
     {
