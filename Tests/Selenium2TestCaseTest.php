@@ -43,6 +43,7 @@
 
 use PHPUnit\Extensions\Selenium2TestCase;
 use PHPUnit\Extensions\Selenium2TestCase\Keys;
+use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\Click;
 use PHPUnit\Extensions\Selenium2TestCase\WebDriverException;
 use PHPUnit\Extensions\Selenium2TestCase\Window;
 
@@ -1162,17 +1163,17 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->click();
         $this->assertEquals('0', $this->byId('check')->text());
 
-        $this->click(PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Click::LEFT);
+        $this->click(Click::LEFT);
         $this->assertEquals('0', $this->byId('check')->text());
 
         // I couldn't get it worked in selenium webdriver 2.28: even though the client (phpunit-selenium) sends
         // the button: 1 in the request (checked with wireshark) - it still uses left mouse button (0)
         /*
-        $this->click(PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Click::MIDDLE);
+        $this->click(Click::MIDDLE);
         $this->assertEquals('1', $this->byId('check')->text());
         */
 
-        $this->click(PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Click::RIGHT);
+        $this->click(Click::RIGHT);
         $this->assertEquals('2', $this->byId('check')->text());
     }
 
