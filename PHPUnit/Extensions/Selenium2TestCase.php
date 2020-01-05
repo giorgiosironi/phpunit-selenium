@@ -49,10 +49,10 @@ use InvalidArgumentException;
 use PHPUnit\Extensions\Selenium2TestCase\Element;
 use PHPUnit\Extensions\Selenium2TestCase\ElementCriteria;
 use PHPUnit\Extensions\Selenium2TestCase\KeysHolder;
+use PHPUnit\Extensions\Selenium2TestCase\NoSeleniumException;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\TestResult;
 use PHPUnit\Util\InvalidArgumentHelper;
-use PHPUnit_Extensions_Selenium2TestCase_NoSeleniumException;
 use PHPUnit_Extensions_Selenium2TestCase_Session;
 use PHPUnit_Extensions_Selenium2TestCase_SessionStrategy;
 use PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Isolated;
@@ -338,7 +338,7 @@ abstract class Selenium2TestCase extends TestCase
             if (!$this->session) {
                 $this->session = $this->getStrategy()->session($this->parameters);
             }
-        } catch (PHPUnit_Extensions_Selenium2TestCase_NoSeleniumException $e) {
+        } catch (NoSeleniumException $e) {
             $this->markTestSkipped("The Selenium Server is not active on host {$this->parameters['host']} at port {$this->parameters['port']}.");
         }
         return $this->session;

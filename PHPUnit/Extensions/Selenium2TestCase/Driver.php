@@ -45,7 +45,6 @@
 namespace PHPUnit\Extensions\Selenium2TestCase;
 
 use BadMethodCallException;
-use PHPUnit_Extensions_Selenium2TestCase_NoSeleniumException;
 use PHPUnit_Extensions_Selenium2TestCase_Response;
 use PHPUnit_Extensions_Selenium2TestCase_Session;
 use PHPUnit_Extensions_Selenium2TestCase_Session_Timeouts;
@@ -130,14 +129,14 @@ class Driver
 
         $rawResponse = trim(curl_exec($curl));
         if (curl_errno($curl)) {
-            throw new PHPUnit_Extensions_Selenium2TestCase_NoSeleniumException(
+            throw new NoSeleniumException(
                 'Error connection[' . curl_errno($curl) . '] to ' .
                 $url->getValue()  . ': ' . curl_error($curl)
             );
         }
         $info = curl_getinfo($curl);
         if ($info['http_code'] == 0) {
-            throw new PHPUnit_Extensions_Selenium2TestCase_NoSeleniumException();
+            throw new NoSeleniumException();
         }
         if ($info['http_code'] == 404) {
             throw new BadMethodCallException("The command $url is not recognized by the server.");
