@@ -45,7 +45,7 @@
 namespace PHPUnit\Extensions\Selenium2TestCase;
 
 use InvalidArgumentException;
-use PHPUnit_Extensions_Selenium2TestCase_Element_Accessor;
+use PHPUnit\Extensions\Selenium2TestCase\Element\Accessor;
 use PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost;
 
 /**
@@ -72,7 +72,7 @@ use PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost;
  * @method void submit() Submits a form; can be called on its children
  * @method string text() Get content of ordinary elements
  */
-class Element extends PHPUnit_Extensions_Selenium2TestCase_Element_Accessor
+class Element extends Accessor
 {
     /**
      * @return \self

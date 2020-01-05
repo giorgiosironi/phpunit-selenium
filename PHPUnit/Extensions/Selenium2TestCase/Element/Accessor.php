@@ -40,6 +40,8 @@
  * @link       http://www.phpunit.de/
  */
 
+namespace PHPUnit\Extensions\Selenium2TestCase\Element;
+
 use PHPUnit\Extensions\Selenium2TestCase\CommandsHolder;
 use PHPUnit\Extensions\Selenium2TestCase\Element;
 use PHPUnit\Extensions\Selenium2TestCase\ElementCriteria;
@@ -55,7 +57,7 @@ use PHPUnit\Extensions\Selenium2TestCase\URL;
  * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
  */
-abstract class PHPUnit_Extensions_Selenium2TestCase_Element_Accessor extends CommandsHolder
+abstract class Accessor extends CommandsHolder
 {
 
     /**

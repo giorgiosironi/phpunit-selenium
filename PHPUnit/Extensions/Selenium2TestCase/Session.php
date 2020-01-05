@@ -45,7 +45,7 @@
 namespace PHPUnit\Extensions\Selenium2TestCase;
 
 use InvalidArgumentException;
-use PHPUnit_Extensions_Selenium2TestCase_Element_Accessor;
+use PHPUnit\Extensions\Selenium2TestCase\Element\Accessor;
 use PHPUnit_Extensions_Selenium2TestCase_Element_Select;
 use PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost;
 use PHPUnit_Extensions_Selenium2TestCase_Session_Cookie;
@@ -87,7 +87,7 @@ use PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Url;
  * @method array log(string $type) Get the log for a given log type. Log buffer is reset after each request.
  * @method array logTypes() Get available log types.
  */
-class Session extends PHPUnit_Extensions_Selenium2TestCase_Element_Accessor
+class Session extends Accessor
 {
     /**
      * @var string  the base URL for this session,
