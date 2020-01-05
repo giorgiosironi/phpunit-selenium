@@ -42,12 +42,15 @@
  * @since      File available since Release 1.0.0
  */
 
+use PHPUnit\Extensions\SeleniumCommon\ExitHandler;
+
 // By default the code coverage files are written to the same directory
 // that contains the covered sourcecode files. Use this setting to change
 // the default behaviour and set a specific directory to write the files to.
 // If you change the default setting, please make sure to also configure
 // the same directory in phpunit_coverage.php. Also note that the webserver
 // needs write access to the directory.
+
 if (!isset($GLOBALS['PHPUNIT_COVERAGE_DATA_DIRECTORY'])) {
     $GLOBALS['PHPUNIT_COVERAGE_DATA_DIRECTORY'] = FALSE;
 }
@@ -61,4 +64,4 @@ if ( isset($_COOKIE['PHPUNIT_SELENIUM_TEST_ID']) &&
 }
 
 include ('ExitHandler.php');
-PHPUnit_Extensions_SeleniumCommon_ExitHandler::init();
+ExitHandler::init();
