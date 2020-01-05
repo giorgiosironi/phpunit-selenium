@@ -42,7 +42,10 @@
  * @since      File available since Release 1.2.12
  */
 
+namespace PHPUnit\Extensions\Selenium2TestCase;
+
 use PHPUnit\Extensions\Selenium2TestCase;
+use PHPUnit_Extensions_Selenium2TestCase_WebDriverException;
 
 /**
  * The WaitUntil implementation, inspired by Java and .NET clients
@@ -57,7 +60,7 @@ use PHPUnit\Extensions\Selenium2TestCase;
  * @see        http://selenium.googlecode.com/svn/trunk/dotnet/src/WebDriver.Support/UI/WebDriverWait.cs
  * @see        http://selenium.googlecode.com/svn/trunk/java/client/src/org/openqa/selenium/support/ui/FluentWait.java
  */
-class PHPUnit_Extensions_Selenium2TestCase_WaitUntil
+class WaitUntil
 {
     /**
      * PHPUnit Test Case instance
@@ -123,7 +126,7 @@ class PHPUnit_Extensions_Selenium2TestCase_WaitUntil
 
                     return $result;
                 }
-            } catch(Exception $e) {
+            } catch(\Exception $e) {
                 $lastException = $e;
             }
 

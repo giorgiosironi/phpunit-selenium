@@ -53,12 +53,12 @@ use PHPUnit\Extensions\Selenium2TestCase\NoSeleniumException;
 use PHPUnit\Extensions\Selenium2TestCase\Session;
 use PHPUnit\Extensions\Selenium2TestCase\SessionStrategy;
 use PHPUnit\Extensions\Selenium2TestCase\URL;
+use PHPUnit\Extensions\Selenium2TestCase\WaitUntil;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\TestResult;
 use PHPUnit\Util\InvalidArgumentHelper;
 use PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Isolated;
 use PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Shared;
-use PHPUnit_Extensions_Selenium2TestCase_WaitUntil;
 use PHPUnit_Extensions_SeleniumCommon_RemoteCoverage;
 use RuntimeException;
 use Throwable;
@@ -590,7 +590,7 @@ abstract class Selenium2TestCase extends TestCase
      */
     public function waitUntil($callback, $timeout = NULL)
     {
-        $waitUntil = new PHPUnit_Extensions_Selenium2TestCase_WaitUntil($this);
+        $waitUntil = new WaitUntil($this);
         return $waitUntil->run($callback, $timeout);
     }
 
