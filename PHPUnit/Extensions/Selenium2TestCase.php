@@ -48,10 +48,10 @@ use Exception;
 use InvalidArgumentException;
 use PHPUnit\Extensions\Selenium2TestCase\Element;
 use PHPUnit\Extensions\Selenium2TestCase\ElementCriteria;
+use PHPUnit\Extensions\Selenium2TestCase\KeysHolder;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\TestResult;
 use PHPUnit\Util\InvalidArgumentHelper;
-use PHPUnit_Extensions_Selenium2TestCase_KeysHolder;
 use PHPUnit_Extensions_Selenium2TestCase_NoSeleniumException;
 use PHPUnit_Extensions_Selenium2TestCase_Session;
 use PHPUnit_Extensions_Selenium2TestCase_SessionStrategy;
@@ -181,7 +181,7 @@ abstract class Selenium2TestCase extends TestCase
     private $collectCodeCoverageInformation;
 
     /**
-     * @var PHPUnit_Extensions_Selenium2TestCase_KeysHolder
+     * @var KeysHolder
      */
     private $keysHolder;
 
@@ -278,7 +278,7 @@ abstract class Selenium2TestCase extends TestCase
             'secure' => FALSE
         );
 
-        $this->keysHolder = new PHPUnit_Extensions_Selenium2TestCase_KeysHolder();
+        $this->keysHolder = new KeysHolder();
     }
 
     public function setupSpecificBrowser($params)
@@ -600,7 +600,7 @@ abstract class Selenium2TestCase extends TestCase
      * @deprecated
      * @param string $name
      * @throws \PHPUnit\Extensions\Selenium2TestCase\Exception
-     * @see PHPUnit_Extensions_Selenium2TestCase_KeysHolder
+     * @see KeysHolder
      */
     public function keysSpecial($name)
     {
