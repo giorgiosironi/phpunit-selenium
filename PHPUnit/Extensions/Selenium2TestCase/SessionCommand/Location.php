@@ -42,7 +42,7 @@
  * @since      File available since Release 1.2.0
  */
 
-use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\GenericAttribute;
+namespace PHPUnit\Extensions\Selenium2TestCase\SessionCommand;
 
 /**
  * Gets or posts an attribute from/to the session (title, alert text, etc.)
@@ -55,7 +55,7 @@ use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\GenericAttribute;
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.9
  */
-class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Location extends GenericAttribute
+class Location extends GenericAttribute
 {
 
     public function __construct($location, $commandUrl)

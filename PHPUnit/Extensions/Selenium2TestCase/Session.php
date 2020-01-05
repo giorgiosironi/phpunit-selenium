@@ -62,6 +62,7 @@ use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\Frame;
 use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\GenericAccessor as SessionGenericAccessor;
 use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\GenericAttribute;
 use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\Keys as SessionKeys;
+use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\Location;
 use PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Url;
 
 /**
@@ -167,7 +168,7 @@ class Session extends Accessor
             'touchMove' => $this->touchCommandFactoryMethod('touch/move'),
             'touchScroll' => $this->touchCommandFactoryMethod('touch/scroll'),
             'flick' => $this->touchCommandFactoryMethod('touch/flick'),
-            'location' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Location',
+            'location' => Location::class,
             'orientation' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Orientation',
             'file' => File::class
         );
