@@ -45,8 +45,8 @@
 namespace PHPUnit\Extensions\Selenium2TestCase\Session;
 
 use PHPUnit\Extensions\Selenium2TestCase\Driver;
+use PHPUnit\Extensions\Selenium2TestCase\Session\Cookie\Builder;
 use PHPUnit\Extensions\Selenium2TestCase\URL;
-use PHPUnit_Extensions_Selenium2TestCase_Session_Cookie_Builder;
 
 /**
  * Adds and remove cookies.
@@ -73,11 +73,11 @@ class Cookie
     /**
      * @param string $name
      * @param string $value
-     * @return PHPUnit_Extensions_Selenium2TestCase_Session_Cookie_Builder
+     * @return Builder
      */
     public function add($name, $value)
     {
-        return new PHPUnit_Extensions_Selenium2TestCase_Session_Cookie_Builder($this, $name, $value);
+        return new Builder($this, $name, $value);
     }
 
     /**

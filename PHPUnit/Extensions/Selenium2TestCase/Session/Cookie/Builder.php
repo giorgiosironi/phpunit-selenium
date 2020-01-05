@@ -42,6 +42,8 @@
  * @since      File available since Release 1.2.6
  */
 
+namespace PHPUnit\Extensions\Selenium2TestCase\Session\Cookie;
+
 /**
  * Adds a cookie.
  *
@@ -53,7 +55,7 @@
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.6
  */
-class PHPUnit_Extensions_Selenium2TestCase_Session_Cookie_Builder
+class Builder
 {
     private $name;
     private $value;
@@ -71,7 +73,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Session_Cookie_Builder
 
     /**
      * @param string
-     * @return PHPUnit_Extensions_Selenium2TestCase_Session_Cookie_Builder
+     * @return Builder
      */
     public function path($path)
     {
@@ -81,7 +83,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Session_Cookie_Builder
 
     /**
      * @param string
-     * @return PHPUnit_Extensions_Selenium2TestCase_Session_Cookie_Builder
+     * @return Builder
      */
     public function domain($domain)
     {
@@ -91,7 +93,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Session_Cookie_Builder
 
     /**
      * @param boolean
-     * @return PHPUnit_Extensions_Selenium2TestCase_Session_Cookie_Builder
+     * @return Builder
      */
     public function secure($secure)
     {
@@ -101,7 +103,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Session_Cookie_Builder
 
     /**
      * @param integer
-     * @return PHPUnit_Extensions_Selenium2TestCase_Session_Cookie_Builder
+     * @return Builder
      */
     public function expiry($expiry)
     {
