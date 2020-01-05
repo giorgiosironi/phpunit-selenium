@@ -43,6 +43,7 @@
  */
 
 use PHPUnit\Extensions\Selenium2TestCase\Command;
+use PHPUnit\Extensions\Selenium2TestCase\Element;
 
 /**
  * Changes the focus to a frame.
@@ -86,7 +87,7 @@ class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Frame extends Command
      */
     private function isElement($id)
     {
-        return $id instanceof PHPUnit_Extensions_Selenium2TestCase_Element;
+        return $id instanceof Element;
     }
 
     public function httpMethod()

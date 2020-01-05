@@ -42,6 +42,8 @@
  * @since      File available since Release 1.2.2
  */
 
+use PHPUnit\Extensions\Selenium2TestCase\Element;
+
 /**
  * Object representing a <select> element.
  *
@@ -53,13 +55,12 @@
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.2
  */
-class PHPUnit_Extensions_Selenium2TestCase_Element_Select
-    extends PHPUnit_Extensions_Selenium2TestCase_Element
+class PHPUnit_Extensions_Selenium2TestCase_Element_Select extends Element
 {
     /**
      * @return PHPUnit_Extensions_Selenium2TestCase_Element_Select
      */
-    public static function fromElement(PHPUnit_Extensions_Selenium2TestCase_Element $element)
+    public static function fromElement(Element $element)
     {
         return new self($element->driver, $element->url);
     }

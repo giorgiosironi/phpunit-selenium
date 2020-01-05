@@ -42,7 +42,12 @@
  * @since      File available since Release 1.2.0
  */
 
-use PHPUnit\Extensions\Selenium2TestCase\Driver;
+namespace PHPUnit\Extensions\Selenium2TestCase;
+
+use InvalidArgumentException;
+use PHPUnit_Extensions_Selenium2TestCase_Element_Accessor;
+use PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost;
+use PHPUnit_Extensions_Selenium2TestCase_URL;
 
 /**
  * Object representing a DOM element.
@@ -60,7 +65,7 @@ use PHPUnit\Extensions\Selenium2TestCase\Driver;
  * @method string css($propertyName) Retrieves the value of a CSS property
  * @method bool displayed() Checks an element's visibility
  * @method bool enabled() Checks a form element's state
- * @method bool equals(PHPUnit_Extensions_Selenium2TestCase_Element $another) Checks if the two elements are the same on the page
+ * @method bool equals(Element $another) Checks if the two elements are the same on the page
  * @method array rect() Retrieves the element's coordinates: keys 'x', 'y', 'width' and 'height' in the returned array
  * @method array location() Retrieves the element's position in the page: keys 'x' and 'y' in the returned array
  * @method bool selected() Checks the state of an option or other form element
@@ -68,8 +73,7 @@ use PHPUnit\Extensions\Selenium2TestCase\Driver;
  * @method void submit() Submits a form; can be called on its children
  * @method string text() Get content of ordinary elements
  */
-class PHPUnit_Extensions_Selenium2TestCase_Element
-    extends PHPUnit_Extensions_Selenium2TestCase_Element_Accessor
+class Element extends PHPUnit_Extensions_Selenium2TestCase_Element_Accessor
 {
     /**
      * @return \self

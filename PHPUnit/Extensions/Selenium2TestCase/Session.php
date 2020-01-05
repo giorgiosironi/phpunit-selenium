@@ -42,6 +42,8 @@
  * @since      File available since Release 1.2.0
  */
 
+use PHPUnit\Extensions\Selenium2TestCase\Element;
+
 /**
  * Browser session for Selenium 2: main point of entry for functionality.
  *
@@ -60,8 +62,8 @@
  * @method string execute(array $javaScriptCode) Injects arbitrary JavaScript in the page and returns the last. See unit tests for usage
  * @method string executeAsync(array $javaScriptCode) Injects arbitrary JavaScript and wait for the callback (last element of arguments) to be called. See unit tests for usage
  * @method void forward()
- * @method void frame(mixed $element) Changes the focus to a frame in the page (by frameCount of type int, htmlId of type string, htmlName of type string or element of type \PHPUnit_Extensions_Selenium2TestCase_Element)
- * @method void moveto(\PHPUnit_Extensions_Selenium2TestCase_Element $element) Move the mouse by an offset of the specificed element.
+ * @method void frame(mixed $element) Changes the focus to a frame in the page (by frameCount of type int, htmlId of type string, htmlName of type string or element of type Element)
+ * @method void moveto(Element $element) Move the mouse by an offset of the specificed element.
  * @method void refresh()
  * @method string source() Returns the HTML source of the page
  * @method string title()
@@ -205,7 +207,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
     /**
      * @return PHPUnit_Extensions_Selenium2TestCase_Element_Select
      */
-    public function select(PHPUnit_Extensions_Selenium2TestCase_Element $element)
+    public function select(Element $element)
     {
         $tag = $element->name();
         if ($tag !== 'select') {
@@ -216,11 +218,11 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
 
     /**
      * @param array   WebElement JSON object
-     * @return PHPUnit_Extensions_Selenium2TestCase_Element
+     * @return Element
      */
     public function elementFromResponseValue($value)
     {
-        return PHPUnit_Extensions_Selenium2TestCase_Element::fromResponseValue($value, $this->getSessionUrl()->descend('element'), $this->driver);
+        return Element::fromResponseValue($value, $this->getSessionUrl()->descend('element'), $this->driver);
     }
 
     /**
@@ -262,7 +264,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
     /**
      * Get the element on the page that currently has focus.
      *
-     * @return PHPUnit_Extensions_Selenium2TestCase_Element
+     * @return Element
      */
     public function active()
     {

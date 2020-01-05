@@ -46,6 +46,7 @@ namespace PHPUnit\Extensions;
 
 use Exception;
 use InvalidArgumentException;
+use PHPUnit\Extensions\Selenium2TestCase\Element;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\TestResult;
 use PHPUnit\Util\InvalidArgumentHelper;
@@ -78,26 +79,26 @@ use Throwable;
  * @method void acceptAlert() Press OK on an alert, or confirms a dialog
  * @method mixed alertText() alertText($value = NULL) Gets the alert dialog text, or sets the text for a prompt dialog
  * @method void back()
- * @method \PHPUnit_Extensions_Selenium2TestCase_Element byClassName() byClassName($value)
- * @method \PHPUnit_Extensions_Selenium2TestCase_Element byCssSelector() byCssSelector($value)
- * @method \PHPUnit_Extensions_Selenium2TestCase_Element byId() byId($value)
- * @method \PHPUnit_Extensions_Selenium2TestCase_Element byLinkText() byLinkText($value)
- * @method \PHPUnit_Extensions_Selenium2TestCase_Element byPartialLinkText() byPartialLinkText($value)
- * @method \PHPUnit_Extensions_Selenium2TestCase_Element byName() byName($value)
- * @method \PHPUnit_Extensions_Selenium2TestCase_Element byTag() byTag($value)
- * @method \PHPUnit_Extensions_Selenium2TestCase_Element byXPath() byXPath($value)
+ * @method Element byClassName() byClassName($value)
+ * @method Element byCssSelector() byCssSelector($value)
+ * @method Element byId() byId($value)
+ * @method Element byLinkText() byLinkText($value)
+ * @method Element byPartialLinkText() byPartialLinkText($value)
+ * @method Element byName() byName($value)
+ * @method Element byTag() byTag($value)
+ * @method Element byXPath() byXPath($value)
  * @method void click() click(int $button = 0) Click any mouse button (at the coordinates set by the last moveto command).
  * @method void clickOnElement() clickOnElement($id)
  * @method string currentScreenshot() BLOB of the image file
  * @method void dismissAlert() Press Cancel on an alert, or does not confirm a dialog
  * @method void doubleclick() Double clicks (at the coordinates set by the last moveto command).
- * @method \PHPUnit_Extensions_Selenium2TestCase_Element element() element(\PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $criteria) Retrieves an element
+ * @method Element element() element(\PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $criteria) Retrieves an element
  * @method array elements() elements(\PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $criteria) Retrieves an array of Element instances
  * @method string execute() execute($javaScriptCode) Injects arbitrary JavaScript in the page and returns the last
  * @method string executeAsync() executeAsync($javaScriptCode) Injects arbitrary JavaScript and wait for the callback (last element of arguments) to be called
  * @method void forward()
- * @method void frame() frame(mixed $element) Changes the focus to a frame in the page (by frameCount of type int, htmlId of type string, htmlName of type string or element of type \PHPUnit_Extensions_Selenium2TestCase_Element)
- * @method void moveto() moveto(\PHPUnit_Extensions_Selenium2TestCase_Element $element) Move the mouse by an offset of the specificed element.
+ * @method void frame() frame(mixed $element) Changes the focus to a frame in the page (by frameCount of type int, htmlId of type string, htmlName of type string or element of type Element)
+ * @method void moveto() moveto(Element $element) Move the mouse by an offset of the specificed element.
  * @method void refresh()
  * @method \PHPUnit_Extensions_Selenium2TestCase_Element_Select select() select($element)
  * @method string source() Returns the HTML source of the page
@@ -114,7 +115,7 @@ use Throwable;
  * @method array logTypes() Get available log types.
  * @method void closeWindow() Close the current window.
  * @method void stop() Close the current window and clear session data.
- * @method \PHPUnit_Extensions_Selenium2TestCase_Element active() Get the element on the page that currently has focus.
+ * @method Element active() Get the element on the page that currently has focus.
  * @method \PHPUnit_Extensions_Selenium2TestCase_Window currentWindow() get the current Window Object
  */
 abstract class Selenium2TestCase extends TestCase
