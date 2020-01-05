@@ -56,6 +56,7 @@ use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\AcceptAlert;
 use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\Active;
 use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\AlertText;
 use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\Click;
+use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\DismissAlert;
 use PHPUnit_Extensions_Selenium2TestCase_SessionCommand_GenericAttribute;
 use PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Url;
 
@@ -137,7 +138,7 @@ class Session extends Accessor
             'click' => Click::class,
             'buttondown' => GenericPost::class,
             'buttonup' => GenericPost::class,
-            'dismissAlert' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_DismissAlert',
+            'dismissAlert' => DismissAlert::class,
             'doubleclick' => GenericPost::class,
             'execute' => GenericPost::class,
             'executeAsync' => GenericPost::class,
