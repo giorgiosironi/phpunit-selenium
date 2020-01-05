@@ -57,6 +57,7 @@ use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\Active;
 use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\AlertText;
 use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\Click;
 use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\DismissAlert;
+use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\File;
 use PHPUnit_Extensions_Selenium2TestCase_SessionCommand_GenericAttribute;
 use PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Url;
 
@@ -165,7 +166,7 @@ class Session extends Accessor
             'flick' => $this->touchCommandFactoryMethod('touch/flick'),
             'location' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Location',
             'orientation' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Orientation',
-            'file' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_File'
+            'file' => File::class
         );
     }
 
