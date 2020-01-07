@@ -42,6 +42,8 @@
  * @since      File available since Release 1.2.9
  */
 
+namespace PHPUnit\Extensions\Selenium2TestCase;
+
 /**
  * @package    PHPUnit_Selenium
  * @author     Giorgio Sironi <info@giorgiosironi.com>
@@ -51,7 +53,6 @@
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.8
  */
-class PHPUnit_Extensions_Selenium2TestCase_NoSeleniumException
-    extends PHPUnit_Extensions_Selenium2TestCase_Exception
+class NoSeleniumException extends \PHPUnit\Extensions\Selenium2TestCase\Exception
 {
 }

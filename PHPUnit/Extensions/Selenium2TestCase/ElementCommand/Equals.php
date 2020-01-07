@@ -42,6 +42,13 @@
  * @since      File available since Release 1.2.4
  */
 
+namespace PHPUnit\Extensions\Selenium2TestCase\ElementCommand;
+
+use InvalidArgumentException;
+use PHPUnit\Extensions\Selenium2TestCase\Command;
+use PHPUnit\Extensions\Selenium2TestCase\Element;
+use PHPUnit\Extensions\Selenium2TestCase\URL;
+
 /**
  * Checks equality (same element on the page) with another DOM element.
  *
@@ -53,17 +60,15 @@
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.4
  */
-class PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Equals
-    extends PHPUnit_Extensions_Selenium2TestCase_Command
+class Equals extends Command
 {
     /**
      * @param array $parameter
      */
-    public function __construct($parameter,
-                                PHPUnit_Extensions_Selenium2TestCase_URL $equalsResourceBaseUrl)
+    public function __construct($parameter, URL $equalsResourceBaseUrl)
     {
         $this->jsonParameters = array();
-        if (!($parameter instanceof PHPUnit_Extensions_Selenium2TestCase_Element)) {
+        if (!($parameter instanceof Element)) {
             throw new InvalidArgumentException("Elements can only test equality with other Element instances.");
         }
         $this->url = $equalsResourceBaseUrl->descend($parameter->getId());

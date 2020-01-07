@@ -42,6 +42,8 @@
  * @since      File available since Release 1.2.0
  */
 
+namespace PHPUnit\Extensions\Selenium2TestCase\SessionCommand;
+
 /**
  * Gets or posts an attribute from/to the session (title, alert text, etc.)
  *
@@ -53,8 +55,7 @@
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.9
  */
-class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Location
-    extends PHPUnit_Extensions_Selenium2TestCase_SessionCommand_GenericAttribute
+class Location extends GenericAttribute
 {
 
     public function __construct($location, $commandUrl)

@@ -1,4 +1,7 @@
 <?php
+
+namespace PHPUnit\Extensions\SeleniumCommon;
+
 /**
  * If Ececution was stopped by calling exit();
  * php does not append append.php, so no code coverage date is collected
@@ -6,7 +9,7 @@
  * @author Arbuzov <info@whitediver.com>
  *
  */
-class PHPUnit_Extensions_SeleniumCommon_ExitHandler
+class ExitHandler
 {
     /**
      * Register handler.
@@ -15,7 +18,7 @@ class PHPUnit_Extensions_SeleniumCommon_ExitHandler
      */
     public static function init()
     {
-        register_shutdown_function( array( 'PHPUnit_Extensions_SeleniumCommon_ExitHandler', 'handle' ) );
+        register_shutdown_function(array(ExitHandler::class, 'handle'));
     }
 
     /**

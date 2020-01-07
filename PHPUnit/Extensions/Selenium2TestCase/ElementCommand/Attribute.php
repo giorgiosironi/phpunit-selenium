@@ -42,6 +42,11 @@
  * @since      File available since Release 1.2.4
  */
 
+namespace PHPUnit\Extensions\Selenium2TestCase\ElementCommand;
+
+use PHPUnit\Extensions\Selenium2TestCase\Command;
+use PHPUnit\Extensions\Selenium2TestCase\URL;
+
 /**
  * Retrieves an attribute of a DOM element.
  *
@@ -53,14 +58,12 @@
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.4
  */
-class PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Attribute
-    extends PHPUnit_Extensions_Selenium2TestCase_Command
+class Attribute extends Command
 {
     /**
      * @param array $parameter
      */
-    public function __construct($parameter,
-                                PHPUnit_Extensions_Selenium2TestCase_URL $attributeResourceBaseUrl)
+    public function __construct($parameter, URL $attributeResourceBaseUrl)
     {
         $this->jsonParameters = array();
         $this->url = $attributeResourceBaseUrl->descend($parameter);

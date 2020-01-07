@@ -42,6 +42,12 @@
  * @since      File available since Release 1.2.4
  */
 
+namespace PHPUnit\Extensions\Selenium2TestCase;
+
+use BadMethodCallException;
+use Exception;
+use InvalidArgumentException;
+
 /**
  * Object representing elements, or everything that may have subcommands.
  *
@@ -53,10 +59,10 @@
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.4
  */
-abstract class PHPUnit_Extensions_Selenium2TestCase_CommandsHolder
+abstract class CommandsHolder
 {
     /**
-     * @var PHPUnit_Extensions_Selenium2TestCase_Driver
+     * @var Driver
      */
     protected $driver;
 
@@ -71,8 +77,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase_CommandsHolder
      */
     protected $commands;
 
-    public function __construct($driver,
-                                PHPUnit_Extensions_Selenium2TestCase_URL $url)
+    public function __construct($driver, URL $url)
     {
         $this->driver = $driver;
         $this->url = $url;
@@ -101,7 +106,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase_CommandsHolder
         return $response->getValue();
     }
 
-    protected function postCommand($name, PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $criteria)
+    protected function postCommand($name, ElementCriteria $criteria)
     {
         $response = $this->driver->curl('POST',
                                         $this->url->addCommand($name),
@@ -110,8 +115,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase_CommandsHolder
     }
 
     /**
-     * @params string $commandClass     a class name, descending from
-                                        PHPUnit_Extensions_Selenium2TestCase_Command
+     * @params string $commandClass     a class name, descending from Command
      * @return callable
      */
     private function factoryMethod($commandClass)
@@ -142,7 +146,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase_CommandsHolder
      * @param string $commandName  The called method name
      *                              defined as a key in initCommands()
      * @param array $jsonParameters
-     * @return PHPUnit_Extensions_Selenium2TestCase_Command
+     * @return Command
      */
     protected function newCommand($commandName, $jsonParameters)
     {

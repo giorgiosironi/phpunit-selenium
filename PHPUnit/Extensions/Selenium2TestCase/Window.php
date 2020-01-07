@@ -42,6 +42,10 @@
  * @since      File available since Release 1.2.5
  */
 
+namespace PHPUnit\Extensions\Selenium2TestCase;
+
+use PHPUnit\Extensions\Selenium2TestCase\ElementCommand\GenericPost;
+
 /**
  * Object representing a browser window.
  *
@@ -56,7 +60,7 @@
  * @method array position(array $position = null) Window position as array('x' => $x, 'y' => $y)
  * @method array maximize() Maximize window
  */
-class PHPUnit_Extensions_Selenium2TestCase_Window extends PHPUnit_Extensions_Selenium2TestCase_CommandsHolder
+class Window extends CommandsHolder
 {
     /**
      * @return array    class names
@@ -64,9 +68,9 @@ class PHPUnit_Extensions_Selenium2TestCase_Window extends PHPUnit_Extensions_Sel
     protected function initCommands()
     {
         return array(
-            'size' => 'PHPUnit_Extensions_Selenium2TestCase_StateCommand',
-            'position' => 'PHPUnit_Extensions_Selenium2TestCase_StateCommand',
-            'maximize' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
+            'size' => StateCommand::class,
+            'position' => StateCommand::class,
+            'maximize' => GenericPost::class,
         );
     }
 

@@ -42,6 +42,12 @@
  * @since      File available since Release 1.2.6
  */
 
+namespace PHPUnit\Extensions\Selenium2TestCase\Session;
+
+use PHPUnit\Extensions\Selenium2TestCase\Driver;
+use PHPUnit\Extensions\Selenium2TestCase\Session\Cookie\Builder;
+use PHPUnit\Extensions\Selenium2TestCase\URL;
+
 /**
  * Adds and remove cookies.
  *
@@ -53,13 +59,12 @@
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.6
  */
-class PHPUnit_Extensions_Selenium2TestCase_Session_Cookie
+class Cookie
 {
     private $driver;
     private $url;
 
-    public function __construct(PHPUnit_Extensions_Selenium2TestCase_Driver $driver,
-                                PHPUnit_Extensions_Selenium2TestCase_URL $url)
+    public function __construct(Driver $driver, URL $url)
     {
         $this->driver = $driver;
         $this->url = $url;
@@ -68,11 +73,11 @@ class PHPUnit_Extensions_Selenium2TestCase_Session_Cookie
     /**
      * @param string $name
      * @param string $value
-     * @return PHPUnit_Extensions_Selenium2TestCase_Session_Cookie_Builder
+     * @return Builder
      */
     public function add($name, $value)
     {
-        return new PHPUnit_Extensions_Selenium2TestCase_Session_Cookie_Builder($this, $name, $value);
+        return new Builder($this, $name, $value);
     }
 
     /**
@@ -87,7 +92,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Session_Cookie
                 return $cookie['value'];
             }
         }
-        throw new PHPUnit_Extensions_Selenium2TestCase_Exception("There is no '$name' cookie available on this page.");
+        throw new \PHPUnit\Extensions\Selenium2TestCase\Exception("There is no '$name' cookie available on this page.");
     }
 
     /**

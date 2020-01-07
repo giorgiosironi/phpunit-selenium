@@ -42,6 +42,11 @@
  * @since      File available since Release 1.2.4
  */
 
+namespace PHPUnit\Extensions\Selenium2TestCase\SessionCommand;
+
+use PHPUnit\Extensions\Selenium2TestCase\Command;
+use PHPUnit\Extensions\Selenium2TestCase\Element;
+
 /**
  * Changes the focus to a frame.
  *
@@ -53,8 +58,7 @@
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.4
  */
-class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Frame
-    extends PHPUnit_Extensions_Selenium2TestCase_Command
+class Frame extends Command
 {
     public function __construct($id, $commandUrl)
     {
@@ -85,7 +89,7 @@ class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Frame
      */
     private function isElement($id)
     {
-        return $id instanceof PHPUnit_Extensions_Selenium2TestCase_Element;
+        return $id instanceof Element;
     }
 
     public function httpMethod()

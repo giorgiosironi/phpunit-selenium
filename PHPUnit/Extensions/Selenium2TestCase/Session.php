@@ -42,6 +42,32 @@
  * @since      File available since Release 1.2.0
  */
 
+namespace PHPUnit\Extensions\Selenium2TestCase;
+
+use InvalidArgumentException;
+use PHPUnit\Extensions\Selenium2TestCase\Element\Accessor;
+use PHPUnit\Extensions\Selenium2TestCase\Element\Select;
+use PHPUnit\Extensions\Selenium2TestCase\ElementCommand\GenericAccessor;
+use PHPUnit\Extensions\Selenium2TestCase\ElementCommand\GenericPost;
+use PHPUnit\Extensions\Selenium2TestCase\Session\Cookie;
+use PHPUnit\Extensions\Selenium2TestCase\Session\Storage;
+use PHPUnit\Extensions\Selenium2TestCase\Session\Timeouts;
+use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\AcceptAlert;
+use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\Active;
+use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\AlertText;
+use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\Click;
+use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\DismissAlert;
+use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\File;
+use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\Frame;
+use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\GenericAccessor as SessionGenericAccessor;
+use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\GenericAttribute;
+use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\Keys as SessionKeys;
+use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\Location;
+use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\Log;
+use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\MoveTo;
+use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\Orientation;
+use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\Window as SessionWindow;
+
 /**
  * Browser session for Selenium 2: main point of entry for functionality.
  *
@@ -60,8 +86,8 @@
  * @method string execute(array $javaScriptCode) Injects arbitrary JavaScript in the page and returns the last. See unit tests for usage
  * @method string executeAsync(array $javaScriptCode) Injects arbitrary JavaScript and wait for the callback (last element of arguments) to be called. See unit tests for usage
  * @method void forward()
- * @method void frame(mixed $element) Changes the focus to a frame in the page (by frameCount of type int, htmlId of type string, htmlName of type string or element of type \PHPUnit_Extensions_Selenium2TestCase_Element)
- * @method void moveto(\PHPUnit_Extensions_Selenium2TestCase_Element $element) Move the mouse by an offset of the specificed element.
+ * @method void frame(mixed $element) Changes the focus to a frame in the page (by frameCount of type int, htmlId of type string, htmlName of type string or element of type Element)
+ * @method void moveto(Element $element) Move the mouse by an offset of the specificed element.
  * @method void refresh()
  * @method string source() Returns the HTML source of the page
  * @method string title()
@@ -74,8 +100,7 @@
  * @method array log(string $type) Get the log for a given log type. Log buffer is reset after each request.
  * @method array logTypes() Get available log types.
  */
-class PHPUnit_Extensions_Selenium2TestCase_Session
-    extends PHPUnit_Extensions_Selenium2TestCase_Element_Accessor
+class Session extends Accessor
 {
     /**
      * @var string  the base URL for this session,
@@ -84,7 +109,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
     private $baseUrl;
 
     /**
-     * @var PHPUnit_Extensions_Selenium2TestCase_Session_Timeouts
+     * @var Timeouts
      */
     private $timeouts;
 
@@ -94,9 +119,9 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
     private $stopped = FALSE;
 
     public function __construct($driver,
-                                PHPUnit_Extensions_Selenium2TestCase_URL $url,
-                                PHPUnit_Extensions_Selenium2TestCase_URL $baseUrl,
-                                PHPUnit_Extensions_Selenium2TestCase_Session_Timeouts $timeouts)
+                                URL $url,
+                                URL $baseUrl,
+                                Timeouts $timeouts)
     {
         $this->baseUrl = $baseUrl;
         $this->timeouts = $timeouts;
@@ -115,40 +140,40 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
     {
         $baseUrl = $this->baseUrl;
         return array(
-            'acceptAlert' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_AcceptAlert',
-            'alertText' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_AlertText',
-            'back' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
-            'click' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Click',
-            'buttondown' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
-            'buttonup' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
-            'dismissAlert' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_DismissAlert',
-            'doubleclick' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
-            'execute' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
-            'executeAsync' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
-            'forward' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
-            'frame' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Frame',
-            'keys' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Keys',
-            'moveto' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_MoveTo',
-            'refresh' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
-            'screenshot' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor',
-            'source' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_GenericAccessor',
-            'title' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_GenericAccessor',
-            'log' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Log',
+            'acceptAlert' => AcceptAlert::class,
+            'alertText' => AlertText::class,
+            'back' => GenericPost::class,
+            'click' => Click::class,
+            'buttondown' => GenericPost::class,
+            'buttonup' => GenericPost::class,
+            'dismissAlert' => DismissAlert::class,
+            'doubleclick' => GenericPost::class,
+            'execute' => GenericPost::class,
+            'executeAsync' => GenericPost::class,
+            'forward' => GenericPost::class,
+            'frame' => Frame::class,
+            'keys' => SessionKeys::class,
+            'moveto' => MoveTo::class,
+            'refresh' => GenericPost::class,
+            'screenshot' => GenericAccessor::class,
+            'source' => SessionGenericAccessor::class,
+            'title' => SessionGenericAccessor::class,
+            'log' => Log::class,
             'logTypes' => $this->attributeCommandFactoryMethod('log/types'),
             'url' => function ($jsonParameters, $commandUrl) use ($baseUrl) {
-                return new PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Url($jsonParameters, $commandUrl, $baseUrl);
+                return new \PHPUnit\Extensions\Selenium2TestCase\SessionCommand\Url($jsonParameters, $commandUrl, $baseUrl);
             },
-            'window' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Window',
-            'windowHandle' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_GenericAccessor',
-            'windowHandles' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_GenericAccessor',
+            'window' => SessionWindow::class,
+            'windowHandle' => SessionGenericAccessor::class,
+            'windowHandles' => SessionGenericAccessor::class,
             'touchDown' => $this->touchCommandFactoryMethod('touch/down'),
             'touchUp' => $this->touchCommandFactoryMethod('touch/up'),
             'touchMove' => $this->touchCommandFactoryMethod('touch/move'),
             'touchScroll' => $this->touchCommandFactoryMethod('touch/scroll'),
             'flick' => $this->touchCommandFactoryMethod('touch/flick'),
-            'location' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Location',
-            'orientation' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Orientation',
-            'file' => 'PHPUnit_Extensions_Selenium2TestCase_SessionCommand_File'
+            'location' => Location::class,
+            'orientation' => Orientation::class,
+            'file' => File::class
         );
     }
 
@@ -156,7 +181,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
     {
         $url = $this->url->addCommand($urlSegment);
         return function ($jsonParameters, $commandUrl) use ($url) {
-            return new PHPUnit_Extensions_Selenium2TestCase_SessionCommand_GenericAttribute($jsonParameters, $url);
+            return new GenericAttribute($jsonParameters, $url);
         };
     }
 
@@ -164,7 +189,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
     {
         $url = $this->url->addCommand($urlSegment);
         return function ($jsonParameters, $commandUrl) use ($url) {
-            return new PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost($jsonParameters, $url);
+            return new GenericPost($jsonParameters, $url);
         };
     }
 
@@ -174,7 +199,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
     }
 
     /**
-     * @return PHPUnit_Extensions_Selenium2TestCase_URL
+     * @return URL
      */
     public function getSessionUrl()
     {
@@ -203,24 +228,24 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
     }
 
     /**
-     * @return PHPUnit_Extensions_Selenium2TestCase_Element_Select
+     * @return Select
      */
-    public function select(PHPUnit_Extensions_Selenium2TestCase_Element $element)
+    public function select(Element $element)
     {
         $tag = $element->name();
         if ($tag !== 'select') {
             throw new InvalidArgumentException("The element is not a `select` tag but a `$tag`.");
         }
-        return PHPUnit_Extensions_Selenium2TestCase_Element_Select::fromElement($element);
+        return Select::fromElement($element);
     }
 
     /**
      * @param array   WebElement JSON object
-     * @return PHPUnit_Extensions_Selenium2TestCase_Element
+     * @return Element
      */
     public function elementFromResponseValue($value)
     {
-        return PHPUnit_Extensions_Selenium2TestCase_Element::fromResponseValue($value, $this->getSessionUrl()->descend('element'), $this->driver);
+        return Element::fromResponseValue($value, $this->getSessionUrl()->descend('element'), $this->driver);
     }
 
     /**
@@ -246,12 +271,12 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
     }
 
     /**
-     * @return PHPUnit_Extensions_Selenium2TestCase_Window
+     * @return Window
      */
     public function currentWindow()
     {
         $url = $this->url->descend('window')->descend(trim($this->windowHandle(), '{}'));
-        return new PHPUnit_Extensions_Selenium2TestCase_Window($this->driver, $url);
+        return new Window($this->driver, $url);
     }
 
     public function closeWindow()
@@ -262,31 +287,31 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
     /**
      * Get the element on the page that currently has focus.
      *
-     * @return PHPUnit_Extensions_Selenium2TestCase_Element
+     * @return Element
      */
     public function active()
     {
-        $command = new PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Active(null, $this->url);
+        $command = new Active(null, $this->url);
         $response = $this->driver->execute($command);
         return $this->elementFromResponseValue($response->getValue());
     }
 
     /**
-     * @return PHPUnit_Extensions_Selenium2TestCase_Session_Cookie
+     * @return Cookie
      */
     public function cookie()
     {
         $url = $this->url->descend('cookie');
-        return new PHPUnit_Extensions_Selenium2TestCase_Session_Cookie($this->driver, $url);
+        return new Cookie($this->driver, $url);
     }
 
     /**
-     * @return PHPUnit_Extensions_Selenium2TestCase_Session_Storage
+     * @return Storage
      */
     public function localStorage()
     {
         $url = $this->url->addCommand('localStorage');
-        return new PHPUnit_Extensions_Selenium2TestCase_Session_Storage($this->driver, $url);
+        return new Storage($this->driver, $url);
     }
 
     public function landscape()

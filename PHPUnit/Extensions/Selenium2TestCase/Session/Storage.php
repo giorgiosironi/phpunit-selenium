@@ -42,6 +42,11 @@
  * @since      File available since Release 1.2.6
  */
 
+namespace PHPUnit\Extensions\Selenium2TestCase\Session;
+
+use PHPUnit\Extensions\Selenium2TestCase\Driver;
+use PHPUnit\Extensions\Selenium2TestCase\URL;
+
 /**
  * Manage the local storage HTML 5 database.
  *
@@ -53,13 +58,12 @@
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.6
  */
-class PHPUnit_Extensions_Selenium2TestCase_Session_Storage
+class Storage
 {
     private $driver;
     private $url;
 
-    public function __construct(PHPUnit_Extensions_Selenium2TestCase_Driver $driver,
-                                PHPUnit_Extensions_Selenium2TestCase_URL $url)
+    public function __construct(Driver $driver, URL $url)
     {
         $this->driver = $driver;
         $this->url = $url;

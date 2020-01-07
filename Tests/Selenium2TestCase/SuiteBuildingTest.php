@@ -47,7 +47,7 @@ use PHPUnit\Framework\TestSuite;
 require_once 'PHPUnit/Extensions/Selenium2TestCase.php';
 
 /**
- * Tests for PHPUnit_Extensions_Selenium2TestCase::suite().
+ * Tests for Selenium2TestCase::suite().
  *
  * @package    PHPUnit_Selenium
  * @author     Jonathan Lipps <jlipps@gmail.com>

@@ -41,7 +41,12 @@
  * @link       http://www.phpunit.de/
  * @since      File available since Release 1.2.6
  */
+
+namespace PHPUnit\Extensions;
+
 use PHPUnit\Framework\TestSuite;
+use ReflectionClass;
+use ReflectionMethod;
 
 /**
  * TestSuite class for a set of tests from a single Testcase Class
@@ -55,7 +60,7 @@ use PHPUnit\Framework\TestSuite;
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.6
  */
-class PHPUnit_Extensions_SeleniumBrowserSuite extends TestSuite
+class SeleniumBrowserSuite extends TestSuite
 {
     /**
      * Overriding the default: Selenium suites are always built from a TestCase class.

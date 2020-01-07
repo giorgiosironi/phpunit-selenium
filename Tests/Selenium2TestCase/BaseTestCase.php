@@ -1,5 +1,8 @@
 <?php
-class Tests_Selenium2TestCase_BaseTestCase extends PHPUnit_Extensions_Selenium2TestCase
+
+use PHPUnit\Extensions\Selenium2TestCase;
+
+class Tests_Selenium2TestCase_BaseTestCase extends Selenium2TestCase
 {
     public function setUp(): void
     {

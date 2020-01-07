@@ -42,6 +42,8 @@
  * @since      File available since Release 1.2.12
  */
 
+namespace PHPUnit\Extensions\Selenium2TestCase;
+
 /**
  * Class-mapper, that converts requested special key into correspondent Unicode character
  *
@@ -54,7 +56,7 @@
  * @since      Class available since Release 1.2.12
  * @see        http://code.google.com/p/selenium/wiki/JsonWireProtocol#/session/:sessionId/element/:id/value
  */
-class PHPUnit_Extensions_Selenium2TestCase_KeysHolder
+class KeysHolder
 {
     private $_keys = array(
         'null'      => "\xEE\x80\x80",
@@ -119,7 +121,7 @@ class PHPUnit_Extensions_Selenium2TestCase_KeysHolder
         $normalizedName = strtolower($name);
 
         if (!isset($this->_keys[$normalizedName])) {
-            throw new PHPUnit_Extensions_Selenium2TestCase_Exception("There is no special key '$name' defined");
+            throw new \PHPUnit\Extensions\Selenium2TestCase\Exception("There is no special key '$name' defined");
         }
 
         return $this->_keys[$normalizedName];

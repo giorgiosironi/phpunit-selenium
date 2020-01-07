@@ -1,5 +1,8 @@
 <?php
-class Tests_Selenium2TestCase_SessionInSetupTest extends PHPUnit_Extensions_Selenium2TestCase
+
+use PHPUnit\Extensions\Selenium2TestCase;
+
+class Tests_Selenium2TestCase_SessionInSetupTest extends Selenium2TestCase
 {
     public function setUp(): void
     {

@@ -42,6 +42,8 @@
  * @since      File available since Release 1.2.0
  */
 
+namespace PHPUnit\Extensions\Selenium2TestCase;
+
 /**
  * URL Value Object allowing easy concatenation.
  *
@@ -53,7 +55,7 @@
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.0
  */
-final class PHPUnit_Extensions_Selenium2TestCase_URL
+final class URL
 {
     /**
      * @var string
@@ -72,7 +74,7 @@ final class PHPUnit_Extensions_Selenium2TestCase_URL
      * @param string $host
      * @param int port
      * @param bool secure
-     * @return PHPUnit_Extensions_Selenium2TestCase_URL
+     * @return URL
      */
     public static function fromHostAndPort($host, $port, $secure)
     {
@@ -98,7 +100,7 @@ final class PHPUnit_Extensions_Selenium2TestCase_URL
 
     /**
      * @param string $addition
-     * @return PHPUnit_Extensions_Selenium2TestCase_URL
+     * @return URL
      */
     public function descend($addition)
     {
@@ -116,7 +118,7 @@ final class PHPUnit_Extensions_Selenium2TestCase_URL
     }
 
     /**
-     * @return PHPUnit_Extensions_Selenium2TestCase_URL
+     * @return URL
      */
     public function ascend()
     {
@@ -136,7 +138,7 @@ final class PHPUnit_Extensions_Selenium2TestCase_URL
 
     /**
      * @param string $command
-     * @return PHPUnit_Extensions_Selenium2TestCase_URL
+     * @return URL
      */
     public function addCommand($command)
     {
@@ -145,7 +147,7 @@ final class PHPUnit_Extensions_Selenium2TestCase_URL
 
     /**
      * @param string $newUrl
-     * @return PHPUnit_Extensions_Selenium2TestCase_URL
+     * @return URL
      */
     public function jump($newUrl)
     {

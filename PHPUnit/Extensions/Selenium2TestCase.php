@@ -41,9 +41,30 @@
  * @link       http://www.phpunit.de/
  * @since      File available since Release 1.2.0
  */
+
+namespace PHPUnit\Extensions;
+
+use Exception;
+use InvalidArgumentException;
+use PHPUnit\Extensions\Selenium2TestCase\Element;
+use PHPUnit\Extensions\Selenium2TestCase\Element\Select;
+use PHPUnit\Extensions\Selenium2TestCase\ElementCriteria;
+use PHPUnit\Extensions\Selenium2TestCase\KeysHolder;
+use PHPUnit\Extensions\Selenium2TestCase\NoSeleniumException;
+use PHPUnit\Extensions\Selenium2TestCase\Session;
+use PHPUnit\Extensions\Selenium2TestCase\Session\Timeouts;
+use PHPUnit\Extensions\Selenium2TestCase\SessionStrategy;
+use PHPUnit\Extensions\Selenium2TestCase\SessionStrategy\Isolated;
+use PHPUnit\Extensions\Selenium2TestCase\SessionStrategy\Shared;
+use PHPUnit\Extensions\Selenium2TestCase\URL;
+use PHPUnit\Extensions\Selenium2TestCase\WaitUntil;
+use PHPUnit\Extensions\Selenium2TestCase\Window;
+use PHPUnit\Extensions\SeleniumCommon\RemoteCoverage;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\TestResult;
 use PHPUnit\Util\InvalidArgumentHelper;
+use RuntimeException;
+use Throwable;
 
 /**
  * TestCase class that uses Selenium 2
@@ -60,33 +81,33 @@ use PHPUnit\Util\InvalidArgumentHelper;
  * @method void acceptAlert() Press OK on an alert, or confirms a dialog
  * @method mixed alertText() alertText($value = NULL) Gets the alert dialog text, or sets the text for a prompt dialog
  * @method void back()
- * @method \PHPUnit_Extensions_Selenium2TestCase_Element byClassName() byClassName($value)
- * @method \PHPUnit_Extensions_Selenium2TestCase_Element byCssSelector() byCssSelector($value)
- * @method \PHPUnit_Extensions_Selenium2TestCase_Element byId() byId($value)
- * @method \PHPUnit_Extensions_Selenium2TestCase_Element byLinkText() byLinkText($value)
- * @method \PHPUnit_Extensions_Selenium2TestCase_Element byPartialLinkText() byPartialLinkText($value)
- * @method \PHPUnit_Extensions_Selenium2TestCase_Element byName() byName($value)
- * @method \PHPUnit_Extensions_Selenium2TestCase_Element byTag() byTag($value)
- * @method \PHPUnit_Extensions_Selenium2TestCase_Element byXPath() byXPath($value)
+ * @method Element byClassName() byClassName($value)
+ * @method Element byCssSelector() byCssSelector($value)
+ * @method Element byId() byId($value)
+ * @method Element byLinkText() byLinkText($value)
+ * @method Element byPartialLinkText() byPartialLinkText($value)
+ * @method Element byName() byName($value)
+ * @method Element byTag() byTag($value)
+ * @method Element byXPath() byXPath($value)
  * @method void click() click(int $button = 0) Click any mouse button (at the coordinates set by the last moveto command).
  * @method void clickOnElement() clickOnElement($id)
  * @method string currentScreenshot() BLOB of the image file
  * @method void dismissAlert() Press Cancel on an alert, or does not confirm a dialog
  * @method void doubleclick() Double clicks (at the coordinates set by the last moveto command).
- * @method \PHPUnit_Extensions_Selenium2TestCase_Element element() element(\PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $criteria) Retrieves an element
- * @method array elements() elements(\PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $criteria) Retrieves an array of Element instances
+ * @method Element element() element(ElementCriteria $criteria) Retrieves an element
+ * @method array elements() elements(ElementCriteria $criteria) Retrieves an array of Element instances
  * @method string execute() execute($javaScriptCode) Injects arbitrary JavaScript in the page and returns the last
  * @method string executeAsync() executeAsync($javaScriptCode) Injects arbitrary JavaScript and wait for the callback (last element of arguments) to be called
  * @method void forward()
- * @method void frame() frame(mixed $element) Changes the focus to a frame in the page (by frameCount of type int, htmlId of type string, htmlName of type string or element of type \PHPUnit_Extensions_Selenium2TestCase_Element)
- * @method void moveto() moveto(\PHPUnit_Extensions_Selenium2TestCase_Element $element) Move the mouse by an offset of the specificed element.
+ * @method void frame() frame(mixed $element) Changes the focus to a frame in the page (by frameCount of type int, htmlId of type string, htmlName of type string or element of type Element)
+ * @method void moveto() moveto(Element $element) Move the mouse by an offset of the specificed element.
  * @method void refresh()
- * @method \PHPUnit_Extensions_Selenium2TestCase_Element_Select select() select($element)
+ * @method Select select() select($element)
  * @method string source() Returns the HTML source of the page
- * @method \PHPUnit_Extensions_Selenium2TestCase_Session_Timeouts timeouts()
+ * @method Timeouts timeouts()
  * @method string title()
  * @method void|string url() url($url = NULL)
- * @method PHPUnit_Extensions_Selenium2TestCase_ElementCriteria using() using($strategy) Factory Method for Criteria objects
+ * @method ElementCriteria using() using($strategy) Factory Method for Criteria objects
  * @method void window() window($name) Changes the focus to another window
  * @method string windowHandle() Retrieves the current window handle
  * @method string windowHandles() Retrieves a list of all available window handles
@@ -96,10 +117,10 @@ use PHPUnit\Util\InvalidArgumentHelper;
  * @method array logTypes() Get available log types.
  * @method void closeWindow() Close the current window.
  * @method void stop() Close the current window and clear session data.
- * @method \PHPUnit_Extensions_Selenium2TestCase_Element active() Get the element on the page that currently has focus.
- * @method \PHPUnit_Extensions_Selenium2TestCase_Window currentWindow() get the current Window Object
+ * @method Element active() Get the element on the page that currently has focus.
+ * @method Window currentWindow() get the current Window Object
  */
-abstract class PHPUnit_Extensions_Selenium2TestCase extends TestCase
+abstract class Selenium2TestCase extends TestCase
 {
     const VERSION = '7.0.1';
 
@@ -109,7 +130,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends TestCase
     protected $coverageScriptUrl;
 
     /**
-     * @var PHPUnit_Extensions_Selenium2TestCase_Session
+     * @var Session
      */
     private $session;
 
@@ -119,12 +140,12 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends TestCase
     private $parameters;
 
     /**
-     * @var PHPUnit_Extensions_Selenium2TestCase_SessionStrategy
+     * @var SessionStrategy
      */
     protected static $sessionStrategy;
 
     /**
-     * @var PHPUnit_Extensions_Selenium2TestCase_SessionStrategy
+     * @var SessionStrategy
      */
     protected static $browserSessionStrategy;
 
@@ -143,7 +164,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends TestCase
     private static $defaultWaitUntilSleepInterval = 500;
 
     /**
-     * @var PHPUnit_Extensions_Selenium2TestCase_SessionStrategy
+     * @var SessionStrategy
      */
     protected $localSessionStrategy;
 
@@ -163,7 +184,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends TestCase
     private $collectCodeCoverageInformation;
 
     /**
-     * @var PHPUnit_Extensions_Selenium2TestCase_KeysHolder
+     * @var KeysHolder
      */
     private $keysHolder;
 
@@ -183,7 +204,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends TestCase
         if (!$shareSession) {
             self::$sessionStrategy = self::defaultSessionStrategy();
         } else {
-            self::$sessionStrategy = new PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Shared(
+            self::$sessionStrategy = new Shared(
               self::defaultSessionStrategy(), self::$keepSessionOnFailure
               );
         }
@@ -209,7 +230,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends TestCase
 
     private static function defaultSessionStrategy()
     {
-        return new PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Isolated;
+        return new Isolated;
     }
 
     /**
@@ -260,7 +281,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends TestCase
             'secure' => FALSE
         );
 
-        $this->keysHolder = new PHPUnit_Extensions_Selenium2TestCase_KeysHolder();
+        $this->keysHolder = new KeysHolder();
     }
 
     public function setupSpecificBrowser($params)
@@ -293,9 +314,9 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends TestCase
             if ($strat != "isolated" && $strat != "shared") {
                 throw new InvalidArgumentException("Session strategy must be either 'isolated' or 'shared'");
             } elseif ($strat == "isolated") {
-                self::$browserSessionStrategy = new PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Isolated;
+                self::$browserSessionStrategy = new Isolated;
             } else {
-                self::$browserSessionStrategy = new PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Shared(self::defaultSessionStrategy(), self::$keepSessionOnFailure);
+                self::$browserSessionStrategy = new Shared(self::defaultSessionStrategy(), self::$keepSessionOnFailure);
             }
         } else {
             self::$browserSessionStrategy = self::defaultSessionStrategy();
@@ -320,7 +341,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends TestCase
             if (!$this->session) {
                 $this->session = $this->getStrategy()->session($this->parameters);
             }
-        } catch (PHPUnit_Extensions_Selenium2TestCase_NoSeleniumException $e) {
+        } catch (NoSeleniumException $e) {
             $this->markTestSkipped("The Selenium Server is not active on host {$this->parameters['host']} at port {$this->parameters['port']}.");
         }
         return $this->session;
@@ -339,7 +360,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends TestCase
         parent::run($result);
 
         if ($this->collectCodeCoverageInformation) {
-            $coverage = new PHPUnit_Extensions_SeleniumCommon_RemoteCoverage(
+            $coverage = new RemoteCoverage(
                 $this->coverageScriptUrl,
                 $this->testId
             );
@@ -394,7 +415,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends TestCase
 
     public static function suite($className)
     {
-        return PHPUnit_Extensions_SeleniumTestSuite::fromTestCaseClass($className);
+        return SeleniumTestSuite::fromTestCaseClass($className);
     }
 
     public function onNotSuccessfulTest(Throwable $e): void
@@ -413,7 +434,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends TestCase
     public function __call($command, $arguments)
     {
         if ($this->session === NULL) {
-            throw new PHPUnit_Extensions_Selenium2TestCase_Exception("There is currently no active session to execute the '$command' command. You're probably trying to set some option in setUp() with an incorrect setter name. You may consider using setUpPage() instead.");
+            throw new \PHPUnit\Extensions\Selenium2TestCase\Exception("There is currently no active session to execute the '$command' command. You're probably trying to set some option in setUp() with an incorrect setter name. You may consider using setUpPage() instead.");
         }
         $result = call_user_func_array(
           array($this->session, $command), $arguments
@@ -504,7 +525,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends TestCase
             throw InvalidArgumentHelper::factory(1, 'string');
         }
 
-        $this->parameters['browserUrl'] = new PHPUnit_Extensions_Selenium2TestCase_URL($browserUrl);
+        $this->parameters['browserUrl'] = new URL($browserUrl);
     }
 
     public function getBrowserUrl()
@@ -572,7 +593,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends TestCase
      */
     public function waitUntil($callback, $timeout = NULL)
     {
-        $waitUntil = new PHPUnit_Extensions_Selenium2TestCase_WaitUntil($this);
+        $waitUntil = new WaitUntil($this);
         return $waitUntil->run($callback, $timeout);
     }
 
@@ -581,8 +602,8 @@ abstract class PHPUnit_Extensions_Selenium2TestCase extends TestCase
      * Deprecated due to issues with IE webdriver. Use keys() method instead
      * @deprecated
      * @param string $name
-     * @throws PHPUnit_Extensions_Selenium2TestCase_Exception
-     * @see PHPUnit_Extensions_Selenium2TestCase_KeysHolder
+     * @throws \PHPUnit\Extensions\Selenium2TestCase\Exception
+     * @see KeysHolder
      */
     public function keysSpecial($name)
     {

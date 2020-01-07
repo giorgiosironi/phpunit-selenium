@@ -42,6 +42,19 @@
  * @since      File available since Release 1.2.0
  */
 
+namespace PHPUnit\Extensions\Selenium2TestCase;
+
+use InvalidArgumentException;
+use PHPUnit\Extensions\Selenium2TestCase\Element\Accessor;
+use PHPUnit\Extensions\Selenium2TestCase\ElementCommand\Attribute;
+use PHPUnit\Extensions\Selenium2TestCase\ElementCommand\Click;
+use PHPUnit\Extensions\Selenium2TestCase\ElementCommand\Css;
+use PHPUnit\Extensions\Selenium2TestCase\ElementCommand\Equals;
+use PHPUnit\Extensions\Selenium2TestCase\ElementCommand\GenericAccessor;
+use PHPUnit\Extensions\Selenium2TestCase\ElementCommand\GenericPost;
+use PHPUnit\Extensions\Selenium2TestCase\ElementCommand\Rect;
+use PHPUnit\Extensions\Selenium2TestCase\ElementCommand\Value;
+
 /**
  * Object representing a DOM element.
  *
@@ -58,7 +71,7 @@
  * @method string css($propertyName) Retrieves the value of a CSS property
  * @method bool displayed() Checks an element's visibility
  * @method bool enabled() Checks a form element's state
- * @method bool equals(PHPUnit_Extensions_Selenium2TestCase_Element $another) Checks if the two elements are the same on the page
+ * @method bool equals(Element $another) Checks if the two elements are the same on the page
  * @method array rect() Retrieves the element's coordinates: keys 'x', 'y', 'width' and 'height' in the returned array
  * @method array location() Retrieves the element's position in the page: keys 'x' and 'y' in the returned array
  * @method bool selected() Checks the state of an option or other form element
@@ -66,17 +79,13 @@
  * @method void submit() Submits a form; can be called on its children
  * @method string text() Get content of ordinary elements
  */
-class PHPUnit_Extensions_Selenium2TestCase_Element
-    extends PHPUnit_Extensions_Selenium2TestCase_Element_Accessor
+class Element extends Accessor
 {
     /**
      * @return \self
      * @throws InvalidArgumentException
      */
-    public static function fromResponseValue(
-            array $value,
-            PHPUnit_Extensions_Selenium2TestCase_URL $parentFolder,
-            PHPUnit_Extensions_Selenium2TestCase_Driver $driver)
+    public static function fromResponseValue(array $value, URL $parentFolder, Driver $driver)
     {
         if (!isset($value['ELEMENT'])) {
             throw new InvalidArgumentException('Element not found.');
@@ -99,21 +108,21 @@ class PHPUnit_Extensions_Selenium2TestCase_Element
     protected function initCommands()
     {
         return array(
-            'attribute' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Attribute',
-            'clear' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
-            'click' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Click',
-            'css' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Css',
-            'displayed' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor',
-            'enabled' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor',
-            'equals' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Equals',
-            'location' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor',
-            'name' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor',
-            'rect' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Rect',
-            'selected' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor',
-            'size' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor',
-            'submit' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost',
-            'text' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericAccessor',
-            'value' => 'PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Value',
+            'attribute' => Attribute::class,
+            'clear' => GenericPost::class,
+            'click' => Click::class,
+            'css' => Css::class,
+            'displayed' => GenericAccessor::class,
+            'enabled' => GenericAccessor::class,
+            'equals' => Equals::class,
+            'location' => GenericAccessor::class,
+            'name' => GenericAccessor::class,
+            'rect' => Rect::class,
+            'selected' => GenericAccessor::class,
+            'size' => GenericAccessor::class,
+            'submit' => GenericPost::class,
+            'text' => GenericAccessor::class,
+            'value' => Value::class,
             'tap' => $this->touchCommandFactoryMethod('touch/click'),
             'scroll' => $this->touchCommandFactoryMethod('touch/scroll'),
             'doubletap' => $this->touchCommandFactoryMethod('touch/doubleclick'),
@@ -137,7 +146,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Element
                     is_null($jsonParameters)) {
                 $jsonParameters['element'] = $self->getId();
             }
-            return new PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost($jsonParameters, $url);
+            return new GenericPost($jsonParameters, $url);
         };
     }
 

@@ -42,6 +42,11 @@
  * @since      File available since Release 1.2.0
  */
 
+namespace PHPUnit\Extensions\Selenium2TestCase\SessionCommand;
+
+use PHPUnit\Extensions\Selenium2TestCase\Command;
+use PHPUnit\Extensions\Selenium2TestCase\URL as SeleniumURL;
+
 /**
  * Gets or sets the current URL of the window.
  *
@@ -53,10 +58,9 @@
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.0
  */
-class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Url
-    extends PHPUnit_Extensions_Selenium2TestCase_Command
+class Url extends Command
 {
-    public function __construct($url, $commandUrl, PHPUnit_Extensions_Selenium2TestCase_URL $baseUrl)
+    public function __construct($url, $commandUrl, SeleniumURL $baseUrl)
     {
         if ($url !== NULL) {
             $absoluteLocation = $baseUrl->jump($url)->getValue();

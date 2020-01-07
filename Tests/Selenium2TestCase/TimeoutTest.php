@@ -15,7 +15,7 @@ class Tests_Selenium2TestCase_TimeoutTest extends Tests_Selenium2TestCase_BaseTe
 
     public function testAnImplicitWaitValueToRespectOnTheServerMustBeSmallerThanTheSeleniumServerCallsTimeout()
     {
-        $this->expectException(PHPUnit_Extensions_Selenium2TestCase_Exception::class);
+        $this->expectException(\PHPUnit\Extensions\Selenium2TestCase\Exception::class);
         $this->timeouts()->implicitWait(120000);
     }
 

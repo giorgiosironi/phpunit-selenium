@@ -1,4 +1,6 @@
 <?php
+
+use PHPUnit\Extensions\SeleniumCommon\RemoteCoverage;
 use PHPUnit\Framework\TestCase;
 
 class Tests_Selenium2TestCase_Coverage_RemoteCoverageTest extends TestCase
@@ -6,7 +8,7 @@ class Tests_Selenium2TestCase_Coverage_RemoteCoverageTest extends TestCase
     public function testObtainsCodeCoverageInformationFromAPossiblyRemoteHttpServer()
     {
         $coverageScriptUrl = PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL . '/coverage/dummy.txt';
-        $coverage = new PHPUnit_Extensions_SeleniumCommon_RemoteCoverage(
+        $coverage = new RemoteCoverage(
             $coverageScriptUrl,
             'dummyTestId'
         );

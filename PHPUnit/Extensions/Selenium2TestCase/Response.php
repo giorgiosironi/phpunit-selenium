@@ -42,6 +42,8 @@
  * @since      File available since Release 1.2.0
  */
 
+namespace PHPUnit\Extensions\Selenium2TestCase;
+
 /**
  * Object representing an HTTP response from the Selenium Server.
  *
@@ -53,7 +55,7 @@
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.0
  */
-class PHPUnit_Extensions_Selenium2TestCase_Response
+class Response
 {
     /**
      * @var array   decoded response
@@ -79,7 +81,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Response
     }
 
     /**
-     * @return PHPUnit_Extensions_Selenium2TestCase_URL
+     * @return URL
      */
     public function getURL()
     {
@@ -94,6 +96,6 @@ class PHPUnit_Extensions_Selenium2TestCase_Response
             $url .= '/' . $sessionId;
         }
 
-        return new PHPUnit_Extensions_Selenium2TestCase_URL($url);
+        return new URL($url);
     }
 }

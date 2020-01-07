@@ -42,6 +42,12 @@
  * @since      File available since Release 1.2.8
  */
 
+namespace PHPUnit\Extensions\Selenium2TestCase\SessionCommand;
+
+use PHPUnit\Extensions\Selenium2TestCase\Command;
+use PHPUnit\Extensions\Selenium2TestCase\Element;
+use PHPUnit\Extensions\Selenium2TestCase\URL;
+
 /**
  * Moves the mouse pointer.
  *
@@ -53,11 +59,9 @@
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.8
  */
-class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_MoveTo
-    extends PHPUnit_Extensions_Selenium2TestCase_Command
+class MoveTo extends Command
 {
-    public function __construct($element,
-                                PHPUnit_Extensions_Selenium2TestCase_URL $url)
+    public function __construct($element, URL $url)
     {
         if (!is_array($element)) {
             $element = array(
@@ -74,8 +78,8 @@ class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_MoveTo
         $jsonParameters = array_intersect_key($element, $validKeys);
 
         if (isset($jsonParameters['element'])) {
-            if (!($jsonParameters['element'] instanceof PHPUnit_Extensions_Selenium2TestCase_Element)) {
-                throw new PHPUnit_Extensions_Selenium2TestCase_Exception('Only moving over an element is supported. Please pass a PHPUnit_Extensions_Selenium2TestCase_Element instance.');
+            if (!($jsonParameters['element'] instanceof Element)) {
+                throw new \PHPUnit\Extensions\Selenium2TestCase\Exception(sprintf('Only moving over an element is supported. Please pass a \'%s\' instance.', Element::class));
             }
 
             $jsonParameters['element'] = $jsonParameters['element']->getId();

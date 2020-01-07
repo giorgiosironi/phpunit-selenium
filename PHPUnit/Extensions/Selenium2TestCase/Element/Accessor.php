@@ -40,6 +40,13 @@
  * @link       http://www.phpunit.de/
  */
 
+namespace PHPUnit\Extensions\Selenium2TestCase\Element;
+
+use PHPUnit\Extensions\Selenium2TestCase\CommandsHolder;
+use PHPUnit\Extensions\Selenium2TestCase\Element;
+use PHPUnit\Extensions\Selenium2TestCase\ElementCriteria;
+use PHPUnit\Extensions\Selenium2TestCase\URL;
+
 
 /**
  * Provides access to /element and /elements commands
@@ -50,13 +57,12 @@
  * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
  */
-abstract class PHPUnit_Extensions_Selenium2TestCase_Element_Accessor
-    extends PHPUnit_Extensions_Selenium2TestCase_CommandsHolder
+abstract class Accessor extends CommandsHolder
 {
 
     /**
      * @param string $value     e.g. 'container'
-     * @return PHPUnit_Extensions_Selenium2TestCase_Element
+     * @return Element
      */
     public function byClassName($value)
     {
@@ -65,7 +71,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase_Element_Accessor
 
     /**
      * @param string $value     e.g. 'div.container'
-     * @return PHPUnit_Extensions_Selenium2TestCase_Element
+     * @return Element
      */
     public function byCssSelector($value)
     {
@@ -74,7 +80,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase_Element_Accessor
 
     /**
      * @param string $value     e.g. 'uniqueId'
-     * @return PHPUnit_Extensions_Selenium2TestCase_Element
+     * @return Element
      */
     public function byId($value)
     {
@@ -83,7 +89,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase_Element_Accessor
 
     /**
      * @param string $value     e.g. 'Link text'
-     * @return PHPUnit_Extensions_Selenium2TestCase_Element
+     * @return Element
      */
     public function byLinkText($value)
     {
@@ -92,7 +98,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase_Element_Accessor
 
     /**
      * @param string $value     e.g. 'Link te'
-     * @return PHPUnit_Extensions_Selenium2TestCase_Element
+     * @return Element
      */
     public function byPartialLinkText($value)
     {
@@ -101,7 +107,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase_Element_Accessor
 
     /**
      * @param string $value     e.g. 'email_address'
-     * @return PHPUnit_Extensions_Selenium2TestCase_Element
+     * @return Element
      */
     public function byName($value)
     {
@@ -110,7 +116,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase_Element_Accessor
 
     /**
      * @param string $value     e.g. 'body'
-     * @return PHPUnit_Extensions_Selenium2TestCase_Element
+     * @return Element
      */
     public function byTag($value)
     {
@@ -119,7 +125,7 @@ abstract class PHPUnit_Extensions_Selenium2TestCase_Element_Accessor
 
     /**
      * @param string $value     e.g. '/div[@attribute="value"]'
-     * @return PHPUnit_Extensions_Selenium2TestCase_Element
+     * @return Element
      */
     public function byXPath($value)
     {
@@ -127,48 +133,45 @@ abstract class PHPUnit_Extensions_Selenium2TestCase_Element_Accessor
     }
 
     /**
-     * @return PHPUnit_Extensions_Selenium2TestCase_Element
+     * @return Element
      */
-    public function element(PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $criteria)
+    public function element(ElementCriteria $criteria)
     {
         $value = $this->postCommand('element', $criteria);
-        return PHPUnit_Extensions_Selenium2TestCase_Element::fromResponseValue(
-                $value, $this->getSessionUrl()->descend('element'), $this->driver);
+        return Element::fromResponseValue($value, $this->getSessionUrl()->descend('element'), $this->driver);
     }
 
     /**
-     * @return array    instances of PHPUnit_Extensions_Selenium2TestCase_Element
+     * @return Element[]
      */
-    public function elements(PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $criteria)
+    public function elements(ElementCriteria $criteria)
     {
         $values = $this->postCommand('elements', $criteria);
         $elements = array();
         foreach ($values as $value) {
-            $elements[] =
-                PHPUnit_Extensions_Selenium2TestCase_Element::fromResponseValue(
-                    $value, $this->getSessionUrl()->descend('element'), $this->driver);
+            $elements[] = Element::fromResponseValue($value, $this->getSessionUrl()->descend('element'), $this->driver);
         }
         return $elements;
     }
 
     /**
      * @param string $strategy
-     * @return PHPUnit_Extensions_Selenium2TestCase_ElementCriteria
+     * @return ElementCriteria
      */
     public function using($strategy)
     {
-        return new PHPUnit_Extensions_Selenium2TestCase_ElementCriteria($strategy);
+        return new ElementCriteria($strategy);
     }
 
     /**
-     * @return PHPUnit_Extensions_Selenium2TestCase_URL
+     * @return URL
      */
     protected abstract function getSessionUrl();
 
     /**
      * @param string $strategy     supported by JsonWireProtocol element/ command
      * @param string $value
-     * @return PHPUnit_Extensions_Selenium2TestCase_Element
+     * @return Element
      */
     private function by($strategy, $value)
     {

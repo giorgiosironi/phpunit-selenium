@@ -42,6 +42,14 @@
  * @since      File available since Release 1.3.2
  */
 
+namespace PHPUnit\Extensions\Selenium2TestCase\SessionCommand;
+
+use BadMethodCallException;
+use Exception;
+use PHPUnit\Extensions\Selenium2TestCase\Command;
+use PHPUnit\Extensions\Selenium2TestCase\URL;
+use ZipArchive;
+
 /**
  * Sends a file to a RC
  * Returns the FQ path to the transfered file
@@ -54,8 +62,7 @@
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.3.2
  */
-class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_File
-    extends PHPUnit_Extensions_Selenium2TestCase_Command
+class File extends Command
 {
 
     /**
@@ -63,7 +70,7 @@ class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_File
      */
     private static $_zipArchive;
 
-    public function __construct($argument, PHPUnit_Extensions_Selenium2TestCase_URL $url)
+    public function __construct($argument, URL $url)
     {
         if (!is_file($argument)) {
             throw new BadMethodCallException("No such file: {$argument}");

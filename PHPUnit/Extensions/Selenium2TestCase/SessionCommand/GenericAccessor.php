@@ -42,6 +42,10 @@
  * @since      File available since Release 1.2.0
  */
 
+namespace PHPUnit\Extensions\Selenium2TestCase\SessionCommand;
+
+use PHPUnit\Extensions\Selenium2TestCase\Command;
+
 /**
  * Gets an attribute from the session (title, alert text, etc.)
  *
@@ -53,8 +57,7 @@
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.0
  */
-class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_GenericAccessor
-    extends PHPUnit_Extensions_Selenium2TestCase_Command
+class GenericAccessor extends Command
 {
     public function httpMethod()
     {

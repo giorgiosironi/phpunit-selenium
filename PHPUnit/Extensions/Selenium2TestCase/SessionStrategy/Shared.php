@@ -42,6 +42,11 @@
  * @since      File available since Release 1.2.6
  */
 
+namespace PHPUnit\Extensions\Selenium2TestCase\SessionStrategy;
+
+use PHPUnit\Extensions\Selenium2TestCase\Session;
+use PHPUnit\Extensions\Selenium2TestCase\SessionStrategy;
+
 /**
  * Keeps a Session object shared between test runs to save time.
  *
@@ -53,8 +58,7 @@
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.6
  */
-class PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Shared
-    implements PHPUnit_Extensions_Selenium2TestCase_SessionStrategy
+class Shared implements SessionStrategy
 {
     private $original;
     private $session;
@@ -62,7 +66,7 @@ class PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Shared
     private $lastTestWasNotSuccessful = FALSE;
     private $keepSessionOnFailure;
 
-    public function __construct(PHPUnit_Extensions_Selenium2TestCase_SessionStrategy $originalStrategy, $keepSessionOnFailure)
+    public function __construct(SessionStrategy $originalStrategy, $keepSessionOnFailure)
     {
         $this->original = $originalStrategy;
         $this->keepSessionOnFailure = $keepSessionOnFailure;
@@ -91,7 +95,7 @@ class PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Shared
         $this->lastTestWasNotSuccessful = TRUE;
     }
 
-    public function endOfTest(PHPUnit_Extensions_Selenium2TestCase_Session $session = NULL)
+    public function endOfTest(Session $session = NULL)
     {
     }
 }

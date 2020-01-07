@@ -41,10 +41,14 @@
  * @link       http://www.phpunit.de/
  */
 
-use PHPUnit_Extensions_Selenium2TestCase_Keys as Keys;
+use PHPUnit\Extensions\Selenium2TestCase;
+use PHPUnit\Extensions\Selenium2TestCase\Keys;
+use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\Click;
+use PHPUnit\Extensions\Selenium2TestCase\WebDriverException;
+use PHPUnit\Extensions\Selenium2TestCase\Window;
 
 /**
- * Tests for PHPUnit_Extensions_Selenium2TestCase.
+ * Tests for Selenium2TestCase.
  *
  * @package    PHPUnit_Selenium
  * @author     Giorgio Sironi <info@giorgiosironi.com>
@@ -56,8 +60,8 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
 {
     protected function tearDown(): void
     {
-        PHPUnit_Extensions_Selenium2TestCase::setDefaultWaitUntilTimeout(0);
-        PHPUnit_Extensions_Selenium2TestCase::setDefaultWaitUntilSleepInterval(500);
+        Selenium2TestCase::setDefaultWaitUntilTimeout(0);
+        Selenium2TestCase::setDefaultWaitUntilSleepInterval(500);
     }
 
 
@@ -69,7 +73,7 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
 
     public function testVersionCanBeReadFromTheTestCaseClass()
     {
-        $this->assertEquals(1, version_compare(PHPUnit_Extensions_Selenium2TestCase::VERSION, "1.2.0"));
+        $this->assertEquals(1, version_compare(Selenium2TestCase::VERSION, "1.2.0"));
     }
 
     public function testCamelCaseUrlsAreSupported()
@@ -706,7 +710,7 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->byId('theTextbox')->value('t');
 
         $this->assertStringContainsString('{keydown(theTextbox - 84)}'
-                           . ' {keypress(theTextbox)}'
+                           . ' {keypress(theTextbox - 116)}'
                            . ' {keyup(theTextbox - 84)}',
                                $this->byId('eventlog')->value());
     }
@@ -907,7 +911,7 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
 
         $this->window('myPopupWindow');
         $popup = $this->currentWindow();
-        $this->assertTrue($popup instanceof PHPUnit_Extensions_Selenium2TestCase_Window);
+        $this->assertTrue($popup instanceof Window);
         $popup->size(array('width' => 150, 'height' => 200));
         $size = $popup->size();
         $this->assertEquals(150, $size['width']);
@@ -983,7 +987,7 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         try {
             $this->cookie()->get($name);
             $this->fail('The cookie shouldn\'t exist anymore.');
-        } catch (PHPUnit_Extensions_Selenium2TestCase_Exception $e) {
+        } catch (\PHPUnit\Extensions\Selenium2TestCase\Exception $e) {
             $this->assertEquals("There is no '$name' cookie available on this page.", $e->getMessage());
         }
     }
@@ -1034,7 +1038,7 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         try {
             $this->moveto('moveto');
             $this->fail('A single non-element parameter should cause an exception');
-        } catch (PHPUnit_Extensions_Selenium2TestCase_Exception $e) {
+        } catch (\PHPUnit\Extensions\Selenium2TestCase\Exception $e) {
             $this->assertStringStartsWith('Only moving over an element is supported', $e->getMessage());
         }
 
@@ -1043,7 +1047,7 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
                 'element' => 'moveto'
             ));
             $this->fail('An "element" array parameter with non-element value should cause an exception');
-        } catch (PHPUnit_Extensions_Selenium2TestCase_Exception $e) {
+        } catch (\PHPUnit\Extensions\Selenium2TestCase\Exception $e) {
             $this->assertStringStartsWith('Only moving over an element is supported', $e->getMessage());
         }
     }
@@ -1121,8 +1125,8 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->url('html/test_open.html');
         try {
             $el = $this->byId("nonexistent");
-        } catch (PHPUnit_Extensions_Selenium2TestCase_WebDriverException $e) {
-            $this->assertEquals(PHPUnit_Extensions_Selenium2TestCase_WebDriverException::NoSuchElement, $e->getCode());
+        } catch (WebDriverException $e) {
+            $this->assertEquals(WebDriverException::NoSuchElement, $e->getCode());
             return;
         }
         $this->fail('The element shouldn\'t exist.');
@@ -1159,17 +1163,17 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $this->click();
         $this->assertEquals('0', $this->byId('check')->text());
 
-        $this->click(PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Click::LEFT);
+        $this->click(Click::LEFT);
         $this->assertEquals('0', $this->byId('check')->text());
 
         // I couldn't get it worked in selenium webdriver 2.28: even though the client (phpunit-selenium) sends
         // the button: 1 in the request (checked with wireshark) - it still uses left mouse button (0)
         /*
-        $this->click(PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Click::MIDDLE);
+        $this->click(Click::MIDDLE);
         $this->assertEquals('1', $this->byId('check')->text());
         */
 
-        $this->click(PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Click::RIGHT);
+        $this->click(Click::RIGHT);
         $this->assertEquals('2', $this->byId('check')->text());
     }
 
@@ -1206,14 +1210,14 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
     }
 
     public function testWaitUntilDefaultTimeout(){
-        $this->assertEquals(0, PHPUnit_Extensions_Selenium2TestCase::defaultWaitUntilTimeout());
-        PHPUnit_Extensions_Selenium2TestCase::setDefaultWaitUntilTimeout(100);
-        $this->assertEquals(100, PHPUnit_Extensions_Selenium2TestCase::defaultWaitUntilTimeout());
+        $this->assertEquals(0, Selenium2TestCase::defaultWaitUntilTimeout());
+        Selenium2TestCase::setDefaultWaitUntilTimeout(100);
+        $this->assertEquals(100, Selenium2TestCase::defaultWaitUntilTimeout());
     }
 
     public function testWaitUntilDefaultSleepInterval(){
-        $this->assertEquals(500, PHPUnit_Extensions_Selenium2TestCase::defaultWaitUntilSleepInterval());
-        PHPUnit_Extensions_Selenium2TestCase::setDefaultWaitUntilSleepInterval(100);
-        $this->assertEquals(100, PHPUnit_Extensions_Selenium2TestCase::defaultWaitUntilSleepInterval());
+        $this->assertEquals(500, Selenium2TestCase::defaultWaitUntilSleepInterval());
+        Selenium2TestCase::setDefaultWaitUntilSleepInterval(100);
+        $this->assertEquals(100, Selenium2TestCase::defaultWaitUntilSleepInterval());
     }
 }

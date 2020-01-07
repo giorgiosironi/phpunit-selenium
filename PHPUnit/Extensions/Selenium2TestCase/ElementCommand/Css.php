@@ -42,6 +42,11 @@
  * @since      File available since Release 1.2.4
  */
 
+namespace PHPUnit\Extensions\Selenium2TestCase\ElementCommand;
+
+use PHPUnit\Extensions\Selenium2TestCase\Command;
+use PHPUnit\Extensions\Selenium2TestCase\URL;
+
 /**
  * Retrieves the value of a CSS property.
  *
@@ -53,14 +58,12 @@
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.4
  */
-class PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Css
-    extends PHPUnit_Extensions_Selenium2TestCase_Command
+class Css extends Command
 {
     /**
      * @param array $propertyName
      */
-    public function __construct($propertyName,
-                                PHPUnit_Extensions_Selenium2TestCase_URL $cssResourceBaseUrl)
+    public function __construct($propertyName, URL $cssResourceBaseUrl)
     {
         $this->jsonParameters = array();
         $this->url = $cssResourceBaseUrl->descend($propertyName);

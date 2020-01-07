@@ -41,8 +41,15 @@
  * @link       http://www.phpunit.de/
  * @since      File available since Release 1.2.8
  */
+
+namespace PHPUnit\Extensions\Selenium2TestCase;
+
+use PHPUnit\Extensions\Selenium2TestCase;
 use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\Test;
+use PHPUnit\Framework\TestListener;
+use PHPUnit\Framework\TestListenerDefaultImplementation;
+use Throwable;
 
 /**
  * Base class for implementing commands with special semantics.
@@ -55,10 +62,9 @@ use PHPUnit\Framework\Test;
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.8
  */
-class PHPUnit_Extensions_Selenium2TestCase_ScreenshotListener 
-    implements \PHPUnit\Framework\TestListener
+class ScreenshotListener implements TestListener
 {
-    use \PHPUnit\Framework\TestListenerDefaultImplementation;
+    use TestListenerDefaultImplementation;
 
     private $directory;
 
@@ -79,12 +85,12 @@ class PHPUnit_Extensions_Selenium2TestCase_ScreenshotListener
 
     private function storeAScreenshot(Test $test)
     {
-        if ($test instanceof PHPUnit_Extensions_Selenium2TestCase)
+        if ($test instanceof Selenium2TestCase)
         {
             try {
                 $file = $this->directory . '/' . get_class($test) . '__' . $test->getName() . '__' . date('Y-m-d\TH-i-s') . '.png';
                 file_put_contents($file,        $test->currentScreenshot());
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 $file = $this->directory . '/' . get_class($test) . '__' . $test->getName() . '__' . date('Y-m-d\TH-i-s') . '.txt';
                 file_put_contents($file, "Screenshot generation doesn't work." . "\n"
                                          . $e->getMessage() . "\n"

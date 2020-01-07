@@ -42,6 +42,11 @@
  * @since      File available since Release 1.2.0
  */
 
+namespace PHPUnit\Extensions\Selenium2TestCase\ElementCommand;
+
+use BadMethodCallException;
+use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\Keys;
+
 /**
  * Get and set the element's value attribute.
  *
@@ -53,8 +58,7 @@
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.0
  */
-class PHPUnit_Extensions_Selenium2TestCase_ElementCommand_Value
-    extends PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Keys
+class Value extends Keys
 {
     public function httpMethod()
     {

@@ -41,6 +41,8 @@
  * @link       http://www.phpunit.de/
  */
 
+use PHPUnit\Extensions\Selenium2TestCase\WebDriverException;
+
 /**
  * Tests for session::waitUntil() command.
  *
@@ -59,7 +61,7 @@ class Tests_Selenium2TestCase_WaitUntilTest extends Tests_Selenium2TestCase_Base
         $this->waitUntil(function($testCase) {
             try {
                 $testCase->byXPath('//div[@id="parent"][contains(text(), "default text")]');
-            } catch (PHPUnit_Extensions_Selenium2TestCase_WebDriverException $e) {
+            } catch (WebDriverException $e) {
                 return TRUE;
             }
         }, 8000);
@@ -69,13 +71,13 @@ class Tests_Selenium2TestCase_WaitUntilTest extends Tests_Selenium2TestCase_Base
 
     public function testWaitUnsuccessfully()
     {
-        $this->expectException(PHPUnit_Extensions_Selenium2TestCase_WebDriverException::class);
+        $this->expectException(WebDriverException::class);
         $this->url('html/test_wait.html');
 
         $this->waitUntil(function($testCase) {
             try {
                 $testCase->byXPath('//div[@id="parent"][contains(text(), "default text")]');
-            } catch (PHPUnit_Extensions_Selenium2TestCase_WebDriverException $e) {
+            } catch (WebDriverException $e) {
                 return TRUE;
             }
         }, 42);
@@ -83,7 +85,7 @@ class Tests_Selenium2TestCase_WaitUntilTest extends Tests_Selenium2TestCase_Base
 
     public function testInvalidCallback()
     {
-        $this->expectException(PHPUnit_Extensions_Selenium2TestCase_Exception::class);
+        $this->expectException(\PHPUnit\Extensions\Selenium2TestCase\Exception::class);
         $this->expectExceptionMessage('The valid callback is expected');
         $this->waitUntil('not a callback');
     }
@@ -99,7 +101,7 @@ class Tests_Selenium2TestCase_WaitUntilTest extends Tests_Selenium2TestCase_Base
                 return TRUE;
             });
             $this->fail('Should fail because of the element not exists there yet');
-        } catch (PHPUnit_Extensions_Selenium2TestCase_WebDriverException $e) {}
+        } catch (WebDriverException $e) {}
 
         // in this case - element should be found, because of the implicitWait
         $element = $this->byId('testBox');

@@ -42,6 +42,10 @@
  * @since      File available since Release 1.3.2
  */
 
+namespace PHPUnit\Extensions\Selenium2TestCase\SessionCommand;
+
+use PHPUnit\Extensions\Selenium2TestCase\Command;
+
 /**
  * Get the log for a given log type. Log buffer is reset after each request.
  *
@@ -53,8 +57,7 @@
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.3.2
  */
-class PHPUnit_Extensions_Selenium2TestCase_SessionCommand_Log
-    extends PHPUnit_Extensions_Selenium2TestCase_Command
+class Log extends Command
 {
     public function __construct($type, $commandUrl)
     {

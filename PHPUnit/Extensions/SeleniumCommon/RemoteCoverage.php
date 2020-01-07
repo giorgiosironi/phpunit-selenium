@@ -1,5 +1,10 @@
 <?php
-class PHPUnit_Extensions_SeleniumCommon_RemoteCoverage
+
+namespace PHPUnit\Extensions\SeleniumCommon;
+
+use Exception;
+
+class RemoteCoverage
 {
     public function __construct($coverageScriptUrl, $testId)
     {

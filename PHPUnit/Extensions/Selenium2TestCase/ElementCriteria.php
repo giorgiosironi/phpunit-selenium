@@ -42,6 +42,10 @@
  * @since      File available since Release 1.2.0
  */
 
+namespace PHPUnit\Extensions\Selenium2TestCase;
+
+use ArrayObject;
+
 /**
  * Conditions for selecting a DOM element.
  *
@@ -54,7 +58,7 @@
  * @since      Class available since Release 1.2.0
  * @see        http://code.google.com/p/selenium/wiki/JsonWireProtocol#/session/:sessionId/element
  */
-class PHPUnit_Extensions_Selenium2TestCase_ElementCriteria extends ArrayObject
+class ElementCriteria extends ArrayObject
 {
     public function __construct($strategy)
     {
@@ -62,7 +66,7 @@ class PHPUnit_Extensions_Selenium2TestCase_ElementCriteria extends ArrayObject
     }
 
     /**
-     * @return PHPUnit_Extensions_Selenium2TestCase_ElementCriteria
+     * @return ElementCriteria
      */
     public function value($searchTarget)
     {

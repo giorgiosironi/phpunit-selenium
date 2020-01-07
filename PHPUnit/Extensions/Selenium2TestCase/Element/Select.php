@@ -42,6 +42,11 @@
  * @since      File available since Release 1.2.2
  */
 
+namespace PHPUnit\Extensions\Selenium2TestCase\Element;
+
+use PHPUnit\Extensions\Selenium2TestCase\Element;
+use PHPUnit\Extensions\Selenium2TestCase\ElementCriteria;
+
 /**
  * Object representing a <select> element.
  *
@@ -53,13 +58,12 @@
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.2
  */
-class PHPUnit_Extensions_Selenium2TestCase_Element_Select
-    extends PHPUnit_Extensions_Selenium2TestCase_Element
+class Select extends Element
 {
     /**
-     * @return PHPUnit_Extensions_Selenium2TestCase_Element_Select
+     * @return Select
      */
-    public static function fromElement(PHPUnit_Extensions_Selenium2TestCase_Element $element)
+    public static function fromElement(Element $element)
     {
         return new self($element->driver, $element->url);
     }
@@ -157,10 +161,10 @@ class PHPUnit_Extensions_Selenium2TestCase_Element_Select
     }
 
     /**
-     * @param PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $localCriteria  condiotions for selecting an option
+     * @param ElementCriteria $localCriteria  condiotions for selecting an option
      * @return void
      */
-    public function selectOptionByCriteria(PHPUnit_Extensions_Selenium2TestCase_ElementCriteria $localCriteria)
+    public function selectOptionByCriteria(ElementCriteria $localCriteria)
     {
         $option = $this->element($localCriteria);
         if (!$option->selected()) {

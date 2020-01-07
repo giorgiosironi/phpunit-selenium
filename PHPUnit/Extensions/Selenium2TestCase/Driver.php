@@ -42,6 +42,11 @@
  * @since      File available since Release 1.2.0
  */
 
+namespace PHPUnit\Extensions\Selenium2TestCase;
+
+use BadMethodCallException;
+use PHPUnit\Extensions\Selenium2TestCase\Session\Timeouts;
+
 /**
  * Driver for creating browser session with Selenium 2 (WebDriver API).
  *
@@ -53,18 +58,18 @@
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.0
  */
-class PHPUnit_Extensions_Selenium2TestCase_Driver
+class Driver
 {
     private $seleniumServerUrl;
     private $seleniumServerRequestsTimeout;
 
-    public function __construct(PHPUnit_Extensions_Selenium2TestCase_URL $seleniumServerUrl, $timeout = 60)
+    public function __construct(URL $seleniumServerUrl, $timeout = 60)
     {
         $this->seleniumServerUrl = $seleniumServerUrl;
         $this->seleniumServerRequestsTimeout = $timeout;
     }
 
-    public function startSession(array $desiredCapabilities, PHPUnit_Extensions_Selenium2TestCase_URL $browserUrl)
+    public function startSession(array $desiredCapabilities, URL $browserUrl)
     {
         $sessionCreation = $this->seleniumServerUrl->descend("/wd/hub/session");
         $response = $this->curl('POST', $sessionCreation, array(
@@ -72,12 +77,12 @@ class PHPUnit_Extensions_Selenium2TestCase_Driver
         ));
         $sessionPrefix = $response->getURL();
 
-        $timeouts = new PHPUnit_Extensions_Selenium2TestCase_Session_Timeouts(
+        $timeouts = new Timeouts(
             $this,
             $sessionPrefix->descend('timeouts'),
             $this->seleniumServerRequestsTimeout * 1000
         );
-        return new PHPUnit_Extensions_Selenium2TestCase_Session(
+        return new Session(
             $this,
             $sessionPrefix,
             $browserUrl,
@@ -92,9 +97,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Driver
      * @param string $url
      * @param array $params       JSON parameters for POST requests
      */
-    public function curl($http_method,
-                         PHPUnit_Extensions_Selenium2TestCase_URL $url,
-                         $params = NULL)
+    public function curl($http_method, URL $url, $params = NULL)
     {
         $curl = curl_init($url->getValue());
         curl_setopt($curl, CURLOPT_TIMEOUT, $this->seleniumServerRequestsTimeout);
@@ -120,14 +123,14 @@ class PHPUnit_Extensions_Selenium2TestCase_Driver
 
         $rawResponse = trim(curl_exec($curl));
         if (curl_errno($curl)) {
-            throw new PHPUnit_Extensions_Selenium2TestCase_NoSeleniumException(
+            throw new NoSeleniumException(
                 'Error connection[' . curl_errno($curl) . '] to ' .
                 $url->getValue()  . ': ' . curl_error($curl)
             );
         }
         $info = curl_getinfo($curl);
         if ($info['http_code'] == 0) {
-            throw new PHPUnit_Extensions_Selenium2TestCase_NoSeleniumException();
+            throw new NoSeleniumException();
         }
         if ($info['http_code'] == 404) {
             throw new BadMethodCallException("The command $url is not recognized by the server.");
@@ -139,7 +142,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Driver
         $content = json_decode($rawResponse, TRUE);
 
         if ($content === null && json_last_error() !== JSON_ERROR_NONE) {
-            throw new PHPUnit_Extensions_Selenium2TestCase_Exception(
+            throw new \PHPUnit\Extensions\Selenium2TestCase\Exception(
                 sprintf(
                     "JSON decoding of remote response failed.\n".
                     "Error code: %d\n".
@@ -161,14 +164,14 @@ class PHPUnit_Extensions_Selenium2TestCase_Driver
         }
 
         $status = isset($content['status']) ? $content['status'] : 0;
-        if ($status !== PHPUnit_Extensions_Selenium2TestCase_WebDriverException::Success) {
-            throw new PHPUnit_Extensions_Selenium2TestCase_WebDriverException($message, $status);
+        if ($status !== WebDriverException::Success) {
+            throw new WebDriverException($message, $status);
         }
 
-        return new PHPUnit_Extensions_Selenium2TestCase_Response($content, $info);
+        return new Response($content, $info);
     }
 
-    public function execute(PHPUnit_Extensions_Selenium2TestCase_Command $command)
+    public function execute(Command $command)
     {
         return $this->curl($command->httpMethod(),
                            $command->url(),

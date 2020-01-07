@@ -42,6 +42,8 @@
  * @since      File available since Release 1.2.6
  */
 
+namespace PHPUnit\Extensions\Selenium2TestCase;
+
 /**
  * Specifies how to create Session objects for running tests.
  *
@@ -53,7 +55,7 @@
  * @link       http://www.phpunit.de/
  * @since      Class available since Release 1.2.6
  */
-interface PHPUnit_Extensions_Selenium2TestCase_SessionStrategy
+interface SessionStrategy
 {
     /**
      * @param array $parameters 'host' => Selenium Server machine
@@ -66,5 +68,5 @@ interface PHPUnit_Extensions_Selenium2TestCase_SessionStrategy
 
     public function notSuccessfulTest();
 
-    public function endOfTest(PHPUnit_Extensions_Selenium2TestCase_Session $session = NULL);
+    public function endOfTest(Session $session = NULL);
 }

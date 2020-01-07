@@ -42,6 +42,10 @@
  * @since      File available since Release 1.2.12
  */
 
+namespace PHPUnit\Extensions\Selenium2TestCase;
+
+use PHPUnit\Extensions\Selenium2TestCase;
+
 /**
  * The WaitUntil implementation, inspired by Java and .NET clients
  *
@@ -55,20 +59,20 @@
  * @see        http://selenium.googlecode.com/svn/trunk/dotnet/src/WebDriver.Support/UI/WebDriverWait.cs
  * @see        http://selenium.googlecode.com/svn/trunk/java/client/src/org/openqa/selenium/support/ui/FluentWait.java
  */
-class PHPUnit_Extensions_Selenium2TestCase_WaitUntil
+class WaitUntil
 {
     /**
      * PHPUnit Test Case instance
      *
-     * @var PHPUnit_Extensions_Selenium2TestCase
+     * @var Selenium2TestCase
      */
     private $_testCase;
 
 
     /**
-     * @param PHPUnit_Extensions_Selenium2TestCase $testCase
+     * @param Selenium2TestCase $testCase
      */
-    public function __construct(PHPUnit_Extensions_Selenium2TestCase $testCase)
+    public function __construct(Selenium2TestCase $testCase)
     {
         $this->_testCase = $testCase;
     }
@@ -78,13 +82,13 @@ class PHPUnit_Extensions_Selenium2TestCase_WaitUntil
      * @param null|int $timeout
      * @param null|int $sleepInterval the delay between 2 iterations of the callback
      * @return mixed
-     * @throws PHPUnit_Extensions_Selenium2TestCase_Exception
-     * @throws PHPUnit_Extensions_Selenium2TestCase_WebDriverException
+     * @throws \PHPUnit\Extensions\Selenium2TestCase\Exception
+     * @throws WebDriverException
      */
     public function run($callback, $timeout = NULL, $sleepInterval = NULL)
     {
         if (!is_callable($callback)) {
-            throw new PHPUnit_Extensions_Selenium2TestCase_Exception('The valid callback is expected');
+            throw new \PHPUnit\Extensions\Selenium2TestCase\Exception('The valid callback is expected');
         }
 
         // if there was an implicit timeout specified - remember it and temporarily turn it off
@@ -94,14 +98,14 @@ class PHPUnit_Extensions_Selenium2TestCase_WaitUntil
         }
 
         if(is_null($sleepInterval)){
-            $sleepInterval = PHPUnit_Extensions_Selenium2TestCase::defaultWaitUntilSleepInterval();
+            $sleepInterval = Selenium2TestCase::defaultWaitUntilSleepInterval();
         }
 
         $sleepInterval *= 1000;
 
 
         if (is_null($timeout)) {
-            $timeout = PHPUnit_Extensions_Selenium2TestCase::defaultWaitUntilTimeout();
+            $timeout = Selenium2TestCase::defaultWaitUntilTimeout();
         }
 
         $timeout /= 1000;
@@ -121,7 +125,7 @@ class PHPUnit_Extensions_Selenium2TestCase_WaitUntil
 
                     return $result;
                 }
-            } catch(Exception $e) {
+            } catch(\Exception $e) {
                 $lastException = $e;
             }
 
@@ -131,8 +135,7 @@ class PHPUnit_Extensions_Selenium2TestCase_WaitUntil
                 }
 
                 $message = "Timed out after {$timeout} second" . ($timeout != 1 ? 's' : '');
-                throw new PHPUnit_Extensions_Selenium2TestCase_WebDriverException($message,
-                    PHPUnit_Extensions_Selenium2TestCase_WebDriverException::Timeout, $lastException);
+                throw new WebDriverException($message, WebDriverException::Timeout, $lastException);
             }
 
             usleep($sleepInterval);
