@@ -43,4 +43,14 @@ class Tests_Selenium2TestCase_Coverage_CookieTest extends Tests_Selenium2TestCas
         $this->url('/');
         $this->assertNotEquals($this->getTestIdCookie(), $previousTestIdCookie);
     }
+
+    public function testGetAll()
+    {
+        $cookies = $this->prepareSession()->cookie()->getAll();
+
+        $this->assertIsArray($cookies);
+        $this->assertCount(1, $cookies);
+        $this->assertArrayHasKey('PHPUNIT_SELENIUM_TEST_ID', $cookies);
+        $this->assertEquals($this->getTestId(), $cookies['PHPUNIT_SELENIUM_TEST_ID']);
+    }
 }

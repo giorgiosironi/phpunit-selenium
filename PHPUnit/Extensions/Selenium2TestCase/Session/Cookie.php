@@ -96,6 +96,23 @@ class Cookie
     }
 
     /**
+     * Return all cookies
+     *
+     * @return array [name => value]
+     */
+    public function getAll()
+    {
+        $result = [];
+
+        $cookies = $this->driver->curl('GET', $this->url)->getValue();
+        foreach ($cookies as $cookie) {
+            $result[$cookie['name']] = $cookie['value'];
+        }
+
+        return $result;
+    }
+
+    /**
      * @param string $name
      * @return void
      */
