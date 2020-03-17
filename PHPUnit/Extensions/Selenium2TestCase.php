@@ -122,7 +122,7 @@ use Throwable;
  */
 abstract class Selenium2TestCase extends TestCase
 {
-    const VERSION = '7.0.1';
+    const VERSION = '8.0.0';
 
     /**
      * @var string  override to provide code coverage data from the server
