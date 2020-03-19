@@ -45,6 +45,7 @@
 namespace PHPUnit\Extensions;
 
 use Exception;
+use InvalidArgumentException;
 use PHPUnit\Extensions\Selenium2TestCase\Element;
 use PHPUnit\Extensions\Selenium2TestCase\Element\Select;
 use PHPUnit\Extensions\Selenium2TestCase\ElementCriteria;
@@ -59,7 +60,7 @@ use PHPUnit\Extensions\Selenium2TestCase\URL;
 use PHPUnit\Extensions\Selenium2TestCase\WaitUntil;
 use PHPUnit\Extensions\Selenium2TestCase\Window;
 use PHPUnit\Extensions\SeleniumCommon\RemoteCoverage;
-use PHPUnit\Framework\InvalidArgumentException;
+use PHPUnit\Framework\InvalidArgumentException as PHPUnitInvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\TestResult;
 use RuntimeException;
@@ -198,7 +199,7 @@ abstract class Selenium2TestCase extends TestCase
     public static function shareSession($shareSession)
     {
         if (!is_bool($shareSession)) {
-            throw new \InvalidArgumentException("The shared session support can only be switched on or off.");
+            throw new InvalidArgumentException("The shared session support can only be switched on or off.");
         }
         if (!$shareSession) {
             self::$sessionStrategy = self::defaultSessionStrategy();
@@ -212,7 +213,7 @@ abstract class Selenium2TestCase extends TestCase
     public static function keepSessionOnFailure($keepSession)
     {
       if (!is_bool($keepSession)) {
-            throw new \InvalidArgumentException("The keep session on fail support can only be switched on or off.");
+            throw new InvalidArgumentException("The keep session on fail support can only be switched on or off.");
         }
       if ($keepSession){
             self::$keepSessionOnFailure = TRUE;
@@ -311,7 +312,7 @@ abstract class Selenium2TestCase extends TestCase
         } elseif (isset($params['sessionStrategy'])) {
             $strat = $params['sessionStrategy'];
             if ($strat != "isolated" && $strat != "shared") {
-                throw new \InvalidArgumentException("Session strategy must be either 'isolated' or 'shared'");
+                throw new InvalidArgumentException("Session strategy must be either 'isolated' or 'shared'");
             } elseif ($strat == "isolated") {
                 self::$browserSessionStrategy = new Isolated;
             } else {
@@ -444,12 +445,12 @@ abstract class Selenium2TestCase extends TestCase
 
     /**
      * @param  string $host
-     * @throws InvalidArgumentException
+     * @throws PHPUnitInvalidArgumentException
      */
     public function setHost($host)
     {
         if (!is_string($host)) {
-            throw InvalidArgumentException::create(1, 'string');
+            throw PHPUnitInvalidArgumentException::create(1, 'string');
         }
 
         $this->parameters['host'] = $host;
@@ -462,12 +463,12 @@ abstract class Selenium2TestCase extends TestCase
 
     /**
      * @param  integer $port
-     * @throws InvalidArgumentException
+     * @throws PHPUnitInvalidArgumentException
      */
     public function setPort($port)
     {
         if (!is_int($port)) {
-            throw InvalidArgumentException::create(1, 'integer');
+            throw PHPUnitInvalidArgumentException::create(1, 'integer');
         }
 
         $this->parameters['port'] = $port;
@@ -480,12 +481,12 @@ abstract class Selenium2TestCase extends TestCase
 
     /**
      * @param boolean $secure
-     * @throws InvalidArgumentException
+     * @throws PHPUnitInvalidArgumentException
      */
     public function setSecure($secure)
     {
         if(!is_bool($secure)) {
-            throw InvalidArgumentException::create(1, 'boolean');
+            throw PHPUnitInvalidArgumentException::create(1, 'boolean');
         }
 
         $this->parameters['secure'] = $secure;
@@ -498,12 +499,12 @@ abstract class Selenium2TestCase extends TestCase
 
     /**
      * @param  string $browser
-     * @throws InvalidArgumentException
+     * @throws PHPUnitInvalidArgumentException
      */
     public function setBrowser($browserName)
     {
         if (!is_string($browserName)) {
-            throw InvalidArgumentException::create(1, 'string');
+            throw PHPUnitInvalidArgumentException::create(1, 'string');
         }
 
         $this->parameters['browserName'] = $browserName;
@@ -516,12 +517,12 @@ abstract class Selenium2TestCase extends TestCase
 
     /**
      * @param  string $browserUrl
-     * @throws InvalidArgumentException
+     * @throws PHPUnitInvalidArgumentException
      */
     public function setBrowserUrl($browserUrl)
     {
         if (!is_string($browserUrl)) {
-            throw InvalidArgumentException::create(1, 'string');
+            throw PHPUnitInvalidArgumentException::create(1, 'string');
         }
 
         $this->parameters['browserUrl'] = new URL($browserUrl);
