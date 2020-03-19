@@ -34,12 +34,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @package    PHPUnit_Selenium
- * @author     Andrew Krasichkov <krasichkovandrew@gmail.com>
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
- * @since      File available since Release 1.3.2
  */
 
 namespace PHPUnit\Extensions\Selenium2TestCase\SessionCommand;
@@ -49,19 +44,13 @@ use PHPUnit\Extensions\Selenium2TestCase\Command;
 /**
  * Get the log for a given log type. Log buffer is reset after each request.
  *
- * @package    PHPUnit_Selenium
- * @author     Andrew Krasichkov <krasichkovandrew@gmail.com>
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
- * @since      Class available since Release 1.3.2
  */
 class Log extends Command
 {
     public function __construct($type, $commandUrl)
     {
-        $jsonParameters = array('type' => $type);
+        $jsonParameters = ['type' => $type];
         parent::__construct($jsonParameters, $commandUrl);
     }
 

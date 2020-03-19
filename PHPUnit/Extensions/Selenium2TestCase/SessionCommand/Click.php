@@ -34,12 +34,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @package    PHPUnit_Selenium
- * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
- * @since      File available since Release 1.2.13
  */
 
 namespace PHPUnit\Extensions\Selenium2TestCase\SessionCommand;
@@ -51,30 +46,26 @@ use PHPUnit\Extensions\Selenium2TestCase\URL;
 /**
  * Sends session click command for emulating LEFT, MIDDLE or RIGHT mouse buttons
  *
- * @package    PHPUnit_Selenium
- * @author     Ivan Kurnosov <zerkms@zerkms.com>
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
- * @since      Class available since Release 1.2.13
  */
 class Click extends Command
 {
-    const LEFT = 0;
-    const MIDDLE = 1;
-    const RIGHT = 2;
+    public const LEFT   = 0;
+    public const MIDDLE = 1;
+    public const RIGHT  = 2;
 
     public function __construct($argument, URL $url)
     {
-        if (is_null($argument)) {
-            $jsonParameters = NULL;
-        } elseif (!is_scalar($argument) || !in_array($argument, array(
-            self::LEFT, self::RIGHT, self::MIDDLE
-        ))) {
+        if ($argument === null) {
+            $jsonParameters = null;
+        } elseif (! is_scalar($argument) || ! in_array($argument, [
+            self::LEFT,
+            self::RIGHT,
+            self::MIDDLE,
+        ])) {
             throw new BadMethodCallException('Wrong parameter for click(): expecting 0, 1 or 2.');
         } else {
-            $jsonParameters = array('button' => $argument);
+            $jsonParameters = ['button' => $argument];
         }
 
         parent::__construct($jsonParameters, $url);

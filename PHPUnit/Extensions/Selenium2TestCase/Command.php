@@ -34,12 +34,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @package    PHPUnit_Selenium
- * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
- * @since      File available since Release 1.2.0
  */
 
 namespace PHPUnit\Extensions\Selenium2TestCase;
@@ -49,29 +44,23 @@ use InvalidArgumentException;
 /**
  * Base class for implementing commands with special semantics.
  *
- * @package    PHPUnit_Selenium
- * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
- * @since      Class available since Release 1.2.0
  */
 abstract class Command
 {
     protected $jsonParameters;
-    private $commandName;
 
     /**
-     * @param array $jsonParameters     null in case of no parameters
+     * @param array $jsonParameters null in case of no parameters
      */
     public function __construct($jsonParameters, URL $url)
     {
-        if (!is_array($jsonParameters) && $jsonParameters !== NULL) {
-            throw new InvalidArgumentException("The JSON parameters must be an array, or a NULL value in case they are not required.");
+        if (! is_array($jsonParameters) && $jsonParameters !== null) {
+            throw new InvalidArgumentException('The JSON parameters must be an array, or a NULL value in case they are not required.');
         }
+
         $this->jsonParameters = $jsonParameters;
-        $this->url = $url;
+        $this->url            = $url;
     }
 
     public function url()
@@ -84,9 +73,6 @@ abstract class Command
      */
     abstract public function httpMethod();
 
-    /**
-     * @param array $jsonParameters     null in case of no parameters
-     */
     public function jsonParameters()
     {
         return $this->jsonParameters;

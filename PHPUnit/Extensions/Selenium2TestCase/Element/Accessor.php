@@ -34,9 +34,6 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @package    PHPUnit_Selenium
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
  */
 
@@ -47,21 +44,16 @@ use PHPUnit\Extensions\Selenium2TestCase\Element;
 use PHPUnit\Extensions\Selenium2TestCase\ElementCriteria;
 use PHPUnit\Extensions\Selenium2TestCase\URL;
 
-
 /**
  * Provides access to /element and /elements commands
- * 
- * @package    PHPUnit_Selenium
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @version    Release: @package_version@
+ *
  * @link       http://www.phpunit.de/
  */
 abstract class Accessor extends CommandsHolder
 {
-
     /**
-     * @param string $value     e.g. 'container'
+     * @param string $value e.g. 'container'
+     *
      * @return Element
      */
     public function byClassName($value)
@@ -70,7 +62,8 @@ abstract class Accessor extends CommandsHolder
     }
 
     /**
-     * @param string $value     e.g. 'div.container'
+     * @param string $value e.g. 'div.container'
+     *
      * @return Element
      */
     public function byCssSelector($value)
@@ -79,7 +72,8 @@ abstract class Accessor extends CommandsHolder
     }
 
     /**
-     * @param string $value     e.g. 'uniqueId'
+     * @param string $value e.g. 'uniqueId'
+     *
      * @return Element
      */
     public function byId($value)
@@ -88,7 +82,8 @@ abstract class Accessor extends CommandsHolder
     }
 
     /**
-     * @param string $value     e.g. 'Link text'
+     * @param string $value e.g. 'Link text'
+     *
      * @return Element
      */
     public function byLinkText($value)
@@ -97,7 +92,8 @@ abstract class Accessor extends CommandsHolder
     }
 
     /**
-     * @param string $value     e.g. 'Link te'
+     * @param string $value e.g. 'Link te'
+     *
      * @return Element
      */
     public function byPartialLinkText($value)
@@ -106,7 +102,8 @@ abstract class Accessor extends CommandsHolder
     }
 
     /**
-     * @param string $value     e.g. 'email_address'
+     * @param string $value e.g. 'email_address'
+     *
      * @return Element
      */
     public function byName($value)
@@ -115,7 +112,8 @@ abstract class Accessor extends CommandsHolder
     }
 
     /**
-     * @param string $value     e.g. 'body'
+     * @param string $value e.g. 'body'
+     *
      * @return Element
      */
     public function byTag($value)
@@ -124,7 +122,8 @@ abstract class Accessor extends CommandsHolder
     }
 
     /**
-     * @param string $value     e.g. '/div[@attribute="value"]'
+     * @param string $value e.g. '/div[@attribute="value"]'
+     *
      * @return Element
      */
     public function byXPath($value)
@@ -138,6 +137,7 @@ abstract class Accessor extends CommandsHolder
     public function element(ElementCriteria $criteria)
     {
         $value = $this->postCommand('element', $criteria);
+
         return Element::fromResponseValue($value, $this->getSessionUrl()->descend('element'), $this->driver);
     }
 
@@ -146,16 +146,18 @@ abstract class Accessor extends CommandsHolder
      */
     public function elements(ElementCriteria $criteria)
     {
-        $values = $this->postCommand('elements', $criteria);
-        $elements = array();
+        $values   = $this->postCommand('elements', $criteria);
+        $elements = [];
         foreach ($values as $value) {
             $elements[] = Element::fromResponseValue($value, $this->getSessionUrl()->descend('element'), $this->driver);
         }
+
         return $elements;
     }
 
     /**
      * @param string $strategy
+     *
      * @return ElementCriteria
      */
     public function using($strategy)
@@ -166,16 +168,16 @@ abstract class Accessor extends CommandsHolder
     /**
      * @return URL
      */
-    protected abstract function getSessionUrl();
+    abstract protected function getSessionUrl();
 
     /**
-     * @param string $strategy     supported by JsonWireProtocol element/ command
+     * @param string $strategy supported by JsonWireProtocol element/ command
      * @param string $value
+     *
      * @return Element
      */
     private function by($strategy, $value)
     {
         return $this->element($this->using($strategy)->value($value));
     }
-
 }

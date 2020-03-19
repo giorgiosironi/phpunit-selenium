@@ -34,12 +34,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @package    PHPUnit_Selenium
- * @author     Christian Becker <chris@beckr.org>
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
- * @since      
  */
 
 namespace PHPUnit\Extensions\Selenium2TestCase;
@@ -47,40 +42,34 @@ namespace PHPUnit\Extensions\Selenium2TestCase;
 /**
  * Indicates an exception as a result of a non-sucessful WebDriver response status code.
  *
- * @package    PHPUnit_Selenium
- * @author     Christian Becker <chris@beckr.org>
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
- * @since      
  */
 class WebDriverException extends \PHPUnit\Extensions\Selenium2TestCase\Exception
 {
     /* @see http://code.google.com/p/selenium/wiki/JsonWireProtocol#Response_Status_Codes */
-    const Success = 0;
-    const NoSuchDriver = 6;
-    const NoSuchElement = 7;
-    const NoSuchFrame = 8;
-    const UnknownCommand = 9;
-    const StaleElementReference = 10;
-    const ElementNotVisible = 11;
-    const InvalidElementState = 12;
-    const UnknownError = 13;
-    const ElementIsNotSelectable = 15;
-    const JavaScriptError = 17;
-    const XPathLookupError = 19;
-    const Timeout = 21;
-    const NoSuchWindow = 23;
-    const InvalidCookieDomain = 24;
-    const UnableToSetCookie = 25;
-    const UnexpectedAlertOpen = 26;
-    const NoAlertOpenError = 27;
-    const ScriptTimeout = 28;
-    const InvalidElementCoordinates = 29;
-    const IMENotAvailable = 30;
-    const IMEEngineActivationFailed = 31;
-    const InvalidSelector = 32;
-    const SessionNotCreatedException = 33;
-    const MoveTargetOutOfBounds = 34;
+    public const Success                    = 0;
+    public const NoSuchDriver               = 6;
+    public const NoSuchElement              = 7;
+    public const NoSuchFrame                = 8;
+    public const UnknownCommand             = 9;
+    public const StaleElementReference      = 10;
+    public const ElementNotVisible          = 11;
+    public const InvalidElementState        = 12;
+    public const UnknownError               = 13;
+    public const ElementIsNotSelectable     = 15;
+    public const JavaScriptError            = 17;
+    public const XPathLookupError           = 19;
+    public const Timeout                    = 21;
+    public const NoSuchWindow               = 23;
+    public const InvalidCookieDomain        = 24;
+    public const UnableToSetCookie          = 25;
+    public const UnexpectedAlertOpen        = 26;
+    public const NoAlertOpenError           = 27;
+    public const ScriptTimeout              = 28;
+    public const InvalidElementCoordinates  = 29;
+    public const IMENotAvailable            = 30;
+    public const IMEEngineActivationFailed  = 31;
+    public const InvalidSelector            = 32;
+    public const SessionNotCreatedException = 33;
+    public const MoveTargetOutOfBounds      = 34;
 }

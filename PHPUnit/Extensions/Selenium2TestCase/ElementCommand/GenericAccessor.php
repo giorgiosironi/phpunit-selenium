@@ -34,12 +34,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @package    PHPUnit_Selenium
- * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
- * @since      File available since Release 1.2.0
  */
 
 namespace PHPUnit\Extensions\Selenium2TestCase\ElementCommand;
@@ -47,16 +42,10 @@ namespace PHPUnit\Extensions\Selenium2TestCase\ElementCommand;
 use PHPUnit\Extensions\Selenium2TestCase\Command;
 
 /**
- * Class for implementing commands that just return a value 
+ * Class for implementing commands that just return a value
  * (obtained with GET).
  *
- * @package    PHPUnit_Selenium
- * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
- * @since      Class available since Release 1.2.0
  */
 class GenericAccessor extends Command
 {

@@ -34,12 +34,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @package    PHPUnit_Selenium
- * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
- * @since      File available since Release 1.2.6
  */
 
 namespace PHPUnit\Extensions\Selenium2TestCase\Session;
@@ -51,13 +46,7 @@ use PHPUnit\Extensions\Selenium2TestCase\URL;
 /**
  * Adds and remove cookies.
  *
- * @package    PHPUnit_Selenium
- * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
- * @since      Class available since Release 1.2.6
  */
 class Cookie
 {
@@ -67,12 +56,13 @@ class Cookie
     public function __construct(Driver $driver, URL $url)
     {
         $this->driver = $driver;
-        $this->url = $url;
+        $this->url    = $url;
     }
 
     /**
      * @param string $name
      * @param string $value
+     *
      * @return Builder
      */
     public function add($name, $value)
@@ -82,21 +72,24 @@ class Cookie
 
     /**
      * @param string $name
+     *
      * @return string
      */
     public function get($name)
     {
         $cookies = $this->driver->curl('GET', $this->url)->getValue();
         foreach ($cookies as $cookie) {
-            if ($cookie['name'] == $name) {
+            if ($cookie['name'] === $name) {
                 return $cookie['value'];
             }
         }
-        throw new \PHPUnit\Extensions\Selenium2TestCase\Exception("There is no '$name' cookie available on this page.");
+
+        throw new \PHPUnit\Extensions\Selenium2TestCase\Exception(sprintf("There is no '%s' cookie available on this page.", $name));
     }
 
     /**
      * @param string $name
+     *
      * @return void
      */
     public function remove($name)
@@ -115,15 +108,17 @@ class Cookie
 
     /**
      * @internal
+     *
      * @param array $data
+     *
      * @return void
      */
     public function postCookie(array $data)
     {
-        $this->driver->curl('POST',
-                            $this->url,
-                            array(
-                                'cookie' => $data
-                            ));
+        $this->driver->curl(
+            'POST',
+            $this->url,
+            ['cookie' => $data,]
+        );
     }
 }

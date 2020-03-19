@@ -34,12 +34,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @package    PHPUnit_Selenium
- * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
- * @since      File available since Release 1.2.6
  */
 
 namespace PHPUnit\Extensions\Selenium2TestCase\SessionStrategy;
@@ -50,52 +45,49 @@ use PHPUnit\Extensions\Selenium2TestCase\SessionStrategy;
 /**
  * Keeps a Session object shared between test runs to save time.
  *
- * @package    PHPUnit_Selenium
- * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
- * @since      Class available since Release 1.2.6
  */
 class Shared implements SessionStrategy
 {
     private $original;
     private $session;
     private $mainWindow;
-    private $lastTestWasNotSuccessful = FALSE;
+    private $lastTestWasNotSuccessful = false;
     private $keepSessionOnFailure;
 
     public function __construct(SessionStrategy $originalStrategy, $keepSessionOnFailure)
     {
-        $this->original = $originalStrategy;
+        $this->original             = $originalStrategy;
         $this->keepSessionOnFailure = $keepSessionOnFailure;
     }
 
     public function session(array $parameters)
     {
-        if ($this->lastTestWasNotSuccessful && !$this->keepSessionOnFailure) {
-            if ($this->session !== NULL) {
+        if ($this->lastTestWasNotSuccessful && ! $this->keepSessionOnFailure) {
+            if ($this->session !== null) {
                 $this->session->stop();
-                $this->session = NULL;
+                $this->session = null;
             }
-            $this->lastTestWasNotSuccessful = FALSE;
+
+            $this->lastTestWasNotSuccessful = false;
         }
-        if ($this->session === NULL) {
-            $this->session = $this->original->session($parameters);
+
+        if ($this->session === null) {
+            $this->session    = $this->original->session($parameters);
             $this->mainWindow = $this->session->windowHandle();
         } else {
             $this->session->window($this->mainWindow);
         }
+
         return $this->session;
     }
 
     public function notSuccessfulTest()
     {
-        $this->lastTestWasNotSuccessful = TRUE;
+        $this->lastTestWasNotSuccessful = true;
     }
 
-    public function endOfTest(Session $session = NULL)
+    public function endOfTest(?Session $session = null)
     {
     }
 }

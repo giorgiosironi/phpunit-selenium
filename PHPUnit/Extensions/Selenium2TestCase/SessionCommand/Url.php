@@ -34,12 +34,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @package    PHPUnit_Selenium
- * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
- * @since      File available since Release 1.2.0
  */
 
 namespace PHPUnit\Extensions\Selenium2TestCase\SessionCommand;
@@ -50,24 +45,19 @@ use PHPUnit\Extensions\Selenium2TestCase\URL as SeleniumURL;
 /**
  * Gets or sets the current URL of the window.
  *
- * @package    PHPUnit_Selenium
- * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
- * @since      Class available since Release 1.2.0
  */
 class Url extends Command
 {
     public function __construct($url, $commandUrl, SeleniumURL $baseUrl)
     {
-        if ($url !== NULL) {
+        if ($url !== null) {
             $absoluteLocation = $baseUrl->jump($url)->getValue();
-            $jsonParameters = array('url' => $absoluteLocation);
+            $jsonParameters   = ['url' => $absoluteLocation];
         } else {
-            $jsonParameters = NULL;
+            $jsonParameters = null;
         }
+
         parent::__construct($jsonParameters, $commandUrl);
     }
 
@@ -76,6 +66,7 @@ class Url extends Command
         if ($this->jsonParameters) {
             return 'POST';
         }
+
         return 'GET';
     }
 }

@@ -34,12 +34,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @package    PHPUnit_Selenium
- * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
- * @since      File available since Release 1.3.2
  */
 
 namespace PHPUnit\Extensions\Selenium2TestCase\SessionCommand;
@@ -54,40 +49,31 @@ use ZipArchive;
  * Sends a file to a RC
  * Returns the FQ path to the transfered file
  *
- * @package    PHPUnit_Selenium
- * @author     Kevin Ran  <heilong24@gmail.com>
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
- * @since      Class available since Release 1.3.2
  */
 class File extends Command
 {
-
-    /**
-     * @var
-     */
-    private static $_zipArchive;
+    /** @var */
+    private static $zipArchive;
 
     public function __construct($argument, URL $url)
     {
-        if (!is_file($argument)) {
-            throw new BadMethodCallException("No such file: {$argument}");
+        if (! is_file($argument)) {
+            throw new BadMethodCallException(sprintf('No such file: %s', $argument));
         }
 
-        $zipfile_path = $this->_zipArchiveFile($argument);
-        $contents     = file_get_contents($zipfile_path);
+        $zipfilePath = $this->zipArchiveFile($argument);
+        $contents    = file_get_contents($zipfilePath);
 
         if ($contents === false) {
-            throw new Exception("Unable to read generated zip file: {$zipfile_path}");
+            throw new Exception(sprintf('Unable to read generated zip file: %s', $zipfilePath));
         }
 
         $file = base64_encode($contents);
 
-        parent::__construct(array('file' => $file), $url);
+        parent::__construct(['file' => $file], $url);
 
-        unlink($zipfile_path);
+        unlink($zipfilePath);
     }
 
     public function httpMethod()
@@ -98,32 +84,30 @@ class File extends Command
     /**
      * Creates a zip archive with the given file
      *
-     * @param   string $file_path   FQ path to file
+     * @param   string $filePath FQ path to file
+     *
      * @return  string              Generated zip file
      */
-    protected function _zipArchiveFile( $file_path )
+    protected function zipArchiveFile($filePath)
     {
-
         // file MUST be readable
-        if( !is_readable( $file_path ) ) {
-
-            throw new Exception( "Unable to read {$file_path}" );
-
+        if (! is_readable($filePath)) {
+            throw new Exception(sprintf('Unable to read %s', $filePath));
         } // if !file_data
 
-        $filename_hash  = sha1( time() . $file_path );
-        $tmp_dir        = $this->_getTmpDir();
-        $zip_filename   = "{$tmp_dir}{$filename_hash}.zip";
-        $zip            = $this->_getZipArchiver();
+        $filenameHash = sha1(time() . $filePath);
+        $tmpDir       = $this->getTmpDir();
+        $zipFilename  = sprintf('%s%s.zip', $tmpDir, $filenameHash);
+        $zip          = $this->getZipArchiver();
 
-        if ($zip->open($zip_filename, ZIPARCHIVE::CREATE) === FALSE) {
-            throw new Exception( "Unable to create zip archive: {$zip_filename}" );
+        if ($zip->open($zipFilename, ZipArchive::CREATE) === false) {
+            throw new Exception(sprintf('Unable to create zip archive: %s', $zipFilename));
         }
 
-        $zip->addFile($file_path, basename($file_path));
+        $zip->addFile($filePath, basename($filePath));
         $zip->close();
 
-        return $zip_filename;
+        return $zipFilename;
     }
 
     /**
@@ -131,14 +115,14 @@ class File extends Command
      *
      * @return ZipArchive
      */
-    protected function _getZipArchiver()
+    protected function getZipArchiver()
     {
         // create ZipArchive if necessary
-        if (!static::$_zipArchive) {
-            static::$_zipArchive = new ZipArchive();
+        if (! static::$zipArchive) {
+            static::$zipArchive = new ZipArchive();
         }
 
-        return static::$_zipArchive;
+        return static::$zipArchive;
     }
 
     /**
@@ -147,7 +131,7 @@ class File extends Command
      *
      * @return string
      */
-    protected function _getTmpDir()
+    protected function getTmpDir()
     {
         return rtrim(sys_get_temp_dir(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
     }

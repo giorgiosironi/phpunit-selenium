@@ -34,12 +34,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @package    PHPUnit_Selenium
- * @author     Jonathan Lipps <jlipps@gmail.com>
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
- * @since      File available since Release 1.2.0
  */
 
 namespace PHPUnit\Extensions\Selenium2TestCase\SessionCommand;
@@ -47,24 +42,18 @@ namespace PHPUnit\Extensions\Selenium2TestCase\SessionCommand;
 /**
  * Gets or posts an attribute from/to the session (title, alert text, etc.)
  *
- * @package    PHPUnit_Selenium
- * @author     Jonathan Lipps <jlipps@gmail.com>
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
- * @since      Class available since Release 1.2.9
  */
 class Orientation extends GenericAttribute
 {
-
     public function __construct($orientation, $commandUrl)
     {
-        if ($orientation !== NULL) {
-            $jsonParameters = array('orientation' => $orientation);
+        if ($orientation !== null) {
+            $jsonParameters = ['orientation' => $orientation];
         } else {
-            $jsonParameters = NULL;
+            $jsonParameters = null;
         }
+
         parent::__construct($jsonParameters, $commandUrl);
     }
 
@@ -73,6 +62,7 @@ class Orientation extends GenericAttribute
         if ($this->jsonParameters) {
             return 'POST';
         }
+
         return 'GET';
     }
 }

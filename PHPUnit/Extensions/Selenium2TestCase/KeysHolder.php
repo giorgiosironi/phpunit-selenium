@@ -34,12 +34,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @package    PHPUnit_Selenium
- * @author     Ivan Kurnosov <zerkms@zerkms.com>
- * @copyright  2010-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
- * @since      File available since Release 1.2.12
  */
 
 namespace PHPUnit\Extensions\Selenium2TestCase;
@@ -47,18 +42,12 @@ namespace PHPUnit\Extensions\Selenium2TestCase;
 /**
  * Class-mapper, that converts requested special key into correspondent Unicode character
  *
- * @package    PHPUnit_Selenium
- * @author     Ivan Kurnosov <zerkms@zerkms.com>
- * @copyright  2010-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
- * @since      Class available since Release 1.2.12
  * @see        http://code.google.com/p/selenium/wiki/JsonWireProtocol#/session/:sessionId/element/:id/value
  */
 class KeysHolder
 {
-    private $_keys = array(
+    private $keys = [
         'null'      => "\xEE\x80\x80",
         'cancel'    => "\xEE\x80\x81",
         'help'      => "\xEE\x80\x82",
@@ -114,16 +103,16 @@ class KeysHolder
         'f11'       => "\xEE\x80\xBB",
         'f12'       => "\xEE\x80\xBC",
         'command'   => "\xEE\x80\xBD",
-    );
+    ];
 
     public function specialKey($name)
     {
         $normalizedName = strtolower($name);
 
-        if (!isset($this->_keys[$normalizedName])) {
-            throw new \PHPUnit\Extensions\Selenium2TestCase\Exception("There is no special key '$name' defined");
+        if (! isset($this->keys[$normalizedName])) {
+            throw new \PHPUnit\Extensions\Selenium2TestCase\Exception(sprintf("There is no special key '%s' defined", $name));
         }
 
-        return $this->_keys[$normalizedName];
+        return $this->keys[$normalizedName];
     }
 }

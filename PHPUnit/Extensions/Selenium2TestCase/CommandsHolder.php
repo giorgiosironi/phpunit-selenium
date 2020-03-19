@@ -34,12 +34,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @package    PHPUnit_Selenium
- * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
- * @since      File available since Release 1.2.4
  */
 
 namespace PHPUnit\Extensions\Selenium2TestCase;
@@ -51,24 +46,14 @@ use InvalidArgumentException;
 /**
  * Object representing elements, or everything that may have subcommands.
  *
- * @package    PHPUnit_Selenium
- * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
- * @since      Class available since Release 1.2.4
  */
 abstract class CommandsHolder
 {
-    /**
-     * @var Driver
-     */
+    /** @var Driver */
     protected $driver;
 
-    /**
-     * @var string  the API URL for this element,
-     */
+    /** @var string  the API URL for this element, */
     protected $url;
 
     /**
@@ -79,16 +64,16 @@ abstract class CommandsHolder
 
     public function __construct($driver, URL $url)
     {
-        $this->driver = $driver;
-        $this->url = $url;
-        $this->commands = array();
+        $this->driver   = $driver;
+        $this->url      = $url;
+        $this->commands = [];
         foreach ($this->initCommands() as $commandName => $handler) {
             if (is_string($handler)) {
                 $this->commands[$commandName] = $this->factoryMethod($handler);
-            } else if (is_callable($handler)) {
+            } elseif (is_callable($handler)) {
                 $this->commands[$commandName] = $handler;
             } else {
-                throw new InvalidArgumentException("Command $commandName is not configured correctly.");
+                throw new InvalidArgumentException(sprintf('Command %s is not configured correctly.', $commandName));
             }
         }
     }
@@ -97,30 +82,35 @@ abstract class CommandsHolder
      * @return array    class names, or
      *                  callables of the form function($parameter, $commandUrl)
      */
-    protected abstract function initCommands();
+    abstract protected function initCommands();
 
     public function __call($commandName, $arguments)
     {
         $jsonParameters = $this->extractJsonParameters($arguments);
-        $response = $this->driver->execute($this->newCommand($commandName, $jsonParameters));
+        $response       = $this->driver->execute($this->newCommand($commandName, $jsonParameters));
+
         return $response->getValue();
     }
 
     protected function postCommand($name, ElementCriteria $criteria)
     {
-        $response = $this->driver->curl('POST',
-                                        $this->url->addCommand($name),
-                                        $criteria->getArrayCopy());
+        $response = $this->driver->curl(
+            'POST',
+            $this->url->addCommand($name),
+            $criteria->getArrayCopy()
+        );
+
         return $response->getValue();
     }
 
     /**
-     * @params string $commandClass     a class name, descending from Command
      * @return callable
+     *
+     * @params string $commandClass     a class name, descending from Command
      */
     private function factoryMethod($commandClass)
     {
-        return function($jsonParameters, $url) use ($commandClass) {
+        return static function ($jsonParameters, $url) use ($commandClass) {
             return new $commandClass($jsonParameters, $url);
         };
     }
@@ -129,9 +119,10 @@ abstract class CommandsHolder
     {
         $this->checkArguments($arguments);
 
-        if (count($arguments) == 0) {
-            return NULL;
+        if (count($arguments) === 0) {
+            return null;
         }
+
         return $arguments[0];
     }
 
@@ -143,19 +134,21 @@ abstract class CommandsHolder
     }
 
     /**
-     * @param string $commandName  The called method name
-     *                              defined as a key in initCommands()
-     * @param array $jsonParameters
+     * @param string $commandName    The called method name
+     *                                defined as a key in initCommands()
+     * @param array  $jsonParameters
+     *
      * @return Command
      */
     protected function newCommand($commandName, $jsonParameters)
     {
         if (isset($this->commands[$commandName])) {
             $factoryMethod = $this->commands[$commandName];
-            $url = $this->url->addCommand($commandName);
-            $command = $factoryMethod($jsonParameters, $url);
-            return $command;
+            $url           = $this->url->addCommand($commandName);
+
+            return $factoryMethod($jsonParameters, $url);
         }
-        throw new BadMethodCallException("The command '$commandName' is not existent or not supported yet.");
+
+        throw new BadMethodCallException(sprintf("The command '%s' is not existent or not supported yet.", $commandName));
     }
 }

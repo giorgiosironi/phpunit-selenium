@@ -9,21 +9,21 @@ class RemoteCoverage
     public function __construct($coverageScriptUrl, $testId)
     {
         $this->coverageScriptUrl = $coverageScriptUrl;
-        $this->testId = $testId;
+        $this->testId            = $testId;
     }
 
     public function get()
     {
-        if (!empty($this->coverageScriptUrl)) {
+        if (! empty($this->coverageScriptUrl)) {
             $url = sprintf(
-              '%s?PHPUNIT_SELENIUM_TEST_ID=%s',
-              $this->coverageScriptUrl,
-              urlencode($this->testId)
+                '%s?PHPUNIT_SELENIUM_TEST_ID=%s',
+                $this->coverageScriptUrl,
+                urlencode($this->testId)
             );
 
             $buffer = @file_get_contents($url);
 
-            if ($buffer !== FALSE) {
+            if ($buffer !== false) {
                 $coverageData = unserialize($buffer);
                 if (is_array($coverageData)) {
                     return $this->matchLocalAndRemotePaths($coverageData);
@@ -33,28 +33,28 @@ class RemoteCoverage
             }
         }
 
-        return array();
+        return [];
     }
 
     /**
      * @param  array $coverage
+     *
      * @return array
-     * @author Mattis Stordalen Flister <mattis@xait.no>
      */
     protected function matchLocalAndRemotePaths(array $coverage)
     {
-        $coverageWithLocalPaths = array();
+        $coverageWithLocalPaths = [];
 
         foreach ($coverage as $originalRemotePath => $data) {
             $remotePath = $originalRemotePath;
             $separator  = $this->findDirectorySeparator($remotePath);
 
-            while (!($localpath = stream_resolve_include_path($remotePath)) &&
-                   strpos($remotePath, $separator) !== FALSE) {
+            while (! ($localpath = stream_resolve_include_path($remotePath)) &&
+                   strpos($remotePath, $separator) !== false) {
                 $remotePath = substr($remotePath, strpos($remotePath, $separator) + 1);
             }
 
-            if ($localpath && md5_file($localpath) == $data['md5']) {
+            if ($localpath && md5_file($localpath) === $data['md5']) {
                 $coverageWithLocalPaths[$localpath] = $data['coverage'];
             }
         }
@@ -64,12 +64,12 @@ class RemoteCoverage
 
     /**
      * @param  string $path
+     *
      * @return string
-     * @author Mattis Stordalen Flister <mattis@xait.no>
      */
     protected function findDirectorySeparator($path)
     {
-        if (strpos($path, '/') !== FALSE) {
+        if (strpos($path, '/') !== false) {
             return '/';
         }
 

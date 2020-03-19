@@ -34,12 +34,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @package    PHPUnit_Selenium
- * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
- * @since      File available since Release 1.2.6
  */
 
 namespace PHPUnit\Extensions\Selenium2TestCase;
@@ -47,13 +42,7 @@ namespace PHPUnit\Extensions\Selenium2TestCase;
 /**
  * Specifies how to create Session objects for running tests.
  *
- * @package    PHPUnit_Selenium
- * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
- * @since      Class available since Release 1.2.6
  */
 interface SessionStrategy
 {
@@ -68,5 +57,5 @@ interface SessionStrategy
 
     public function notSuccessfulTest();
 
-    public function endOfTest(Session $session = NULL);
+    public function endOfTest(?Session $session = null);
 }

@@ -34,12 +34,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @package    PHPUnit_Selenium
- * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
- * @since      File available since Release 1.2.0
  */
 
 namespace PHPUnit\Extensions\Selenium2TestCase;
@@ -47,19 +42,11 @@ namespace PHPUnit\Extensions\Selenium2TestCase;
 /**
  * URL Value Object allowing easy concatenation.
  *
- * @package    PHPUnit_Selenium
- * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
- * @since      Class available since Release 1.2.0
  */
 final class URL
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $value;
 
     /**
@@ -72,17 +59,19 @@ final class URL
 
     /**
      * @param string $host
-     * @param int port
-     * @param bool secure
+     * @param int    $port
+     * @param bool   $secure
+     *
      * @return URL
      */
     public static function fromHostAndPort($host, $port, $secure)
     {
-        $prefix = "http://";
+        $prefix = 'http://';
         if ($secure) {
-            $prefix = "https://";
+            $prefix = 'https://';
         }
-        return new self($prefix.$host.":".$port);
+
+        return new self($prefix . $host . ':' . $port);
     }
 
     /**
@@ -100,11 +89,12 @@ final class URL
 
     /**
      * @param string $addition
+     *
      * @return URL
      */
     public function descend($addition)
     {
-        if ($addition == '') {
+        if ($addition === '') {
             // if we're adding nothing, respect the current url's choice of
             // whether or not to include a trailing slash; prevents inadvertent
             // adding of slashes to urls that can't handle it
@@ -114,6 +104,7 @@ final class URL
                       . '/'
                       . ltrim($addition, '/');
         }
+
         return new self($newValue);
     }
 
@@ -122,8 +113,9 @@ final class URL
      */
     public function ascend()
     {
-        $lastSlash = strrpos($this->value, "/");
-        $newValue = substr($this->value, 0, $lastSlash);
+        $lastSlash = strrpos($this->value, '/');
+        $newValue  = substr($this->value, 0, $lastSlash);
+
         return new self($newValue);
     }
 
@@ -133,11 +125,13 @@ final class URL
     public function lastSegment()
     {
         $segments = explode('/', $this->value);
+
         return end($segments);
     }
 
     /**
      * @param string $command
+     *
      * @return URL
      */
     public function addCommand($command)
@@ -147,6 +141,7 @@ final class URL
 
     /**
      * @param string $newUrl
+     *
      * @return URL
      */
     public function jump($newUrl)
@@ -162,6 +157,7 @@ final class URL
     {
         $string = preg_replace('/([A-Z]{1,1})/', ' \1', $string);
         $string = strtolower($string);
+
         return str_replace(' ', '_', $string);
     }
 

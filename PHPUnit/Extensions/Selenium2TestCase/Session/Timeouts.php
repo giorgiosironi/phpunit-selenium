@@ -34,12 +34,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @package    PHPUnit_Selenium
- * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
- * @since      File available since Release 1.2.4
  */
 
 namespace PHPUnit\Extensions\Selenium2TestCase\Session;
@@ -51,13 +46,8 @@ use PHPUnit\Extensions\Selenium2TestCase\URL;
 /**
  * Manages timeouts for the current browser session.
  *
- * @package    PHPUnit_Selenium
- * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
- * @since      Class available since Release 1.2.4
+ *
  * @method implicitWait(int $ms) Sets timeout when searching for elements
  * @method asyncScript(int $ms) Sets timeout for asynchronous scripts executed by Session::executeAsync()
  */
@@ -75,20 +65,23 @@ class Timeouts extends CommandsHolder
     protected function initCommands()
     {
         $self = $this;
-        return array(
-            'implicitWait' => function ($milliseconds, $commandUrl) use ($self) {
+
+        return [
+            'implicitWait' => static function ($milliseconds, $commandUrl) use ($self) {
                 $self->check($milliseconds);
                 $self->setLastImplicitWaitValue($milliseconds);
-                $jsonParameters = array('ms' => $milliseconds);
+                $jsonParameters = ['ms' => $milliseconds];
+
                 return new GenericPost($jsonParameters, $commandUrl);
             },
-            'asyncScript' => function ($milliseconds, $commandUrl) use ($self) {
+            'asyncScript' => static function ($milliseconds, $commandUrl) use ($self) {
                 $self->check($milliseconds);
-                $jsonParameters = array('ms' => $milliseconds);
+                $jsonParameters = ['ms' => $milliseconds];
+
                 return new GenericPost($jsonParameters, $commandUrl);
             },
 
-        );
+        ];
     }
 
     public function setLastImplicitWaitValue($implicitWait)

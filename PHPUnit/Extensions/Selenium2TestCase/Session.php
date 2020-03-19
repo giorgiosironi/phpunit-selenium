@@ -34,12 +34,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @package    PHPUnit_Selenium
- * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
- * @since      File available since Release 1.2.0
  */
 
 namespace PHPUnit\Extensions\Selenium2TestCase;
@@ -71,13 +66,8 @@ use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\Window as SessionWindow;
 /**
  * Browser session for Selenium 2: main point of entry for functionality.
  *
- * @package    PHPUnit_Selenium
- * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
- * @since      Class available since Release 1.2.0
+ *
  * @method void acceptAlert() Press OK on an alert, or confirms a dialog
  * @method mixed alertText($value = NULL) Gets the alert dialog text, or sets the text for a prompt dialog
  * @method void back()
@@ -108,22 +98,19 @@ class Session extends Accessor
      */
     private $baseUrl;
 
-    /**
-     * @var Timeouts
-     */
+    /** @var Timeouts */
     private $timeouts;
 
-    /**
-     * @var boolean
-     */
-    private $stopped = FALSE;
+    /** @var bool */
+    private $stopped = false;
 
-    public function __construct($driver,
-                                URL $url,
-                                URL $baseUrl,
-                                Timeouts $timeouts)
-    {
-        $this->baseUrl = $baseUrl;
+    public function __construct(
+        $driver,
+        URL $url,
+        URL $baseUrl,
+        Timeouts $timeouts
+    ) {
+        $this->baseUrl  = $baseUrl;
         $this->timeouts = $timeouts;
         parent::__construct($driver, $url);
     }
@@ -139,7 +126,8 @@ class Session extends Accessor
     protected function initCommands()
     {
         $baseUrl = $this->baseUrl;
-        return array(
+
+        return [
             'acceptAlert' => AcceptAlert::class,
             'alertText' => AlertText::class,
             'back' => GenericPost::class,
@@ -160,7 +148,7 @@ class Session extends Accessor
             'title' => SessionGenericAccessor::class,
             'log' => Log::class,
             'logTypes' => $this->attributeCommandFactoryMethod('log/types'),
-            'url' => function ($jsonParameters, $commandUrl) use ($baseUrl) {
+            'url' => static function ($jsonParameters, $commandUrl) use ($baseUrl) {
                 return new \PHPUnit\Extensions\Selenium2TestCase\SessionCommand\Url($jsonParameters, $commandUrl, $baseUrl);
             },
             'window' => SessionWindow::class,
@@ -173,14 +161,15 @@ class Session extends Accessor
             'flick' => $this->touchCommandFactoryMethod('touch/flick'),
             'location' => Location::class,
             'orientation' => Orientation::class,
-            'file' => File::class
-        );
+            'file' => File::class,
+        ];
     }
 
     private function attributeCommandFactoryMethod($urlSegment)
     {
         $url = $this->url->addCommand($urlSegment);
-        return function ($jsonParameters, $commandUrl) use ($url) {
+
+        return static function ($jsonParameters, $commandUrl) use ($url) {
             return new GenericAttribute($jsonParameters, $url);
         };
     }
@@ -188,7 +177,8 @@ class Session extends Accessor
     private function touchCommandFactoryMethod($urlSegment)
     {
         $url = $this->url->addCommand($urlSegment);
-        return function ($jsonParameters, $commandUrl) use ($url) {
+
+        return static function ($jsonParameters, $commandUrl) use ($url) {
             return new GenericPost($jsonParameters, $url);
         };
     }
@@ -208,6 +198,7 @@ class Session extends Accessor
 
     /**
      * Closed the browser.
+     *
      * @return void
      */
     public function stop()
@@ -215,13 +206,15 @@ class Session extends Accessor
         if ($this->stopped) {
             return;
         }
+
         try {
             $this->driver->curl('DELETE', $this->url);
         } catch (Exception $e) {
             // sessions which aren't closed because of sharing can time out on the server. In no way trying to close them should make a test fail, as it already finished before arriving here.
-            "Closing sessions: " . $e->getMessage() . "\n";
+            'Closing sessions: ' . $e->getMessage() . "\n";
         }
-        $this->stopped = TRUE;
+
+        $this->stopped = true;
         if ($this->stopped) {
             return;
         }
@@ -234,13 +227,15 @@ class Session extends Accessor
     {
         $tag = $element->name();
         if ($tag !== 'select') {
-            throw new InvalidArgumentException("The element is not a `select` tag but a `$tag`.");
+            throw new InvalidArgumentException(sprintf('The element is not a `select` tag but a `%s`.', $tag));
         }
+
         return Select::fromElement($element);
     }
 
     /**
-     * @param array   WebElement JSON object
+     * @param array $value WebElement JSON object
+     *
      * @return Element
      */
     public function elementFromResponseValue($value)
@@ -249,12 +244,13 @@ class Session extends Accessor
     }
 
     /**
-     * @param string $id    id attribute, e.g. 'container'
+     * @param string $id id attribute, e.g. 'container'
+     *
      * @return void
      */
     public function clickOnElement($id)
     {
-        return $this->element($this->using('id')->value($id))->click();
+        $this->element($this->using('id')->value($id))->click();
     }
 
     public function timeouts()
@@ -276,6 +272,7 @@ class Session extends Accessor
     public function currentWindow()
     {
         $url = $this->url->descend('window')->descend(trim($this->windowHandle(), '{}'));
+
         return new Window($this->driver, $url);
     }
 
@@ -291,8 +288,9 @@ class Session extends Accessor
      */
     public function active()
     {
-        $command = new Active(null, $this->url);
+        $command  = new Active(null, $this->url);
         $response = $this->driver->execute($command);
+
         return $this->elementFromResponseValue($response->getValue());
     }
 
@@ -302,6 +300,7 @@ class Session extends Accessor
     public function cookie()
     {
         $url = $this->url->descend('cookie');
+
         return new Cookie($this->driver, $url);
     }
 
@@ -311,6 +310,7 @@ class Session extends Accessor
     public function localStorage()
     {
         $url = $this->url->addCommand('localStorage');
+
         return new Storage($this->driver, $url);
     }
 

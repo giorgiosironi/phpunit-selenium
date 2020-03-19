@@ -34,12 +34,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @package    PHPUnit_Selenium
- * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
- * @since      File available since Release 1.2.0
  */
 
 namespace PHPUnit\Extensions\Selenium2TestCase;
@@ -47,30 +42,20 @@ namespace PHPUnit\Extensions\Selenium2TestCase;
 /**
  * Object representing an HTTP response from the Selenium Server.
  *
- * @package    PHPUnit_Selenium
- * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
- * @since      Class available since Release 1.2.0
  */
 class Response
 {
-    /**
-     * @var array   decoded response
-     */
+    /** @var array   decoded response */
     private $jsonResponse;
 
-    /**
-     * @var array   CURL info for the response.
-     */
+    /** @var array   CURL info for the response. */
     private $info;
 
     public function __construct($jsonResponse, $info)
     {
         $this->jsonResponse = $jsonResponse;
-        $this->info = $info;
+        $this->info         = $info;
     }
 
     public function getValue()
@@ -85,14 +70,14 @@ class Response
      */
     public function getURL()
     {
-        $url = $this->info['url'];
+        $url       = $this->info['url'];
         $sessionId = $this->jsonResponse['sessionId'];
 
         // if url doesn't have sessionId included - append it manually
         // this change was performed in selenium v2.34
         // @see https://code.google.com/p/selenium/issues/detail?id=6089
         // @see https://github.com/sebastianbergmann/phpunit-selenium/issues/265
-        if (strpos($url, $sessionId) === FALSE) {
+        if (strpos($url, $sessionId) === false) {
             $url .= '/' . $sessionId;
         }
 

@@ -34,16 +34,11 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @package    PHPUnit_Selenium
- * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
- * @since      File available since Release 1.0.0
  */
 
-if ( isset($_COOKIE['PHPUNIT_SELENIUM_TEST_ID']) &&
-    !isset($_GET['PHPUNIT_SELENIUM_TEST_ID']) &&
+if (isset($_COOKIE['PHPUNIT_SELENIUM_TEST_ID']) &&
+    ! isset($_GET['PHPUNIT_SELENIUM_TEST_ID']) &&
     extension_loaded('xdebug')) {
     $GLOBALS['PHPUNIT_FILTERED_FILES'][] = __FILE__;
 
@@ -62,8 +57,8 @@ if ( isset($_COOKIE['PHPUNIT_SELENIUM_TEST_ID']) &&
         $file = $_SERVER['SCRIPT_FILENAME'];
     }
 
-    $sanitizedCookieName = str_replace(array('\\'), '_', $_COOKIE['PHPUNIT_SELENIUM_TEST_ID']);
-    $fullPath = $file . '.' . md5(uniqid(rand(), TRUE)) . '.' . $sanitizedCookieName;
+    $sanitizedCookieName = str_replace(['\\'], '_', $_COOKIE['PHPUNIT_SELENIUM_TEST_ID']);
+    $fullPath            = $file . '.' . md5(uniqid(rand(), true)) . '.' . $sanitizedCookieName;
 
     file_put_contents($fullPath, serialize($data));
 }

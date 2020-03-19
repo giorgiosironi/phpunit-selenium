@@ -34,21 +34,17 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @package    PHPUnit_Selenium
- * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
- * @since      File available since Release 1.0.0
  */
 
 $directory = realpath(__DIR__);
-while ($directory != '/') {
+while ($directory !== '/') {
     $autoloadCandidate = $directory . '/vendor/autoload.php';
     if (file_exists($autoloadCandidate)) {
         require_once $autoloadCandidate;
         break;
     }
+
     $directory = realpath($directory . '/..');
 }
 
@@ -58,14 +54,14 @@ while ($directory != '/') {
 $GLOBALS['PHPUNIT_COVERAGE_DATA_DIRECTORY'] = getcwd();
 
 if (isset($_GET['PHPUNIT_SELENIUM_TEST_ID'])) {
-    $facade = new \SebastianBergmann\FileIterator\Facade();
-    $sanitizedCookieName = str_replace(array('\\'), '_', $_GET['PHPUNIT_SELENIUM_TEST_ID']);
-    $files  = $facade->getFilesAsArray(
-      $GLOBALS['PHPUNIT_COVERAGE_DATA_DIRECTORY'],
-      $sanitizedCookieName
+    $facade              = new \SebastianBergmann\FileIterator\Facade();
+    $sanitizedCookieName = str_replace(['\\'], '_', $_GET['PHPUNIT_SELENIUM_TEST_ID']);
+    $files               = $facade->getFilesAsArray(
+        $GLOBALS['PHPUNIT_COVERAGE_DATA_DIRECTORY'],
+        $sanitizedCookieName
     );
 
-    $coverage = array();
+    $coverage = [];
 
     foreach ($files as $file) {
         $data = unserialize(file_get_contents($file));
@@ -75,13 +71,14 @@ if (isset($_GET['PHPUNIT_SELENIUM_TEST_ID'])) {
 
         foreach ($data as $file => $lines) {
             if ($filter->isFile($file)) {
-                if (!isset($coverage[$file])) {
-                    $coverage[$file] = array(
-                      'md5' => md5_file($file), 'coverage' => $lines
-                    );
+                if (! isset($coverage[$file])) {
+                    $coverage[$file] = [
+                        'md5' => md5_file($file),
+                        'coverage' => $lines,
+                    ];
                 } else {
                     foreach ($lines as $line => $flag) {
-                        if (!isset($coverage[$file]['coverage'][$line]) ||
+                        if (! isset($coverage[$file]['coverage'][$line]) ||
                             $flag > $coverage[$file]['coverage'][$line]) {
                             $coverage[$file]['coverage'][$line] = $flag;
                         }

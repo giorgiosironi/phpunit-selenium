@@ -34,12 +34,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @package    PHPUnit_Selenium
- * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
- * @since      File available since Release 1.2.5
  */
 
 namespace PHPUnit\Extensions\Selenium2TestCase;
@@ -49,13 +44,8 @@ use PHPUnit\Extensions\Selenium2TestCase\ElementCommand\GenericPost;
 /**
  * Object representing a browser window.
  *
- * @package    PHPUnit_Selenium
- * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
- * @since      Class available since Release 1.2.5
+ *
  * @method array size(array $size = null) Window size as array('width' => $x, 'height' => $y)
  * @method array position(array $position = null) Window position as array('x' => $x, 'y' => $y)
  * @method array maximize() Maximize window
@@ -67,11 +57,10 @@ class Window extends CommandsHolder
      */
     protected function initCommands()
     {
-        return array(
+        return [
             'size' => StateCommand::class,
             'position' => StateCommand::class,
             'maximize' => GenericPost::class,
-        );
+        ];
     }
-
 }

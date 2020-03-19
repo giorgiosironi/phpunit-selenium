@@ -34,12 +34,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @package    PHPUnit_Selenium
- * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
- * @since      File available since Release 1.2.2
  */
 
 namespace PHPUnit\Extensions;
@@ -53,25 +48,21 @@ use ReflectionMethod;
 /**
  * TestSuite class for Selenium 1 tests
  *
- * @package    PHPUnit_Selenium
- * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
- * @since      Class available since Release 1.2.0
  */
 class SeleniumTestSuite extends TestSuite
 {
     /**
      * Overriding the default: Selenium suites are always built from a TestCase class.
-     * @var boolean
+     *
+     * @var bool
      */
-    protected $testCase = TRUE;
+    protected $testCase = true;
 
     /**
      * Making the method public.
-     * @param ReflectionClass $class
+     *
+     * @param ReflectionClass  $class
      * @param ReflectionMethod $method
      */
     public function addTestMethod(ReflectionClass $class, ReflectionMethod $method): void
@@ -80,7 +71,8 @@ class SeleniumTestSuite extends TestSuite
     }
 
     /**
-     * @param string $className     extending PHPUnit_Extensions_SeleniumTestCase
+     * @param string $className extending PHPUnit_Extensions_SeleniumTestCase
+     *
      * @return SeleniumTestSuite
      */
     public static function fromTestCaseClass($className)
@@ -93,25 +85,24 @@ class SeleniumTestSuite extends TestSuite
         $staticProperties = $class->getStaticProperties();
         if (isset($staticProperties['browsers'])) {
             $browsers = $staticProperties['browsers'];
-        } else if (is_callable("{$className}::browsers")) {
+        } elseif (is_callable(sprintf('%s::browsers', $className))) {
             $browsers = $className::browsers();
         } else {
             $browsers = null;
         }
 
         //BC: renamed seleneseDirectory -> selenesePath
-        if (!isset($staticProperties['selenesePath']) && isset($staticProperties['seleneseDirectory'])) {
+        if (! isset($staticProperties['selenesePath']) && isset($staticProperties['seleneseDirectory'])) {
             $staticProperties['selenesePath'] = $staticProperties['seleneseDirectory'];
         }
 
         // Create tests from Selenese/HTML files.
         if (isset($staticProperties['selenesePath']) &&
             (is_dir($staticProperties['selenesePath']) || is_file($staticProperties['selenesePath']))) {
-
             if (is_dir($staticProperties['selenesePath'])) {
                 $files = array_merge(
-                  self::getSeleneseFiles($staticProperties['selenesePath'], '.htm'),
-                  self::getSeleneseFiles($staticProperties['selenesePath'], '.html')
+                    self::getSeleneseFiles($staticProperties['selenesePath'], '.htm'),
+                    self::getSeleneseFiles($staticProperties['selenesePath'], '.html')
                 );
             } else {
                 $files[] = realpath($staticProperties['selenesePath']);
@@ -123,21 +114,23 @@ class SeleniumTestSuite extends TestSuite
                     $browserSuite = SeleniumBrowserSuite::fromClassAndBrowser($className, $browser);
 
                     foreach ($files as $file) {
-                        self::addGeneratedTestTo($browserSuite,
-                          new $className($file, array(), '', $browser),
-                          $classGroups
+                        self::addGeneratedTestTo(
+                            $browserSuite,
+                            new $className($file, [], '', $browser),
+                            $classGroups
                         );
                     }
 
                     $suite->addTest($browserSuite);
                 }
-            }
-            else {
+            } else {
                 // Create tests from Selenese/HTML files for single browser.
                 foreach ($files as $file) {
-                    self::addGeneratedTestTo($suite,
-                                              new $className($file),
-                                              $classGroups);
+                    self::addGeneratedTestTo(
+                        $suite,
+                        new $className($file),
+                        $classGroups
+                    );
                 }
             }
         }
@@ -149,12 +142,12 @@ class SeleniumTestSuite extends TestSuite
                 foreach ($class->getMethods() as $method) {
                     $browserSuite->addTestMethod($class, $method);
                 }
+
                 $browserSuite->setupSpecificBrowser($browser);
 
                 $suite->addTest($browserSuite);
             }
-        }
-        else {
+        } else {
             // Create tests from test methods for single browser.
             foreach ($class->getMethods() as $method) {
                 if (!TestUtil::isTestMethod($method)) {
@@ -184,13 +177,13 @@ class SeleniumTestSuite extends TestSuite
     /**
      * @param  string $directory
      * @param  string $suffix
+     *
      * @return array
      */
     private static function getSeleneseFiles($directory, $suffix)
     {
-        $facade = new File_Iterator_Facade;
+        $facade = new File_Iterator_Facade();
 
         return $facade->getFilesAsArray($directory, $suffix);
     }
-
 }

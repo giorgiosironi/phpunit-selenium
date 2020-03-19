@@ -34,26 +34,16 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @package    PHPUnit_Selenium
- * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
- * @since      File available since Release 1.2.6
  */
 
 namespace PHPUnit\Extensions\Selenium2TestCase\Session\Cookie;
 
+// phpcs:disable SlevomatCodingStandard.Classes.UnusedPrivateElements
 /**
  * Adds a cookie.
  *
- * @package    PHPUnit_Selenium
- * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
- * @since      Class available since Release 1.2.6
  */
 class Builder
 {
@@ -61,53 +51,61 @@ class Builder
     private $value;
     private $path;
     private $domain;
-    private $secure = FALSE;
+    private $secure = false;
     private $expiry;
 
     public function __construct($cookieFacade, $name, $value)
     {
         $this->cookieFacade = $cookieFacade;
-        $this->name = $name;
-        $this->value = $value;
+        $this->name         = $name;
+        $this->value        = $value;
     }
 
     /**
-     * @param string
+     * @param string $path
+     *
      * @return Builder
      */
     public function path($path)
     {
         $this->path = $path;
+
         return $this;
     }
 
     /**
-     * @param string
+     * @param string $domain
+     *
      * @return Builder
      */
     public function domain($domain)
     {
         $this->domain = $domain;
+
         return $this;
     }
 
     /**
-     * @param boolean
+     * @param bool $secure
+     *
      * @return Builder
      */
     public function secure($secure)
     {
         $this->secure = $secure;
+
         return $this;
     }
 
     /**
-     * @param integer
+     * @param int $expiry
+     *
      * @return Builder
      */
     public function expiry($expiry)
     {
         $this->expiry = $expiry;
+
         return $this;
     }
 
@@ -116,16 +114,17 @@ class Builder
      */
     public function set()
     {
-        $cookieData = array(
+        $cookieData = [
             'name' => $this->name,
             'value' => $this->value,
             'secure' => $this->secure,
-        );
-        foreach (array('path', 'domain', 'expiry') as $parameter) {
-            if ($this->$parameter !== NULL) {
+        ];
+        foreach (['path', 'domain', 'expiry'] as $parameter) {
+            if ($this->$parameter !== null) {
                 $cookieData[$parameter] = $this->$parameter;
             }
         }
+
         $this->cookieFacade->postCookie($cookieData);
     }
 }

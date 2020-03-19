@@ -34,12 +34,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @package    PHPUnit_Selenium
- * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
- * @since      File available since Release 1.2.6
  */
 
 namespace PHPUnit\Extensions;
@@ -52,21 +47,16 @@ use ReflectionMethod;
  * TestSuite class for a set of tests from a single Testcase Class
  * executed with a particular browser.
  *
- * @package    PHPUnit_Selenium
- * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
- * @since      Class available since Release 1.2.6
  */
 class SeleniumBrowserSuite extends TestSuite
 {
     /**
      * Overriding the default: Selenium suites are always built from a TestCase class.
-     * @var boolean
+     *
+     * @var bool
      */
-    protected $testCase = TRUE;
+    protected $testCase = true;
 
     public function addTestMethod(ReflectionClass $class, ReflectionMethod $method): void
     {
@@ -78,12 +68,14 @@ class SeleniumBrowserSuite extends TestSuite
         $browserSuite = new self();
         if (isset($browser['browserName'])) {
             $name = $browser['browserName'];
-        } else if (isset($browser['name'])) {
+        } elseif (isset($browser['name'])) {
             $name = $browser['name'];
         } else {
             $name = $browser['browser'];
         }
+
         $browserSuite->setName($className . ': ' . $name);
+
         return $browserSuite;
     }
 

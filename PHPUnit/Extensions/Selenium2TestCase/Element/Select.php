@@ -34,12 +34,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @package    PHPUnit_Selenium
- * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
- * @since      File available since Release 1.2.2
  */
 
 namespace PHPUnit\Extensions\Selenium2TestCase\Element;
@@ -50,13 +45,7 @@ use PHPUnit\Extensions\Selenium2TestCase\ElementCriteria;
 /**
  * Object representing a <select> element.
  *
- * @package    PHPUnit_Selenium
- * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
- * @since      Class available since Release 1.2.2
  */
 class Select extends Element
 {
@@ -74,9 +63,10 @@ class Select extends Element
     public function selectedLabel()
     {
         $selectedOption = $this->selectedOption();
-        if ($selectedOption === NULL) {
+        if ($selectedOption === null) {
             return '';
         }
+
         return $selectedOption->text();
     }
 
@@ -86,9 +76,10 @@ class Select extends Element
     public function selectedValue()
     {
         $selectedOption = $this->selectedOption();
-        if ($selectedOption === NULL) {
+        if ($selectedOption === null) {
             return '';
         }
+
         return $selectedOption->value();
     }
 
@@ -98,9 +89,10 @@ class Select extends Element
     public function selectedId()
     {
         $selectedOption = $this->selectedOption();
-        if ($selectedOption === NULL) {
+        if ($selectedOption === null) {
             return '';
         }
+
         return $selectedOption->attribute('id');
     }
 
@@ -109,10 +101,11 @@ class Select extends Element
      */
     public function selectedLabels()
     {
-        $labels = array();
+        $labels = [];
         foreach ($this->selectedOptions() as $option) {
             $labels[] = $option->text();
         }
+
         return $labels;
     }
 
@@ -121,10 +114,11 @@ class Select extends Element
      */
     public function selectedValues()
     {
-        $values = array();
+        $values = [];
         foreach ($this->selectedOptions() as $option) {
             $values[] = $option->value();
         }
+
         return $values;
     }
 
@@ -133,41 +127,45 @@ class Select extends Element
      */
     public function selectedIds()
     {
-        $id = array();
+        $id = [];
         foreach ($this->selectedOptions() as $option) {
             $values[] = $option->attribute('id');
         }
+
         return $id;
     }
 
     /**
      * @param string $label the text appearing in the option
+     *
      * @return void
      */
     public function selectOptionByLabel($label)
     {
-        $toSelect = $this->using('xpath')->value(".//option[.='$label']");
+        $toSelect = $this->using('xpath')->value(sprintf(".//option[.='%s']", $label));
         $this->selectOptionByCriteria($toSelect);
     }
 
     /**
      * @param string $value the value attribute of the option
+     *
      * @return void
      */
     public function selectOptionByValue($value)
     {
-        $toSelect = $this->using('xpath')->value(".//option[@value='$value']");
+        $toSelect = $this->using('xpath')->value(sprintf(".//option[@value='%s']", $value));
         $this->selectOptionByCriteria($toSelect);
     }
 
     /**
-     * @param ElementCriteria $localCriteria  condiotions for selecting an option
+     * @param ElementCriteria $localCriteria condiotions for selecting an option
+     *
      * @return void
      */
     public function selectOptionByCriteria(ElementCriteria $localCriteria)
     {
         $option = $this->element($localCriteria);
-        if (!$option->selected()) {
+        if (! $option->selected()) {
             $option->click();
         }
     }
@@ -177,10 +175,11 @@ class Select extends Element
      */
     public function selectOptionValues()
     {
-        $options = array();
+        $options = [];
         foreach ($this->options() as $option) {
             $options[] = $option->value();
         }
+
         return $options;
     }
 
@@ -189,10 +188,11 @@ class Select extends Element
      */
     public function selectOptionLabels()
     {
-        $options = array();
+        $options = [];
         foreach ($this->options() as $option) {
             $options[] = $option->text();
         }
+
         return $options;
     }
 
@@ -201,12 +201,13 @@ class Select extends Element
      */
     private function selectedOptions()
     {
-        $options = array();
+        $options = [];
         foreach ($this->options() as $option) {
             if ($option->selected()) {
                 $options[] = $option;
             }
         }
+
         return $options;
     }
 
@@ -224,12 +225,14 @@ class Select extends Element
                 return $option;
             }
         }
-        return NULL;
+
+        return null;
     }
 
     private function options()
     {
         $onlyTheOptions = $this->using('css selector')->value('option');
+
         return $this->elements($onlyTheOptions);
     }
 }

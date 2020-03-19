@@ -34,12 +34,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @package    PHPUnit_Selenium
- * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
- * @since      File available since Release 1.2.6
  */
 
 namespace PHPUnit\Extensions\Selenium2TestCase\SessionStrategy;
@@ -52,35 +47,31 @@ use PHPUnit\Extensions\Selenium2TestCase\URL;
 /**
  * Produces a new Session object shared for each test.
  *
- * @package    PHPUnit_Selenium
- * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @version    Release: @package_version@
  * @link       http://www.phpunit.de/
- * @since      Class available since Release 1.2.6
  */
 class Isolated implements SessionStrategy
 {
     public function session(array $parameters)
     {
         $seleniumServerUrl = URL::fromHostAndPort($parameters['host'], $parameters['port'], $parameters['secure']);
-        $driver = new Driver($seleniumServerUrl, $parameters['seleniumServerRequestsTimeout']);
-        $capabilities = array_merge($parameters['desiredCapabilities'],
-                                    array(
-                                        'browserName' => $parameters['browserName']
-                                    ));
-        $session = $driver->startSession($capabilities, $parameters['browserUrl']);
-        return $session;
+        $driver            = new Driver($seleniumServerUrl, $parameters['seleniumServerRequestsTimeout']);
+        $capabilities      = array_merge(
+            $parameters['desiredCapabilities'],
+            [
+                'browserName' => $parameters['browserName'],
+            ]
+        );
+
+        return $driver->startSession($capabilities, $parameters['browserUrl']);
     }
 
     public function notSuccessfulTest()
     {
     }
 
-    public function endOfTest(Session $session = NULL)
+    public function endOfTest(?Session $session = null)
     {
-        if ($session !== NULL) {
+        if ($session !== null) {
             $session->stop();
         }
     }
