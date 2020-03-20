@@ -93,7 +93,7 @@ class Element extends Accessor
         ];
     }
 
-    protected function getSessionUrl()
+    protected function getSessionUrl(): URL
     {
         return $this->url->ascend()->ascend();
     }

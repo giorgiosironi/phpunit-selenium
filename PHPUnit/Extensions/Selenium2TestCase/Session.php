@@ -157,10 +157,7 @@ class Session extends Accessor
         $this->stop();
     }
 
-    /**
-     * @return URL
-     */
-    public function getSessionUrl()
+    public function getSessionUrl(): URL
     {
         return $this->url;
     }

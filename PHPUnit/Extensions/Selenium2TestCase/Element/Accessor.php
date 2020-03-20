@@ -22,88 +22,69 @@ abstract class Accessor extends CommandsHolder
 {
     /**
      * @param string $value e.g. 'container'
-     *
-     * @return Element
      */
-    public function byClassName($value)
+    public function byClassName(string $value): Element
     {
         return $this->by('class name', $value);
     }
 
     /**
      * @param string $value e.g. 'div.container'
-     *
-     * @return Element
      */
-    public function byCssSelector($value)
+    public function byCssSelector(string $value): Element
     {
         return $this->by('css selector', $value);
     }
 
     /**
      * @param string $value e.g. 'uniqueId'
-     *
-     * @return Element
      */
-    public function byId($value)
+    public function byId(string $value): Element
     {
         return $this->by('id', $value);
     }
 
     /**
      * @param string $value e.g. 'Link text'
-     *
-     * @return Element
      */
-    public function byLinkText($value)
+    public function byLinkText(string $value): Element
     {
         return $this->by('link text', $value);
     }
 
     /**
      * @param string $value e.g. 'Link te'
-     *
-     * @return Element
      */
-    public function byPartialLinkText($value)
+    public function byPartialLinkText(string $value): Element
     {
         return $this->by('partial link text', $value);
     }
 
     /**
      * @param string $value e.g. 'email_address'
-     *
-     * @return Element
      */
-    public function byName($value)
+    public function byName(string $value): Element
     {
         return $this->by('name', $value);
     }
 
     /**
      * @param string $value e.g. 'body'
-     *
-     * @return Element
      */
-    public function byTag($value)
+    public function byTag(string $value): Element
     {
         return $this->by('tag name', $value);
     }
 
     /**
      * @param string $value e.g. '/div[@attribute="value"]'
-     *
-     * @return Element
      */
-    public function byXPath($value)
+    public function byXPath(string $value): Element
     {
         return $this->by('xpath', $value);
     }
 
-    /**
-     * @return Element
-     */
-    public function element(ElementCriteria $criteria)
+    public function element(ElementCriteria $criteria): Element
     {
         $value = $this->postCommand('element', $criteria);
 
@@ -113,7 +94,7 @@ abstract class Accessor extends CommandsHolder
     /**
      * @return Element[]
      */
-    public function elements(ElementCriteria $criteria)
+    public function elements(ElementCriteria $criteria): array
     {
         $values   = $this->postCommand('elements', $criteria);
         $elements = [];
@@ -124,28 +105,17 @@ abstract class Accessor extends CommandsHolder
         return $elements;
     }
 
-    /**
-     * @param string $strategy
-     *
-     * @return ElementCriteria
-     */
-    public function using($strategy)
+    public function using(string $strategy): ElementCriteria
     {
         return new ElementCriteria($strategy);
     }
 
-    /**
-     * @return URL
-     */
-    abstract protected function getSessionUrl();
+    abstract protected function getSessionUrl(): URL;
 
     /**
      * @param string $strategy supported by JsonWireProtocol element/ command
-     * @param string $value
-     *
-     * @return Element
      */
-    private function by($strategy, $value)
+    private function by(string $strategy, string $value): Element
     {
         return $this->element($this->using($strategy)->value($value));
     }
