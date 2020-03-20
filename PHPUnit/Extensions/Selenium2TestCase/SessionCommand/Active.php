@@ -18,7 +18,7 @@ use PHPUnit\Extensions\Selenium2TestCase\URL;
  */
 class Active extends Command
 {
-    public function __construct($jsonParameters, URL $url)
+    public function __construct(?array $jsonParameters, URL $url)
     {
         $url = $url->addCommand('element')->addCommand('active');
         parent::__construct($jsonParameters, $url);
