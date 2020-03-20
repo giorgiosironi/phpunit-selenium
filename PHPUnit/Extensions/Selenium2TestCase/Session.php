@@ -61,10 +61,7 @@ use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\Window as SessionWindow;
  */
 class Session extends Accessor
 {
-    /**
-     * @var string  the base URL for this session,
-     *              which all relative URLs will refer to
-     */
+    /** @var string  the base URL for this session, which all relative URLs will refer to */
     private $baseUrl;
 
     /** @var Timeouts */
@@ -74,7 +71,7 @@ class Session extends Accessor
     private $stopped = false;
 
     public function __construct(
-        $driver,
+        Driver $driver,
         URL $url,
         URL $baseUrl,
         Timeouts $timeouts
@@ -84,10 +81,7 @@ class Session extends Accessor
         parent::__construct($driver, $url);
     }
 
-    /**
-     * @return string
-     */
-    public function id()
+    public function id(): string
     {
         return $this->url->lastSegment();
     }
@@ -134,7 +128,7 @@ class Session extends Accessor
         ];
     }
 
-    private function attributeCommandFactoryMethod($urlSegment)
+    private function attributeCommandFactoryMethod(string $urlSegment): callable
     {
         $url = $this->url->addCommand($urlSegment);
 
@@ -143,7 +137,7 @@ class Session extends Accessor
         };
     }
 
-    private function touchCommandFactoryMethod($urlSegment)
+    private function touchCommandFactoryMethod(string $urlSegment): callable
     {
         $url = $this->url->addCommand($urlSegment);
 
@@ -164,10 +158,8 @@ class Session extends Accessor
 
     /**
      * Closed the browser.
-     *
-     * @return void
      */
-    public function stop()
+    public function stop(): void
     {
         if ($this->stopped) {
             return;
@@ -186,10 +178,7 @@ class Session extends Accessor
         }
     }
 
-    /**
-     * @return Select
-     */
-    public function select(Element $element)
+    public function select(Element $element): Select
     {
         $tag = $element->name();
         if ($tag !== 'select') {
@@ -201,58 +190,49 @@ class Session extends Accessor
 
     /**
      * @param array $value WebElement JSON object
-     *
-     * @return Element
      */
-    public function elementFromResponseValue($value)
+    public function elementFromResponseValue(array $value): Element
     {
         return Element::fromResponseValue($value, $this->getSessionUrl()->descend('element'), $this->driver);
     }
 
     /**
      * @param string $id id attribute, e.g. 'container'
-     *
-     * @return void
      */
-    public function clickOnElement($id)
+    public function clickOnElement(string $id): void
     {
         $this->element($this->using('id')->value($id))->click();
     }
 
-    public function timeouts()
+    public function timeouts(): Timeouts
     {
         return $this->timeouts;
     }
 
     /**
-     * @return string   a BLOB of a PNG file
+     * @return string a BLOB of a PNG file
      */
-    public function currentScreenshot()
+    public function currentScreenshot(): string
     {
         return base64_decode($this->screenshot());
     }
 
-    /**
-     * @return Window
-     */
-    public function currentWindow()
+    public function currentWindow(): Window
     {
         $url = $this->url->descend('window')->descend(trim($this->windowHandle(), '{}'));
 
         return new Window($this->driver, $url);
     }
 
-    public function closeWindow()
+    public function closeWindow(): void
     {
         $this->driver->curl('DELETE', $this->url->descend('window'));
     }
 
     /**
      * Get the element on the page that currently has focus.
-     *
-     * @return Element
      */
-    public function active()
+    public function active(): Element
     {
         $command  = new Active(null, $this->url);
         $response = $this->driver->execute($command);
@@ -260,32 +240,26 @@ class Session extends Accessor
         return $this->elementFromResponseValue($response->getValue());
     }
 
-    /**
-     * @return Cookie
-     */
-    public function cookie()
+    public function cookie(): Cookie
     {
         $url = $this->url->descend('cookie');
 
         return new Cookie($this->driver, $url);
     }
 
-    /**
-     * @return Storage
-     */
-    public function localStorage()
+    public function localStorage(): Storage
     {
         $url = $this->url->addCommand('localStorage');
 
         return new Storage($this->driver, $url);
     }
 
-    public function landscape()
+    public function landscape(): void
     {
         $this->orientation('LANDSCAPE');
     }
 
-    public function portrait()
+    public function portrait(): void
     {
         $this->orientation('PORTRAIT');
     }
