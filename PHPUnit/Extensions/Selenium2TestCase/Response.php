@@ -15,13 +15,13 @@ namespace PHPUnit\Extensions\Selenium2TestCase;
  */
 class Response
 {
-    /** @var array   decoded response */
+    /** @var array decoded response */
     private $jsonResponse;
 
-    /** @var array   CURL info for the response. */
+    /** @var array CURL info for the response. */
     private $info;
 
-    public function __construct($jsonResponse, $info)
+    public function __construct(array $jsonResponse, array $info)
     {
         $this->jsonResponse = $jsonResponse;
         $this->info         = $info;
@@ -34,10 +34,7 @@ class Response
         }
     }
 
-    /**
-     * @return URL
-     */
-    public function getURL()
+    public function getURL(): URL
     {
         $url       = $this->info['url'];
         $sessionId = $this->jsonResponse['sessionId'];
