@@ -18,7 +18,7 @@ use PHPUnit\Extensions\Selenium2TestCase\Element;
  */
 class Frame extends Command
 {
-    public function __construct($id, $commandUrl)
+    public function __construct($id, URL $commandUrl)
     {
         $jsonParameters = [
             'id' => $this->extractId($id),
@@ -42,10 +42,7 @@ class Frame extends Command
         return $id;
     }
 
-    /**
-     * @return bool
-     */
-    private function isElement($id)
+    private function isElement($id): bool
     {
         return $id instanceof Element;
     }
