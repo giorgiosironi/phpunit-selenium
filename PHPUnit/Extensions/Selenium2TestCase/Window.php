@@ -22,9 +22,9 @@ use PHPUnit\Extensions\Selenium2TestCase\ElementCommand\GenericPost;
 class Window extends CommandsHolder
 {
     /**
-     * @return array    class names
+     * @return array class names
      */
-    protected function initCommands()
+    protected function initCommands(): array
     {
         return [
             'size' => StateCommand::class,

@@ -22,16 +22,13 @@ abstract class CommandsHolder
     /** @var Driver */
     protected $driver;
 
-    /** @var string  the API URL for this element, */
+    /** @var string the API URL for this element, */
     protected $url;
 
-    /**
-     * @var array   instances of
-     *              PHPUnit_Extensions_Selenium2TestCase_ElementCommand
-     */
+    /** @var array instances of PHPUnit_Extensions_Selenium2TestCase_ElementCommand */
     protected $commands;
 
-    public function __construct($driver, URL $url)
+    public function __construct(Driver $driver, URL $url)
     {
         $this->driver   = $driver;
         $this->url      = $url;
@@ -48,10 +45,9 @@ abstract class CommandsHolder
     }
 
     /**
-     * @return array    class names, or
-     *                  callables of the form function($parameter, $commandUrl)
+     * @return array class names, or callables of the form function($parameter, $commandUrl)
      */
-    abstract protected function initCommands();
+    abstract protected function initCommands(): array;
 
     public function __call($commandName, $arguments)
     {
@@ -61,7 +57,7 @@ abstract class CommandsHolder
         return $response->getValue();
     }
 
-    protected function postCommand($name, ElementCriteria $criteria)
+    protected function postCommand(string $name, ElementCriteria $criteria)
     {
         $response = $this->driver->curl(
             'POST',
@@ -73,18 +69,16 @@ abstract class CommandsHolder
     }
 
     /**
-     * @return callable
-     *
-     * @params string $commandClass     a class name, descending from Command
+     * @param string $commandClass a class name, descending from Command
      */
-    private function factoryMethod($commandClass)
+    private function factoryMethod(string $commandClass): callable
     {
         return static function ($jsonParameters, $url) use ($commandClass) {
             return new $commandClass($jsonParameters, $url);
         };
     }
 
-    private function extractJsonParameters($arguments)
+    private function extractJsonParameters(array $arguments)
     {
         $this->checkArguments($arguments);
 
@@ -95,7 +89,7 @@ abstract class CommandsHolder
         return $arguments[0];
     }
 
-    private function checkArguments($arguments)
+    private function checkArguments(array $arguments): void
     {
         if (count($arguments) > 1) {
             throw new Exception('You cannot call a command with multiple method arguments.');
@@ -103,13 +97,9 @@ abstract class CommandsHolder
     }
 
     /**
-     * @param string $commandName    The called method name
-     *                                defined as a key in initCommands()
-     * @param array  $jsonParameters
-     *
-     * @return Command
+     * @param string $commandName The called method name defined as a key in initCommands()
      */
-    protected function newCommand($commandName, $jsonParameters)
+    protected function newCommand(string $commandName, array $jsonParameters): Command
     {
         if (isset($this->commands[$commandName])) {
             $factoryMethod = $this->commands[$commandName];

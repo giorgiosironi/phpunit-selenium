@@ -92,7 +92,7 @@ class Session extends Accessor
         return $this->url->lastSegment();
     }
 
-    protected function initCommands()
+    protected function initCommands(): array
     {
         $baseUrl = $this->baseUrl;
 

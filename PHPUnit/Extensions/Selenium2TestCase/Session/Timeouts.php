@@ -31,7 +31,7 @@ class Timeouts extends CommandsHolder
         $this->maximumTimeout = $maximumTimeout;
     }
 
-    protected function initCommands()
+    protected function initCommands(): array
     {
         $self = $this;
 

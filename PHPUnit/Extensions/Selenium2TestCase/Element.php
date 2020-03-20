@@ -60,9 +60,9 @@ class Element extends Accessor
     }
 
     /**
-     * @return array    class names
+     * @return array class names
      */
-    protected function initCommands()
+    protected function initCommands(): array
     {
         return [
             'attribute' => Attribute::class,
