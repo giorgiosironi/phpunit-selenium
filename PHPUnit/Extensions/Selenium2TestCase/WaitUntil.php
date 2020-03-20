@@ -42,12 +42,8 @@ class WaitUntil
      * @throws \PHPUnit\Extensions\Selenium2TestCase\Exception
      * @throws WebDriverException
      */
-    public function run($callback, $timeout = null, $sleepInterval = null)
+    public function run(callable $callback, ?int $timeout = null, ?int $sleepInterval = null)
     {
-        if (! is_callable($callback)) {
-            throw new \PHPUnit\Extensions\Selenium2TestCase\Exception('The valid callback is expected');
-        }
-
         // if there was an implicit timeout specified - remember it and temporarily turn it off
         $implicitWait = $this->testCase->timeouts()->getLastImplicitWaitValue();
         if ($implicitWait) {
