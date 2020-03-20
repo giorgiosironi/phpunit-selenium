@@ -17,7 +17,7 @@ use PHPUnit\Extensions\Selenium2TestCase\Command;
  */
 class Log extends Command
 {
-    public function __construct($type, $commandUrl)
+    public function __construct($type, URL $commandUrl)
     {
         $jsonParameters = ['type' => $type];
         parent::__construct($jsonParameters, $commandUrl);
