@@ -17,7 +17,7 @@ use PHPUnit\Extensions\Selenium2TestCase\Command;
  */
 class Window extends Command
 {
-    public function __construct($name, $commandUrl)
+    public function __construct($name, URL $commandUrl)
     {
         $jsonParameters = ['name' => $name];
         parent::__construct($jsonParameters, $commandUrl);
