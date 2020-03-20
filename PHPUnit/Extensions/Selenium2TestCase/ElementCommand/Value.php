@@ -18,7 +18,7 @@ use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\Keys;
  */
 class Value extends Keys
 {
-    public function httpMethod()
+    public function httpMethod(): string
     {
         if ($this->jsonParameters) {
             return 'POST';

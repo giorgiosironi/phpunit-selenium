@@ -45,7 +45,7 @@ class File extends Command
         unlink($zipfilePath);
     }
 
-    public function httpMethod()
+    public function httpMethod(): string
     {
         return 'POST';
     }

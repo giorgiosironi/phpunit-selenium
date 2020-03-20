@@ -17,7 +17,7 @@ use PHPUnit\Extensions\Selenium2TestCase\Command;
  */
 class GenericAccessor extends Command
 {
-    public function httpMethod()
+    public function httpMethod(): string
     {
         return 'GET';
     }

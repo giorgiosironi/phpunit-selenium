@@ -18,16 +18,12 @@ use PHPUnit\Extensions\Selenium2TestCase\URL;
  */
 class Css extends Command
 {
-    /**
-     * @param array $propertyName
-     */
-    public function __construct($propertyName, URL $cssResourceBaseUrl)
+    public function __construct(string $propertyName, URL $cssResourceBaseUrl)
     {
-        $this->jsonParameters = [];
-        $this->url            = $cssResourceBaseUrl->descend($propertyName);
+        parent::__construct([], $cssResourceBaseUrl->descend($propertyName));
     }
 
-    public function httpMethod()
+    public function httpMethod(): string
     {
         return 'GET';
     }

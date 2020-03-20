@@ -50,7 +50,7 @@ class Frame extends Command
         return $id instanceof Element;
     }
 
-    public function httpMethod()
+    public function httpMethod(): string
     {
         return 'POST';
     }

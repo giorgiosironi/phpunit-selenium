@@ -24,7 +24,7 @@ class Active extends Command
         parent::__construct($jsonParameters, $url);
     }
 
-    public function httpMethod()
+    public function httpMethod(): string
     {
         return 'POST';
     }

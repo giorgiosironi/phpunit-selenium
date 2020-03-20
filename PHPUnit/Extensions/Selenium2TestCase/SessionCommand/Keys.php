@@ -32,7 +32,7 @@ class Keys extends Command
     /**
      * @return string
      */
-    public function httpMethod()
+    public function httpMethod(): string
     {
         return 'POST';
     }

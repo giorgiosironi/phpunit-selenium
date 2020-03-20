@@ -18,11 +18,12 @@ use InvalidArgumentException;
 abstract class Command
 {
     protected $jsonParameters;
+    private $url;
 
     /**
      * @param array $jsonParameters null in case of no parameters
      */
-    public function __construct($jsonParameters, URL $url)
+    public function __construct(?array $jsonParameters, URL $url)
     {
         if (! is_array($jsonParameters) && $jsonParameters !== null) {
             throw new InvalidArgumentException('The JSON parameters must be an array, or a NULL value in case they are not required.');
@@ -32,15 +33,12 @@ abstract class Command
         $this->url            = $url;
     }
 
-    public function url()
+    public function url(): URL
     {
         return $this->url;
     }
 
-    /**
-     * @return string
-     */
-    abstract public function httpMethod();
+    abstract public function httpMethod(): string;
 
     public function jsonParameters()
     {

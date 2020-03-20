@@ -23,7 +23,7 @@ class Window extends Command
         parent::__construct($jsonParameters, $commandUrl);
     }
 
-    public function httpMethod()
+    public function httpMethod(): string
     {
         return 'POST';
     }

@@ -32,7 +32,7 @@ class AlertText extends Command
         parent::__construct($jsonParameters, $url);
     }
 
-    public function httpMethod()
+    public function httpMethod(): string
     {
         if ($this->jsonParameters) {
             return 'POST';

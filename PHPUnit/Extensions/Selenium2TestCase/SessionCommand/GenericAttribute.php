@@ -17,7 +17,7 @@ use PHPUnit\Extensions\Selenium2TestCase\Command;
  */
 class GenericAttribute extends Command
 {
-    public function httpMethod()
+    public function httpMethod(): string
     {
         if ($this->jsonParameters) {
             return 'POST';

@@ -10,7 +10,6 @@
 
 namespace PHPUnit\Extensions\Selenium2TestCase\ElementCommand;
 
-use InvalidArgumentException;
 use PHPUnit\Extensions\Selenium2TestCase\Command;
 use PHPUnit\Extensions\Selenium2TestCase\Element;
 use PHPUnit\Extensions\Selenium2TestCase\URL;
@@ -20,20 +19,12 @@ use PHPUnit\Extensions\Selenium2TestCase\URL;
  */
 class Equals extends Command
 {
-    /**
-     * @param array $parameter
-     */
-    public function __construct($parameter, URL $equalsResourceBaseUrl)
+    public function __construct(Element $parameter, URL $equalsResourceBaseUrl)
     {
-        $this->jsonParameters = [];
-        if (! ($parameter instanceof Element)) {
-            throw new InvalidArgumentException('Elements can only test equality with other Element instances.');
-        }
-
-        $this->url = $equalsResourceBaseUrl->descend($parameter->getId());
+        parent::__construct([], $equalsResourceBaseUrl->descend($parameter->getId()));
     }
 
-    public function httpMethod()
+    public function httpMethod(): string
     {
         return 'GET';
     }

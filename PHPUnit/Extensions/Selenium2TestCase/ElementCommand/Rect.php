@@ -18,16 +18,12 @@ use PHPUnit\Extensions\Selenium2TestCase\URL;
  */
 class Rect extends Command
 {
-    /**
-     * @param array $parameter
-     */
-    public function __construct($parameter, URL $attributeResourceBaseUrl)
+    public function __construct(string $parameter, URL $attributeResourceBaseUrl)
     {
-        $this->jsonParameters = [];
-        $this->url            = $attributeResourceBaseUrl->descend($parameter);
+        parent::__construct([], $attributeResourceBaseUrl->descend($parameter));
     }
 
-    public function httpMethod()
+    public function httpMethod(): string
     {
         return 'GET';
     }

@@ -17,7 +17,7 @@ use PHPUnit\Extensions\Selenium2TestCase\Command;
  */
 class DismissAlert extends Command
 {
-    public function httpMethod()
+    public function httpMethod(): string
     {
         return 'POST';
     }

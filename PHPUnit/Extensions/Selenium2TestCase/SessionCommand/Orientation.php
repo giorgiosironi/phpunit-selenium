@@ -26,7 +26,7 @@ class Orientation extends GenericAttribute
         parent::__construct($jsonParameters, $commandUrl);
     }
 
-    public function httpMethod()
+    public function httpMethod(): string
     {
         if ($this->jsonParameters) {
             return 'POST';

@@ -17,7 +17,7 @@ use PHPUnit\Extensions\Selenium2TestCase\Command;
  */
 class AcceptAlert extends Command
 {
-    public function httpMethod()
+    public function httpMethod(): string
     {
         return 'POST';
     }

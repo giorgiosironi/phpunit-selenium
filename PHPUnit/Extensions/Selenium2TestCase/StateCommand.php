@@ -15,7 +15,7 @@ namespace PHPUnit\Extensions\Selenium2TestCase;
  */
 class StateCommand extends Command
 {
-    public function httpMethod()
+    public function httpMethod(): string
     {
         if ($this->jsonParameters) {
             return 'POST';
