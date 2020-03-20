@@ -26,7 +26,7 @@ class ScreenshotListener implements TestListener
 
     private $directory;
 
-    public function __construct($directory)
+    public function __construct(string $directory)
     {
         $this->directory = $directory;
     }
@@ -41,7 +41,7 @@ class ScreenshotListener implements TestListener
         $this->storeAScreenshot($test);
     }
 
-    private function storeAScreenshot(Test $test)
+    private function storeAScreenshot(Test $test): void
     {
         if ($test instanceof Selenium2TestCase)
         {
