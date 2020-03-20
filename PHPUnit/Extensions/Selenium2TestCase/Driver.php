@@ -27,7 +27,7 @@ class Driver
         $this->seleniumServerRequestsTimeout = $timeout;
     }
 
-    public function startSession(array $desiredCapabilities, URL $browserUrl)
+    public function startSession(array $desiredCapabilities, URL $browserUrl): Session
     {
         $sessionCreation = $this->seleniumServerUrl->descend('/wd/hub/session');
         $response        = $this->curl('POST', $sessionCreation, ['desiredCapabilities' => $desiredCapabilities,]);
@@ -54,7 +54,7 @@ class Driver
      * @param string $url
      * @param array  $params JSON parameters for POST requests
      */
-    public function curl($httpMethod, URL $url, $params = null)
+    public function curl(string $httpMethod, URL $url, ?array $params = null): Response
     {
         $curl = curl_init($url->getValue());
         curl_setopt($curl, CURLOPT_TIMEOUT, $this->seleniumServerRequestsTimeout);
@@ -135,7 +135,7 @@ class Driver
         return new Response($content, $info);
     }
 
-    public function execute(Command $command)
+    public function execute(Command $command): Response
     {
         return $this->curl(
             $command->httpMethod(),
