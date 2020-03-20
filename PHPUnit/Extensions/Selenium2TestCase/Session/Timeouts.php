@@ -25,7 +25,7 @@ class Timeouts extends CommandsHolder
     private $maximumTimeout;
     private $lastImplicitWaitValue = 0;
 
-    public function __construct($driver, URL $url, $maximumTimeout)
+    public function __construct($driver, URL $url, int $maximumTimeout)
     {
         parent::__construct($driver, $url);
         $this->maximumTimeout = $maximumTimeout;
@@ -53,17 +53,17 @@ class Timeouts extends CommandsHolder
         ];
     }
 
-    public function setLastImplicitWaitValue($implicitWait)
+    public function setLastImplicitWaitValue(int $implicitWait): void
     {
         $this->lastImplicitWaitValue = $implicitWait;
     }
 
-    public function getLastImplicitWaitValue()
+    public function getLastImplicitWaitValue(): int
     {
         return $this->lastImplicitWaitValue;
     }
 
-    public function check($timeout)
+    public function check($timeout): void
     {
         if ($timeout > $this->maximumTimeout) {
             throw new \PHPUnit\Extensions\Selenium2TestCase\Exception('There is no use in setting this timeout unless you also call $this->setSeleniumServerRequestsTimeout($seconds) in setUp().');
