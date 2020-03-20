@@ -11,11 +11,14 @@
 namespace PHPUnit\Extensions\Selenium2TestCase\Session\Cookie;
 
 // phpcs:disable SlevomatCodingStandard.Classes.UnusedPrivateElements
+use PHPUnit\Extensions\Selenium2TestCase\Session\Cookie;
+
 /**
  * Adds a cookie.
  */
 class Builder
 {
+    private $cookieFacade;
     private $name;
     private $value;
     private $path;
@@ -23,65 +26,42 @@ class Builder
     private $secure = false;
     private $expiry;
 
-    public function __construct($cookieFacade, $name, $value)
+    public function __construct(Cookie $cookieFacade, string $name, string $value)
     {
         $this->cookieFacade = $cookieFacade;
         $this->name         = $name;
         $this->value        = $value;
     }
 
-    /**
-     * @param string $path
-     *
-     * @return Builder
-     */
-    public function path($path)
+    public function path(string $path): self
     {
         $this->path = $path;
 
         return $this;
     }
 
-    /**
-     * @param string $domain
-     *
-     * @return Builder
-     */
-    public function domain($domain)
+    public function domain(string $domain): self
     {
         $this->domain = $domain;
 
         return $this;
     }
 
-    /**
-     * @param bool $secure
-     *
-     * @return Builder
-     */
-    public function secure($secure)
+    public function secure(bool $secure): self
     {
         $this->secure = $secure;
 
         return $this;
     }
 
-    /**
-     * @param int $expiry
-     *
-     * @return Builder
-     */
-    public function expiry($expiry)
+    public function expiry(int $expiry): self
     {
         $this->expiry = $expiry;
 
         return $this;
     }
 
-    /**
-     * @return void
-     */
-    public function set()
+    public function set(): void
     {
         $cookieData = [
             'name' => $this->name,
