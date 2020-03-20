@@ -28,23 +28,12 @@ class Cookie
         $this->url    = $url;
     }
 
-    /**
-     * @param string $name
-     * @param string $value
-     *
-     * @return Builder
-     */
-    public function add($name, $value)
+    public function add(string $name, string $value): Builder
     {
         return new Builder($this, $name, $value);
     }
 
-    /**
-     * @param string $name
-     *
-     * @return string
-     */
-    public function get($name)
+    public function get(string $name): string
     {
         $cookies = $this->driver->curl('GET', $this->url)->getValue();
         foreach ($cookies as $cookie) {
@@ -56,33 +45,21 @@ class Cookie
         throw new \PHPUnit\Extensions\Selenium2TestCase\Exception(sprintf("There is no '%s' cookie available on this page.", $name));
     }
 
-    /**
-     * @param string $name
-     *
-     * @return void
-     */
-    public function remove($name)
+    public function remove(string $name): void
     {
         $url = $this->url->descend($name);
         $this->driver->curl('DELETE', $url);
     }
 
-    /**
-     * @return void
-     */
-    public function clear()
+    public function clear(): void
     {
         $this->driver->curl('DELETE', $this->url);
     }
 
     /**
      * @internal
-     *
-     * @param array $data
-     *
-     * @return void
      */
-    public function postCookie(array $data)
+    public function postCookie(array $data): void
     {
         $this->driver->curl(
             'POST',
