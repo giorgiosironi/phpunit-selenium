@@ -34,7 +34,6 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @link       http://www.phpunit.de/
  */
 
 namespace PHPUnit\Extensions;
@@ -65,8 +64,6 @@ use Throwable;
  * TestCase class that uses Selenium 2
  * (WebDriver API and JsonWire protocol) to provide
  * the functionality required for web testing.
- *
- * @link       http://www.phpunit.de/
  *
  * @method void acceptAlert() Press OK on an alert, or confirms a dialog
  * @method mixed alertText() alertText($value = NULL) Gets the alert dialog text, or sets the text for a prompt dialog

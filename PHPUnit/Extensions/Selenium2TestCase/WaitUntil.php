@@ -33,8 +33,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
- *
- * @link       http://www.phpunit.de/
  */
 
 namespace PHPUnit\Extensions\Selenium2TestCase;
@@ -44,7 +42,6 @@ use PHPUnit\Extensions\Selenium2TestCase;
 /**
  * The WaitUntil implementation, inspired by Java and .NET clients
  *
- * @link       http://www.phpunit.de/
  * @see        http://selenium.googlecode.com/svn/trunk/dotnet/src/WebDriver.Support/UI/WebDriverWait.cs
  * @see        http://selenium.googlecode.com/svn/trunk/java/client/src/org/openqa/selenium/support/ui/FluentWait.java
  */

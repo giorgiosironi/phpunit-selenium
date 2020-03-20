@@ -33,8 +33,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
- *
- * @link       http://www.phpunit.de/
  */
 
 namespace PHPUnit\Extensions\Selenium2TestCase;
@@ -65,8 +63,6 @@ use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\Window as SessionWindow;
 
 /**
  * Browser session for Selenium 2: main point of entry for functionality.
- *
- * @link       http://www.phpunit.de/
  *
  * @method void acceptAlert() Press OK on an alert, or confirms a dialog
  * @method mixed alertText($value = NULL) Gets the alert dialog text, or sets the text for a prompt dialog

@@ -33,8 +33,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
- *
- * @link       http://www.phpunit.de/
  */
 
 namespace PHPUnit\Extensions\Selenium2TestCase\SessionCommand;
@@ -44,8 +42,6 @@ use PHPUnit\Extensions\Selenium2TestCase\URL as SeleniumURL;
 
 /**
  * Gets or sets the current URL of the window.
- *
- * @link       http://www.phpunit.de/
  */
 class Url extends Command
 {

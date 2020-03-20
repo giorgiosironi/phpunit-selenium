@@ -33,8 +33,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
- *
- * @link       http://www.phpunit.de/
  */
 
 namespace PHPUnit\Extensions\Selenium2TestCase\SessionCommand;
@@ -45,8 +43,6 @@ use PHPUnit\Extensions\Selenium2TestCase\URL;
 
 /**
  * Sends session click command for emulating LEFT, MIDDLE or RIGHT mouse buttons
- *
- * @link       http://www.phpunit.de/
  */
 class Click extends Command
 {

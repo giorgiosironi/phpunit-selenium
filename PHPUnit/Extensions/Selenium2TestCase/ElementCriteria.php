@@ -33,8 +33,6 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
- *
- * @link       http://www.phpunit.de/
  */
 
 namespace PHPUnit\Extensions\Selenium2TestCase;
@@ -44,7 +42,6 @@ use ArrayObject;
 /**
  * Conditions for selecting a DOM element.
  *
- * @link       http://www.phpunit.de/
  * @see        http://code.google.com/p/selenium/wiki/JsonWireProtocol#/session/:sessionId/element
  */
 class ElementCriteria extends ArrayObject
