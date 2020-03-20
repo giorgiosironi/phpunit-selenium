@@ -25,7 +25,7 @@ class File extends Command
     /** @var */
     private static $zipArchive;
 
-    public function __construct($argument, URL $url)
+    public function __construct(string $argument, URL $url)
     {
         if (! is_file($argument)) {
             throw new BadMethodCallException(sprintf('No such file: %s', $argument));
@@ -40,6 +40,7 @@ class File extends Command
 
         $file = base64_encode($contents);
 
+        
         parent::__construct(['file' => $file], $url);
 
         unlink($zipfilePath);
@@ -57,7 +58,7 @@ class File extends Command
      *
      * @return  string              Generated zip file
      */
-    protected function zipArchiveFile($filePath)
+    protected function zipArchiveFile(string $filePath): string
     {
         // file MUST be readable
         if (! is_readable($filePath)) {
@@ -81,10 +82,8 @@ class File extends Command
 
     /**
      * Returns a runtime instance of a ZipArchive
-     *
-     * @return ZipArchive
      */
-    protected function getZipArchiver()
+    protected function getZipArchiver(): ZipArchive
     {
         // create ZipArchive if necessary
         if (! static::$zipArchive) {
@@ -97,10 +96,8 @@ class File extends Command
     /**
      * Calls sys_get_temp_dir and ensures that it has a trailing slash
      * ( behavior varies across systems )
-     *
-     * @return string
      */
-    protected function getTmpDir()
+    protected function getTmpDir(): string
     {
         return rtrim(sys_get_temp_dir(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
     }
