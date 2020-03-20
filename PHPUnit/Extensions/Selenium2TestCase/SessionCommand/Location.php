@@ -15,7 +15,7 @@ namespace PHPUnit\Extensions\Selenium2TestCase\SessionCommand;
  */
 class Location extends GenericAttribute
 {
-    public function __construct($location, $commandUrl)
+    public function __construct($location, URL $commandUrl)
     {
         if ($location !== null) {
             $jsonParameters = ['location' => $location];
