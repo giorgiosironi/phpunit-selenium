@@ -50,9 +50,6 @@ class MoveTo extends Command
         parent::__construct($jsonParameters, $url);
     }
 
-    /**
-     * @return string
-     */
     public function httpMethod(): string
     {
         return 'POST';
