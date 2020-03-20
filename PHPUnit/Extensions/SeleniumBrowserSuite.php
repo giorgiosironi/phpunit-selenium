@@ -32,7 +32,7 @@ class SeleniumBrowserSuite extends TestSuite
         parent::addTestMethod($class, $method);
     }
 
-    public static function fromClassAndBrowser($className, array $browser)
+    public static function fromClassAndBrowser(string $className, array $browser): self
     {
         $browserSuite = new self();
         if (isset($browser['browserName'])) {
@@ -48,12 +48,12 @@ class SeleniumBrowserSuite extends TestSuite
         return $browserSuite;
     }
 
-    public function setupSpecificBrowser(array $browser)
+    public function setupSpecificBrowser(array $browser): void
     {
         $this->browserOnAllTests($this, $browser);
     }
 
-    private function browserOnAllTests(TestSuite $suite, array $browser)
+    private function browserOnAllTests(TestSuite $suite, array $browser): void
     {
         foreach ($suite->tests() as $test) {
             if ($test instanceof TestSuite) {
