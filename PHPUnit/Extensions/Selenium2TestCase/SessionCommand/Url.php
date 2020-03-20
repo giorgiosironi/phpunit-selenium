@@ -18,7 +18,7 @@ use PHPUnit\Extensions\Selenium2TestCase\URL as SeleniumURL;
  */
 class Url extends Command
 {
-    public function __construct($url, $commandUrl, SeleniumURL $baseUrl)
+    public function __construct(?string $url, URL $commandUrl, SeleniumURL $baseUrl)
     {
         if ($url !== null) {
             $absoluteLocation = $baseUrl->jump($url)->getValue();
