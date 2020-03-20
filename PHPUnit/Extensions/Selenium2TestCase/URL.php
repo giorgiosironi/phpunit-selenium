@@ -18,22 +18,13 @@ final class URL
     /** @var string */
     private $value;
 
-    /**
-     * @param string $value
-     */
-    public function __construct($value)
+    /** @param string $value */
+    public function __construct(string $value)
     {
         $this->value = $value;
     }
 
-    /**
-     * @param string $host
-     * @param int    $port
-     * @param bool   $secure
-     *
-     * @return URL
-     */
-    public static function fromHostAndPort($host, $port, $secure)
+    public static function fromHostAndPort(string $host, int $port, bool $secure): URL
     {
         $prefix = 'http://';
         if ($secure) {
@@ -43,10 +34,7 @@ final class URL
         return new self($prefix . $host . ':' . $port);
     }
 
-    /**
-     * @return string
-     */
-    public function getValue()
+    public function getValue(): string
     {
         return $this->value;
     }
@@ -56,12 +44,7 @@ final class URL
         return $this->getValue();
     }
 
-    /**
-     * @param string $addition
-     *
-     * @return URL
-     */
-    public function descend($addition)
+    public function descend(string $addition): URL
     {
         if ($addition === '') {
             // if we're adding nothing, respect the current url's choice of
@@ -77,10 +60,7 @@ final class URL
         return new self($newValue);
     }
 
-    /**
-     * @return URL
-     */
-    public function ascend()
+    public function ascend(): URL
     {
         $lastSlash = strrpos($this->value, '/');
         $newValue  = substr($this->value, 0, $lastSlash);
@@ -88,32 +68,19 @@ final class URL
         return new self($newValue);
     }
 
-    /**
-     * @return string
-     */
-    public function lastSegment()
+    public function lastSegment(): string
     {
         $segments = explode('/', $this->value);
 
         return end($segments);
     }
 
-    /**
-     * @param string $command
-     *
-     * @return URL
-     */
-    public function addCommand($command)
+    public function addCommand(string $command): URL
     {
         return $this->descend($this->camelCaseToUnderScores($command));
     }
 
-    /**
-     * @param string $newUrl
-     *
-     * @return URL
-     */
-    public function jump($newUrl)
+    public function jump(string $newUrl): URL
     {
         if ($this->isAbsolute($newUrl)) {
             return new self($newUrl);
@@ -122,7 +89,7 @@ final class URL
         }
     }
 
-    private function camelCaseToUnderScores($string)
+    private function camelCaseToUnderScores(string $string): string
     {
         $string = preg_replace('/([A-Z]{1,1})/', ' \1', $string);
         $string = strtolower($string);
@@ -130,7 +97,7 @@ final class URL
         return str_replace(' ', '_', $string);
     }
 
-    private function isAbsolute($urlValue)
+    private function isAbsolute(string $urlValue): bool
     {
         return preg_match('/^(http|https):\/\//', $urlValue) > 0;
     }
