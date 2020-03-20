@@ -75,7 +75,7 @@ class KeysHolder
         'command'   => "\xEE\x80\xBD",
     ];
 
-    public function specialKey($name)
+    public function specialKey(string $name): string
     {
         $normalizedName = strtolower($name);
 
