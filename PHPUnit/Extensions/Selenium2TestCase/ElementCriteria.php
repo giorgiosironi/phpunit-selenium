@@ -19,15 +19,12 @@ use ArrayObject;
  */
 class ElementCriteria extends ArrayObject
 {
-    public function __construct($strategy)
+    public function __construct(string $strategy)
     {
         $this['using'] = $strategy;
     }
 
-    /**
-     * @return ElementCriteria
-     */
-    public function value($searchTarget)
+    public function value(string $searchTarget): ElementCriteria
     {
         $this['value'] = $searchTarget;
 
