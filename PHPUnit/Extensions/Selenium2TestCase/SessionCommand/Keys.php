@@ -29,9 +29,6 @@ class Keys extends Command
         }
     }
 
-    /**
-     * @return string
-     */
     public function httpMethod(): string
     {
         return 'POST';
@@ -40,13 +37,11 @@ class Keys extends Command
     /**
      * Given a string returns an array of the characters that compose the string
      *
-     * @param string $text
-     *
-     * @return array
+     * @param string|array $text
      *
      * @throws InvalidArgumentException
      */
-    public function keysForText($text)
+    public function keysForText($text): array
     {
         if (is_scalar($text)) {
             return ['value' => preg_split('//u', (string) $text, -1, PREG_SPLIT_NO_EMPTY)];
