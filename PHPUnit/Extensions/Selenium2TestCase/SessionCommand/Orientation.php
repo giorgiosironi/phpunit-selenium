@@ -15,7 +15,7 @@ namespace PHPUnit\Extensions\Selenium2TestCase\SessionCommand;
  */
 class Orientation extends GenericAttribute
 {
-    public function __construct($orientation, $commandUrl)
+    public function __construct($orientation, URL $commandUrl)
     {
         if ($orientation !== null) {
             $jsonParameters = ['orientation' => $orientation];
