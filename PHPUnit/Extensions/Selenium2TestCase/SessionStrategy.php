@@ -22,9 +22,9 @@ interface SessionStrategy
                                 'browser' => a browser name
      *                          'browserUrl' => base URL to use during the test
      */
-    public function session(array $parameters);
+    public function session(array $parameters): Session;
 
-    public function notSuccessfulTest();
+    public function notSuccessfulTest(): void;
 
-    public function endOfTest(?Session $session = null);
+    public function endOfTest(?Session $session = null): void;
 }

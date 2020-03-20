@@ -20,7 +20,7 @@ use PHPUnit\Extensions\Selenium2TestCase\URL;
  */
 class Isolated implements SessionStrategy
 {
-    public function session(array $parameters)
+    public function session(array $parameters): Session
     {
         $seleniumServerUrl = URL::fromHostAndPort($parameters['host'], $parameters['port'], $parameters['secure']);
         $driver            = new Driver($seleniumServerUrl, $parameters['seleniumServerRequestsTimeout']);
@@ -34,11 +34,11 @@ class Isolated implements SessionStrategy
         return $driver->startSession($capabilities, $parameters['browserUrl']);
     }
 
-    public function notSuccessfulTest()
+    public function notSuccessfulTest(): void
     {
     }
 
-    public function endOfTest(?Session $session = null)
+    public function endOfTest(?Session $session = null): void
     {
         if ($session !== null) {
             $session->stop();

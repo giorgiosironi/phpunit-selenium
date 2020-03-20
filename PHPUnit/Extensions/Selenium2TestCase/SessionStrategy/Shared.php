@@ -30,7 +30,7 @@ class Shared implements SessionStrategy
         $this->keepSessionOnFailure = $keepSessionOnFailure;
     }
 
-    public function session(array $parameters)
+    public function session(array $parameters): Session
     {
         if ($this->lastTestWasNotSuccessful && ! $this->keepSessionOnFailure) {
             if ($this->session !== null) {
@@ -51,12 +51,12 @@ class Shared implements SessionStrategy
         return $this->session;
     }
 
-    public function notSuccessfulTest()
+    public function notSuccessfulTest(): void
     {
         $this->lastTestWasNotSuccessful = true;
     }
 
-    public function endOfTest(?Session $session = null)
+    public function endOfTest(?Session $session = null): void
     {
     }
 }
