@@ -41,11 +41,9 @@ use PHPUnit\Extensions\Selenium2TestCase\ElementCommand\Value;
 class Element extends Accessor
 {
     /**
-     * @return \self
-     *
      * @throws InvalidArgumentException
      */
-    public static function fromResponseValue(array $value, URL $parentFolder, Driver $driver)
+    public static function fromResponseValue(array $value, URL $parentFolder, Driver $driver): Element
     {
         if (! isset($value['ELEMENT'])) {
             throw new InvalidArgumentException('Element not found.');
@@ -56,10 +54,7 @@ class Element extends Accessor
         return new self($driver, $url);
     }
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->url->lastSegment();
     }
@@ -98,7 +93,7 @@ class Element extends Accessor
         return $this->url->ascend()->ascend();
     }
 
-    private function touchCommandFactoryMethod($urlSegment)
+    private function touchCommandFactoryMethod(string $urlSegment): callable
     {
         $url  = $this->getSessionUrl()->addCommand($urlSegment);
         $self = $this;
@@ -116,20 +111,16 @@ class Element extends Accessor
 
     /**
      * Retrieves the tag name
-     *
-     * @return string
      */
-    public function name()
+    public function name(): string
     {
         return strtolower(parent::name());
     }
 
     /**
      * Generates an array that is structured as the WebDriver Object of the JSONWireProtocoll
-     *
-     * @return array
      */
-    public function toWebDriverObject()
+    public function toWebDriverObject(): array
     {
         return ['ELEMENT' => (string) $this->getId()];
     }
@@ -141,12 +132,8 @@ class Element extends Accessor
      *
      * @see https://code.google.com/p/selenium/source/detail?r=953007b48e83f90450f3e41b11ec31e2928f1605
      * @see https://code.google.com/p/selenium/source/browse/java/CHANGELOG
-     *
-     * @param string $newValue
-     *
-     * @return string|null
      */
-    public function value($newValue = null)
+    public function value(?string $newValue = null): ?string
     {
         if ($newValue !== null) {
             return parent::value($newValue);
