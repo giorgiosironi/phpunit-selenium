@@ -10,7 +10,6 @@
 
 namespace PHPUnit\Extensions\Selenium2TestCase\SessionCommand;
 
-use BadMethodCallException;
 use PHPUnit\Extensions\Selenium2TestCase\Command;
 use PHPUnit\Extensions\Selenium2TestCase\URL;
 
@@ -19,14 +18,10 @@ use PHPUnit\Extensions\Selenium2TestCase\URL;
  */
 class AlertText extends Command
 {
-    public function __construct($argument, URL $url)
+    public function __construct(?string $jsonParameters, URL $url)
     {
-        if (is_string($argument)) {
-            $jsonParameters =['text' => $argument];
-        } elseif ($argument === null) {
-            $jsonParameters = null;
-        } else {
-            throw new BadMethodCallException('Wrong parameters for alertText().');
+        if ($jsonParameters !== null) {
+            $jsonParameters = ['text' => $jsonParameters];
         }
 
         parent::__construct($jsonParameters, $url);
