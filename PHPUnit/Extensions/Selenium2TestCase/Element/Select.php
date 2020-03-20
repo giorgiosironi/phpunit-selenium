@@ -18,18 +18,12 @@ use PHPUnit\Extensions\Selenium2TestCase\ElementCriteria;
  */
 class Select extends Element
 {
-    /**
-     * @return Select
-     */
-    public static function fromElement(Element $element)
+    public static function fromElement(Element $element): Select
     {
         return new self($element->driver, $element->url);
     }
 
-    /**
-     * @return string
-     */
-    public function selectedLabel()
+    public function selectedLabel(): string
     {
         $selectedOption = $this->selectedOption();
         if ($selectedOption === null) {
@@ -39,10 +33,7 @@ class Select extends Element
         return $selectedOption->text();
     }
 
-    /**
-     * @return string
-     */
-    public function selectedValue()
+    public function selectedValue(): string
     {
         $selectedOption = $this->selectedOption();
         if ($selectedOption === null) {
@@ -52,10 +43,7 @@ class Select extends Element
         return $selectedOption->value();
     }
 
-    /**
-     * @return string
-     */
-    public function selectedId()
+    public function selectedId(): string
     {
         $selectedOption = $this->selectedOption();
         if ($selectedOption === null) {
@@ -66,9 +54,9 @@ class Select extends Element
     }
 
     /**
-     * @return array
+     * @return Element[]
      */
-    public function selectedLabels()
+    public function selectedLabels(): array
     {
         $labels = [];
         foreach ($this->selectedOptions() as $option) {
@@ -78,10 +66,7 @@ class Select extends Element
         return $labels;
     }
 
-    /**
-     * @return array
-     */
-    public function selectedValues()
+    public function selectedValues(): array
     {
         $values = [];
         foreach ($this->selectedOptions() as $option) {
@@ -91,10 +76,7 @@ class Select extends Element
         return $values;
     }
 
-    /**
-     * @return array
-     */
-    public function selectedIds()
+    public function selectedIds(): array
     {
         $id = [];
         foreach ($this->selectedOptions() as $option) {
@@ -106,10 +88,8 @@ class Select extends Element
 
     /**
      * @param string $label the text appearing in the option
-     *
-     * @return void
      */
-    public function selectOptionByLabel($label)
+    public function selectOptionByLabel(string $label): void
     {
         $toSelect = $this->using('xpath')->value(sprintf(".//option[.='%s']", $label));
         $this->selectOptionByCriteria($toSelect);
@@ -117,10 +97,8 @@ class Select extends Element
 
     /**
      * @param string $value the value attribute of the option
-     *
-     * @return void
      */
-    public function selectOptionByValue($value)
+    public function selectOptionByValue(string $value): void
     {
         $toSelect = $this->using('xpath')->value(sprintf(".//option[@value='%s']", $value));
         $this->selectOptionByCriteria($toSelect);
@@ -128,10 +106,8 @@ class Select extends Element
 
     /**
      * @param ElementCriteria $localCriteria condiotions for selecting an option
-     *
-     * @return void
      */
-    public function selectOptionByCriteria(ElementCriteria $localCriteria)
+    public function selectOptionByCriteria(ElementCriteria $localCriteria): void
     {
         $option = $this->element($localCriteria);
         if (! $option->selected()) {
@@ -140,9 +116,9 @@ class Select extends Element
     }
 
     /**
-     * @return array
+     * @return Element[]
      */
-    public function selectOptionValues()
+    public function selectOptionValues(): array
     {
         $options = [];
         foreach ($this->options() as $option) {
@@ -153,9 +129,9 @@ class Select extends Element
     }
 
     /**
-     * @return array
+     * @return Element[]
      */
-    public function selectOptionLabels()
+    public function selectOptionLabels(): array
     {
         $options = [];
         foreach ($this->options() as $option) {
@@ -165,10 +141,10 @@ class Select extends Element
         return $options;
     }
 
-    /***
-     * @return array
+    /**
+     * @return Element[]
      */
-    private function selectedOptions()
+    private function selectedOptions(): array
     {
         $options = [];
         foreach ($this->options() as $option) {
@@ -180,14 +156,14 @@ class Select extends Element
         return $options;
     }
 
-    public function clearSelectedOptions()
+    public function clearSelectedOptions(): void
     {
         foreach ($this->selectedOptions() as $option) {
             $option->click();
         }
     }
 
-    private function selectedOption()
+    private function selectedOption(): ?Element
     {
         foreach ($this->options() as $option) {
             if ($option->selected()) {
@@ -198,7 +174,10 @@ class Select extends Element
         return null;
     }
 
-    private function options()
+    /**
+     * @return Element[]
+     */
+    private function options(): array
     {
         $onlyTheOptions = $this->using('css selector')->value('option');
 
