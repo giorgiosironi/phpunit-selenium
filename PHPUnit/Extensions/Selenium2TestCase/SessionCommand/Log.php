@@ -11,6 +11,7 @@
 namespace PHPUnit\Extensions\Selenium2TestCase\SessionCommand;
 
 use PHPUnit\Extensions\Selenium2TestCase\Command;
+use PHPUnit\Extensions\Selenium2TestCase\URL;
 
 /**
  * Get the log for a given log type. Log buffer is reset after each request.

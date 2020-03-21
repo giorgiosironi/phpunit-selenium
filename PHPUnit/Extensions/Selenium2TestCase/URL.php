@@ -44,7 +44,7 @@ final class URL
         return $this->getValue();
     }
 
-    public function descend(string $addition): URL
+    public function descend(?string $addition): URL
     {
         if ($addition === '') {
             // if we're adding nothing, respect the current url's choice of

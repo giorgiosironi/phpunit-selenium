@@ -98,8 +98,9 @@ abstract class CommandsHolder
 
     /**
      * @param string $commandName The called method name defined as a key in initCommands()
+     * @param string|array|null $jsonParameters
      */
-    protected function newCommand(string $commandName, array $jsonParameters): Command
+    protected function newCommand(string $commandName, $jsonParameters): Command
     {
         if (isset($this->commands[$commandName])) {
             $factoryMethod = $this->commands[$commandName];

@@ -12,6 +12,7 @@ namespace PHPUnit\Extensions\Selenium2TestCase\SessionCommand;
 
 use PHPUnit\Extensions\Selenium2TestCase\Command;
 use PHPUnit\Extensions\Selenium2TestCase\Element;
+use PHPUnit\Extensions\Selenium2TestCase\URL;
 
 /**
  * Changes the focus to a frame.

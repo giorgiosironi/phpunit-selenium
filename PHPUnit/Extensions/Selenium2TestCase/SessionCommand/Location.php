@@ -10,6 +10,8 @@
 
 namespace PHPUnit\Extensions\Selenium2TestCase\SessionCommand;
 
+use PHPUnit\Extensions\Selenium2TestCase\URL;
+
 /**
  * Gets or posts an attribute from/to the session (title, alert text, etc.)
  */
