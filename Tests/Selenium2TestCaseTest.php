@@ -1,4 +1,7 @@
 <?php
+
+namespace Tests;
+
 /**
  * PHPUnit
  *
@@ -41,11 +44,13 @@
  * @link       http://www.phpunit.de/
  */
 
+use BadMethodCallException;
 use PHPUnit\Extensions\Selenium2TestCase;
 use PHPUnit\Extensions\Selenium2TestCase\Keys;
 use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\Click;
 use PHPUnit\Extensions\Selenium2TestCase\WebDriverException;
 use PHPUnit\Extensions\Selenium2TestCase\Window;
+use Tests\Selenium2TestCase\BaseTestCase;
 
 /**
  * Tests for Selenium2TestCase.
@@ -56,7 +61,7 @@ use PHPUnit\Extensions\Selenium2TestCase\Window;
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
  */
-class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestCase
+class Selenium2TestCaseTest extends BaseTestCase
 {
     protected function tearDown(): void
     {
@@ -271,7 +276,7 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
     {
         $this->url('html/test_geometry.html');
         $element = $this->byId('colored');
-        $this->assertRegExp('/rgb[a]?\(0,\s*0,\s*255[,\s*1]?\)/', $element->css('background-color'));
+        $this->assertMatchesRegularExpression('/rgb[a]?\(0,\s*0,\s*255[,\s*1]?\)/', $element->css('background-color'));
     }
 
     public function testClick()
@@ -362,7 +367,7 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
 
         $this->clickOnElement('submitButton');
         $h2 = $this->byCssSelector('h2');
-        $this->assertRegExp('/Welcome, TestUser!/', $h2->text());
+        $this->assertMatchesRegularExpression('/Welcome, TestUser!/', $h2->text());
     }
 
     /**
@@ -394,9 +399,21 @@ class Extensions_Selenium2TestCaseTest extends Tests_Selenium2TestCase_BaseTestC
         $usernameInput = $this->byName('username');
         $usernameInput->value('TestUser');
 
-        $this->byCssSelector('form')->submit();
+        $this->byId('submitButton')->submit();
+
+        // fix slow submiting
+        $this->waitUntil(function() {
+            try {
+                $this->byCssSelector('h2');
+
+                return true;
+            } catch (WebDriverException $e) {
+                return null;
+            }
+        }, 10000);
+
         $h2 = $this->byCssSelector('h2');
-        $this->assertRegExp('/Welcome, TestUser!/', $h2->text());
+        $this->assertMatchesRegularExpression('/Welcome, TestUser!/', $h2->text());
     }
 
     /**

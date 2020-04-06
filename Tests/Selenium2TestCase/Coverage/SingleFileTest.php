@@ -1,7 +1,10 @@
 <?php
+
+namespace Tests\Selenium2TestCase\Coverage;
+
 use PHPUnit\Framework\TestCase;
 
-class Tests_Selenium2TestCase_Coverage_SingleFileTest extends TestCase
+class SingleFileTest extends TestCase
 {
     private $dummyTestId = 'ns_dummyTestId';
 

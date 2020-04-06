@@ -1,4 +1,12 @@
 <?php
+
+namespace Tests\Selenium2TestCase;
+
+use BadMethodCallException;
+use DomainException;
+use InvalidArgumentException;
+use RuntimeException;
+
 /**
  * PHPUnit
  *
@@ -50,7 +58,7 @@
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
  */
-class Extensions_Selenium2TestCaseFailuresTest extends Tests_Selenium2TestCase_BaseTestCase
+class Selenium2TestCaseFailuresTest extends BaseTestCase
 {
     public function testInexistentCommandCausesTheTestToFail()
     {
@@ -80,7 +88,7 @@ class Extensions_Selenium2TestCaseFailuresTest extends Tests_Selenium2TestCase_B
             $div->text();
             $this->fail('The element shouldn\'t be accessible.');
         } catch (RuntimeException $e) {
-            $this->assertContains('http://seleniumhq.org/exceptions/stale_element_reference.html', $e->getMessage());
+            $this->assertStringContainsString('http://seleniumhq.org/exceptions/stale_element_reference.html', $e->getMessage());
         }
     }
 

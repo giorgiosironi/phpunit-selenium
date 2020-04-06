@@ -1,6 +1,10 @@
 <?php
 
-class Tests_Selenium2TestCase_SessionCommand_FileTest extends Tests_Selenium2TestCase_BaseTestCase
+namespace Tests\Selenium2TestCase\SessionCommand;
+
+use Tests\Selenium2TestCase\BaseTestCase;
+
+class FileTest extends BaseTestCase
 {
     public function testUploadFile()
     {

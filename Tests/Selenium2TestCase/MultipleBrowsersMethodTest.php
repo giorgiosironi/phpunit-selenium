@@ -1,4 +1,7 @@
 <?php
+
+namespace Tests\Selenium2TestCase;
+
 /**
  * PHPUnit
  *
@@ -41,6 +44,7 @@
  * @link       http://www.phpunit.de/
  */
 
+use Exception;
 use PHPUnit\Extensions\Selenium2TestCase;
 
 /**
@@ -50,7 +54,7 @@ use PHPUnit\Extensions\Selenium2TestCase;
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
  */
-class Extensions_Selenium2TestCaseMultipleBrowsersMethodTest extends Selenium2TestCase
+class MultipleBrowsersMethodTest extends Selenium2TestCase
 {
     private $browserWeSetUp = '';
     private static $testsRun = 0;

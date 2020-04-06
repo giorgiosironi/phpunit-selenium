@@ -1,4 +1,7 @@
 <?php
+
+namespace Tests\Selenium2TestCase;
+
 /**
  * PHPUnit
  *
@@ -50,7 +53,7 @@
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
  */
-class Tests_Selenium2TestCase_LogTest extends Tests_Selenium2TestCase_BaseTestCase
+class LogTest extends BaseTestCase
 {
     private static $expectedLogTypes = array(
         'default' => array(

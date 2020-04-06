@@ -1,9 +1,11 @@
 <?php
 
+namespace Tests\Selenium2TestCase\Coverage;
+
 use PHPUnit\Extensions\SeleniumCommon\RemoteCoverage;
 use PHPUnit\Framework\TestCase;
 
-class Tests_Selenium2TestCase_Coverage_RemoteCoverageTest extends TestCase
+class RemoteCoverageTest extends TestCase
 {
     public function testObtainsCodeCoverageInformationFromAPossiblyRemoteHttpServer()
     {

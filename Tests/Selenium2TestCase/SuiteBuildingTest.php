@@ -1,4 +1,7 @@
 <?php
+
+namespace Tests\Selenium2TestCase;
+
 /**
  * PHPUnit
  *
@@ -43,6 +46,8 @@
 
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\TestSuite;
+use Tests\Selenium2TestCase\fixtures\MultipleBrowsersTestCaseSample;
+use Tests\Selenium2TestCase\fixtures\TestCaseSample;
 
 require_once 'PHPUnit/Extensions/Selenium2TestCase.php';
 
@@ -55,12 +60,12 @@ require_once 'PHPUnit/Extensions/Selenium2TestCase.php';
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
  */
-class Extensions_Selenium2SuiteBuildingTest extends TestCase
+class SuiteBuildingTest extends TestCase
 {
     public function testSampleTestCaseBuildsAFullSuiteContainingAllItsTests()
     {
         require_once __DIR__ . '/fixtures/SuiteBuildingSuites.php';
-        $suite = Extensions_Selenium2TestCaseSample::suite('Extensions_Selenium2TestCaseSample');
+        $suite = TestCaseSample::suite(TestCaseSample::class);
         $this->assertInstanceOf(TestSuite::class, $suite);
         $this->assertEquals(2, count($suite->tests()));
     }
@@ -68,7 +73,7 @@ class Extensions_Selenium2SuiteBuildingTest extends TestCase
     public function testAMultipleBrowsersTestCaseBuildsACopyOfEachTestForEachBrowser()
     {
         require_once __DIR__ . '/fixtures/SuiteBuildingSuites.php';
-        $suite = Extensions_Selenium2MultipleBrowsersTestCaseSample::suite('Extensions_Selenium2MultipleBrowsersTestCaseSample');
+        $suite = MultipleBrowsersTestCaseSample::suite(MultipleBrowsersTestCaseSample::class);
         $this->assertInstanceOf(TestSuite::class, $suite);
         $this->assertEquals(2, count($suite->tests()));
     }
