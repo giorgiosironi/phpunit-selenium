@@ -1,7 +1,11 @@
 <?php
-use PHPUnit\Framework\TestResult;
 
-class Tests_Selenium2TestCase_Coverage_CookieTest extends Tests_Selenium2TestCase_BaseTestCase
+namespace Tests\Selenium2TestCase\Coverage;
+
+use PHPUnit\Framework\TestResult;
+use Tests\Selenium2TestCase\BaseTestCase;
+
+class CookieTest extends BaseTestCase
 {
     // this is a dummy URL (returns down coverage data in HTML), but Firefox still sets domain cookie, which is what's needed
     protected $coverageScriptUrl = PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL .'/coverage/dummy.html';

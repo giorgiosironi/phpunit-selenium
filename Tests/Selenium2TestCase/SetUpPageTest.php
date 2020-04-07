@@ -1,4 +1,7 @@
 <?php
+
+namespace Tests\Selenium2TestCase;
+
 /**
  * PHPUnit
  *
@@ -48,7 +51,7 @@
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
  */
-class Tests_Selenium2TestCase_SetUpPageTest extends Tests_Selenium2TestCase_BaseTestCase {
+class SetUpPageTest extends BaseTestCase {
     public function setUpPage()
     {
         $this->url('html/test_type_page1.html');
@@ -56,6 +59,6 @@ class Tests_Selenium2TestCase_SetUpPageTest extends Tests_Selenium2TestCase_Base
 
     public function testSetUpPageIsExecuted()
     {
-        $this->assertRegExp('/html\/test_type_page1\.html$/', $this->url());
+        $this->assertMatchesRegularExpression('/html\/test_type_page1\.html$/', $this->url());
     }
 }

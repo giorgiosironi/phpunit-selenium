@@ -1,4 +1,7 @@
 <?php
+
+namespace Tests\Selenium2TestCase;
+
 /**
  * PHPUnit
  *
@@ -52,7 +55,7 @@ use PHPUnit\Extensions\Selenium2TestCase\WebDriverException;
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
  */
-class Tests_Selenium2TestCase_WaitUntilTest extends Tests_Selenium2TestCase_BaseTestCase
+class WaitUntilTest extends BaseTestCase
 {
     public function testWaitSuccessfully()
     {

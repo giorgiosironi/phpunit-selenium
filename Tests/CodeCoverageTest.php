@@ -1,5 +1,7 @@
 <?php
 
+namespace Tests;
+
 use PHPUnit\Extensions\Selenium2TestCase;
 
 class CodeCoverageTest extends Selenium2TestCase

@@ -1,4 +1,7 @@
 <?php
+
+namespace Tests\Selenium2TestCase;
+
 /**
  * PHPUnit
  *
@@ -62,7 +65,7 @@ if (defined('SAUCE_USERNAME') && defined('SAUCE_ACCESS_KEY')) {
     define('SAUCE_HOST', '');
 }
 
-class Tests_Selenium2TestCase_MobileFeaturesTest extends Selenium2TestCase
+class MobileFeaturesTest extends Selenium2TestCase
 {
     public static $browsers = array(
         array(

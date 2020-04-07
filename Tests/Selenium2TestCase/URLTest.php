@@ -1,4 +1,7 @@
 <?php
+
+namespace Tests\Selenium2TestCase;
+
 /**
  * PHPUnit
  *
@@ -51,7 +54,7 @@ use PHPUnit\Framework\TestCase;
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
  */
-class Extensions_Selenium2TestCase_URLTest extends TestCase
+class URLTest extends TestCase
 {
     public function testDescendsAnURLWithAnAdditionalFolder()
     {

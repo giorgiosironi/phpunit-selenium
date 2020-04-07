@@ -1,8 +1,10 @@
 <?php
 
+namespace Tests\Selenium2TestCase;
+
 use PHPUnit\Extensions\Selenium2TestCase;
 
-class Tests_Selenium2TestCase_SessionInSetupTest extends Selenium2TestCase
+class SessionInSetupTest extends Selenium2TestCase
 {
     public function setUp(): void
     {

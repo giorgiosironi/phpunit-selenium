@@ -87,11 +87,13 @@ class ScreenshotListener implements TestListener
     {
         if ($test instanceof Selenium2TestCase)
         {
+            $className = str_replace('\\', '_', get_class($test));
+
             try {
-                $file = $this->directory . '/' . get_class($test) . '__' . $test->getName() . '__' . date('Y-m-d\TH-i-s') . '.png';
+                $file = $this->directory . '/' . $className . '__' . $test->getName() . '__' . date('Y-m-d\TH-i-s') . '.png';
                 file_put_contents($file,        $test->currentScreenshot());
             } catch (\Exception $e) {
-                $file = $this->directory . '/' . get_class($test) . '__' . $test->getName() . '__' . date('Y-m-d\TH-i-s') . '.txt';
+                $file = $this->directory . '/' . $className . '__' . $test->getName() . '__' . date('Y-m-d\TH-i-s') . '.txt';
                 file_put_contents($file, "Screenshot generation doesn't work." . "\n"
                                          . $e->getMessage() . "\n"
                                          . $e->getTraceAsString());

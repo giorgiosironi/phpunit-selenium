@@ -1,4 +1,7 @@
 <?php
+
+namespace Tests\Selenium2TestCase;
+
 /**
  * Tests for PHPUnit_Extensions_SeleniumTestCase.
  *
@@ -8,7 +11,7 @@
  * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
  * @link       http://www.phpunit.de/
  */
-class Extensions_Selenium2TestCase_CustomDesiredCapabilitiesTest extends Tests_Selenium2TestCase_BaseTestCase
+class CustomDesiredCapabilitiesTest extends BaseTestCase
 {
     public function setUp(): void
     {

@@ -1,10 +1,14 @@
 <?php
 
+namespace Tests\Selenium2TestCase;
+
+use Exception;
 use PHPUnit\Extensions\Selenium2TestCase;
 use PHPUnit\Extensions\Selenium2TestCase\ScreenshotListener;
 use PHPUnit\Framework\AssertionFailedError;
+use RuntimeException;
 
-class Tests_Selenium2TestCase_ScreenshotListenerTest extends Tests_Selenium2TestCase_BaseTestCase
+class ScreenshotListenerTest extends BaseTestCase
 {
     /** @var ScreenshotListener */
     private $listener;
