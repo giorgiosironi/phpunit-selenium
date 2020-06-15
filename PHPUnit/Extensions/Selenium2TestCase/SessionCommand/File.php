@@ -40,7 +40,6 @@ class File extends Command
 
         $file = base64_encode($contents);
 
-        
         parent::__construct(['file' => $file], $url);
 
         unlink($zipfilePath);

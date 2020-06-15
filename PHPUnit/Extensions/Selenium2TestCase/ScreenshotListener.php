@@ -43,18 +43,15 @@ class ScreenshotListener implements TestListener
 
     private function storeAScreenshot(Test $test): void
     {
-        if ($test instanceof Selenium2TestCase)
-        {
+        if ($test instanceof Selenium2TestCase) {
             $className = str_replace('\\', '_', get_class($test));
 
             try {
                 $file = $this->directory . '/' . $className . '__' . $test->getName() . '__' . date('Y-m-d\TH-i-s') . '.png';
-                file_put_contents($file,        $test->currentScreenshot());
+                file_put_contents($file, $test->currentScreenshot());
             } catch (\Exception $e) {
                 $file = $this->directory . '/' . $className . '__' . $test->getName() . '__' . date('Y-m-d\TH-i-s') . '.txt';
-                file_put_contents($file, "Screenshot generation doesn't work." . "\n"
-                                         . $e->getMessage() . "\n"
-                                         . $e->getTraceAsString());
+                file_put_contents($file, sprintf("Screenshot generation doesn't work.\n%s\n%s", $e->getMessage(), $e->getTraceAsString()));
             }
         }
     }
