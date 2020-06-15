@@ -8,5 +8,7 @@ matrix:
     allow_failures:
         - php: hhvm
 
-before_script: ./.ci/before_script.sh
+before_script:
+  - ./.ci/before_script.sh
+  - vendor/bin/phpcs --standard=ruleset.xml PHPUnit/
 script: "vendor/bin/phpunit Tests"

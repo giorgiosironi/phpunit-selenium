@@ -1,45 +1,11 @@
 <?php
-/**
- * PHPUnit
+/*
+ * This file is part of PHPUnit.
  *
- * Copyright (c) 2010-2011, Sebastian Bergmann <sb@sebastian-bergmann.de>.
- * All rights reserved.
+ * (c) Sebastian Bergmann <sebastian@phpunit.de>
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- *   * Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
- *
- *   * Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in
- *     the documentation and/or other materials provided with the
- *     distribution.
- *
- *   * Neither the name of Sebastian Bergmann nor the names of his
- *     contributors may be used to endorse or promote products derived
- *     from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
- * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
- * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
- * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
- * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
- * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- *
- * @package    PHPUnit_Selenium
- * @author     Ivan Kurnosov <zerkms@zerkms.com>
- * @copyright  2010-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://www.phpunit.de/
- * @since      File available since Release 1.2.12
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace PHPUnit\Extensions\Selenium2TestCase;
@@ -49,13 +15,6 @@ use PHPUnit\Extensions\Selenium2TestCase;
 /**
  * The WaitUntil implementation, inspired by Java and .NET clients
  *
- * @package    PHPUnit_Selenium
- * @author     Ivan Kurnosov <zerkms@zerkms.com>
- * @copyright  2010-2011 Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @version    Release: @package_version@
- * @link       http://www.phpunit.de/
- * @since      Class available since Release 1.2.12
  * @see        http://selenium.googlecode.com/svn/trunk/dotnet/src/WebDriver.Support/UI/WebDriverWait.cs
  * @see        http://selenium.googlecode.com/svn/trunk/java/client/src/org/openqa/selenium/support/ui/FluentWait.java
  */
@@ -66,75 +25,69 @@ class WaitUntil
      *
      * @var Selenium2TestCase
      */
-    private $_testCase;
+    private $testCase;
 
-
-    /**
-     * @param Selenium2TestCase $testCase
-     */
     public function __construct(Selenium2TestCase $testCase)
     {
-        $this->_testCase = $testCase;
+        $this->testCase = $testCase;
     }
 
     /**
-     * @param $callback Callback to run until it returns not null or timeout occurs
-     * @param null|int $timeout
-     * @param null|int $sleepInterval the delay between 2 iterations of the callback
+     * @param callable $callback      Callback to run until it returns not null or timeout occurs
+     * @param int|null $timeout
+     * @param int|null $sleepInterval the delay between 2 iterations of the callback
+     *
      * @return mixed
+     *
      * @throws \PHPUnit\Extensions\Selenium2TestCase\Exception
      * @throws WebDriverException
      */
-    public function run($callback, $timeout = NULL, $sleepInterval = NULL)
+    public function run(callable $callback, ?int $timeout = null, ?int $sleepInterval = null)
     {
-        if (!is_callable($callback)) {
-            throw new \PHPUnit\Extensions\Selenium2TestCase\Exception('The valid callback is expected');
-        }
-
         // if there was an implicit timeout specified - remember it and temporarily turn it off
-        $implicitWait = $this->_testCase->timeouts()->getLastImplicitWaitValue();
+        $implicitWait = $this->testCase->timeouts()->getLastImplicitWaitValue();
         if ($implicitWait) {
-            $this->_testCase->timeouts()->implicitWait(0);
+            $this->testCase->timeouts()->implicitWait(0);
         }
 
-        if(is_null($sleepInterval)){
+        if ($sleepInterval === null) {
             $sleepInterval = Selenium2TestCase::defaultWaitUntilSleepInterval();
         }
 
         $sleepInterval *= 1000;
 
-
-        if (is_null($timeout)) {
+        if ($timeout === null) {
             $timeout = Selenium2TestCase::defaultWaitUntilTimeout();
         }
 
         $timeout /= 1000;
 
-        $endTime = microtime(TRUE) + $timeout;
+        $endTime = microtime(true) + $timeout;
 
-        $lastException = NULL;
+        $lastException = null;
 
-        while (TRUE) {
+        while (true) {
             try {
-                $result = call_user_func($callback, $this->_testCase);
+                $result = call_user_func($callback, $this->testCase);
 
-                if (!is_null($result)) {
+                if ($result !== null) {
                     if ($implicitWait) {
-                        $this->_testCase->timeouts()->implicitWait($implicitWait);
+                        $this->testCase->timeouts()->implicitWait($implicitWait);
                     }
 
                     return $result;
                 }
-            } catch(\Exception $e) {
+            } catch (\Exception $e) {
                 $lastException = $e;
             }
 
-            if (microtime(TRUE) > $endTime) {
+            if (microtime(true) > $endTime) {
                 if ($implicitWait) {
-                    $this->_testCase->timeouts()->implicitWait($implicitWait);
+                    $this->testCase->timeouts()->implicitWait($implicitWait);
                 }
 
-                $message = "Timed out after {$timeout} second" . ($timeout != 1 ? 's' : '');
+                $message = sprintf('Timed out after %s second', $timeout) . ($timeout !== 1 ? 's' : '');
+
                 throw new WebDriverException($message, WebDriverException::Timeout, $lastException);
             }
 

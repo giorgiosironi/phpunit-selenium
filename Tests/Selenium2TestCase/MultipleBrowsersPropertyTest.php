@@ -91,7 +91,7 @@ class MultipleBrowsersPropertyTest extends Selenium2TestCase
         $this->setBrowserUrl(PHPUNIT_TESTSUITE_EXTENSION_SELENIUM_TESTS_URL);
     }
 
-    public function setupSpecificBrowser($params)
+    public function setupSpecificBrowser(array $params): void
     {
         $this->_browserWeSetUp = $params['browserName'];
         parent::setupSpecificBrowser($params);

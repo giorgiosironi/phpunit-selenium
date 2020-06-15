@@ -48,7 +48,9 @@
         "phpunit/phpunit": ">=9.0,<10.0"
     },
     "require-dev": {
-       "phing/phing": "2.*"
+        "phing/phing": "2.*",
+        "squizlabs/php_codesniffer": "3.*",
+        "doctrine/coding-standard": "7.*"
     },
     "autoload": {
         "classmap": [

@@ -1,45 +1,11 @@
 <?php
-/**
- * PHPUnit
+/*
+ * This file is part of PHPUnit.
  *
- * Copyright (c) 2010-2013, Sebastian Bergmann <sebastian@phpunit.de>.
- * All rights reserved.
+ * (c) Sebastian Bergmann <sebastian@phpunit.de>
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- *   * Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
- *
- *   * Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in
- *     the documentation and/or other materials provided with the
- *     distribution.
- *
- *   * Neither the name of Sebastian Bergmann nor the names of his
- *     contributors may be used to endorse or promote products derived
- *     from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
- * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
- * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
- * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
- * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
- * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- *
- * @package    PHPUnit_Selenium
- * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://www.phpunit.de/
- * @since      File available since Release 1.2.0
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace PHPUnit\Extensions\Selenium2TestCase;
@@ -58,13 +24,6 @@ use PHPUnit\Extensions\Selenium2TestCase\ElementCommand\Value;
 /**
  * Object representing a DOM element.
  *
- * @package    PHPUnit_Selenium
- * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @version    Release: @package_version@
- * @link       http://www.phpunit.de/
- * @since      Class available since Release 1.2.0
  * @method string attribute($name) Retrieves an element's attribute
  * @method void clear() Empties the content of a form element.
  * @method void click() Clicks on element
@@ -82,32 +41,30 @@ use PHPUnit\Extensions\Selenium2TestCase\ElementCommand\Value;
 class Element extends Accessor
 {
     /**
-     * @return \self
      * @throws InvalidArgumentException
      */
-    public static function fromResponseValue(array $value, URL $parentFolder, Driver $driver)
+    public static function fromResponseValue(array $value, URL $parentFolder, Driver $driver): Element
     {
-        if (!isset($value['ELEMENT'])) {
+        if (! isset($value['ELEMENT'])) {
             throw new InvalidArgumentException('Element not found.');
         }
+
         $url = $parentFolder->descend($value['ELEMENT']);
+
         return new self($driver, $url);
     }
 
-    /**
-     * @return integer
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->url->lastSegment();
     }
 
     /**
-     * @return array    class names
+     * @return array class names
      */
-    protected function initCommands()
+    protected function initCommands(): array
     {
-        return array(
+        return [
             'attribute' => Attribute::class,
             'clear' => GenericPost::class,
             'click' => Click::class,
@@ -127,61 +84,58 @@ class Element extends Accessor
             'scroll' => $this->touchCommandFactoryMethod('touch/scroll'),
             'doubletap' => $this->touchCommandFactoryMethod('touch/doubleclick'),
             'longtap' => $this->touchCommandFactoryMethod('touch/longclick'),
-            'flick' => $this->touchCommandFactoryMethod('touch/flick')
-        );
+            'flick' => $this->touchCommandFactoryMethod('touch/flick'),
+        ];
     }
 
-    protected function getSessionUrl()
+    protected function getSessionUrl(): URL
     {
         return $this->url->ascend()->ascend();
     }
 
-    private function touchCommandFactoryMethod($urlSegment)
+    private function touchCommandFactoryMethod(string $urlSegment): callable
     {
-        $url = $this->getSessionUrl()->addCommand($urlSegment);
+        $url  = $this->getSessionUrl()->addCommand($urlSegment);
         $self = $this;
-        return function ($jsonParameters, $commandUrl) use ($url, $self) {
+
+        return static function ($jsonParameters, $commandUrl) use ($url, $self) {
             if ((is_array($jsonParameters) &&
-                    !isset($jsonParameters['element'])) ||
-                    is_null($jsonParameters)) {
+                    ! isset($jsonParameters['element'])) ||
+                    $jsonParameters === null) {
                 $jsonParameters['element'] = $self->getId();
             }
+
             return new GenericPost($jsonParameters, $url);
         };
     }
 
     /**
      * Retrieves the tag name
-     * @return string
      */
-    public function name()
+    public function name(): string
     {
         return strtolower(parent::name());
     }
 
     /**
      * Generates an array that is structured as the WebDriver Object of the JSONWireProtocoll
-     *
-     * @return array
      */
-    public function toWebDriverObject()
+    public function toWebDriverObject(): array
     {
-        return array('ELEMENT' => (string)$this->getId());
+        return ['ELEMENT' => (string) $this->getId()];
     }
 
     /**
      * Get or set value of form elements. If the element already has a value, the set one will be appended to it.
      * Created **ONLY** for keeping backward compatibility, since in selenium v2.42.0 it was removed
      * The currently recommended solution is to use `$element->attribute('value')`
+     *
      * @see https://code.google.com/p/selenium/source/detail?r=953007b48e83f90450f3e41b11ec31e2928f1605
      * @see https://code.google.com/p/selenium/source/browse/java/CHANGELOG
-     *
-     * @param string $newValue
-     * @return null|string
      */
-    public function value($newValue = NULL)
+    public function value(?string $newValue = null): ?string
     {
-        if ($newValue !== NULL) {
+        if ($newValue !== null) {
             return parent::value($newValue);
         }
 

@@ -86,13 +86,6 @@ class WaitUntilTest extends BaseTestCase
         }, 42);
     }
 
-    public function testInvalidCallback()
-    {
-        $this->expectException(\PHPUnit\Extensions\Selenium2TestCase\Exception::class);
-        $this->expectExceptionMessage('The valid callback is expected');
-        $this->waitUntil('not a callback');
-    }
-
     public function testImplicitWaitIsRestoredAfterFailure()
     {
         $this->url('html/test_wait.html');

@@ -1,45 +1,11 @@
 <?php
-/**
- * PHPUnit
+/*
+ * This file is part of PHPUnit.
  *
- * Copyright (c) 2010-2013, Sebastian Bergmann <sebastian@phpunit.de>.
- * All rights reserved.
+ * (c) Sebastian Bergmann <sebastian@phpunit.de>
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- *   * Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
- *
- *   * Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in
- *     the documentation and/or other materials provided with the
- *     distribution.
- *
- *   * Neither the name of Sebastian Bergmann nor the names of his
- *     contributors may be used to endorse or promote products derived
- *     from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
- * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
- * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
- * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
- * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
- * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- *
- * @package    PHPUnit_Selenium
- * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://www.phpunit.de/
- * @since      File available since Release 1.2.0
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace PHPUnit\Extensions\Selenium2TestCase;
@@ -49,14 +15,6 @@ use PHPUnit\Extensions\Selenium2TestCase\Session\Timeouts;
 
 /**
  * Driver for creating browser session with Selenium 2 (WebDriver API).
- *
- * @package    PHPUnit_Selenium
- * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @version    Release: @package_version@
- * @link       http://www.phpunit.de/
- * @since      Class available since Release 1.2.0
  */
 class Driver
 {
@@ -65,23 +23,22 @@ class Driver
 
     public function __construct(URL $seleniumServerUrl, $timeout = 60)
     {
-        $this->seleniumServerUrl = $seleniumServerUrl;
+        $this->seleniumServerUrl             = $seleniumServerUrl;
         $this->seleniumServerRequestsTimeout = $timeout;
     }
 
-    public function startSession(array $desiredCapabilities, URL $browserUrl)
+    public function startSession(array $desiredCapabilities, URL $browserUrl): Session
     {
-        $sessionCreation = $this->seleniumServerUrl->descend("/wd/hub/session");
-        $response = $this->curl('POST', $sessionCreation, array(
-            'desiredCapabilities' => $desiredCapabilities
-        ));
-        $sessionPrefix = $response->getURL();
+        $sessionCreation = $this->seleniumServerUrl->descend('/wd/hub/session');
+        $response        = $this->curl('POST', $sessionCreation, ['desiredCapabilities' => $desiredCapabilities,]);
+        $sessionPrefix   = $response->getURL();
 
         $timeouts = new Timeouts(
             $this,
             $sessionPrefix->descend('timeouts'),
             $this->seleniumServerRequestsTimeout * 1000
         );
+
         return new Session(
             $this,
             $sessionPrefix,
@@ -93,31 +50,34 @@ class Driver
     /**
      * Performs an HTTP request to the Selenium 2 server.
      *
-     * @param string $method      'GET'|'POST'|'DELETE'|...
+     * @param string $method 'GET'|'POST'|'DELETE'|...
      * @param string $url
-     * @param array $params       JSON parameters for POST requests
+     * @param array  $params JSON parameters for POST requests
      */
-    public function curl($http_method, URL $url, $params = NULL)
+    public function curl(string $httpMethod, URL $url, ?array $params = null): Response
     {
         $curl = curl_init($url->getValue());
         curl_setopt($curl, CURLOPT_TIMEOUT, $this->seleniumServerRequestsTimeout);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
-        curl_setopt($curl,
-                    CURLOPT_HTTPHEADER,
-                    array(
-                        'Content-type: application/json;charset=UTF-8',
-                        'Accept: application/json;charset=UTF-8'
-                     ));
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt(
+            $curl,
+            CURLOPT_HTTPHEADER,
+            [
+                'Content-type: application/json;charset=UTF-8',
+                'Accept: application/json;charset=UTF-8',
+            ]
+        );
 
-        if ($http_method === 'POST') {
-            curl_setopt($curl, CURLOPT_POST, TRUE);
+        if ($httpMethod === 'POST') {
+            curl_setopt($curl, CURLOPT_POST, true);
             if ($params && is_array($params)) {
                 curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($params));
             } else {
                 curl_setopt($curl, CURLOPT_POSTFIELDS, '');
             }
-            curl_setopt($curl, CURLOPT_FOLLOWLOCATION, TRUE);
-        } else if ($http_method == 'DELETE') {
+
+            curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+        } elseif ($httpMethod === 'DELETE') {
             curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'DELETE');
         }
 
@@ -125,27 +85,31 @@ class Driver
         if (curl_errno($curl)) {
             throw new NoSeleniumException(
                 'Error connection[' . curl_errno($curl) . '] to ' .
-                $url->getValue()  . ': ' . curl_error($curl)
+                $url->getValue() . ': ' . curl_error($curl)
             );
         }
+
         $info = curl_getinfo($curl);
-        if ($info['http_code'] == 0) {
+        if ($info['http_code'] === 0) {
             throw new NoSeleniumException();
         }
-        if ($info['http_code'] == 404) {
-            throw new BadMethodCallException("The command $url is not recognized by the server.");
+
+        if ($info['http_code'] === 404) {
+            throw new BadMethodCallException(sprintf('The command %s is not recognized by the server.', $url));
         }
+
         if (($info['http_code'] >= 400) && ($info['http_code'] < 500)) {
-            throw new BadMethodCallException("Something unexpected happened: '$rawResponse'");
+            throw new BadMethodCallException(sprintf("Something unexpected happened: '%s'", $rawResponse));
         }
+
         curl_close($curl);
-        $content = json_decode($rawResponse, TRUE);
+        $content = json_decode($rawResponse, true);
 
         if ($content === null && json_last_error() !== JSON_ERROR_NONE) {
             throw new \PHPUnit\Extensions\Selenium2TestCase\Exception(
                 sprintf(
-                    "JSON decoding of remote response failed.\n".
-                    "Error code: %d\n".
+                    "JSON decoding of remote response failed.\n" .
+                    "Error code: %d\n" .
                     "The response: '%s'\n",
                     json_last_error(),
                     $rawResponse
@@ -163,7 +127,7 @@ class Driver
             $message = $value['message'];
         }
 
-        $status = isset($content['status']) ? $content['status'] : 0;
+        $status = $content['status'] ?? 0;
         if ($status !== WebDriverException::Success) {
             throw new WebDriverException($message, $status);
         }
@@ -171,10 +135,12 @@ class Driver
         return new Response($content, $info);
     }
 
-    public function execute(Command $command)
+    public function execute(Command $command): Response
     {
-        return $this->curl($command->httpMethod(),
-                           $command->url(),
-                           $command->jsonParameters());
+        return $this->curl(
+            $command->httpMethod(),
+            $command->url(),
+            $command->jsonParameters()
+        );
     }
 }
