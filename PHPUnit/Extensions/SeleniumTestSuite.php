@@ -161,6 +161,10 @@ class SeleniumTestSuite extends TestSuite
                     continue;
                 }
 
+                if (!$method->isPublic()) {
+                    continue;
+                }
+
                 $suite->addTestMethod($class, $method);
             }
         }
