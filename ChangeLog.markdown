@@ -3,6 +3,12 @@ PHPUnit_Selenium
 
 This is the list of changes made to PHPUnit_Selenium.
 
+PHPUnit_Selenium 9.0.0
+----------------------
+
+* Add support for PHPUnit 9 (and drop support for 8.x)
+
+
 PHPUnit_Selenium 8.0.0
 ----------------------
 
