@@ -157,6 +157,14 @@ class SeleniumTestSuite extends TestSuite
         else {
             // Create tests from test methods for single browser.
             foreach ($class->getMethods() as $method) {
+                if (!TestUtil::isTestMethod($method)) {
+                    continue;
+                }
+
+                if (!$method->isPublic()) {
+                    continue;
+                }
+
                 $suite->addTestMethod($class, $method);
             }
         }
