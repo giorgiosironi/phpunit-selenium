@@ -147,6 +147,10 @@ class SeleniumTestSuite extends TestSuite
             foreach ($browsers as $browser) {
                 $browserSuite = SeleniumBrowserSuite::fromClassAndBrowser($className, $browser);
                 foreach ($class->getMethods() as $method) {
+                    if (!TestUtil::isTestMethod($method)) {
+                        continue;
+                    }
+
                     $browserSuite->addTestMethod($class, $method);
                 }
                 $browserSuite->setupSpecificBrowser($browser);
@@ -158,10 +162,6 @@ class SeleniumTestSuite extends TestSuite
             // Create tests from test methods for single browser.
             foreach ($class->getMethods() as $method) {
                 if (!TestUtil::isTestMethod($method)) {
-                    continue;
-                }
-
-                if (!$method->isPublic()) {
                     continue;
                 }
 
