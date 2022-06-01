@@ -3,6 +3,11 @@ PHPUnit_Selenium
 
 This is the list of changes made to PHPUnit_Selenium.
 
+PHPUnit_Selenium 9.0.1
+----------------------
+
+* Don't run non-test methods as tests
+
 PHPUnit_Selenium 9.0.0
 ----------------------
 
