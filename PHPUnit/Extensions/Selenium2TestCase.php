@@ -1,50 +1,17 @@
 <?php
-/**
- * PHPUnit
+/*
+ * This file is part of PHPUnit.
  *
- * Copyright (c) 2010-2013, Sebastian Bergmann <sebastian@phpunit.de>.
- * All rights reserved.
+ * (c) Sebastian Bergmann <sebastian@phpunit.de>
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- *   * Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
- *
- *   * Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in
- *     the documentation and/or other materials provided with the
- *     distribution.
- *
- *   * Neither the name of Sebastian Bergmann nor the names of his
- *     contributors may be used to endorse or promote products derived
- *     from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
- * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
- * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
- * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
- * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
- * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- *
- * @package    PHPUnit_Selenium
- * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://www.phpunit.de/
- * @since      File available since Release 1.2.0
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace PHPUnit\Extensions;
 
 use Exception;
+use InvalidArgumentException;
 use PHPUnit\Extensions\Selenium2TestCase\Element;
 use PHPUnit\Extensions\Selenium2TestCase\Element\Select;
 use PHPUnit\Extensions\Selenium2TestCase\ElementCriteria;
@@ -59,7 +26,6 @@ use PHPUnit\Extensions\Selenium2TestCase\URL;
 use PHPUnit\Extensions\Selenium2TestCase\WaitUntil;
 use PHPUnit\Extensions\Selenium2TestCase\Window;
 use PHPUnit\Extensions\SeleniumCommon\RemoteCoverage;
-use PHPUnit\Framework\InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\TestResult;
 use RuntimeException;
@@ -70,13 +36,6 @@ use Throwable;
  * (WebDriver API and JsonWire protocol) to provide
  * the functionality required for web testing.
  *
- * @package    PHPUnit_Selenium
- * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @version    Release: @package_version@
- * @link       http://www.phpunit.de/
- * @since      Class available since Release 1.2.0
  * @method void acceptAlert() Press OK on an alert, or confirms a dialog
  * @method mixed alertText() alertText($value = NULL) Gets the alert dialog text, or sets the text for a prompt dialog
  * @method void back()
@@ -121,31 +80,22 @@ use Throwable;
  */
 abstract class Selenium2TestCase extends TestCase
 {
-    const VERSION = '9.0.0';
 
-    /**
-     * @var string  override to provide code coverage data from the server
-     */
+    public const VERSION = '9.0.0';
+
+    /** @var string  override to provide code coverage data from the server */
     protected $coverageScriptUrl;
 
-    /**
-     * @var Session
-     */
+    /** @var Session */
     private $session;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     private $parameters;
 
-    /**
-     * @var SessionStrategy
-     */
+    /** @var SessionStrategy */
     protected static $sessionStrategy;
 
-    /**
-     * @var SessionStrategy
-     */
+    /** @var SessionStrategy */
     protected static $browserSessionStrategy;
 
     /**
@@ -162,132 +112,111 @@ abstract class Selenium2TestCase extends TestCase
      */
     private static $defaultWaitUntilSleepInterval = 500;
 
-    /**
-     * @var SessionStrategy
-     */
+    /** @var SessionStrategy */
     protected $localSessionStrategy;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     private static $lastBrowserParams;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $testId;
 
-    /**
-     * @var boolean
-     */
+    /** @var bool */
     private $collectCodeCoverageInformation;
 
-    /**
-     * @var KeysHolder
-     */
+    /** @var KeysHolder */
     private $keysHolder;
 
-    /**
-     * @param boolean
-     */
-    private static $keepSessionOnFailure = FALSE;
+    /** @param boolean */
+    private static $keepSessionOnFailure = false;
 
-    /**
-     * @param boolean
-     */
-    public static function shareSession($shareSession)
+    public static function shareSession(bool $shareSession): void
     {
-        if (!is_bool($shareSession)) {
-            throw new \InvalidArgumentException("The shared session support can only be switched on or off.");
-        }
-        if (!$shareSession) {
+        if (! $shareSession) {
             self::$sessionStrategy = self::defaultSessionStrategy();
         } else {
             self::$sessionStrategy = new Shared(
-              self::defaultSessionStrategy(), self::$keepSessionOnFailure
-              );
+                self::defaultSessionStrategy(),
+                self::$keepSessionOnFailure
+            );
         }
     }
 
-    public static function keepSessionOnFailure($keepSession)
+    public static function keepSessionOnFailure(bool $keepSession): void
     {
-      if (!is_bool($keepSession)) {
-            throw new \InvalidArgumentException("The keep session on fail support can only be switched on or off.");
+        if ($keepSession) {
+            self::$keepSessionOnFailure = true;
         }
-      if ($keepSession){
-            self::$keepSessionOnFailure = TRUE;
-      }
     }
 
-    private static function sessionStrategy()
+    private static function sessionStrategy(): SessionStrategy
     {
-        if (!self::$sessionStrategy) {
+        if (! self::$sessionStrategy) {
             self::$sessionStrategy = self::defaultSessionStrategy();
         }
+
         return self::$sessionStrategy;
     }
 
-    private static function defaultSessionStrategy()
+    private static function defaultSessionStrategy(): SessionStrategy
     {
-        return new Isolated;
+        return new Isolated();
     }
 
     /**
      * Get the default timeout for WaitUntil
-     * @return int the default timeout
      */
-    public static function defaultWaitUntilTimeout(){
+    public static function defaultWaitUntilTimeout(): int
+    {
         return self::$defaultWaitUntilTimeout;
     }
 
     /**
      * Set the default timeout for WaitUntil
-     * @param int $timeout the new default timeout
      */
-    public static function setDefaultWaitUntilTimeout($timeout){
-        $timeout = (int) $timeout;
+    public static function setDefaultWaitUntilTimeout(int $timeout): void
+    {
         self::$defaultWaitUntilTimeout = $timeout > 0 ? $timeout : 0;
     }
 
     /**
      * Get the default sleep delay for WaitUntil
-     * @return int
      */
-    public static function defaultWaitUntilSleepInterval(){
+    public static function defaultWaitUntilSleepInterval(): int
+    {
         return self::$defaultWaitUntilSleepInterval;
     }
 
     /**
      * Set default sleep delay for WaitUntil
-     * @param int $sleepDelay the new default sleep delay
      */
-    public static function setDefaultWaitUntilSleepInterval($sleepDelay){
-        $sleepDelay = (int) $sleepDelay;
+    public static function setDefaultWaitUntilSleepInterval(int $sleepDelay): void
+    {
         self::$defaultWaitUntilSleepInterval = $sleepDelay > 0 ? $sleepDelay : 0;
     }
 
-
-    public function __construct($name = NULL, array $data = array(), $dataName = '')
+    public function __construct($name = null, array $data = [], $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
-        $this->parameters = array(
+        $this->parameters = [
             'host' => 'localhost',
             'port' => 4444,
-            'browser' => NULL,
-            'browserName' => NULL,
-            'desiredCapabilities' => array(),
+            'browser' => null,
+            'browserName' => null,
+            'desiredCapabilities' => [],
             'seleniumServerRequestsTimeout' => 60,
-            'secure' => FALSE
-        );
+            'secure' => false,
+        ];
 
         $this->keysHolder = new KeysHolder();
     }
 
-    public function setupSpecificBrowser($params)
+    public function setupSpecificBrowser(array $params): void
     {
         if (isset($params['keepSession'])) {
-            $this->keepSessionOnFailure(TRUE);
+            $this->keepSessionOnFailure(true);
         }
+
         $this->setUpSessionStrategy($params);
         $params = array_merge($this->parameters, $params);
         $this->setHost($params['host']);
@@ -296,36 +225,38 @@ abstract class Selenium2TestCase extends TestCase
         $this->parameters['browser'] = $params['browser'];
         $this->setDesiredCapabilities($params['desiredCapabilities']);
         $this->setSeleniumServerRequestsTimeout(
-            $params['seleniumServerRequestsTimeout']);
+            $params['seleniumServerRequestsTimeout']
+        );
     }
 
-    protected function setUpSessionStrategy($params)
+    protected function setUpSessionStrategy(array $params): void
     {
         // This logic enables us to have a session strategy reused for each
         // item in self::$browsers. We don't want them both to share one
         // and we don't want each test for a specific browser to have a
         // new strategy
-        if ($params == self::$lastBrowserParams) {
-            // do nothing so we use the same session strategy for this
-            // browser
+
+        // phpcs:disable Generic.CodeAnalysis.EmptyStatement
+        if ($params === self::$lastBrowserParams) {
+            // do nothing so we use the same session strategy for this browser
         } elseif (isset($params['sessionStrategy'])) {
             $strat = $params['sessionStrategy'];
-            if ($strat != "isolated" && $strat != "shared") {
-                throw new \InvalidArgumentException("Session strategy must be either 'isolated' or 'shared'");
-            } elseif ($strat == "isolated") {
-                self::$browserSessionStrategy = new Isolated;
+            if ($strat !== 'isolated' && $strat !== 'shared') {
+                throw new InvalidArgumentException("Session strategy must be either 'isolated' or 'shared'");
+            } elseif ($strat === 'isolated') {
+                self::$browserSessionStrategy = new Isolated();
             } else {
                 self::$browserSessionStrategy = new Shared(self::defaultSessionStrategy(), self::$keepSessionOnFailure);
             }
         } else {
             self::$browserSessionStrategy = self::defaultSessionStrategy();
         }
-        self::$lastBrowserParams = $params;
-        $this->localSessionStrategy = self::$browserSessionStrategy;
 
+        self::$lastBrowserParams    = $params;
+        $this->localSessionStrategy = self::$browserSessionStrategy;
     }
 
-    private function getStrategy()
+    private function getStrategy(): SessionStrategy
     {
         if ($this->localSessionStrategy) {
             return $this->localSessionStrategy;
@@ -334,23 +265,24 @@ abstract class Selenium2TestCase extends TestCase
         }
     }
 
-    public function prepareSession()
+    public function prepareSession(): Session
     {
         try {
-            if (!$this->session) {
+            if (! $this->session) {
                 $this->session = $this->getStrategy()->session($this->parameters);
             }
         } catch (NoSeleniumException $e) {
-            $this->markTestSkipped("The Selenium Server is not active on host {$this->parameters['host']} at port {$this->parameters['port']}.");
+            $this->markTestSkipped(sprintf('The Selenium Server is not active on host %s at port %s.', $this->parameters['host'], $this->parameters['port']));
         }
+
         return $this->session;
     }
 
-    public function run(TestResult $result = NULL): TestResult
+    public function run(?TestResult $result = null): TestResult
     {
-        $this->testId = get_class($this) . '__' . $this->getName();
+        $this->testId = static::class . '__' . $this->getName();
 
-        if ($result === NULL) {
+        if ($result === null) {
             $result = $this->createResult();
         }
 
@@ -364,7 +296,8 @@ abstract class Selenium2TestCase extends TestCase
                 $this->testId
             );
             $result->getCodeCoverage()->append(
-                $coverage->get(), $this
+                $coverage->get(),
+                $this
             );
         }
 
@@ -382,7 +315,7 @@ abstract class Selenium2TestCase extends TestCase
     {
         $this->prepareSession();
 
-        $thrownException = NULL;
+        $thrownException = null;
 
         if ($this->collectCodeCoverageInformation) {
             $this->url($this->coverageScriptUrl);   // phpunit_coverage.php won't do anything if the cookie isn't set, which is exactly what we want
@@ -393,7 +326,7 @@ abstract class Selenium2TestCase extends TestCase
             $this->setUpPage();
             $result = parent::runTest();
 
-            if (!empty($this->verificationErrors)) {
+            if (! empty($this->verificationErrors)) {
                 $this->fail(implode("\n", $this->verificationErrors));
             }
         } catch (Exception $e) {
@@ -404,15 +337,17 @@ abstract class Selenium2TestCase extends TestCase
             $this->session->cookie()->remove('PHPUNIT_SELENIUM_TEST_ID');
         }
 
-        if (NULL !== $thrownException) {
+        if ($thrownException !== null) {
             throw $thrownException;
         }
 
         return $result;
     }
 
-
-    public static function suite($className)
+    /**
+     * @return SeleniumTestSuite
+     */
+    public static function suite(string $className)
     {
         return SeleniumTestSuite::fromTestCaseClass($className);
     }
@@ -428,183 +363,137 @@ abstract class Selenium2TestCase extends TestCase
      *
      * @param  string $command
      * @param  array  $arguments
+     *
      * @return mixed
      */
     public function __call($command, $arguments)
     {
-        if ($this->session === NULL) {
-            throw new \PHPUnit\Extensions\Selenium2TestCase\Exception("There is currently no active session to execute the '$command' command. You're probably trying to set some option in setUp() with an incorrect setter name. You may consider using setUpPage() instead.");
+        if ($this->session === null) {
+            throw new \PHPUnit\Extensions\Selenium2TestCase\Exception(sprintf("There is currently no active session to execute the '%s' command. You're probably trying to set some option in setUp() with an incorrect setter name. You may consider using setUpPage() instead.", $command));
         }
-        $result = call_user_func_array(
-          array($this->session, $command), $arguments
-        );
 
-        return $result;
+        return call_user_func_array(
+            [$this->session, $command],
+            $arguments
+        );
     }
 
-    /**
-     * @param  string $host
-     * @throws InvalidArgumentException
-     */
-    public function setHost($host)
+    public function setHost(string $host): void
     {
-        if (!is_string($host)) {
-            throw InvalidArgumentException::create(1, 'string');
-        }
-
         $this->parameters['host'] = $host;
     }
 
-    public function getHost()
+    public function getHost(): string
     {
         return $this->parameters['host'];
     }
 
-    /**
-     * @param  integer $port
-     * @throws InvalidArgumentException
-     */
-    public function setPort($port)
+    public function setPort(int $port): void
     {
-        if (!is_int($port)) {
-            throw InvalidArgumentException::create(1, 'integer');
-        }
-
         $this->parameters['port'] = $port;
     }
 
-    public function getPort()
+    public function getPort(): int
     {
         return $this->parameters['port'];
     }
 
-    /**
-     * @param boolean $secure
-     * @throws InvalidArgumentException
-     */
-    public function setSecure($secure)
+    public function setSecure(bool $secure): void
     {
-        if(!is_bool($secure)) {
-            throw InvalidArgumentException::create(1, 'boolean');
-        }
-
         $this->parameters['secure'] = $secure;
     }
 
-    public function getSecure()
+    public function getSecure(): bool
     {
         return $this->parameters['secure'];
     }
 
-    /**
-     * @param  string $browser
-     * @throws InvalidArgumentException
-     */
-    public function setBrowser($browserName)
+    public function setBrowser(string $browserName): void
     {
-        if (!is_string($browserName)) {
-            throw InvalidArgumentException::create(1, 'string');
-        }
-
         $this->parameters['browserName'] = $browserName;
     }
 
-    public function getBrowser()
+    public function getBrowser(): string
     {
         return $this->parameters['browserName'];
     }
 
-    /**
-     * @param  string $browserUrl
-     * @throws InvalidArgumentException
-     */
-    public function setBrowserUrl($browserUrl)
+    public function setBrowserUrl(string $browserUrl): void
     {
-        if (!is_string($browserUrl)) {
-            throw InvalidArgumentException::create(1, 'string');
-        }
-
         $this->parameters['browserUrl'] = new URL($browserUrl);
     }
 
-    public function getBrowserUrl()
+    public function getBrowserUrl(): string
     {
-        if (isset($this->parameters['browserUrl'])) {
-            return $this->parameters['browserUrl'];
-        }
-        return '';
+        return $this->parameters['browserUrl'] ?? '';
     }
 
     /**
      * @see http://code.google.com/p/selenium/wiki/JsonWireProtocol
      */
-    public function setDesiredCapabilities(array $capabilities)
+    public function setDesiredCapabilities(array $capabilities): void
     {
         $this->parameters['desiredCapabilities'] = $capabilities;
     }
 
-
-    public function getDesiredCapabilities()
+    public function getDesiredCapabilities(): array
     {
         return $this->parameters['desiredCapabilities'];
     }
 
-    /**
-     * @param int $timeout  seconds
-     */
-    public function setSeleniumServerRequestsTimeout($timeout)
+    public function setSeleniumServerRequestsTimeout(int $timeout): void
     {
         $this->parameters['seleniumServerRequestsTimeout'] = $timeout;
     }
 
-    public function getSeleniumServerRequestsTimeout()
+    public function getSeleniumServerRequestsTimeout(): int
     {
         return $this->parameters['seleniumServerRequestsTimeout'];
     }
 
     /**
      * Get test id (generated internally)
-     * @return string
      */
-    public function getTestId()
+    public function getTestId(): string
     {
         return $this->testId;
     }
 
     /**
      * Get Selenium2 current session id
-     * @return string
      */
-    public function getSessionId()
+    public function getSessionId(): string
     {
         if ($this->session) {
             return $this->session->id();
         }
-        return FALSE;
+
+        return false;
     }
 
     /**
      * Wait until callback isn't null or timeout occurs
      *
-     * @param $callback
-     * @param null $timeout
      * @return mixed
      */
-    public function waitUntil($callback, $timeout = NULL)
+    public function waitUntil($callback, $timeout = null)
     {
         $waitUntil = new WaitUntil($this);
+
         return $waitUntil->run($callback, $timeout);
     }
 
     /**
      * Sends a special key
      * Deprecated due to issues with IE webdriver. Use keys() method instead
+     *
      * @deprecated
-     * @param string $name
-     * @throws \PHPUnit\Extensions\Selenium2TestCase\Exception
+     *
      * @see KeysHolder
+     *
+     * @throws \PHPUnit\Extensions\Selenium2TestCase\Exception
      */
-    public function keysSpecial($name)
+    public function keysSpecial(string $name): void
     {
         $names = explode(',', $name);
 
@@ -619,19 +508,21 @@ abstract class Selenium2TestCase extends TestCase
      */
     public function setUpPage()
     {
-
     }
 
     /**
      * Check whether an alert box is present
+     *
+     * @return true|null
      */
     public function alertIsPresent()
     {
         try {
             $this->alertText();
-            return TRUE;
+
+            return true;
         } catch (Exception $e) {
-            return NULL;
+            return null;
         }
     }
 }

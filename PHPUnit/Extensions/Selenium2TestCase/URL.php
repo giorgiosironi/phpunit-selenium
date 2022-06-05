@@ -1,94 +1,39 @@
 <?php
-/**
- * PHPUnit
+/*
+ * This file is part of PHPUnit.
  *
- * Copyright (c) 2010-2013, Sebastian Bergmann <sebastian@phpunit.de>.
- * All rights reserved.
+ * (c) Sebastian Bergmann <sebastian@phpunit.de>
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- *   * Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
- *
- *   * Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in
- *     the documentation and/or other materials provided with the
- *     distribution.
- *
- *   * Neither the name of Sebastian Bergmann nor the names of his
- *     contributors may be used to endorse or promote products derived
- *     from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
- * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
- * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
- * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
- * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
- * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- *
- * @package    PHPUnit_Selenium
- * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://www.phpunit.de/
- * @since      File available since Release 1.2.0
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace PHPUnit\Extensions\Selenium2TestCase;
 
 /**
  * URL Value Object allowing easy concatenation.
- *
- * @package    PHPUnit_Selenium
- * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @version    Release: @package_version@
- * @link       http://www.phpunit.de/
- * @since      Class available since Release 1.2.0
  */
 final class URL
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $value;
 
-    /**
-     * @param string $value
-     */
-    public function __construct($value)
+    public function __construct(string $value)
     {
         $this->value = $value;
     }
 
-    /**
-     * @param string $host
-     * @param int port
-     * @param bool secure
-     * @return URL
-     */
-    public static function fromHostAndPort($host, $port, $secure)
+    public static function fromHostAndPort(string $host, int $port, bool $secure): URL
     {
-        $prefix = "http://";
+        $prefix = 'http://';
         if ($secure) {
-            $prefix = "https://";
+            $prefix = 'https://';
         }
-        return new self($prefix.$host.":".$port);
+
+        return new self($prefix . $host . ':' . $port);
     }
 
-    /**
-     * @return string
-     */
-    public function getValue()
+    public function getValue(): string
     {
         return $this->value;
     }
@@ -98,13 +43,9 @@ final class URL
         return $this->getValue();
     }
 
-    /**
-     * @param string $addition
-     * @return URL
-     */
-    public function descend($addition)
+    public function descend(?string $addition): URL
     {
-        if ($addition == '') {
+        if ($addition === '') {
             // if we're adding nothing, respect the current url's choice of
             // whether or not to include a trailing slash; prevents inadvertent
             // adding of slashes to urls that can't handle it
@@ -114,42 +55,31 @@ final class URL
                       . '/'
                       . ltrim($addition, '/');
         }
+
         return new self($newValue);
     }
 
-    /**
-     * @return URL
-     */
-    public function ascend()
+    public function ascend(): URL
     {
-        $lastSlash = strrpos($this->value, "/");
-        $newValue = substr($this->value, 0, $lastSlash);
+        $lastSlash = strrpos($this->value, '/');
+        $newValue  = substr($this->value, 0, $lastSlash);
+
         return new self($newValue);
     }
 
-    /**
-     * @return string
-     */
-    public function lastSegment()
+    public function lastSegment(): string
     {
         $segments = explode('/', $this->value);
+
         return end($segments);
     }
 
-    /**
-     * @param string $command
-     * @return URL
-     */
-    public function addCommand($command)
+    public function addCommand(string $command): URL
     {
         return $this->descend($this->camelCaseToUnderScores($command));
     }
 
-    /**
-     * @param string $newUrl
-     * @return URL
-     */
-    public function jump($newUrl)
+    public function jump(string $newUrl): URL
     {
         if ($this->isAbsolute($newUrl)) {
             return new self($newUrl);
@@ -158,14 +88,15 @@ final class URL
         }
     }
 
-    private function camelCaseToUnderScores($string)
+    private function camelCaseToUnderScores(string $string): string
     {
         $string = preg_replace('/([A-Z]{1,1})/', ' \1', $string);
         $string = strtolower($string);
+
         return str_replace(' ', '_', $string);
     }
 
-    private function isAbsolute($urlValue)
+    private function isAbsolute(string $urlValue): bool
     {
         return preg_match('/^(http|https):\/\//', $urlValue) > 0;
     }

@@ -1,45 +1,11 @@
 <?php
-/**
- * PHPUnit
+/*
+ * This file is part of PHPUnit.
  *
- * Copyright (c) 2010-2013, Sebastian Bergmann <sebastian@phpunit.de>.
- * All rights reserved.
+ * (c) Sebastian Bergmann <sebastian@phpunit.de>
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- *   * Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
- *
- *   * Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in
- *     the documentation and/or other materials provided with the
- *     distribution.
- *
- *   * Neither the name of Sebastian Bergmann nor the names of his
- *     contributors may be used to endorse or promote products derived
- *     from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
- * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
- * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
- * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
- * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
- * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- *
- * @package    PHPUnit_Selenium
- * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://www.phpunit.de/
- * @since      File available since Release 1.2.0
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace PHPUnit\Extensions\Selenium2TestCase;
@@ -71,13 +37,6 @@ use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\Window as SessionWindow;
 /**
  * Browser session for Selenium 2: main point of entry for functionality.
  *
- * @package    PHPUnit_Selenium
- * @author     Giorgio Sironi <info@giorgiosironi.com>
- * @copyright  2010-2013 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @version    Release: @package_version@
- * @link       http://www.phpunit.de/
- * @since      Class available since Release 1.2.0
  * @method void acceptAlert() Press OK on an alert, or confirms a dialog
  * @method mixed alertText($value = NULL) Gets the alert dialog text, or sets the text for a prompt dialog
  * @method void back()
@@ -102,44 +61,36 @@ use PHPUnit\Extensions\Selenium2TestCase\SessionCommand\Window as SessionWindow;
  */
 class Session extends Accessor
 {
-    /**
-     * @var string  the base URL for this session,
-     *              which all relative URLs will refer to
-     */
+    /** @var string  the base URL for this session, which all relative URLs will refer to */
     private $baseUrl;
 
-    /**
-     * @var Timeouts
-     */
+    /** @var Timeouts */
     private $timeouts;
 
-    /**
-     * @var boolean
-     */
-    private $stopped = FALSE;
+    /** @var bool */
+    private $stopped = false;
 
-    public function __construct($driver,
-                                URL $url,
-                                URL $baseUrl,
-                                Timeouts $timeouts)
-    {
-        $this->baseUrl = $baseUrl;
+    public function __construct(
+        Driver $driver,
+        URL $url,
+        URL $baseUrl,
+        Timeouts $timeouts
+    ) {
+        $this->baseUrl  = $baseUrl;
         $this->timeouts = $timeouts;
         parent::__construct($driver, $url);
     }
 
-    /**
-     * @return string
-     */
-    public function id()
+    public function id(): string
     {
         return $this->url->lastSegment();
     }
 
-    protected function initCommands()
+    protected function initCommands(): array
     {
         $baseUrl = $this->baseUrl;
-        return array(
+
+        return [
             'acceptAlert' => AcceptAlert::class,
             'alertText' => AlertText::class,
             'back' => GenericPost::class,
@@ -160,7 +111,7 @@ class Session extends Accessor
             'title' => SessionGenericAccessor::class,
             'log' => Log::class,
             'logTypes' => $this->attributeCommandFactoryMethod('log/types'),
-            'url' => function ($jsonParameters, $commandUrl) use ($baseUrl) {
+            'url' => static function ($jsonParameters, $commandUrl) use ($baseUrl) {
                 return new \PHPUnit\Extensions\Selenium2TestCase\SessionCommand\Url($jsonParameters, $commandUrl, $baseUrl);
             },
             'window' => SessionWindow::class,
@@ -173,22 +124,24 @@ class Session extends Accessor
             'flick' => $this->touchCommandFactoryMethod('touch/flick'),
             'location' => Location::class,
             'orientation' => Orientation::class,
-            'file' => File::class
-        );
+            'file' => File::class,
+        ];
     }
 
-    private function attributeCommandFactoryMethod($urlSegment)
+    private function attributeCommandFactoryMethod(string $urlSegment): callable
     {
         $url = $this->url->addCommand($urlSegment);
-        return function ($jsonParameters, $commandUrl) use ($url) {
+
+        return static function ($jsonParameters, $commandUrl) use ($url) {
             return new GenericAttribute($jsonParameters, $url);
         };
     }
 
-    private function touchCommandFactoryMethod($urlSegment)
+    private function touchCommandFactoryMethod(string $urlSegment): callable
     {
         $url = $this->url->addCommand($urlSegment);
-        return function ($jsonParameters, $commandUrl) use ($url) {
+
+        return static function ($jsonParameters, $commandUrl) use ($url) {
             return new GenericPost($jsonParameters, $url);
         };
     }
@@ -198,128 +151,115 @@ class Session extends Accessor
         $this->stop();
     }
 
-    /**
-     * @return URL
-     */
-    public function getSessionUrl()
+    public function getSessionUrl(): URL
     {
         return $this->url;
     }
 
     /**
      * Closed the browser.
-     * @return void
      */
-    public function stop()
+    public function stop(): void
     {
         if ($this->stopped) {
             return;
         }
+
         try {
             $this->driver->curl('DELETE', $this->url);
         } catch (Exception $e) {
             // sessions which aren't closed because of sharing can time out on the server. In no way trying to close them should make a test fail, as it already finished before arriving here.
-            "Closing sessions: " . $e->getMessage() . "\n";
+            'Closing sessions: ' . $e->getMessage() . "\n";
         }
-        $this->stopped = TRUE;
+
+        $this->stopped = true;
         if ($this->stopped) {
             return;
         }
     }
 
-    /**
-     * @return Select
-     */
-    public function select(Element $element)
+    public function select(Element $element): Select
     {
         $tag = $element->name();
         if ($tag !== 'select') {
-            throw new InvalidArgumentException("The element is not a `select` tag but a `$tag`.");
+            throw new InvalidArgumentException(sprintf('The element is not a `select` tag but a `%s`.', $tag));
         }
+
         return Select::fromElement($element);
     }
 
     /**
-     * @param array   WebElement JSON object
-     * @return Element
+     * @param array $value WebElement JSON object
      */
-    public function elementFromResponseValue($value)
+    public function elementFromResponseValue(array $value): Element
     {
         return Element::fromResponseValue($value, $this->getSessionUrl()->descend('element'), $this->driver);
     }
 
     /**
-     * @param string $id    id attribute, e.g. 'container'
-     * @return void
+     * @param string $id id attribute, e.g. 'container'
      */
-    public function clickOnElement($id)
+    public function clickOnElement(string $id): void
     {
-        return $this->element($this->using('id')->value($id))->click();
+        $this->element($this->using('id')->value($id))->click();
     }
 
-    public function timeouts()
+    public function timeouts(): Timeouts
     {
         return $this->timeouts;
     }
 
     /**
-     * @return string   a BLOB of a PNG file
+     * @return string a BLOB of a PNG file
      */
-    public function currentScreenshot()
+    public function currentScreenshot(): string
     {
         return base64_decode($this->screenshot());
     }
 
-    /**
-     * @return Window
-     */
-    public function currentWindow()
+    public function currentWindow(): Window
     {
         $url = $this->url->descend('window')->descend(trim($this->windowHandle(), '{}'));
+
         return new Window($this->driver, $url);
     }
 
-    public function closeWindow()
+    public function closeWindow(): void
     {
         $this->driver->curl('DELETE', $this->url->descend('window'));
     }
 
     /**
      * Get the element on the page that currently has focus.
-     *
-     * @return Element
      */
-    public function active()
+    public function active(): Element
     {
-        $command = new Active(null, $this->url);
+        $command  = new Active(null, $this->url);
         $response = $this->driver->execute($command);
+
         return $this->elementFromResponseValue($response->getValue());
     }
 
-    /**
-     * @return Cookie
-     */
-    public function cookie()
+    public function cookie(): Cookie
     {
         $url = $this->url->descend('cookie');
+
         return new Cookie($this->driver, $url);
     }
 
-    /**
-     * @return Storage
-     */
-    public function localStorage()
+    public function localStorage(): Storage
     {
         $url = $this->url->addCommand('localStorage');
+
         return new Storage($this->driver, $url);
     }
 
-    public function landscape()
+    public function landscape(): void
     {
         $this->orientation('LANDSCAPE');
     }
 
-    public function portrait()
+    public function portrait(): void
     {
         $this->orientation('PORTRAIT');
     }
