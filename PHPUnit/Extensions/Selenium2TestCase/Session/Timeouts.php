@@ -60,6 +60,9 @@ use PHPUnit\Extensions\Selenium2TestCase\URL;
  * @since      Class available since Release 1.2.4
  * @method implicitWait(int $ms) Sets timeout when searching for elements
  * @method asyncScript(int $ms) Sets timeout for asynchronous scripts executed by Session::executeAsync()
+ * @method pageLoadTimeout(int $ms) 
+ * @method scriptTimeout(int $ms)
+ * @method implicitWaitTimeout(int $ms)
  */
 class Timeouts extends CommandsHolder
 {
@@ -76,6 +79,22 @@ class Timeouts extends CommandsHolder
     {
         $self = $this;
         return array(
+            /*
+        	 * https://www.w3.org/TR/webdriver/#dfn-table-of-session-timeouts section 7.5 
+        	 */	
+        	'pageLoadTimeout' => function ($milliseconds, $commandUrl) use ($self) {
+        		$jsonParameters = array('type'=>'page load', 'ms' => $milliseconds);
+        		return new PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost($jsonParameters, $commandUrl->ascend());
+        	},
+        	'scriptTimeout' => function ($milliseconds, $commandUrl) use ($self) {
+	        	$jsonParameters = array('type'=>'script', 'ms' => $milliseconds);
+	        	return new PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost($jsonParameters, $commandUrl->ascend());
+	        },
+	        'implicitWaitTimeout' => function ($milliseconds, $commandUrl) use ($self) {
+	        	$jsonParameters = array('type'=>'implicit', 'ms' => $milliseconds);
+	        	return new PHPUnit_Extensions_Selenium2TestCase_ElementCommand_GenericPost($jsonParameters, $commandUrl->ascend());
+	        },
+            
             'implicitWait' => function ($milliseconds, $commandUrl) use ($self) {
                 $self->check($milliseconds);
                 $self->setLastImplicitWaitValue($milliseconds);
