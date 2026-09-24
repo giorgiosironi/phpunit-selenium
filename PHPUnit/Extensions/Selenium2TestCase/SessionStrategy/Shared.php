@@ -95,7 +95,7 @@ class Shared implements SessionStrategy
         $this->lastTestWasNotSuccessful = TRUE;
     }
 
-    public function endOfTest(Session $session = NULL)
+    public function endOfTest(?Session $session = NULL)
     {
     }
 }

@@ -78,7 +78,7 @@ class Isolated implements SessionStrategy
     {
     }
 
-    public function endOfTest(Session $session = NULL)
+    public function endOfTest(?Session $session = NULL)
     {
         if ($session !== NULL) {
             $session->stop();

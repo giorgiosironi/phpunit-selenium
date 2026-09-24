@@ -346,7 +346,7 @@ abstract class Selenium2TestCase extends TestCase
         return $this->session;
     }
 
-    public function run(TestResult $result = NULL): TestResult
+    public function run(?TestResult $result = NULL): TestResult
     {
         $this->testId = get_class($this) . '__' . $this->getName();
 

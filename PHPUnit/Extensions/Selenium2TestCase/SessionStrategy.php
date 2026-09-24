@@ -68,5 +68,5 @@ interface SessionStrategy
 
     public function notSuccessfulTest();
 
-    public function endOfTest(Session $session = NULL);
+    public function endOfTest(?Session $session = NULL);
 }
